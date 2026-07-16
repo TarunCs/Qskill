@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html lang="en" id="htmlRoot">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>About Us - QSKILL</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+    <style>
+        :root {
+            --bg-primary: #ffffff;
+            --bg-secondary: #f3f4f6;
+            --bg-card: #ffffff;
+            --text-primary: #1f2937;
+            --text-secondary: #6b7280;
+            --border-color: #e5e7eb;
+            --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            --shadow-lg: 0 20px 40px rgba(0, 0, 0, 0.08);
+            --navbar-bg: rgba(255, 255, 255, 0.95);
+            --gradient-start: #3b82f6;
+            --gradient-end: #8b5cf6;
+        }
+        .dark-mode {
+            --bg-primary: #111827;
+            --bg-secondary: #1f2937;
+            --bg-card: #1f2937;
+            --text-primary: #f9fafb;
+            --text-secondary: #9ca3af;
+            --border-color: #374151;
+            --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.3);
+            --shadow-lg: 0 20px 40px rgba(0, 0, 0, 0.4);
+            --navbar-bg: rgba(17, 24, 39, 0.95);
+        }
+        * { transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease; }
+        body {
+            font-family: 'Inter', system-ui, -apple-system, sans-serif;
+            background: var(--bg-secondary);
+            color: var(--text-primary);
+        }
+        .about-hero {
+            background: linear-gradient(135deg, var(--gradient-start) 0%, var(--gradient-end) 50%, #ec4899 100%);
+            padding: 140px 0 80px;
+            color: white;
+            position: relative;
+            overflow: hidden;
+        }
+        .about-hero::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+        }
+        .navbar {
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+            background: var(--navbar-bg) !important;
+            border-bottom: 1px solid var(--border-color);
+        }
+        .value-card {
+            transition: all 0.3s ease;
+            cursor: pointer;
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+        }
+        .value-card:hover {
+            transform: translateY(-8px);
+            box-shadow: var(--shadow-lg);
+        }
+        .timeline-item {
+            border-left: 3px solid var(--gradient-start);
+            padding-left: 20px;
+            margin-bottom: 30px;
+            position: relative;
+        }
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: -7px;
+            top: 0;
+            width: 12px;
+            height: 12px;
+            background: var(--gradient-start);
+            border-radius: 50%;
+        }
+        .team-card {
+            transition: all 0.3s ease;
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+        }
+        .team-card:hover { transform: scale(1.05); }
+        .toast-container {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            z-index: 9999;
+            max-width: 400px;
+        }
+        .toast {
+            background: var(--bg-card);
+            padding: 16px 20px;
+            border-radius: 16px;
+            box-shadow: var(--shadow-lg);
+            display: flex;
+            align-items: center;
+            border-left: 4px solid #22c55e;
+            animation: slideIn 0.5s ease;
+            border: 1px solid var(--border-color);
+        }
+        @keyframes slideIn {
+            from { transform: translateX(100%); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+        .theme-toggle {
+            width: 60px;
+            height: 30px;
+            background: var(--border-color);
+            border-radius: 15px;
+            cursor: pointer;
+            position: relative;
+            transition: all 0.3s ease;
+            border: none;
+        }
+        .theme-toggle .toggle-dot {
+            width: 24px;
+            height: 24px;
+            background: white;
+            border-radius: 50%;
+            position: absolute;
+            top: 3px;
+            left: 3px;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+        }
+        .theme-toggle.dark .toggle-dot { transform: translateX(30px); background: #fbbf24; }
+        .mobile-menu-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 40;
+            display: none;
+            backdrop-filter: blur(4px);
+        }
+        .mobile-menu-overlay.active { display: block; }
+        .mobile-menu-panel {
+            position: fixed;
+            top: 0;
+            right: -320px;
+            width: 300px;
+            height: 100%;
+            background: var(--bg-card);
+            z-index: 50;
+            transition: right 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            padding: 20px;
+            overflow-y: auto;
+            border-left: 1px solid var(--border-color);
+        }
+        .mobile-menu-panel.active { right: 0; }
+    </style>
+</head>
+<body>
+
+    <!-- Navigation -->
+    <nav class="navbar fixed top-0 left-0 right-0 z-50 shadow-sm">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <a href="index.html" class="text-2xl font-extrabold text-blue-600">QSKILL<span class="text-sm text-gray-400 font-medium">.com</span></a>
+                <div class="hidden md:flex items-center space-x-6">
+                    <a href="index.html" class="text-gray-600 hover:text-blue-600 transition">Home</a>
+                    <a href="courses.html" class="text-gray-600 hover:text-blue-600 transition">Courses</a>
+                    <a href="about.html" class="text-blue-600 font-semibold">About</a>
+                    <a href="blog.html" class="text-gray-600 hover:text-blue-600 transition">Blog</a>
+                    <button onclick="toggleDarkMode()" class="p-2 rounded-lg hover:bg-gray-100 transition text-gray-600">
+                        <i id="themeIcon" class="fas fa-moon text-xl"></i>
+                    </button>
+                </div>
+                <div class="flex items-center gap-2 md:hidden">
+                    <button onclick="toggleDarkMode()" class="p-2 rounded-lg hover:bg-gray-100 transition text-gray-600">
+                        <i id="mobileThemeIcon" class="fas fa-moon text-xl"></i>
+                    </button>
+                    <button onclick="openMobileMenu()" class="text-2xl text-gray-600 hover:text-blue-600 transition">
+                        <i class="fas fa-bars"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <div id="mobileMenu" class="hidden md:hidden bg-white border-t px-4 py-3 space-y-2" style="background:var(--bg-card);border-color:var(--border-color);">
+            <a href="index.html" class="block text-gray-600">Home</a>
+            <a href="courses.html" class="block text-gray-600">Courses</a>
+            <a href="about.html" class="block text-blue-600 font-semibold">About</a>
+            <a href="blog.html" class="block text-gray-600">Blog</a>
+        </div>
+    </nav>
+
+    <!-- Hero -->
+    <section class="about-hero">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10">
+            <h1 class="text-4xl md:text-6xl font-bold mb-4">About QSKILL</h1>
+            <p class="text-xl text-blue-100 max-w-2xl mx-auto">Empowering learners worldwide with quality education and expert instruction.</p>
+        </div>
+    </section>
+
+    <!-- Mission -->
+    <section class="py-20" style="background:var(--bg-card);">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid md:grid-cols-2 gap-12 items-center">
+                <div>
+                    <span class="text-blue-600 font-semibold text-sm uppercase tracking-wider">Our Mission</span>
+                    <h2 class="text-3xl md:text-4xl font-bold mt-2" style="color:var(--text-primary);">Making Quality Education Accessible</h2>
+                    <p class="mt-4 leading-relaxed" style="color:var(--text-secondary);">
+                        At QSKILL, we believe that everyone deserves access to world-class education.
+                        Our platform connects passionate learners with expert instructors, offering
+                        courses that are practical, engaging, and career-focused.
+                    </p>
+                    <div class="grid grid-cols-2 gap-4 mt-6">
+                        <div class="p-4 bg-blue-50 rounded-xl dark:bg-blue-900/30">
+                            <div class="text-2xl font-bold text-blue-600">50+</div>
+                            <div class="text-sm text-gray-600 dark:text-gray-400">Expert Courses</div>
+                        </div>
+                        <div class="p-4 bg-purple-50 rounded-xl dark:bg-purple-900/30">
+                            <div class="text-2xl font-bold text-purple-600">10K+</div>
+                            <div class="text-sm text-gray-600 dark:text-gray-400">Students</div>
+                        </div>
+                        <div class="p-4 bg-green-50 rounded-xl dark:bg-green-900/30">
+                            <div class="text-2xl font-bold text-green-600">4.8⭐</div>
+                            <div class="text-sm text-gray-600 dark:text-gray-400">Average Rating</div>
+                        </div>
+                        <div class="p-4 bg-yellow-50 rounded-xl dark:bg-yellow-900/30">
+                            <div class="text-2xl font-bold text-yellow-600">30+</div>
+                            <div class="text-sm text-gray-600 dark:text-gray-400">Instructors</div>
+                        </div>
+                    </div>
+                </div>
+                <div>
+                    <img src="https://cdn-icons-png.flaticon.com/512/3135/3135715.png" alt="About" class="w-full max-w-md mx-auto" />
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Values -->
+    <section class="py-20" style="background:var(--bg-secondary);">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-12">
+                <span class="text-blue-600 font-semibold text-sm uppercase tracking-wider">Our Values</span>
+                <h2 class="text-3xl md:text-4xl font-bold mt-2" style="color:var(--text-primary);">What Drives Us</h2>
+            </div>
+            <div class="grid md:grid-cols-3 gap-8">
+                <div class="value-card p-8 rounded-2xl shadow-sm text-center">
+                    <div class="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center text-3xl text-blue-600 mx-auto dark:bg-blue-900/50">
+                        <i class="fas fa-graduation-cap"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mt-4" style="color:var(--text-primary);">Excellence</h3>
+                    <p class="text-sm mt-2" style="color:var(--text-secondary);">We strive for excellence in every course, ensuring the highest quality education.</p>
+                </div>
+                <div class="value-card p-8 rounded-2xl shadow-sm text-center">
+                    <div class="w-16 h-16 bg-purple-100 rounded-full flex items-center justify-center text-3xl text-purple-600 mx-auto dark:bg-purple-900/50">
+                        <i class="fas fa-users"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mt-4" style="color:var(--text-primary);">Community</h3>
+                    <p class="text-sm mt-2" style="color:var(--text-secondary);">We foster a supportive learning community where everyone can grow together.</p>
+                </div>
+                <div class="value-card p-8 rounded-2xl shadow-sm text-center">
+                    <div class="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center text-3xl text-green-600 mx-auto dark:bg-green-900/50">
+                        <i class="fas fa-lightbulb"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mt-4" style="color:var(--text-primary);">Innovation</h3>
+                    <p class="text-sm mt-2" style="color:var(--text-secondary);">We embrace new technologies and teaching methods to enhance learning.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Timeline -->
+    <section class="py-20" style="background:var(--bg-card);">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-12">
+                <span class="text-blue-600 font-semibold text-sm uppercase tracking-wider">Our Journey</span>
+                <h2 class="text-3xl md:text-4xl font-bold mt-2" style="color:var(--text-primary);">How We Started</h2>
+            </div>
+            <div class="space-y-6">
+                <div class="timeline-item">
+                    <h3 class="font-bold" style="color:var(--text-primary);">2020 - The Beginning</h3>
+                    <p class="text-sm" style="color:var(--text-secondary);">QSKILL was founded with a vision to make quality education accessible to everyone.</p>
+                </div>
+                <div class="timeline-item">
+                    <h3 class="font-bold" style="color:var(--text-primary);">2021 - First 10 Courses</h3>
+                    <p class="text-sm" style="color:var(--text-secondary);">Launched our first 10 courses in web development, data science, and design.</p>
+                </div>
+                <div class="timeline-item">
+                    <h3 class="font-bold" style="color:var(--text-primary);">2022 - 5,000 Students</h3>
+                    <p class="text-sm" style="color:var(--text-secondary);">Reached 5,000 students across 50+ countries worldwide.</p>
+                </div>
+                <div class="timeline-item">
+                    <h3 class="font-bold" style="color:var(--text-primary);">2023 - Expansion</h3>
+                    <p class="text-sm" style="color:var(--text-secondary);">Expanded our course catalog to 50+ courses in various fields.</p>
+                </div>
+                <div class="timeline-item">
+                    <h3 class="font-bold" style="color:var(--text-primary);">2024 - 10,000+ Students</h3>
+                    <p class="text-sm" style="color:var(--text-secondary);">Celebrated 10,000+ students and became a leading online learning platform.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Team -->
+    <section class="py-20" style="background:var(--bg-secondary);">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-12">
+                <span class="text-blue-600 font-semibold text-sm uppercase tracking-wider">Team</span>
+                <h2 class="text-3xl md:text-4xl font-bold mt-2" style="color:var(--text-primary);">Meet Our Instructors</h2>
+            </div>
+            <div class="grid md:grid-cols-4 gap-6">
+                <div class="team-card p-6 rounded-2xl shadow-sm text-center">
+                    <img src="https://i.pravatar.cc/100?img=1" class="w-24 h-24 rounded-full mx-auto mb-3" />
+                    <h4 class="font-bold" style="color:var(--text-primary);">John Smith</h4>
+                    <p class="text-sm text-blue-600">Web Development</p>
+                </div>
+                <div class="team-card p-6 rounded-2xl shadow-sm text-center">
+                    <img src="https://i.pravatar.cc/100?img=2" class="w-24 h-24 rounded-full mx-auto mb-3" />
+                    <h4 class="font-bold" style="color:var(--text-primary);">Sarah Johnson</h4>
+                    <p class="text-sm text-purple-600">Data Science</p>
+                </div>
+                <div class="team-card p-6 rounded-2xl shadow-sm text-center">
+                    <img src="https://i.pravatar.cc/100?img=3" class="w-24 h-24 rounded-full mx-auto mb-3" />
+                    <h4 class="font-bold" style="color:var(--text-primary);">Mike Chen</h4>
+                    <p class="text-sm text-green-600">Digital Marketing</p>
+                </div>
+                <div class="team-card p-6 rounded-2xl shadow-sm text-center">
+                    <img src="https://i.pravatar.cc/100?img=4" class="w-24 h-24 rounded-full mx-auto mb-3" />
+                    <h4 class="font-bold" style="color:var(--text-primary);">Emily Davis</h4>
+                    <p class="text-sm text-red-600">AI & ML</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA -->
+    <section class="py-16 bg-gradient-to-r from-blue-600 to-purple-600 text-white">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <h2 class="text-3xl font-bold mb-4">Ready to Start Learning?</h2>
+            <p class="text-blue-100 mb-6">Join thousands of students and start your learning journey today.</p>
+            <a href="courses.html" class="bg-white text-blue-600 px-8 py-3 rounded-lg font-bold hover:bg-gray-100 transition inline-flex items-center">
+                <i class="fas fa-rocket mr-2"></i>Explore Courses
+            </a>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-white py-6 text-center text-sm">
+        <div class="max-w-7xl mx-auto px-4">
+            &copy; 2026 QSKILL. All rights reserved.
+        </div>
+    </footer>
+
+    <script>
+        let isDarkMode = localStorage.getItem('qskillDarkMode') === 'true';
+
+        function toggleDarkMode() {
+            isDarkMode = !isDarkMode;
+            localStorage.setItem('qskillDarkMode', isDarkMode);
+            applyTheme();
+        }
+
+        function applyTheme() {
+            const html = document.getElementById('htmlRoot');
+            const icon = document.getElementById('themeIcon');
+            const mobileIcon = document.getElementById('mobileThemeIcon');
+            if (isDarkMode) {
+                html.classList.add('dark-mode');
+                if (icon) icon.className = 'fas fa-sun text-xl';
+                if (mobileIcon) mobileIcon.className = 'fas fa-sun text-xl';
+            } else {
+                html.classList.remove('dark-mode');
+                if (icon) icon.className = 'fas fa-moon text-xl';
+                if (mobileIcon) mobileIcon.className = 'fas fa-moon text-xl';
+            }
+        }
+        applyTheme();
+
+        function openMobileMenu() {
+            document.getElementById('mobileMenu').classList.toggle('hidden');
+        }
+    </script>
+</body>
+</html>

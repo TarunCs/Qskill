@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html lang="en" id="htmlRoot">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>QSKILL - Learn Skills That Matter</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+    <link rel="stylesheet" href="styles.css" />
+    <style>
+        .feature-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            transition: all 0.3s ease;
+            padding: 2rem;
+            border-radius: 1rem;
+            text-align: center;
+        }
+        .feature-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-lg);
+        }
+        .hero-gradient {
+            background: var(--gradient-hero);
+            padding: 140px 0 80px;
+            color: white;
+            position: relative;
+            overflow: hidden;
+        }
+        .hero-gradient::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+        }
+        .stat-item {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            transition: all 0.3s ease;
+            padding: 1.5rem;
+            border-radius: 1rem;
+            text-align: center;
+        }
+        .stat-item:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-lg);
+        }
+        /* NO TOAST - Removed completely */
+    </style>
+</head>
+<body>
+
+    <!-- ===== SETTINGS PANEL ===== -->
+    <div id="settingsOverlay" class="settings-overlay" onclick="closeSettings()"></div>
+    <div id="settingsPanel" class="settings-panel">
+        <div class="settings-header">
+            <h2><i class="fas fa-cog mr-2" style="color:var(--color-primary);"></i>Settings</h2>
+            <button class="close-btn" onclick="closeSettings()"><i class="fas fa-times"></i></button>
+        </div>
+        <div class="setting-section">
+            <div class="setting-section-title"><i class="fas fa-palette" style="color:var(--color-primary);"></i> Appearance</div>
+            <div class="setting-item">
+                <div class="info"><div class="label">🌙 Dark Mode</div><div class="desc">Toggle dark/light theme</div></div>
+                <div class="control"><button id="settingsThemeToggle" class="toggle-switch" onclick="toggleDarkModeFromSettings()"><div class="toggle-slider"></div></button></div>
+            </div>
+            <div class="setting-item">
+                <div class="info"><div class="label">🎨 Theme Color</div><div class="desc">Choose accent color</div></div>
+                <div class="control"><select id="themeColorSelect" class="settings-select" onchange="changeThemeColor(this.value)"><option value="blue">Blue</option><option value="purple">Purple</option><option value="green">Green</option><option value="red">Red</option><option value="orange">Orange</option></select></div>
+            </div>
+        </div>
+        <div class="mt-6 pt-6 border-t" style="border-color:var(--border-color);">
+            <button onclick="saveSettings()" class="w-full py-3 rounded-xl font-bold text-white transition" style="background:var(--gradient-primary);"><i class="fas fa-save mr-2"></i>Save Settings</button>
+        </div>
+    </div>
+
+    <!-- ===== MOBILE MENU ===== -->
+    <div id="mobileOverlay" class="mobile-menu-overlay" onclick="closeMobileMenu()"></div>
+    <div id="mobilePanel" class="mobile-menu-panel">
+        <div class="menu-header">
+            <span class="logo">QSKILL</span>
+            <button class="close-btn" onclick="closeMobileMenu()"><i class="fas fa-times"></i></button>
+        </div>
+        <a href="index.html" class="menu-item" style="color:var(--color-primary);font-weight:600;"><i class="fas fa-home"></i>Home</a>
+        <a href="courses.html" class="menu-item"><i class="fas fa-book"></i>Courses</a>
+        <a href="about.html" class="menu-item"><i class="fas fa-info-circle"></i>About</a>
+        <a href="blog.html" class="menu-item"><i class="fas fa-blog"></i>Blog</a>
+        <div id="mobileLoginLinks" class="pt-3">
+            <a href="student-login.html" class="menu-item" style="color:var(--color-primary);"><i class="fas fa-user-graduate"></i>Student</a>
+            <a href="instructor-login.html" class="menu-item"><i class="fas fa-chalkboard-teacher"></i>Instructor</a>
+        </div>
+    </div>
+
+    <!-- ===== NAVIGATION ===== -->
+    <nav id="navbar" class="navbar fixed top-0 left-0 right-0 z-50 shadow-sm">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <a href="index.html" class="flex items-center group">
+                    <span class="text-2xl font-extrabold" style="color:var(--color-primary);">QSKILL</span>
+                    <span class="ml-1 text-sm font-medium" style="color:var(--text-muted);">.com</span>
+                </a>
+                <div class="hidden md:flex items-center space-x-1">
+                    <a href="index.html" class="px-4 py-2 font-medium nav-link active">Home</a>
+                    <a href="courses.html" class="px-4 py-2 font-medium nav-link">Courses</a>
+                    <a href="about.html" class="px-4 py-2 font-medium nav-link">About</a>
+                    <a href="blog.html" class="px-4 py-2 font-medium nav-link">Blog</a>
+                    <div class="h-6 w-px mx-2" style="background:var(--border-color);"></div>
+                    <div id="desktopLoginLinks">
+                        <a href="student-login.html" class="px-4 py-2 text-white rounded-lg font-medium shadow-md hover:shadow-lg transition" style="background:var(--gradient-primary);"><i class="fas fa-user-graduate mr-2"></i>Student</a>
+                        <a href="instructor-login.html" class="px-4 py-2 rounded-lg font-medium transition" style="background:var(--border-color);color:var(--text-secondary);"><i class="fas fa-chalkboard-teacher mr-2"></i>Instructor</a>
+                    </div>
+                    <button onclick="openSettings()" class="ml-1 p-2 rounded-lg transition" style="color:var(--text-secondary);"><i class="fas fa-cog text-xl"></i></button>
+                    <button onclick="toggleDarkMode()" class="p-2 rounded-lg transition" style="color:var(--text-secondary);"><i id="themeIcon" class="fas fa-moon text-xl"></i></button>
+                </div>
+                <div class="flex items-center gap-2 md:hidden">
+                    <button onclick="openSettings()" class="p-2 rounded-lg transition" style="color:var(--text-secondary);"><i class="fas fa-cog text-xl"></i></button>
+                    <button onclick="toggleDarkMode()" class="p-2 rounded-lg transition" style="color:var(--text-secondary);"><i id="mobileThemeIcon" class="fas fa-moon text-xl"></i></button>
+                    <button onclick="openMobileMenu()" class="text-2xl transition" style="color:var(--text-secondary);"><i class="fas fa-bars"></i></button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- ===== PAGE CONTENT ===== -->
+    <div style="padding-top: 80px; min-height: 100vh; background:var(--bg-secondary);">
+        <!-- Hero -->
+        <div class="hero-gradient">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10">
+                <h1 class="text-5xl md:text-7xl font-extrabold mb-4">Welcome to <span class="text-yellow-300">QSKILL</span></h1>
+                <p class="text-xl md:text-2xl text-blue-100 max-w-2xl mx-auto">Master new skills and advance your career with expert-led courses</p>
+                <div class="mt-8 flex flex-wrap justify-center gap-4">
+                    <a href="courses.html" class="px-8 py-4 rounded-xl text-blue-600 font-bold bg-white hover:bg-gray-100 transition shadow-lg hover:shadow-xl"><i class="fas fa-rocket mr-2"></i>Start Learning</a>
+                    <a href="about.html" class="px-8 py-4 rounded-xl text-white font-bold border-2 border-white/50 hover:bg-white/10 transition"><i class="fas fa-info-circle mr-2"></i>Learn More</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Stats -->
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
+                <div class="stat-item"><div class="text-3xl font-bold" style="color:var(--gradient-start);">10K+</div><div style="color:var(--text-secondary);">Students</div></div>
+                <div class="stat-item"><div class="text-3xl font-bold" style="color:var(--gradient-start);">50+</div><div style="color:var(--text-secondary);">Courses</div></div>
+                <div class="stat-item"><div class="text-3xl font-bold" style="color:var(--gradient-start);">30+</div><div style="color:var(--text-secondary);">Instructors</div></div>
+                <div class="stat-item"><div class="text-3xl font-bold" style="color:var(--gradient-start);">4.8⭐</div><div style="color:var(--text-secondary);">Rating</div></div>
+            </div>
+        </div>
+
+        <!-- Features -->
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-16">
+            <h2 class="text-3xl font-bold text-center mb-12" style="color:var(--text-primary);">Why Choose QSKILL?</h2>
+            <div class="grid md:grid-cols-3 gap-8">
+                <div class="feature-card"><div class="text-5xl mb-4">🎓</div><h3 class="text-xl font-bold" style="color:var(--text-primary);">Expert Instructors</h3><p style="color:var(--text-secondary);">Learn from industry professionals</p></div>
+                <div class="feature-card"><div class="text-5xl mb-4">📱</div><h3 class="text-xl font-bold" style="color:var(--text-primary);">Learn Anywhere</h3><p style="color:var(--text-secondary);">Access on any device</p></div>
+                <div class="feature-card"><div class="text-5xl mb-4">🏆</div><h3 class="text-xl font-bold" style="color:var(--text-primary);">Get Certified</h3><p style="color:var(--text-secondary);">Earn recognized certificates</p></div>
+            </div>
+        </div>
+
+        <!-- CTA -->
+        <div class="hero-gradient py-16">
+            <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10">
+                <h2 class="text-3xl md:text-4xl font-bold mb-4">Ready to Start Learning?</h2>
+                <p class="text-xl text-blue-100 mb-8">Join thousands of students and start your learning journey today.</p>
+                <a href="courses.html" class="px-8 py-4 rounded-xl text-blue-600 font-bold bg-white hover:bg-gray-100 transition shadow-lg hover:shadow-xl inline-block"><i class="fas fa-rocket mr-2"></i>Explore Courses</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- ===== FOOTER ===== -->
+    <footer style="background:var(--bg-footer);" class="text-white py-8">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid md:grid-cols-4 gap-8">
+                <div><h3 class="text-2xl font-extrabold text-blue-400">QSKILL</h3><p class="text-sm mt-2" style="color:var(--footer-text);">Empowering learners worldwide.</p><div class="flex space-x-4 mt-4"><a href="#" class="text-gray-400 hover:text-white transition text-xl"><i class="fab fa-facebook"></i></a><a href="#" class="text-gray-400 hover:text-white transition text-xl"><i class="fab fa-twitter"></i></a><a href="#" class="text-gray-400 hover:text-white transition text-xl"><i class="fab fa-linkedin"></i></a><a href="#" class="text-gray-400 hover:text-white transition text-xl"><i class="fab fa-youtube"></i></a></div></div>
+                <div><h4 class="font-semibold mb-3 text-gray-300">Quick Links</h4><ul class="space-y-2 text-sm" style="color:var(--footer-text);"><li><a href="index.html" class="hover:text-white transition">Home</a></li><li><a href="courses.html" class="hover:text-white transition">Courses</a></li><li><a href="about.html" class="hover:text-white transition">About</a></li><li><a href="blog.html" class="hover:text-white transition">Blog</a></li></ul></div>
+                <div><h4 class="font-semibold mb-3 text-gray-300">Support</h4><ul class="space-y-2 text-sm" style="color:var(--footer-text);"><li><a href="enquiry-form.html" class="hover:text-white transition">Contact</a></li><li><a href="#" class="hover:text-white transition">FAQ</a></li><li><a href="#" class="hover:text-white transition">Help Center</a></li></ul></div>
+                <div><h4 class="font-semibold mb-3 text-gray-300">Newsletter</h4><p class="text-sm" style="color:var(--footer-text);">Get the latest updates.</p><div class="mt-3 flex"><input type="email" placeholder="Your email" class="flex-1 px-3 py-2 rounded-l-lg border-0 focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-800 text-sm" id="newsletterEmail" /><button onclick="subscribeNewsletter()" class="bg-blue-600 px-4 py-2 rounded-r-lg hover:bg-blue-700 transition text-sm font-semibold">Subscribe</button></div></div>
+            </div>
+            <div class="border-t mt-8 pt-6 text-center text-sm" style="border-color:var(--border-color);color:var(--footer-text);">&copy; 2026 QSKILL. All rights reserved. | <span id="visitorCount">Loading visitors...</span></div>
+        </div>
+    </footer>
+
+    <script>
+        // ============================================
+        // ===== DARK MODE - NO POPUPS =====
+        // ============================================
+        let isDarkMode = localStorage.getItem('qskillDarkMode') === 'true';
+
+        function toggleDarkMode() {
+            isDarkMode = !isDarkMode;
+            localStorage.setItem('qskillDarkMode', isDarkMode);
+            applyTheme();
+            updateSettingsToggle();
+        }
+
+        function toggleDarkModeFromSettings() {
+            toggleDarkMode();
+        }
+
+        function applyTheme() {
+            const html = document.getElementById('htmlRoot');
+            const icon = document.getElementById('themeIcon');
+            const mobileIcon = document.getElementById('mobileThemeIcon');
+            if (isDarkMode) {
+                html.classList.add('dark-mode');
+                if (icon) icon.className = 'fas fa-sun text-xl';
+                if (mobileIcon) mobileIcon.className = 'fas fa-sun text-xl';
+            } else {
+                html.classList.remove('dark-mode');
+                if (icon) icon.className = 'fas fa-moon text-xl';
+                if (mobileIcon) mobileIcon.className = 'fas fa-moon text-xl';
+            }
+        }
+
+        function updateSettingsToggle() {
+            const toggle = document.querySelector('#settingsThemeToggle');
+            if (toggle) {
+                isDarkMode ? toggle.classList.add('active') : toggle.classList.remove('active');
+            }
+        }
+
+        // ============================================
+        // ===== THEME COLOR - NO POPUPS =====
+        // ============================================
+        function changeThemeColor(color) {
+            const colors = {
+                blue: { start: '#2563eb', end: '#7c3aed' },
+                purple: { start: '#7c3aed', end: '#ec4899' },
+                green: { start: '#059669', end: '#14b8a6' },
+                red: { start: '#dc2626', end: '#f59e0b' },
+                orange: { start: '#f59e0b', end: '#ef4444' }
+            };
+            const selected = colors[color] || colors.blue;
+            document.documentElement.style.setProperty('--color-primary', selected.start);
+            document.documentElement.style.setProperty('--color-secondary', selected.end);
+            localStorage.setItem('qskillThemeColor', color);
+        }
+
+        const savedColor = localStorage.getItem('qskillThemeColor') || 'blue';
+        const colorSelect = document.getElementById('themeColorSelect');
+        if (colorSelect) {
+            colorSelect.value = savedColor;
+            changeThemeColor(savedColor);
+        }
+
+        // ============================================
+        // ===== SETTINGS - NO POPUPS =====
+        // ============================================
+        function openSettings() {
+            document.getElementById('settingsPanel').classList.add('active');
+            document.getElementById('settingsOverlay').classList.add('active');
+            document.body.style.overflow = 'hidden';
+            updateSettingsToggle();
+        }
+
+        function closeSettings() {
+            document.getElementById('settingsPanel').classList.remove('active');
+            document.getElementById('settingsOverlay').classList.remove('active');
+            document.body.style.overflow = 'auto';
+        }
+
+        function saveSettings() {
+            closeSettings();
+        }
+
+        // ============================================
+        // ===== MOBILE MENU - NO POPUPS =====
+        // ============================================
+        function openMobileMenu() {
+            document.getElementById('mobilePanel').classList.add('active');
+            document.getElementById('mobileOverlay').classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeMobileMenu() {
+            document.getElementById('mobilePanel').classList.remove('active');
+            document.getElementById('mobileOverlay').classList.remove('active');
+            document.body.style.overflow = 'auto';
+        }
+
+        // ============================================
+        // ===== NAVIGATION UPDATE - NO POPUPS =====
+        // ============================================
+        function updateNavigation() {
+            const isStudent = sessionStorage.getItem('studentLoggedIn') === 'true';
+            const isInstructor = sessionStorage.getItem('instructorLoggedIn') === 'true';
+            const isAdmin = sessionStorage.getItem('adminLoggedIn') === 'true';
+            const studentName = sessionStorage.getItem('studentName') || 'Student';
+            const instructorName = sessionStorage.getItem('instructorName') || 'Instructor';
+
+            const desktopLogin = document.getElementById('desktopLoginLinks');
+            if (isStudent) {
+                desktopLogin.innerHTML = `<a href="student-dashboard.html" class="px-4 py-2 text-white rounded-lg font-medium shadow-md hover:shadow-lg transition" style="background:var(--gradient-primary);"><i class="fas fa-user mr-2"></i>${studentName}</a><button onclick="logout()" class="px-4 py-2 text-white rounded-lg font-medium transition" style="background:var(--color-danger);"><i class="fas fa-sign-out-alt mr-2"></i>Logout</button>`;
+            } else if (isInstructor) {
+                desktopLogin.innerHTML = `<a href="instructor-dashboard.html" class="px-4 py-2 text-white rounded-lg font-medium shadow-md hover:shadow-lg transition" style="background:var(--gradient-primary);"><i class="fas fa-user mr-2"></i>${instructorName}</a><button onclick="logout()" class="px-4 py-2 text-white rounded-lg font-medium transition" style="background:var(--color-danger);"><i class="fas fa-sign-out-alt mr-2"></i>Logout</button>`;
+            } else if (isAdmin) {
+                desktopLogin.innerHTML = `<a href="admin-dashboard.html" class="px-4 py-2 text-white rounded-lg font-medium shadow-md hover:shadow-lg transition" style="background:var(--gradient-primary);"><i class="fas fa-user-shield mr-2"></i>Admin</a><button onclick="logout()" class="px-4 py-2 text-white rounded-lg font-medium transition" style="background:var(--color-danger);"><i class="fas fa-sign-out-alt mr-2"></i>Logout</button>`;
+            } else {
+                desktopLogin.innerHTML = `<a href="student-login.html" class="px-4 py-2 text-white rounded-lg font-medium shadow-md hover:shadow-lg transition" style="background:var(--gradient-primary);"><i class="fas fa-user-graduate mr-2"></i>Student</a><a href="instructor-login.html" class="px-4 py-2 rounded-lg font-medium transition" style="background:var(--border-color);color:var(--text-secondary);"><i class="fas fa-chalkboard-teacher mr-2"></i>Instructor</a>`;
+            }
+
+            const mobileLogin = document.getElementById('mobileLoginLinks');
+            if (isStudent) {
+                mobileLogin.innerHTML = `<a href="student-dashboard.html" class="menu-item" style="color:var(--color-primary);font-weight:600;"><i class="fas fa-user"></i>${studentName}</a><button onclick="logout();closeMobileMenu();" class="menu-item" style="color:var(--color-danger);border:none;width:100%;text-align:left;background:none;cursor:pointer;"><i class="fas fa-sign-out-alt"></i>Logout</button>`;
+            } else if (isInstructor) {
+                mobileLogin.innerHTML = `<a href="instructor-dashboard.html" class="menu-item" style="color:var(--color-primary);font-weight:600;"><i class="fas fa-user"></i>${instructorName}</a><button onclick="logout();closeMobileMenu();" class="menu-item" style="color:var(--color-danger);border:none;width:100%;text-align:left;background:none;cursor:pointer;"><i class="fas fa-sign-out-alt"></i>Logout</button>`;
+            } else if (isAdmin) {
+                mobileLogin.innerHTML = `<a href="admin-dashboard.html" class="menu-item" style="color:var(--color-primary);font-weight:600;"><i class="fas fa-user-shield"></i>Admin</a><button onclick="logout();closeMobileMenu();" class="menu-item" style="color:var(--color-danger);border:none;width:100%;text-align:left;background:none;cursor:pointer;"><i class="fas fa-sign-out-alt"></i>Logout</button>`;
+            } else {
+                mobileLogin.innerHTML = `<a href="student-login.html" class="menu-item" style="color:var(--color-primary);"><i class="fas fa-user-graduate"></i>Student</a><a href="instructor-login.html" class="menu-item"><i class="fas fa-chalkboard-teacher"></i>Instructor</a>`;
+            }
+        }
+
+        // ============================================
+        // ===== LOGOUT - NO POPUPS =====
+        // ============================================
+        function logout() {
+            sessionStorage.removeItem('studentLoggedIn');
+            sessionStorage.removeItem('studentEmail');
+            sessionStorage.removeItem('studentName');
+            sessionStorage.removeItem('instructorLoggedIn');
+            sessionStorage.removeItem('instructorEmail');
+            sessionStorage.removeItem('instructorName');
+            sessionStorage.removeItem('adminLoggedIn');
+            sessionStorage.removeItem('adminName');
+            window.location.href = 'index.html';
+        }
+
+        // ============================================
+        // ===== NEWSLETTER - NO POPUPS =====
+        // ============================================
+        function subscribeNewsletter() {
+            const email = document.getElementById('newsletterEmail');
+            if (email.value && email.value.includes('@')) {
+                email.value = '';
+            }
+        }
+
+        // ============================================
+        // ===== VISITOR COUNT =====
+        // ============================================
+        function updateVisitorCount() {
+            let visitors = parseInt(localStorage.getItem('qskillVisitors') || '1247');
+            visitors += Math.floor(Math.random() * 2);
+            localStorage.setItem('qskillVisitors', visitors);
+            const countEl = document.getElementById('visitorCount');
+            if (countEl) countEl.textContent = `👥 ${visitors.toLocaleString()} online`;
+        }
+
+        // ============================================
+        // ===== KEYBOARD SHORTCUTS =====
+        // ============================================
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                closeSettings();
+                closeMobileMenu();
+            }
+            if ((e.ctrlKey || e.metaKey) && e.key === 'd') {
+                e.preventDefault();
+                toggleDarkMode();
+            }
+            if ((e.ctrlKey || e.metaKey) && e.key === 's') {
+                e.preventDefault();
+                openSettings();
+            }
+        });
+
+        // ============================================
+        // ===== NAVBAR SCROLL =====
+        // ============================================
+        window.addEventListener('scroll', function() {
+            const navbar = document.getElementById('navbar');
+            if (window.scrollY > 100) {
+                if (navbar) navbar.classList.add('navbar-scrolled');
+            } else {
+                if (navbar) navbar.classList.remove('navbar-scrolled');
+            }
+        });
+
+        // ============================================
+        // ===== INIT =====
+        // ============================================
+        document.addEventListener('DOMContentLoaded', function() {
+            applyTheme();
+            updateNavigation();
+            updateVisitorCount();
+            setInterval(updateVisitorCount, 8000);
+            updateSettingsToggle();
+        });
+    </script>
+</body>
+</html>
