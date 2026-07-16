@@ -1,0 +1,1296 @@
+<!DOCTYPE html>
+<html lang="en" id="htmlRoot">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Courses - QSKILL</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+    <style>
+        /* ===== CSS VARIABLES ===== */
+        :root {
+            --bg-primary: #ffffff;
+            --bg-secondary: #f3f4f6;
+            --bg-card: #ffffff;
+            --bg-card-hover: #f8fafc;
+            --text-primary: #1f2937;
+            --text-secondary: #6b7280;
+            --text-muted: #9ca3af;
+            --border-color: #e5e7eb;
+            --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            --shadow-lg: 0 20px 40px rgba(0, 0, 0, 0.08);
+            --shadow-hover: 0 30px 60px rgba(59, 130, 246, 0.15);
+            --navbar-bg: rgba(255, 255, 255, 0.95);
+            --gradient-start: #3b82f6;
+            --gradient-end: #8b5cf6;
+            --hero-text: #ffffff;
+            --hero-subtext: #bfdbfe;
+            --badge-bg: rgba(0, 0, 0, 0.5);
+            --badge-text: #ffffff;
+            --input-bg: rgba(255, 255, 255, 0.15);
+            --input-border: rgba(255, 255, 255, 0.3);
+            --input-focus: rgba(255, 255, 255, 0.25);
+            --filter-bg: #ffffff;
+            --filter-border: #e5e7eb;
+            --filter-text: #6b7280;
+            --filter-active: linear-gradient(135deg, #3b82f6, #8b5cf6);
+            --filter-active-text: #ffffff;
+            --course-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            --course-shadow-hover: 0 30px 60px rgba(59, 130, 246, 0.15);
+            --footer-bg: #111827;
+            --footer-text: #9ca3af;
+            --scrollbar-track: #f3f4f6;
+            --scrollbar-thumb: #3b82f6;
+            --toast-bg: #ffffff;
+            --toast-border: #22c55e;
+            --toast-error-border: #ef4444;
+            --theme-toggle-bg: #e5e7eb;
+            --theme-toggle-dot: #ffffff;
+            --theme-toggle-active: #fbbf24;
+            --desc-color: #6b7280;
+        }
+
+        /* ===== DARK MODE ===== */
+        .dark-mode {
+            --bg-primary: #0f172a;
+            --bg-secondary: #1e293b;
+            --bg-card: #1e293b;
+            --bg-card-hover: #334155;
+            --text-primary: #f1f5f9;
+            --text-secondary: #94a3b8;
+            --text-muted: #64748b;
+            --border-color: #334155;
+            --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.3);
+            --shadow-lg: 0 20px 40px rgba(0, 0, 0, 0.4);
+            --shadow-hover: 0 30px 60px rgba(59, 130, 246, 0.3);
+            --navbar-bg: rgba(15, 23, 42, 0.95);
+            --hero-text: #ffffff;
+            --hero-subtext: #93c5fd;
+            --badge-bg: rgba(0, 0, 0, 0.7);
+            --badge-text: #ffffff;
+            --input-bg: rgba(255, 255, 255, 0.08);
+            --input-border: rgba(255, 255, 255, 0.15);
+            --input-focus: rgba(255, 255, 255, 0.2);
+            --filter-bg: #1e293b;
+            --filter-border: #334155;
+            --filter-text: #94a3b8;
+            --filter-active: linear-gradient(135deg, #3b82f6, #8b5cf6);
+            --filter-active-text: #ffffff;
+            --course-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.3);
+            --course-shadow-hover: 0 30px 60px rgba(59, 130, 246, 0.3);
+            --footer-bg: #0f172a;
+            --footer-text: #64748b;
+            --scrollbar-track: #1e293b;
+            --scrollbar-thumb: #3b82f6;
+            --toast-bg: #1e293b;
+            --toast-border: #22c55e;
+            --toast-error-border: #ef4444;
+            --theme-toggle-bg: #334155;
+            --theme-toggle-dot: #fbbf24;
+            --theme-toggle-active: #fbbf24;
+            --desc-color: #94a3b8;
+        }
+
+        /* ===== BASE ===== */
+        * {
+            transition: background-color 0.4s ease, color 0.4s ease, border-color 0.4s ease, transform 0.3s ease, box-shadow 0.4s ease;
+        }
+
+        body {
+            font-family: 'Inter', system-ui, -apple-system, sans-serif;
+            background: var(--bg-secondary);
+            color: var(--text-primary);
+            transition: background-color 0.4s ease, color 0.4s ease;
+        }
+
+        /* ===== SCROLLBAR ===== */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: var(--scrollbar-track); }
+        ::-webkit-scrollbar-thumb { background: var(--scrollbar-thumb); border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: var(--gradient-end); }
+
+        /* ===== NAVIGATION ===== */
+        .navbar {
+            transition: all 0.4s ease;
+            backdrop-filter: blur(12px);
+            background: var(--navbar-bg) !important;
+            border-bottom: 1px solid var(--border-color);
+        }
+        .navbar-scrolled {
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.15);
+        }
+
+        .nav-link {
+            transition: all 0.3s ease;
+            position: relative;
+        }
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 50%;
+            width: 0;
+            height: 2px;
+            background: var(--gradient-start);
+            transition: all 0.3s ease;
+            transform: translateX(-50%);
+        }
+        .nav-link:hover::after {
+            width: 80%;
+        }
+        .nav-link.active {
+            color: var(--gradient-start);
+        }
+        .nav-link.active::after {
+            width: 80%;
+        }
+
+        /* ===== HERO ===== */
+        .courses-hero {
+            background: linear-gradient(135deg, var(--gradient-start) 0%, var(--gradient-end) 50%, #ec4899 100%);
+            background-size: 300% 300%;
+            animation: gradientMove 5s ease infinite;
+            padding: 140px 0 80px;
+            color: var(--hero-text);
+            position: relative;
+            overflow: hidden;
+        }
+        .courses-hero::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+        }
+
+        @keyframes gradientMove {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .animate-fadeUp {
+            animation: fadeInUp 0.8s ease forwards;
+        }
+
+        /* ===== SEARCH ===== */
+        .search-box {
+            border: 2px solid var(--input-border);
+            border-radius: 16px;
+            padding: 14px 20px 14px 48px;
+            width: 100%;
+            max-width: 500px;
+            transition: all 0.4s ease;
+            background: var(--input-bg);
+            backdrop-filter: blur(12px);
+            color: var(--hero-text);
+            font-size: 16px;
+        }
+        .search-box::placeholder {
+            color: rgba(255, 255, 255, 0.7);
+        }
+        .search-box:focus {
+            outline: none;
+            background: var(--input-focus);
+            border-color: rgba(255, 255, 255, 0.6);
+            box-shadow: 0 0 0 4px rgba(255, 255, 255, 0.1);
+        }
+        .search-icon {
+            position: absolute;
+            left: 16px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: rgba(255, 255, 255, 0.6);
+        }
+
+        /* ===== FILTERS ===== */
+        .filter-btn {
+            padding: 10px 24px;
+            border-radius: 30px;
+            border: 2px solid var(--filter-border);
+            background: var(--filter-bg);
+            transition: all 0.3s ease;
+            cursor: pointer;
+            font-weight: 500;
+            color: var(--filter-text);
+            font-size: 14px;
+        }
+        .filter-btn:hover {
+            border-color: var(--gradient-start);
+            color: var(--text-primary);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(59, 130, 246, 0.15);
+        }
+        .filter-btn.active {
+            background: var(--filter-active);
+            color: var(--filter-active-text);
+            border-color: transparent;
+            box-shadow: 0 8px 25px rgba(59, 130, 246, 0.3);
+        }
+        .dark-mode .filter-btn:hover {
+            border-color: var(--gradient-start);
+            color: var(--text-primary);
+        }
+
+        /* ===== COURSE CARDS ===== */
+        .course-card {
+            background: var(--bg-card);
+            border-radius: 20px;
+            overflow: hidden;
+            transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            cursor: pointer;
+            border: 1px solid var(--border-color);
+            box-shadow: var(--course-shadow);
+            position: relative;
+        }
+        .course-card:hover {
+            transform: translateY(-12px) scale(1.02);
+            box-shadow: var(--course-shadow-hover);
+            border-color: var(--gradient-start);
+        }
+        .course-card .image-container {
+            position: relative;
+            overflow: hidden;
+            height: 220px;
+            transition: all 0.5s ease;
+        }
+        .course-card:hover .image-container {
+            transform: scale(1.02);
+        }
+        .course-card .image-container .overlay {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to top, rgba(0,0,0,0.7) 0%, transparent 50%);
+        }
+        .course-card .image-container .icon {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 72px;
+            color: rgba(255,255,255,0.15);
+            transition: all 0.5s ease;
+        }
+        .course-card:hover .image-container .icon {
+            transform: translate(-50%, -50%) scale(1.1);
+            color: rgba(255,255,255,0.25);
+        }
+        .course-card .image-container .badge {
+            position: absolute;
+            top: 16px;
+            right: 16px;
+            padding: 6px 14px;
+            border-radius: 30px;
+            font-size: 13px;
+            font-weight: 700;
+            backdrop-filter: blur(12px);
+            background: var(--badge-bg);
+            color: var(--badge-text);
+            border: 1px solid rgba(255,255,255,0.15);
+        }
+        .course-card .image-container .students-badge {
+            position: absolute;
+            bottom: 16px;
+            left: 16px;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            backdrop-filter: blur(12px);
+            background: var(--badge-bg);
+            color: var(--badge-text);
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+        .course-card .image-container .date-badge {
+            position: absolute;
+            bottom: 16px;
+            right: 16px;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 11px;
+            backdrop-filter: blur(12px);
+            background: var(--badge-bg);
+            color: var(--badge-text);
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+        .course-card .image-container .new-badge {
+            position: absolute;
+            top: 16px;
+            left: 16px;
+            padding: 4px 14px;
+            border-radius: 30px;
+            font-size: 11px;
+            font-weight: 700;
+            background: #ef4444;
+            color: white;
+            animation: pulse 2s infinite;
+            box-shadow: 0 0 20px rgba(239, 68, 68, 0.4);
+        }
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        .course-card .content {
+            padding: 20px;
+        }
+        .course-card .content .title {
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 6px;
+            transition: color 0.3s ease;
+        }
+        .course-card:hover .content .title {
+            color: var(--gradient-start);
+        }
+        .course-card .content .desc {
+            font-size: 14px;
+            color: var(--desc-color);
+            line-height: 1.6;
+            display: block;
+            overflow: hidden;
+            max-height: 44px;
+            transition: max-height 0.3s ease;
+        }
+        .course-card:hover .content .desc {
+            max-height: 88px;
+        }
+        .course-card .content .meta {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-top: 12px;
+            font-size: 13px;
+            color: var(--text-secondary);
+        }
+        .course-card .content .footer {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-top: 16px;
+            padding-top: 16px;
+            border-top: 1px solid var(--border-color);
+        }
+        .course-card .content .footer .price {
+            font-size: 24px;
+            font-weight: 800;
+            background: linear-gradient(135deg, var(--gradient-start), var(--gradient-end));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .course-card .content .footer .instructor {
+            font-size: 12px;
+            color: var(--text-secondary);
+        }
+
+        /* ===== ENROLL BUTTON ===== */
+        .enroll-btn {
+            background: linear-gradient(135deg, var(--gradient-start), var(--gradient-end));
+            color: white;
+            padding: 8px 20px;
+            border-radius: 12px;
+            font-weight: 600;
+            font-size: 14px;
+            transition: all 0.4s ease;
+            border: none;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+        .enroll-btn::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(135deg, rgba(255,255,255,0.2), transparent);
+            transform: translateX(-100%);
+            transition: transform 0.5s ease;
+        }
+        .enroll-btn:hover::before {
+            transform: translateX(100%);
+        }
+        .enroll-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 8px 25px rgba(59, 130, 246, 0.4);
+        }
+
+        /* ===== TOAST ===== */
+        .toast-container {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            z-index: 9999;
+            max-width: 400px;
+        }
+        .toast {
+            background: var(--toast-bg);
+            padding: 16px 20px;
+            border-radius: 16px;
+            box-shadow: var(--shadow-lg);
+            display: flex;
+            align-items: center;
+            border-left: 4px solid var(--toast-border);
+            animation: slideIn 0.5s ease;
+            border: 1px solid var(--border-color);
+        }
+        .toast-error { border-left-color: var(--toast-error-border); }
+        @keyframes slideIn {
+            from { transform: translateX(100%); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+
+        /* ===== MOBILE MENU ===== */
+        .mobile-menu-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 40;
+            display: none;
+            backdrop-filter: blur(8px);
+        }
+        .mobile-menu-overlay.active { display: block; }
+        .mobile-menu-panel {
+            position: fixed;
+            top: 0;
+            right: -320px;
+            width: 300px;
+            height: 100%;
+            background: var(--bg-card);
+            z-index: 50;
+            transition: right 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            padding: 20px;
+            overflow-y: auto;
+            border-left: 1px solid var(--border-color);
+            box-shadow: -10px 0 40px rgba(0,0,0,0.1);
+        }
+        .mobile-menu-panel.active { right: 0; }
+        .mobile-menu-panel a {
+            transition: all 0.3s ease;
+        }
+        .mobile-menu-panel a:hover {
+            padding-left: 8px;
+        }
+
+        /* ===== BACK TO TOP ===== */
+        .back-to-top {
+            position: fixed;
+            bottom: 30px;
+            left: 30px;
+            background: linear-gradient(135deg, var(--gradient-start), var(--gradient-end));
+            color: white;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 10px 30px rgba(59, 130, 246, 0.4);
+            cursor: pointer;
+            transition: all 0.4s ease;
+            opacity: 0;
+            transform: translateY(20px);
+            z-index: 100;
+            border: none;
+        }
+        .back-to-top.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        .back-to-top:hover {
+            transform: translateY(-5px) scale(1.1);
+            box-shadow: 0 15px 40px rgba(59, 130, 246, 0.5);
+        }
+
+        /* ===== NO RESULTS ===== */
+        .no-results {
+            text-align: center;
+            padding: 60px 20px;
+        }
+        .no-results .icon {
+            font-size: 64px;
+            color: var(--text-secondary);
+            margin-bottom: 16px;
+            opacity: 0.5;
+        }
+        .no-results h3 {
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 8px;
+        }
+        .no-results p {
+            color: var(--text-secondary);
+        }
+
+        /* ===== THEME TOGGLE ===== */
+        .theme-toggle {
+            width: 60px;
+            height: 30px;
+            background: var(--theme-toggle-bg);
+            border-radius: 15px;
+            cursor: pointer;
+            position: relative;
+            transition: all 0.4s ease;
+            border: none;
+            display: inline-block;
+            box-shadow: inset 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .theme-toggle .toggle-dot {
+            width: 24px;
+            height: 24px;
+            background: var(--theme-toggle-dot);
+            border-radius: 50%;
+            position: absolute;
+            top: 3px;
+            left: 3px;
+            transition: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+        }
+        .theme-toggle.dark .toggle-dot {
+            transform: translateX(30px);
+            background: var(--theme-toggle-active);
+        }
+        .theme-toggle:hover .toggle-dot {
+            transform: scale(1.1);
+        }
+        .theme-toggle.dark:hover .toggle-dot {
+            transform: translateX(30px) scale(1.1);
+        }
+
+        /* ===== RESPONSIVE ===== */
+        @media (max-width: 768px) {
+            .courses-hero { padding: 120px 0 60px; }
+            .search-box { max-width: 100%; font-size: 14px; padding: 12px 16px 12px 40px; }
+            .filter-btn { padding: 8px 16px; font-size: 12px; }
+            .course-card .image-container { height: 180px; }
+            .course-card .content .title { font-size: 16px; }
+            .course-card .content .desc { max-height: 36px; }
+            .course-card .content .footer .price { font-size: 20px; }
+            .toast-container { max-width: 90%; bottom: 20px; right: 20px; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ===== BACK TO TOP ===== -->
+    <div id="backToTop" class="back-to-top" onclick="window.scrollTo({top:0,behavior:'smooth'})">
+        <i class="fas fa-arrow-up"></i>
+    </div>
+
+    <!-- ===== TOAST ===== -->
+    <div id="toastContainer" class="toast-container"></div>
+
+    <!-- ===== MOBILE MENU ===== -->
+    <div id="mobileOverlay" class="mobile-menu-overlay" onclick="closeMobileMenu()"></div>
+    <div id="mobilePanel" class="mobile-menu-panel">
+        <div class="flex justify-between items-center mb-6">
+            <span class="text-2xl font-extrabold text-blue-600">QSKILL</span>
+            <button onclick="closeMobileMenu()" class="text-2xl hover:text-gray-700 transition">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+        <div class="space-y-3" id="mobileMenuLinks">
+            <a href="index.html" class="block text-gray-700 text-lg py-2 border-b border-gray-100 hover:text-blue-600 transition">
+                <i class="fas fa-home mr-3"></i>Home
+            </a>
+            <a href="courses.html" class="block text-blue-600 font-semibold text-lg py-2 border-b border-gray-100">
+                <i class="fas fa-book mr-3"></i>Courses
+            </a>
+            <a href="about.html" class="block text-gray-700 text-lg py-2 border-b border-gray-100 hover:text-blue-600 transition">
+                <i class="fas fa-info-circle mr-3"></i>About
+            </a>
+            <a href="blog.html" class="block text-gray-700 text-lg py-2 border-b border-gray-100 hover:text-blue-600 transition">
+                <i class="fas fa-blog mr-3"></i>Blog
+            </a>
+            <div id="mobileLoginLinks">
+                <a href="student-login.html" class="block bg-blue-600 text-white text-center py-3 rounded-lg font-semibold hover:bg-blue-700 transition">
+                    <i class="fas fa-user-graduate mr-2"></i>Student
+                </a>
+                <a href="instructor-login.html" class="block bg-purple-600 text-white text-center py-3 rounded-lg font-semibold hover:bg-purple-700 transition mt-2">
+                    <i class="fas fa-chalkboard-teacher mr-2"></i>Instructor
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- ===== NAVIGATION ===== -->
+    <nav id="navbar" class="navbar fixed top-0 left-0 right-0 z-50 shadow-sm">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <a href="index.html" class="flex items-center group">
+                    <span class="text-2xl font-extrabold text-blue-600 group-hover:text-blue-700 transition">QSKILL</span>
+                    <span class="ml-1 text-sm text-gray-500 font-medium group-hover:text-gray-600 transition">.com</span>
+                </a>
+                <div class="hidden md:flex items-center space-x-1" id="desktopNav">
+                    <a href="index.html" class="px-4 py-2 text-gray-700 hover:text-blue-600 transition font-medium nav-link">Home</a>
+                    <a href="courses.html" class="px-4 py-2 text-blue-600 font-semibold nav-link active">Courses</a>
+                    <a href="about.html" class="px-4 py-2 text-gray-700 hover:text-blue-600 transition font-medium nav-link">About</a>
+                    <a href="blog.html" class="px-4 py-2 text-gray-700 hover:text-blue-600 transition font-medium nav-link">Blog</a>
+                    <div class="h-6 w-px bg-gray-300 mx-2"></div>
+                    <div id="desktopLoginLinks">
+                        <a href="student-login.html" class="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition font-medium shadow-md hover:shadow-lg">
+                            <i class="fas fa-user-graduate mr-2"></i>Student
+                        </a>
+                        <a href="instructor-login.html" class="px-4 py-2 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition font-medium shadow-md hover:shadow-lg">
+                            <i class="fas fa-chalkboard-teacher mr-2"></i>Instructor
+                        </a>
+                    </div>
+                    <button onclick="toggleDarkMode()" class="ml-2 p-2 rounded-lg hover:bg-gray-100 transition text-gray-600 dark:hover:bg-gray-800">
+                        <i id="themeIcon" class="fas fa-moon text-xl"></i>
+                    </button>
+                </div>
+                <div class="flex items-center gap-2 md:hidden">
+                    <button onclick="toggleDarkMode()" class="p-2 rounded-lg hover:bg-gray-100 transition text-gray-600 dark:hover:bg-gray-800">
+                        <i id="mobileThemeIcon" class="fas fa-moon text-xl"></i>
+                    </button>
+                    <button onclick="openMobileMenu()" class="text-2xl text-gray-600 hover:text-blue-600 transition">
+                        <i class="fas fa-bars"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- ===== HERO ===== -->
+    <section class="courses-hero">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <div class="text-center animate-fadeUp">
+                <h1 class="text-4xl md:text-6xl font-extrabold mb-4">
+                    Explore Our <span class="text-yellow-300">Courses</span>
+                </h1>
+                <p class="text-xl text-blue-100 max-w-2xl mx-auto">
+                    Choose from 50+ expert-led courses and start learning today
+                </p>
+                <div id="loginStatus" class="mt-4"></div>
+            </div>
+            <div class="mt-8 flex justify-center">
+                <div class="relative w-full max-w-md">
+                    <input type="text" id="searchInput" placeholder="Search courses..." class="search-box" onkeyup="filterCourses()" />
+                    <i class="fas fa-search search-icon"></i>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== FILTERS ===== -->
+    <section class="py-6" style="background:var(--bg-card);border-bottom:1px solid var(--border-color);">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex flex-wrap gap-3 justify-center" id="filterContainer">
+                <button class="filter-btn active" data-filter="all" onclick="filterCourses('all')">🎯 All</button>
+                <button class="filter-btn" data-filter="web" onclick="filterCourses('web')">💻 Web Dev</button>
+                <button class="filter-btn" data-filter="data" onclick="filterCourses('data')">📊 Data Science</button>
+                <button class="filter-btn" data-filter="marketing" onclick="filterCourses('marketing')">📈 Marketing</button>
+                <button class="filter-btn" data-filter="ai" onclick="filterCourses('ai')">🤖 AI & ML</button>
+                <button class="filter-btn" data-filter="cloud" onclick="filterCourses('cloud')">☁️ Cloud</button>
+                <button class="filter-btn" data-filter="other" onclick="filterCourses('other')">📚 Other</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== COURSE GRID ===== -->
+    <section class="py-16" style="background:var(--bg-secondary);">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid md:grid-cols-3 gap-8" id="courseContainer"></div>
+            <div id="noResults" class="no-results" style="display:none;">
+                <div class="icon"><i class="fas fa-search"></i></div>
+                <h3>No Courses Found</h3>
+                <p>Try adjusting your search or filter criteria</p>
+                <button onclick="resetFilters()" class="mt-4 bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700 transition">
+                    Reset Filters
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== FOOTER ===== -->
+    <footer class="bg-gray-900 text-white py-12" style="background:var(--footer-bg);">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid md:grid-cols-4 gap-8">
+                <div>
+                    <h3 class="text-2xl font-extrabold text-blue-400">QSKILL</h3>
+                    <p class="text-gray-400 text-sm mt-2" style="color:var(--footer-text);">Empowering learners worldwide.</p>
+                    <div class="flex space-x-4 mt-4">
+                        <a href="#" class="text-gray-400 hover:text-white transition text-xl"><i class="fab fa-facebook"></i></a>
+                        <a href="#" class="text-gray-400 hover:text-white transition text-xl"><i class="fab fa-twitter"></i></a>
+                        <a href="#" class="text-gray-400 hover:text-white transition text-xl"><i class="fab fa-linkedin"></i></a>
+                        <a href="#" class="text-gray-400 hover:text-white transition text-xl"><i class="fab fa-youtube"></i></a>
+                    </div>
+                </div>
+                <div>
+                    <h4 class="font-semibold mb-3 text-gray-300">Quick Links</h4>
+                    <ul class="space-y-2 text-sm text-gray-400" style="color:var(--footer-text);">
+                        <li><a href="index.html" class="hover:text-white transition">Home</a></li>
+                        <li><a href="courses.html" class="hover:text-white transition">Courses</a></li>
+                        <li><a href="about.html" class="hover:text-white transition">About</a></li>
+                        <li><a href="blog.html" class="hover:text-white transition">Blog</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="font-semibold mb-3 text-gray-300">Support</h4>
+                    <ul class="space-y-2 text-sm text-gray-400" style="color:var(--footer-text);">
+                        <li><a href="enquiry-form.html" class="hover:text-white transition">Contact Support</a></li>
+                        <li><a href="#" class="hover:text-white transition">FAQ</a></li>
+                        <li><a href="#" class="hover:text-white transition">Help Center</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="font-semibold mb-3 text-gray-300">Newsletter</h4>
+                    <p class="text-sm text-gray-400" style="color:var(--footer-text);">Get the latest courses and updates.</p>
+                    <div class="mt-3 flex">
+                        <input type="email" placeholder="Your email" class="flex-1 px-3 py-2 rounded-l-lg border-0 focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-800 text-sm" id="newsletterEmail" />
+                        <button onclick="subscribeNewsletter()" class="bg-blue-600 px-4 py-2 rounded-r-lg hover:bg-blue-700 transition text-sm font-semibold">Subscribe</button>
+                    </div>
+                </div>
+            </div>
+            <div class="border-t border-gray-800 mt-8 pt-6 text-center text-sm text-gray-400" style="color:var(--footer-text);border-color:var(--border-color);">
+                &copy; 2026 QSKILL. All rights reserved. | <span id="visitorCount">Loading visitors...</span>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // ============================================
+        // ===== DARK MODE =====
+        // ============================================
+        let isDarkMode = localStorage.getItem('qskillDarkMode') === 'true';
+
+        function toggleDarkMode() {
+            isDarkMode = !isDarkMode;
+            localStorage.setItem('qskillDarkMode', isDarkMode);
+            applyTheme();
+            showToast(isDarkMode ? '🌙 Dark mode enabled' : '☀️ Light mode enabled', 'info');
+        }
+
+        function applyTheme() {
+            const html = document.getElementById('htmlRoot');
+            const icon = document.getElementById('themeIcon');
+            const mobileIcon = document.getElementById('mobileThemeIcon');
+            if (isDarkMode) {
+                html.classList.add('dark-mode');
+                if (icon) { icon.className = 'fas fa-sun text-xl'; }
+                if (mobileIcon) { mobileIcon.className = 'fas fa-sun text-xl'; }
+            } else {
+                html.classList.remove('dark-mode');
+                if (icon) { icon.className = 'fas fa-moon text-xl'; }
+                if (mobileIcon) { mobileIcon.className = 'fas fa-moon text-xl'; }
+            }
+        }
+        applyTheme();
+
+        // ============================================
+        // ===== TOAST =====
+        // ============================================
+        function showToast(message, type = 'success') {
+            const container = document.getElementById('toastContainer');
+            const colors = {
+                success: 'border-green-500',
+                error: 'border-red-500',
+                warning: 'border-yellow-500',
+                info: 'border-blue-500'
+            };
+            const icons = {
+                success: 'fa-check-circle text-green-500',
+                error: 'fa-exclamation-circle text-red-500',
+                warning: 'fa-exclamation-triangle text-yellow-500',
+                info: 'fa-info-circle text-blue-500'
+            };
+            container.innerHTML = `
+                <div class="toast ${colors[type] || colors.success}">
+                    <i class="fas ${icons[type] || icons.success} text-xl mr-3"></i>
+                    <span class="font-medium">${message}</span>
+                    <button onclick="this.parentElement.parentElement.remove()" class="ml-4 text-gray-400 hover:text-gray-600">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+            `;
+            setTimeout(() => { if (container.firstChild) container.innerHTML = ''; }, 4000);
+        }
+
+        // ============================================
+        // ===== MOBILE MENU =====
+        // ============================================
+        function openMobileMenu() {
+            document.getElementById('mobilePanel').classList.add('active');
+            document.getElementById('mobileOverlay').classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeMobileMenu() {
+            document.getElementById('mobilePanel').classList.remove('active');
+            document.getElementById('mobileOverlay').classList.remove('active');
+            document.body.style.overflow = 'auto';
+        }
+
+        // ============================================
+        // ===== NAVIGATION UPDATE =====
+        // ============================================
+        function updateNavigation() {
+            const isStudent = sessionStorage.getItem('studentLoggedIn') === 'true';
+            const isInstructor = sessionStorage.getItem('instructorLoggedIn') === 'true';
+            const studentName = sessionStorage.getItem('studentName') || 'Student';
+            const instructorName = sessionStorage.getItem('instructorName') || 'Instructor';
+
+            // Desktop
+            const desktopLogin = document.getElementById('desktopLoginLinks');
+            if (isStudent) {
+                desktopLogin.innerHTML = `
+                    <a href="student-dashboard.html" class="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition font-medium shadow-md hover:shadow-lg">
+                        <i class="fas fa-user mr-2"></i>${studentName}
+                    </a>
+                    <button onclick="logout()" class="px-4 py-2 bg-red-500 text-white rounded-lg hover:bg-red-600 transition font-medium">
+                        <i class="fas fa-sign-out-alt mr-2"></i>Logout
+                    </button>
+                `;
+            } else if (isInstructor) {
+                desktopLogin.innerHTML = `
+                    <a href="instructor-dashboard.html" class="px-4 py-2 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition font-medium shadow-md hover:shadow-lg">
+                        <i class="fas fa-user mr-2"></i>${instructorName}
+                    </a>
+                    <button onclick="logout()" class="px-4 py-2 bg-red-500 text-white rounded-lg hover:bg-red-600 transition font-medium">
+                        <i class="fas fa-sign-out-alt mr-2"></i>Logout
+                    </button>
+                `;
+            } else {
+                desktopLogin.innerHTML = `
+                    <a href="student-login.html" class="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition font-medium shadow-md hover:shadow-lg">
+                        <i class="fas fa-user-graduate mr-2"></i>Student
+                    </a>
+                    <a href="instructor-login.html" class="px-4 py-2 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition font-medium shadow-md hover:shadow-lg">
+                        <i class="fas fa-chalkboard-teacher mr-2"></i>Instructor
+                    </a>
+                `;
+            }
+
+            // Mobile
+            const mobileLogin = document.getElementById('mobileLoginLinks');
+            if (isStudent) {
+                mobileLogin.innerHTML = `
+                    <a href="student-dashboard.html" class="block bg-blue-600 text-white text-center py-3 rounded-lg font-semibold hover:bg-blue-700 transition">
+                        <i class="fas fa-user mr-2"></i>${studentName}
+                    </a>
+                    <button onclick="logout();closeMobileMenu();" class="block w-full bg-red-500 text-white text-center py-3 rounded-lg font-semibold hover:bg-red-600 transition mt-2">
+                        <i class="fas fa-sign-out-alt mr-2"></i>Logout
+                    </button>
+                `;
+            } else if (isInstructor) {
+                mobileLogin.innerHTML = `
+                    <a href="instructor-dashboard.html" class="block bg-purple-600 text-white text-center py-3 rounded-lg font-semibold hover:bg-purple-700 transition">
+                        <i class="fas fa-user mr-2"></i>${instructorName}
+                    </a>
+                    <button onclick="logout();closeMobileMenu();" class="block w-full bg-red-500 text-white text-center py-3 rounded-lg font-semibold hover:bg-red-600 transition mt-2">
+                        <i class="fas fa-sign-out-alt mr-2"></i>Logout
+                    </button>
+                `;
+            } else {
+                mobileLogin.innerHTML = `
+                    <a href="student-login.html" class="block bg-blue-600 text-white text-center py-3 rounded-lg font-semibold hover:bg-blue-700 transition">
+                        <i class="fas fa-user-graduate mr-2"></i>Student
+                    </a>
+                    <a href="instructor-login.html" class="block bg-purple-600 text-white text-center py-3 rounded-lg font-semibold hover:bg-purple-700 transition mt-2">
+                        <i class="fas fa-chalkboard-teacher mr-2"></i>Instructor
+                    </a>
+                `;
+            }
+
+            // Login status on hero
+            const statusDiv = document.getElementById('loginStatus');
+            if (isStudent) {
+                statusDiv.innerHTML = `
+                    <span class="inline-block bg-white/20 backdrop-blur-sm px-4 py-2 rounded-full text-sm">
+                        <i class="fas fa-check-circle text-green-300 mr-2"></i>Logged in as ${studentName}
+                        <a href="student-dashboard.html" class="ml-2 text-white underline hover:no-underline">Go to Dashboard →</a>
+                    </span>
+                `;
+            } else if (isInstructor) {
+                statusDiv.innerHTML = `
+                    <span class="inline-block bg-white/20 backdrop-blur-sm px-4 py-2 rounded-full text-sm">
+                        <i class="fas fa-check-circle text-green-300 mr-2"></i>Logged in as ${instructorName}
+                        <a href="instructor-dashboard.html" class="ml-2 text-white underline hover:no-underline">Go to Dashboard →</a>
+                    </span>
+                `;
+            } else {
+                statusDiv.innerHTML = `
+                    <a href="student-login.html" class="inline-block bg-white text-blue-600 px-6 py-2 rounded-full font-semibold hover:bg-gray-100 transition shadow-lg">
+                        <i class="fas fa-sign-in-alt mr-2"></i>Login to Enroll
+                    </a>
+                `;
+            }
+        }
+
+        // ============================================
+        // ===== LOGOUT =====
+        // ============================================
+        function logout() {
+            if (confirm('Are you sure you want to logout?')) {
+                sessionStorage.removeItem('studentLoggedIn');
+                sessionStorage.removeItem('studentEmail');
+                sessionStorage.removeItem('studentName');
+                sessionStorage.removeItem('instructorLoggedIn');
+                sessionStorage.removeItem('instructorEmail');
+                sessionStorage.removeItem('instructorName');
+                showToast('👋 Logged out successfully!', 'info');
+                setTimeout(() => window.location.reload(), 500);
+            }
+        }
+
+        // ============================================
+        // ===== NEWSLETTER =====
+        // ============================================
+        function subscribeNewsletter() {
+            const email = document.getElementById('newsletterEmail');
+            if (email.value && email.value.includes('@')) {
+                showToast(`✅ Subscribed! Check your inbox at ${email.value}`, 'success');
+                email.value = '';
+            } else {
+                showToast('Please enter a valid email address', 'error');
+            }
+        }
+
+        // ============================================
+        // ===== COURSE DATA =====
+        // ============================================
+        function getCourses() {
+            const saved = JSON.parse(localStorage.getItem('qskillCourses') || '[]');
+
+            const defaultCourses = [
+                {
+                    id: 1,
+                    title: 'Web Development Bootcamp',
+                    category: 'web',
+                    desc: 'Full-stack development with HTML, CSS, JavaScript & React. Build real-world projects and master frontend and backend.',
+                    price: '$49',
+                    color: 'from-blue-500 to-blue-700',
+                    icon: 'fa-html5',
+                    students: 1234,
+                    rating: 4.8,
+                    instructor: 'John Smith',
+                    date: '2026-01-15',
+                    video: 'https://www.youtube.com/embed/dQw4w9WgXcQ',
+                    isNew: false,
+                    status: 'published'
+                },
+                {
+                    id: 2,
+                    title: 'Data Science Masterclass',
+                    category: 'data',
+                    desc: 'Python, Pandas, Machine Learning, and Data Visualization. Master data analysis and become a data scientist.',
+                    price: '$79',
+                    color: 'from-purple-500 to-purple-700',
+                    icon: 'fa-database',
+                    students: 987,
+                    rating: 4.9,
+                    instructor: 'Sarah Johnson',
+                    date: '2026-02-01',
+                    video: null,
+                    isNew: false,
+                    status: 'published'
+                },
+                {
+                    id: 3,
+                    title: 'Digital Marketing Pro',
+                    category: 'marketing',
+                    desc: 'SEO, Social Media Marketing, Google Ads, and Content Strategy for modern businesses and brands.',
+                    price: '$39',
+                    color: 'from-green-500 to-green-700',
+                    icon: 'fa-chart-line',
+                    students: 876,
+                    rating: 4.7,
+                    instructor: 'Mike Chen',
+                    date: '2025-12-10',
+                    video: null,
+                    isNew: false,
+                    status: 'published'
+                },
+                {
+                    id: 4,
+                    title: 'AI & Machine Learning',
+                    category: 'ai',
+                    desc: 'Neural networks, deep learning, and AI applications. Build intelligent systems and master artificial intelligence.',
+                    price: '$99',
+                    color: 'from-red-500 to-red-700',
+                    icon: 'fa-robot',
+                    students: 654,
+                    rating: 4.9,
+                    instructor: 'Emily Davis',
+                    date: '2026-01-20',
+                    video: null,
+                    isNew: false,
+                    status: 'published'
+                },
+                {
+                    id: 5,
+                    title: 'App Development with Flutter',
+                    category: 'web',
+                    desc: 'Build cross-platform mobile apps for iOS and Android using Flutter and Dart framework.',
+                    price: '$69',
+                    color: 'from-yellow-500 to-yellow-700',
+                    icon: 'fa-mobile-alt',
+                    students: 543,
+                    rating: 4.6,
+                    instructor: 'Alex Rivera',
+                    date: '2026-02-15',
+                    video: null,
+                    isNew: false,
+                    status: 'published'
+                },
+                {
+                    id: 6,
+                    title: 'Cloud Computing & DevOps',
+                    category: 'cloud',
+                    desc: 'AWS, Azure, Google Cloud, Docker, Kubernetes, and CI/CD pipelines for modern infrastructure.',
+                    price: '$89',
+                    color: 'from-pink-500 to-pink-700',
+                    icon: 'fa-cloud',
+                    students: 432,
+                    rating: 4.8,
+                    instructor: 'Maria Garcia',
+                    date: '2026-03-01',
+                    video: null,
+                    isNew: false,
+                    status: 'published'
+                },
+                {
+                    id: 7,
+                    title: 'Cybersecurity Fundamentals',
+                    category: 'other',
+                    desc: 'Learn network security, encryption, threat detection, and ethical hacking basics to protect systems.',
+                    price: '$59',
+                    color: 'from-indigo-500 to-indigo-700',
+                    icon: 'fa-shield-alt',
+                    students: 321,
+                    rating: 4.5,
+                    instructor: 'David Park',
+                    date: '2026-03-10',
+                    video: null,
+                    isNew: true,
+                    status: 'published'
+                },
+                {
+                    id: 8,
+                    title: 'UX/UI Design Mastery',
+                    category: 'other',
+                    desc: 'Design beautiful, user-friendly interfaces with Figma, Adobe XD, and modern design principles.',
+                    price: '$44',
+                    color: 'from-teal-500 to-teal-700',
+                    icon: 'fa-paint-brush',
+                    students: 289,
+                    rating: 4.4,
+                    instructor: 'Lisa Kim',
+                    date: '2026-03-12',
+                    video: null,
+                    isNew: true,
+                    status: 'published'
+                }
+            ];
+
+            const allCourseMap = {};
+            [...defaultCourses, ...saved].forEach(c => {
+                if (c.id && !allCourseMap[c.id]) {
+                    allCourseMap[c.id] = c;
+                }
+            });
+            return Object.values(allCourseMap);
+        }
+
+        // ============================================
+        // ===== RENDER COURSES =====
+        // ============================================
+        let currentFilter = 'all';
+        let currentSearch = '';
+
+        function renderCourses(filter = 'all', search = '') {
+            const container = document.getElementById('courseContainer');
+            const noResults = document.getElementById('noResults');
+            container.innerHTML = '';
+
+            let courses = getCourses();
+
+            if (filter !== 'all') {
+                courses = courses.filter(c => c.category === filter);
+            }
+
+            if (search.trim()) {
+                const term = search.toLowerCase().trim();
+                courses = courses.filter(c =>
+                    c.title.toLowerCase().includes(term) ||
+                    c.desc.toLowerCase().includes(term) ||
+                    c.instructor.toLowerCase().includes(term)
+                );
+            }
+
+            courses.sort((a, b) => {
+                if (a.isNew && !b.isNew) return -1;
+                if (!a.isNew && b.isNew) return 1;
+                return new Date(b.date) - new Date(a.date);
+            });
+
+            if (courses.length === 0) {
+                noResults.style.display = 'block';
+                return;
+            }
+            noResults.style.display = 'none';
+
+            const isLoggedIn = sessionStorage.getItem('studentLoggedIn') === 'true' ||
+                               sessionStorage.getItem('instructorLoggedIn') === 'true';
+
+            courses.forEach((course, index) => {
+                const card = document.createElement('div');
+                card.className = 'course-card animate-fadeUp';
+                card.style.animationDelay = `${index * 0.08}s`;
+
+                const hasVideo = course.video && course.video.includes('youtube.com/embed');
+                const colorClass = course.color || 'from-blue-500 to-blue-700';
+
+                card.innerHTML = `
+                    <div class="image-container" style="background: linear-gradient(135deg, ${colorClass.replace('from-', '').replace('to-', '').trim() || '#667eea'}, #764ba2);">
+                        <div class="overlay"></div>
+                        <i class="fab ${course.icon || 'fa-code'} icon"></i>
+                        <span class="badge">${course.price}</span>
+                        ${course.isNew ? '<span class="new-badge">🆕 NEW</span>' : ''}
+                        <span class="students-badge">
+                            <i class="fas fa-users mr-1"></i>${(course.students || 0).toLocaleString()}
+                        </span>
+                        <span class="date-badge">
+                            <i class="far fa-calendar-alt mr-1"></i>${new Date(course.date).toLocaleDateString()}
+                        </span>
+                        ${hasVideo ? `
+                            <div class="absolute inset-0 flex items-center justify-center">
+                                <i class="fas fa-play-circle text-white text-6xl opacity-80 hover:opacity-100 transition" style="text-shadow: 0 4px 20px rgba(0,0,0,0.5);"></i>
+                            </div>
+                        ` : ''}
+                    </div>
+                    <div class="content">
+                        <div class="flex items-center gap-2 text-sm mb-1">
+                            <span class="text-yellow-400">
+                                ${course.rating > 0 ? '★'.repeat(Math.floor(course.rating)) + '☆'.repeat(5-Math.floor(course.rating)) : '⭐ New'}
+                            </span>
+                            ${course.rating > 0 ? `<span class="text-gray-500 text-xs">(${course.rating})</span>` : ''}
+                        </div>
+                        <h3 class="title">${course.title}</h3>
+                        <p class="desc">${course.desc}</p>
+                        <div class="meta">
+                            <span><i class="fas fa-user mr-1"></i>${course.instructor}</span>
+                            <span><i class="fas fa-clock mr-1"></i>${Math.floor(Math.random() * 10) + 4} weeks</span>
+                        </div>
+                        <div class="footer">
+                            <div>
+                                <span class="price">${course.price}</span>
+                                <div class="instructor">By ${course.instructor}</div>
+                            </div>
+                            <a href="${isLoggedIn ? 'course-detail.html' : 'student-login.html'}" class="enroll-btn">
+                                ${isLoggedIn ? 'Enroll Now' : 'Login to Enroll'}
+                                <i class="fas fa-arrow-right ml-2"></i>
+                            </a>
+                        </div>
+                    </div>
+                `;
+
+                card.addEventListener('click', (e) => {
+                    if (!e.target.closest('a') && !e.target.closest('.enroll-btn')) {
+                        window.location.href = isLoggedIn ? 'course-detail.html' : 'student-login.html';
+                    }
+                });
+
+                container.appendChild(card);
+            });
+        }
+
+        // ============================================
+        // ===== FILTER FUNCTIONS =====
+        // ============================================
+        function filterCourses(filter = null) {
+            if (filter !== null) {
+                currentFilter = filter;
+                document.querySelectorAll('.filter-btn').forEach(btn => {
+                    btn.classList.toggle('active', btn.dataset.filter === filter);
+                });
+            }
+            currentSearch = document.getElementById('searchInput').value;
+            renderCourses(currentFilter, currentSearch);
+        }
+
+        function resetFilters() {
+            currentFilter = 'all';
+            currentSearch = '';
+            document.getElementById('searchInput').value = '';
+            document.querySelectorAll('.filter-btn').forEach(btn => {
+                btn.classList.toggle('active', btn.dataset.filter === 'all');
+            });
+            renderCourses('all', '');
+            showToast('Filters reset successfully', 'info');
+        }
+
+        window.filterCourses = filterCourses;
+        window.resetFilters = resetFilters;
+
+        // ============================================
+        // ===== VISITOR COUNT =====
+        // ============================================
+        function updateVisitorCount() {
+            let visitors = parseInt(localStorage.getItem('qskillVisitors') || '1247');
+            visitors += Math.floor(Math.random() * 2);
+            localStorage.setItem('qskillVisitors', visitors);
+            document.getElementById('visitorCount').textContent =
+                `👥 ${visitors.toLocaleString()} online`;
+        }
+
+        // ============================================
+        // ===== INIT =====
+        // ============================================
+        document.addEventListener('DOMContentLoaded', function() {
+            applyTheme();
+            updateNavigation();
+            renderCourses('all', '');
+            updateVisitorCount();
+            setInterval(updateVisitorCount, 8000);
+
+            document.addEventListener('keydown', function(e) {
+                if (e.key === 'Escape') {
+                    closeMobileMenu();
+                    resetFilters();
+                }
+                if ((e.ctrlKey || e.metaKey) && e.key === 'f') {
+                    e.preventDefault();
+                    document.getElementById('searchInput').focus();
+                }
+                if ((e.ctrlKey || e.metaKey) && e.key === 'd') {
+                    e.preventDefault();
+                    toggleDarkMode();
+                }
+            });
+
+            window.addEventListener('scroll', function() {
+                const navbar = document.getElementById('navbar');
+                const backToTop = document.getElementById('backToTop');
+                if (window.scrollY > 100) {
+                    navbar.classList.add('navbar-scrolled');
+                    backToTop.classList.add('visible');
+                } else {
+                    navbar.classList.remove('navbar-scrolled');
+                    backToTop.classList.remove('visible');
+                }
+            });
+
+            setTimeout(() => {
+                const isStudent = sessionStorage.getItem('studentLoggedIn') === 'true';
+                const isInstructor = sessionStorage.getItem('instructorLoggedIn') === 'true';
+                if (isStudent) {
+                    const name = sessionStorage.getItem('studentName') || 'Student';
+                    showToast(`👋 Welcome back, ${name}! Find your next course.`, 'success');
+                } else if (isInstructor) {
+                    const name = sessionStorage.getItem('instructorName') || 'Instructor';
+                    showToast(`👋 Welcome back, ${name}! Ready to teach?`, 'success');
+                } else {
+                    showToast('🎯 Find the perfect course for your career goals!', 'info');
+                }
+            }, 800);
+
+            // Keyboard shortcut hint
+            console.log('💡 Keyboard Shortcuts: Ctrl+F=Search, Ctrl+D=Dark Mode, ESC=Reset Filters');
+        });
+    </script>
+</body>
+</html>

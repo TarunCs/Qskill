@@ -1,0 +1,461 @@
+<!DOCTYPE html>
+<html lang="en" id="htmlRoot">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Enrollment Form - QSKILL</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+    <link rel="stylesheet" href="styles.css" />
+    <style>
+        .form-container {
+            padding-top: 80px;
+            min-height: 100vh;
+            background: var(--bg-secondary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+        .form-card {
+            background: var(--bg-card);
+            border-radius: 24px;
+            padding: 40px;
+            max-width: 700px;
+            width: 100%;
+            box-shadow: var(--shadow-lg);
+            border: 1px solid var(--border-color);
+            animation: slideUp 0.6s ease;
+        }
+        .form-input, .form-select, .form-textarea {
+            width: 100%;
+            padding: 12px 16px;
+            border: 2px solid var(--border-color);
+            border-radius: 12px;
+            transition: all 0.3s ease;
+            font-size: 16px;
+            background: var(--bg-input);
+            color: var(--text-primary);
+        }
+        .form-input:focus, .form-select:focus, .form-textarea:focus {
+            outline: none;
+            border-color: var(--gradient-start);
+            box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.1);
+        }
+        .section-title {
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--text-primary);
+            padding-bottom: 12px;
+            border-bottom: 2px solid var(--border-color);
+            margin-bottom: 20px;
+        }
+        .section-title i {
+            color: var(--gradient-start);
+            margin-right: 10px;
+        }
+        .progress-steps {
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+            margin-bottom: 30px;
+            position: relative;
+        }
+        .progress-steps::before {
+            content: '';
+            position: absolute;
+            top: 20px;
+            left: 20%;
+            right: 20%;
+            height: 3px;
+            background: var(--border-color);
+            z-index: 0;
+        }
+        .step {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            z-index: 1;
+        }
+        .step .number {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: var(--border-color);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            color: var(--text-muted);
+            transition: all 0.3s ease;
+        }
+        .step.active .number {
+            background: var(--gradient-start);
+            color: white;
+        }
+        .step.completed .number {
+            background: var(--success);
+            color: white;
+        }
+        .step .label {
+            font-size: 12px;
+            margin-top: 6px;
+            color: var(--text-muted);
+        }
+        .step.active .label {
+            color: var(--gradient-start);
+            font-weight: 600;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Back to Top -->
+    <div id="backToTop" class="back-to-top" onclick="window.scrollTo({top:0,behavior:'smooth'})">
+        <i class="fas fa-arrow-up"></i>
+    </div>
+
+    <!-- Toast -->
+    <div id="toastContainer" class="toast-container"></div>
+
+    <!-- Settings -->
+    <div id="settingsOverlay" class="settings-overlay" onclick="closeSettings()"></div>
+    <div id="settingsPanel" class="settings-panel">
+        <div class="settings-header">
+            <h2><i class="fas fa-cog mr-2" style="color:var(--gradient-start);"></i>Settings</h2>
+            <button onclick="closeSettings()"><i class="fas fa-times"></i></button>
+        </div>
+        <div class="setting-section">
+            <div class="setting-section-title"><i class="fas fa-palette" style="color:var(--gradient-start);"></i> Appearance</div>
+            <div class="setting-item">
+                <div class="info"><div class="label">🌙 Dark Mode</div><div class="desc">Toggle dark/light theme</div></div>
+                <div class="control"><button id="settingsThemeToggle" class="toggle-switch" onclick="toggleDarkModeFromSettings()"><div class="toggle-slider"></div></button></div>
+            </div>
+            <div class="setting-item">
+                <div class="info"><div class="label">🎨 Theme Color</div><div class="desc">Choose your accent color</div></div>
+                <div class="control"><select id="themeColorSelect" class="settings-select" onchange="changeThemeColor(this.value)"><option value="blue">Blue</option><option value="purple">Purple</option><option value="green">Green</option><option value="red">Red</option><option value="orange">Orange</option></select></div>
+            </div>
+        </div>
+        <div id="studentSettings" class="setting-section">
+            <div class="setting-section-title"><i class="fas fa-user-graduate" style="color:var(--gradient-start);"></i> Student Preferences</div>
+            <div class="setting-item"><div class="info"><div class="label">🔔 Course Notifications</div><div class="desc">Get updates on new courses</div></div><div class="control"><button class="toggle-switch active" onclick="toggleSetting(this)"><div class="toggle-slider"></div></button></div></div>
+            <div class="setting-item"><div class="info"><div class="label">📊 Progress Reports</div><div class="desc">Weekly progress emails</div></div><div class="control"><button class="toggle-switch active" onclick="toggleSetting(this)"><div class="toggle-slider"></div></button></div></div>
+            <div class="setting-item"><div class="info"><div class="label">⏰ Learning Reminders</div><div class="desc">Daily study reminders</div></div><div class="control"><button class="toggle-switch" onclick="toggleSetting(this)"><div class="toggle-slider"></div></button></div></div>
+            <div class="setting-item"><div class="info"><div class="label">🎯 Daily Learning Goal</div><div class="desc">Set your daily target</div></div><div class="control"><select class="settings-select" onchange="showToast('✅ Daily goal updated!', 'success')"><option value="15">15 min</option><option value="30" selected>30 min</option><option value="60">1 hour</option><option value="120">2 hours</option></select></div></div>
+        </div>
+        <div id="instructorSettings" class="setting-section" style="display:none;">
+            <div class="setting-section-title"><i class="fas fa-chalkboard-teacher" style="color:var(--gradient-start);"></i> Instructor Preferences</div>
+            <div class="setting-item"><div class="info"><div class="label">📊 Student Analytics</div><div class="desc">Detailed progress reports</div></div><div class="control"><button class="toggle-switch active" onclick="toggleSetting(this)"><div class="toggle-slider"></div></button></div></div>
+            <div class="setting-item"><div class="info"><div class="label">✏️ Course Publishing</div><div class="desc">Auto-publish courses</div></div><div class="control"><button class="toggle-switch" onclick="toggleSetting(this)"><div class="toggle-slider"></div></button></div></div>
+            <div class="setting-item"><div class="info"><div class="label">💰 Revenue Reports</div><div class="desc">Monthly earnings summary</div></div><div class="control"><button class="toggle-switch active" onclick="toggleSetting(this)"><div class="toggle-slider"></div></button></div></div>
+            <div class="setting-item"><div class="info"><div class="label">📅 Default Course Duration</div><div class="desc">Set default duration</div></div><div class="control"><select class="settings-select" onchange="showToast('✅ Default duration updated!', 'success')"><option value="4">4 weeks</option><option value="8" selected>8 weeks</option><option value="12">12 weeks</option></select></div></div>
+        </div>
+        <div class="setting-section">
+            <div class="setting-section-title"><i class="fas fa-globe" style="color:var(--gradient-start);"></i> General</div>
+            <div class="setting-item"><div class="info"><div class="label">🌐 Language</div><div class="desc">Interface language</div></div><div class="control"><select class="settings-select" onchange="showToast('✅ Language updated!', 'success')"><option value="en" selected>English</option><option value="es">Spanish</option><option value="fr">French</option></select></div></div>
+            <div class="setting-item"><div class="info"><div class="label">🔒 Privacy</div><div class="desc">Manage privacy settings</div></div><div class="control"><button onclick="showToast('🔒 Privacy settings opened', 'info')" style="color:var(--gradient-start);" class="text-sm hover:underline">Manage</button></div></div>
+        </div>
+        <div class="mt-6 pt-6 border-t" style="border-color:var(--border-color);">
+            <button onclick="saveSettings()" class="w-full py-3 rounded-xl font-bold text-white" style="background:linear-gradient(135deg, var(--gradient-start), var(--gradient-end));"><i class="fas fa-save mr-2"></i>Save All Settings</button>
+        </div>
+    </div>
+
+    <!-- Mobile Menu -->
+    <div id="mobileOverlay" class="mobile-menu-overlay" onclick="closeMobileMenu()"></div>
+    <div id="mobilePanel" class="mobile-menu-panel">
+        <div class="flex justify-between items-center mb-6">
+            <span class="text-2xl font-extrabold" style="color:var(--gradient-start);">QSKILL</span>
+            <button onclick="closeMobileMenu()" class="text-2xl" style="color:var(--text-secondary);"><i class="fas fa-times"></i></button>
+        </div>
+        <a href="index.html"><i class="fas fa-home mr-3"></i>Home</a>
+        <a href="courses.html"><i class="fas fa-book mr-3"></i>Courses</a>
+        <a href="about.html"><i class="fas fa-info-circle mr-3"></i>About</a>
+        <a href="blog.html"><i class="fas fa-blog mr-3"></i>Blog</a>
+        <div id="mobileLoginLinks" class="pt-3">
+            <a href="student-login.html" class="block text-white text-center py-3 rounded-lg font-semibold" style="background:var(--gradient-start);"><i class="fas fa-user-graduate mr-2"></i>Student</a>
+            <a href="instructor-login.html" class="block text-center py-3 rounded-lg font-semibold mt-2" style="background:var(--border-color);color:var(--text-secondary);"><i class="fas fa-chalkboard-teacher mr-2"></i>Instructor</a>
+        </div>
+    </div>
+
+    <!-- Navigation -->
+    <nav id="navbar" class="navbar fixed top-0 left-0 right-0 z-50 shadow-sm">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <a href="index.html" class="flex items-center group">
+                    <span class="text-2xl font-extrabold" style="color:var(--gradient-start);">QSKILL</span>
+                    <span class="ml-1 text-sm font-medium" style="color:var(--text-muted);">.com</span>
+                </a>
+                <div class="hidden md:flex items-center space-x-1">
+                    <a href="index.html" class="px-4 py-2 font-medium nav-link">Home</a>
+                    <a href="courses.html" class="px-4 py-2 font-medium nav-link active">Courses</a>
+                    <a href="about.html" class="px-4 py-2 font-medium nav-link">About</a>
+                    <a href="blog.html" class="px-4 py-2 font-medium nav-link">Blog</a>
+                    <div class="h-6 w-px mx-2" style="background:var(--border-color);"></div>
+                    <div id="desktopLoginLinks">
+                        <a href="student-login.html" class="px-4 py-2 text-white rounded-lg font-medium shadow-md hover:shadow-lg transition" style="background:var(--gradient-start);"><i class="fas fa-user-graduate mr-2"></i>Student</a>
+                        <a href="instructor-login.html" class="px-4 py-2 rounded-lg font-medium transition" style="background:var(--border-color);color:var(--text-secondary);"><i class="fas fa-chalkboard-teacher mr-2"></i>Instructor</a>
+                    </div>
+                    <button onclick="openSettings()" class="ml-1 p-2 rounded-lg transition" style="color:var(--text-secondary);"><i class="fas fa-cog text-xl"></i></button>
+                    <button onclick="toggleDarkMode()" class="p-2 rounded-lg transition" style="color:var(--text-secondary);"><i id="themeIcon" class="fas fa-moon text-xl"></i></button>
+                </div>
+                <div class="flex items-center gap-2 md:hidden">
+                    <button onclick="openSettings()" class="p-2 rounded-lg transition" style="color:var(--text-secondary);"><i class="fas fa-cog text-xl"></i></button>
+                    <button onclick="toggleDarkMode()" class="p-2 rounded-lg transition" style="color:var(--text-secondary);"><i id="mobileThemeIcon" class="fas fa-moon text-xl"></i></button>
+                    <button onclick="openMobileMenu()" class="text-2xl transition" style="color:var(--text-secondary);"><i class="fas fa-bars"></i></button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- ===== PAGE CONTENT ===== -->
+    <div class="form-container">
+        <div class="form-card">
+            <h1 class="text-3xl font-bold text-center mb-2" style="color:var(--text-primary);">Enrollment Form</h1>
+            <p class="text-center mb-6" style="color:var(--text-secondary);">Please fill in all the details below</p>
+
+            <!-- Progress Steps -->
+            <div class="progress-steps">
+                <div class="step active"><div class="number">1</div><span class="label">Personal</span></div>
+                <div class="step"><div class="number">2</div><span class="label">Contact</span></div>
+                <div class="step"><div class="number">3</div><span class="label">Course</span></div>
+            </div>
+
+            <form id="enrollForm" onsubmit="handleEnrollForm(event)">
+                <!-- Personal Information -->
+                <div class="mb-8">
+                    <h2 class="section-title"><i class="fas fa-user"></i>Personal Information</h2>
+                    <div class="grid md:grid-cols-2 gap-4">
+                        <div>
+                            <label class="block font-semibold mb-2" style="color:var(--text-primary);">First Name *</label>
+                            <input type="text" required class="form-input" placeholder="John" id="firstName" />
+                        </div>
+                        <div>
+                            <label class="block font-semibold mb-2" style="color:var(--text-primary);">Last Name *</label>
+                            <input type="text" required class="form-input" placeholder="Doe" id="lastName" />
+                        </div>
+                    </div>
+                    <div class="grid md:grid-cols-2 gap-4 mt-4">
+                        <div>
+                            <label class="block font-semibold mb-2" style="color:var(--text-primary);">Date of Birth *</label>
+                            <input type="date" required class="form-input" id="dob" />
+                        </div>
+                        <div>
+                            <label class="block font-semibold mb-2" style="color:var(--text-primary);">Gender *</label>
+                            <select required class="form-select" id="gender">
+                                <option value="">Select</option>
+                                <option value="male">Male</option>
+                                <option value="female">Female</option>
+                                <option value="other">Other</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Contact Details -->
+                <div class="mb-8">
+                    <h2 class="section-title"><i class="fas fa-phone"></i>Contact Details</h2>
+                    <div class="grid md:grid-cols-2 gap-4">
+                        <div>
+                            <label class="block font-semibold mb-2" style="color:var(--text-primary);">Email Address *</label>
+                            <input type="email" required class="form-input" placeholder="john@example.com" id="email" />
+                        </div>
+                        <div>
+                            <label class="block font-semibold mb-2" style="color:var(--text-primary);">Phone Number *</label>
+                            <input type="tel" required class="form-input" placeholder="+1 (555) 123-4567" id="phone" />
+                        </div>
+                    </div>
+                    <div class="mt-4">
+                        <label class="block font-semibold mb-2" style="color:var(--text-primary);">Address *</label>
+                        <textarea rows="2" required class="form-textarea" placeholder="123 Main St, City, State, ZIP" id="address"></textarea>
+                    </div>
+                </div>
+
+                <!-- Course Selection -->
+                <div class="mb-8">
+                    <h2 class="section-title"><i class="fas fa-book"></i>Course Selection</h2>
+                    <div>
+                        <label class="block font-semibold mb-2" style="color:var(--text-primary);">Select Course *</label>
+                        <select required class="form-select" id="course">
+                            <option value="">Choose a course</option>
+                            <option value="web">Web Development Bootcamp - $49</option>
+                            <option value="data">Data Science Masterclass - $79</option>
+                            <option value="marketing">Digital Marketing Pro - $39</option>
+                            <option value="ai">AI & Machine Learning - $99</option>
+                        </select>
+                    </div>
+                    <div class="mt-4">
+                        <label class="block font-semibold mb-2" style="color:var(--text-primary);">Preferred Start Date *</label>
+                        <input type="date" required class="form-input" id="startDate" />
+                    </div>
+                </div>
+
+                <!-- Additional Info -->
+                <div class="mb-6">
+                    <h2 class="section-title"><i class="fas fa-info-circle"></i>Additional Information</h2>
+                    <div>
+                        <label class="block font-semibold mb-2" style="color:var(--text-primary);">How did you hear about us?</label>
+                        <select class="form-select" id="source">
+                            <option value="">Select</option>
+                            <option value="social">Social Media</option>
+                            <option value="google">Google Search</option>
+                            <option value="friend">Friend/Colleague</option>
+                            <option value="email">Email</option>
+                            <option value="other">Other</option>
+                        </select>
+                    </div>
+                    <div class="mt-4">
+                        <label class="block font-semibold mb-2" style="color:var(--text-primary);">Special Requirements</label>
+                        <textarea rows="3" class="form-textarea" placeholder="Any additional notes..." id="requirements"></textarea>
+                    </div>
+                </div>
+
+                <button type="submit" class="w-full py-3 rounded-xl font-bold text-white transition text-lg" style="background:linear-gradient(135deg, var(--gradient-start), var(--gradient-end));">
+                    <i class="fas fa-paper-plane mr-2"></i>Submit Enrollment
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer style="background:var(--footer-bg);" class="text-white py-6 text-center text-sm">
+        <div class="max-w-7xl mx-auto px-4">
+            &copy; 2026 QSKILL. All rights reserved.
+        </div>
+    </footer>
+
+    <script>
+        // ============================================
+        // ===== SHARED FUNCTIONS =====
+        // ============================================
+        let isDarkMode = localStorage.getItem('qskillDarkMode') === 'true';
+        function toggleDarkMode() {
+            isDarkMode = !isDarkMode;
+            localStorage.setItem('qskillDarkMode', isDarkMode);
+            applyTheme();
+            updateSettingsToggle();
+            showToast(isDarkMode ? '🌙 Dark mode enabled' : '☀️ Light mode enabled', 'info');
+        }
+        function toggleDarkModeFromSettings() { toggleDarkMode(); }
+        function applyTheme() {
+            const html = document.getElementById('htmlRoot');
+            const icon = document.getElementById('themeIcon');
+            const mobileIcon = document.getElementById('mobileThemeIcon');
+            if (isDarkMode) { html.classList.add('dark-mode'); if (icon) icon.className = 'fas fa-sun text-xl'; if (mobileIcon) mobileIcon.className = 'fas fa-sun text-xl'; }
+            else { html.classList.remove('dark-mode'); if (icon) icon.className = 'fas fa-moon text-xl'; if (mobileIcon) mobileIcon.className = 'fas fa-moon text-xl'; }
+        }
+        function updateSettingsToggle() { const toggle = document.querySelector('#settingsThemeToggle'); if (toggle) { isDarkMode ? toggle.classList.add('active') : toggle.classList.remove('active'); } }
+        function changeThemeColor(color) {
+            const colors = { blue: { start: '#3b82f6', end: '#8b5cf6' }, purple: { start: '#8b5cf6', end: '#ec4899' }, green: { start: '#22c55e', end: '#14b8a6' }, red: { start: '#ef4444', end: '#f59e0b' }, orange: { start: '#f59e0b', end: '#ef4444' } };
+            const selected = colors[color] || colors.blue;
+            document.documentElement.style.setProperty('--gradient-start', selected.start);
+            document.documentElement.style.setProperty('--gradient-end', selected.end);
+            localStorage.setItem('qskillThemeColor', color);
+            showToast('🎨 Theme color updated!', 'success');
+        }
+        const savedColor = localStorage.getItem('qskillThemeColor') || 'blue';
+        const colorSelect = document.getElementById('themeColorSelect');
+        if (colorSelect) { colorSelect.value = savedColor; changeThemeColor(savedColor); }
+
+        function openSettings() { document.getElementById('settingsPanel').classList.add('active'); document.getElementById('settingsOverlay').classList.add('active'); document.body.style.overflow = 'hidden'; updateSettingsToggle(); updateRoleSettings(); }
+        function closeSettings() { document.getElementById('settingsPanel').classList.remove('active'); document.getElementById('settingsOverlay').classList.remove('active'); document.body.style.overflow = 'auto'; }
+        function updateRoleSettings() {
+            const isStudent = sessionStorage.getItem('studentLoggedIn') === 'true';
+            const isInstructor = sessionStorage.getItem('instructorLoggedIn') === 'true';
+            document.getElementById('studentSettings').style.display = isStudent ? 'block' : 'none';
+            document.getElementById('instructorSettings').style.display = isInstructor ? 'block' : 'none';
+        }
+        function toggleSetting(element) { element.classList.toggle('active'); const isActive = element.classList.contains('active'); const label = element.closest('.setting-item').querySelector('.label')?.textContent || 'Setting'; showToast(`${isActive ? '✅ Enabled' : '❌ Disabled'}: ${label}`, isActive ? 'success' : 'warning'); }
+        function saveSettings() { showToast('✅ All settings saved successfully!', 'success'); closeSettings(); }
+
+        function showToast(message, type = 'success') {
+            const container = document.getElementById('toastContainer');
+            const colors = { success: 'border-green-500', error: 'border-red-500', warning: 'border-yellow-500', info: 'border-blue-500' };
+            const icons = { success: 'fa-check-circle text-green-500', error: 'fa-exclamation-circle text-red-500', warning: 'fa-exclamation-triangle text-yellow-500', info: 'fa-info-circle text-blue-500' };
+            const toast = document.createElement('div');
+            toast.className = `toast toast-${type}`;
+            toast.innerHTML = `<i class="fas ${icons[type] || icons.success} text-xl mr-3"></i><span class="font-medium">${message}</span><button onclick="this.parentElement.parentElement.remove()" class="ml-4 text-gray-400 hover:text-gray-600"><i class="fas fa-times"></i></button>`;
+            container.appendChild(toast);
+            setTimeout(() => { if (toast.parentElement) { toast.style.animation = 'slideOut 0.3s ease forwards'; setTimeout(() => toast.remove(), 300); } }, 4000);
+        }
+
+        function openMobileMenu() { document.getElementById('mobilePanel').classList.add('active'); document.getElementById('mobileOverlay').classList.add('active'); document.body.style.overflow = 'hidden'; }
+        function closeMobileMenu() { document.getElementById('mobilePanel').classList.remove('active'); document.getElementById('mobileOverlay').classList.remove('active'); document.body.style.overflow = 'auto'; }
+
+        function updateNavigation() {
+            const isStudent = sessionStorage.getItem('studentLoggedIn') === 'true';
+            const isInstructor = sessionStorage.getItem('instructorLoggedIn') === 'true';
+            const studentName = sessionStorage.getItem('studentName') || 'Student';
+            const instructorName = sessionStorage.getItem('instructorName') || 'Instructor';
+            const desktopLogin = document.getElementById('desktopLoginLinks');
+            if (isStudent) {
+                desktopLogin.innerHTML = `<a href="student-dashboard.html" class="px-4 py-2 text-white rounded-lg font-medium shadow-md hover:shadow-lg transition" style="background:var(--gradient-start);"><i class="fas fa-user mr-2"></i>${studentName}</a><button onclick="logout()" class="px-4 py-2 text-white rounded-lg font-medium transition" style="background:var(--danger);"><i class="fas fa-sign-out-alt mr-2"></i>Logout</button>`;
+            } else if (isInstructor) {
+                desktopLogin.innerHTML = `<a href="instructor-dashboard.html" class="px-4 py-2 text-white rounded-lg font-medium shadow-md hover:shadow-lg transition" style="background:var(--gradient-start);"><i class="fas fa-user mr-2"></i>${instructorName}</a><button onclick="logout()" class="px-4 py-2 text-white rounded-lg font-medium transition" style="background:var(--danger);"><i class="fas fa-sign-out-alt mr-2"></i>Logout</button>`;
+            } else {
+                desktopLogin.innerHTML = `<a href="student-login.html" class="px-4 py-2 text-white rounded-lg font-medium shadow-md hover:shadow-lg transition" style="background:var(--gradient-start);"><i class="fas fa-user-graduate mr-2"></i>Student</a><a href="instructor-login.html" class="px-4 py-2 rounded-lg font-medium transition" style="background:var(--border-color);color:var(--text-secondary);"><i class="fas fa-chalkboard-teacher mr-2"></i>Instructor</a>`;
+            }
+            const mobileLogin = document.getElementById('mobileLoginLinks');
+            if (isStudent) {
+                mobileLogin.innerHTML = `<a href="student-dashboard.html" class="block text-white text-center py-3 rounded-lg font-semibold transition" style="background:var(--gradient-start);"><i class="fas fa-user mr-2"></i>${studentName}</a><button onclick="logout();closeMobileMenu();" class="block w-full text-white text-center py-3 rounded-lg font-semibold transition mt-2" style="background:var(--danger);"><i class="fas fa-sign-out-alt mr-2"></i>Logout</button>`;
+            } else if (isInstructor) {
+                mobileLogin.innerHTML = `<a href="instructor-dashboard.html" class="block text-white text-center py-3 rounded-lg font-semibold transition" style="background:var(--gradient-start);"><i class="fas fa-user mr-2"></i>${instructorName}</a><button onclick="logout();closeMobileMenu();" class="block w-full text-white text-center py-3 rounded-lg font-semibold transition mt-2" style="background:var(--danger);"><i class="fas fa-sign-out-alt mr-2"></i>Logout</button>`;
+            } else {
+                mobileLogin.innerHTML = `<a href="student-login.html" class="block text-white text-center py-3 rounded-lg font-semibold transition" style="background:var(--gradient-start);"><i class="fas fa-user-graduate mr-2"></i>Student</a><a href="instructor-login.html" class="block text-center py-3 rounded-lg font-semibold transition mt-2" style="background:var(--border-color);color:var(--text-secondary);"><i class="fas fa-chalkboard-teacher mr-2"></i>Instructor</a>`;
+            }
+        }
+
+        function logout() {
+            if (confirm('Are you sure you want to logout?')) {
+                sessionStorage.removeItem('studentLoggedIn'); sessionStorage.removeItem('studentEmail'); sessionStorage.removeItem('studentName');
+                sessionStorage.removeItem('instructorLoggedIn'); sessionStorage.removeItem('instructorEmail'); sessionStorage.removeItem('instructorName');
+                showToast('👋 Logged out successfully!', 'info');
+                setTimeout(() => window.location.reload(), 500);
+            }
+        }
+
+        // ============================================
+        // ===== ENROLL FORM HANDLER =====
+        // ============================================
+        function handleEnrollForm(e) {
+            e.preventDefault();
+            const firstName = document.getElementById('firstName').value;
+            const lastName = document.getElementById('lastName').value;
+            const email = document.getElementById('email').value;
+            const course = document.getElementById('course').value;
+
+            if (!firstName || !lastName || !email || !course) {
+                showToast('Please fill in all required fields', 'error');
+                return;
+            }
+
+            showToast('✅ Enrollment form submitted successfully! We will contact you within 24 hours.', 'success');
+            setTimeout(() => {
+                window.location.href = 'index.html';
+            }, 2000);
+        }
+
+        // Keyboard Shortcuts
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') { closeSettings(); closeMobileMenu(); }
+            if ((e.ctrlKey || e.metaKey) && e.key === 'd') { e.preventDefault(); toggleDarkMode(); }
+            if ((e.ctrlKey || e.metaKey) && e.key === 's') { e.preventDefault(); openSettings(); }
+        });
+
+        // Navbar Scroll
+        window.addEventListener('scroll', function() {
+            const navbar = document.getElementById('navbar');
+            const backToTop = document.getElementById('backToTop');
+            if (window.scrollY > 100) { if (navbar) navbar.classList.add('navbar-scrolled'); if (backToTop) backToTop.classList.add('visible'); }
+            else { if (navbar) navbar.classList.remove('navbar-scrolled'); if (backToTop) backToTop.classList.remove('visible'); }
+        });
+
+        // Init
+        document.addEventListener('DOMContentLoaded', function() {
+            applyTheme();
+            updateNavigation();
+            updateSettingsToggle();
+            updateRoleSettings();
+        });
+    </script>
+</body>
+</html>
