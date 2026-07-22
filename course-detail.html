@@ -1,0 +1,493 @@
+<!DOCTYPE html>
+<html lang="en" id="htmlRoot">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Course Detail - QSKILL</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+    <link rel="stylesheet" href="styles.css" />
+    <style>
+        .detail-container {
+            padding-top: 80px;
+            background: var(--bg-secondary);
+            min-height: 100vh;
+        }
+
+        .video-placeholder {
+            background: var(--gradient-primary);
+            border-radius: var(--radius-lg);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            min-height: 300px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .video-placeholder:hover {
+            transform: scale(1.01);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .video-placeholder .play-btn {
+            font-size: 64px;
+            color: white;
+            opacity: 0.8;
+            transition: all 0.3s ease;
+        }
+
+        .video-placeholder:hover .play-btn {
+            opacity: 1;
+            transform: scale(1.1);
+        }
+
+        .tab-btn {
+            padding: 10px 20px;
+            border-radius: 10px 10px 0 0;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            border: none;
+            background: transparent;
+            color: var(--text-secondary);
+        }
+
+        .tab-btn.active {
+            background: var(--bg-card);
+            color: var(--color-primary);
+            box-shadow: 0 -2px 0 var(--color-primary);
+        }
+
+        .tab-btn:hover {
+            background: var(--bg-card-hover);
+        }
+
+        .tab-content {
+            display: none;
+            background: var(--bg-card);
+            padding: 24px;
+            border-radius: 0 12px 12px 12px;
+            animation: fadeIn 0.3s ease;
+            border: 1px solid var(--border-color);
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .sidebar-card {
+            position: sticky;
+            top: 100px;
+        }
+
+        .module-item {
+            border: 1px solid var(--border-color);
+            border-radius: 10px;
+            overflow: hidden;
+            margin-bottom: 8px;
+        }
+
+        .module-header {
+            padding: 14px 20px;
+            background: var(--bg-secondary);
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .module-header:hover {
+            background: var(--bg-card-hover);
+        }
+
+        .module-content {
+            padding: 0 20px;
+            max-height: 0;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .module-content.open {
+            padding: 16px 20px;
+            max-height: 500px;
+        }
+
+        .review-item {
+            border-bottom: 1px solid var(--border-color);
+            padding: 16px 0;
+        }
+
+        .review-item:last-child {
+            border-bottom: none;
+        }
+
+        .enroll-btn {
+            background: var(--gradient-primary);
+            transition: all 0.3s ease;
+        }
+
+        .enroll-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 15px 30px rgba(37, 99, 235, 0.3);
+        }
+
+        @media (max-width: 768px) {
+            .video-placeholder {
+                min-height: 200px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Settings Panel -->
+    <div id="settingsOverlay" class="settings-overlay" onclick="closeSettings()"></div>
+    <div id="settingsPanel" class="settings-panel">
+        <div class="settings-header">
+            <h2><i class="fas fa-cog mr-2" style="color:var(--color-primary);"></i>Settings</h2><button
+                class="close-btn" onclick="closeSettings()"><i class="fas fa-times"></i></button>
+        </div>
+        <div class="setting-section">
+            <div class="setting-section-title"><i class="fas fa-palette" style="color:var(--color-primary);"></i>
+                Appearance</div>
+            <div class="setting-item">
+                <div class="info">
+                    <div class="label">🌙 Dark Mode</div>
+                    <div class="desc">Toggle dark/light theme</div>
+                </div>
+                <div class="control"><button id="settingsThemeToggle" class="toggle-switch"
+                        onclick="toggleDarkModeFromSettings()">
+                        <div class="toggle-slider"></div>
+                    </button></div>
+            </div>
+            <div class="setting-item">
+                <div class="info">
+                    <div class="label">🎨 Theme Color</div>
+                    <div class="desc">Choose accent color</div>
+                </div>
+                <div class="control"><select id="themeColorSelect" class="settings-select"
+                        onchange="changeThemeColor(this.value)">
+                        <option value="blue">Blue</option>
+                        <option value="purple">Purple</option>
+                        <option value="green">Green</option>
+                        <option value="red">Red</option>
+                        <option value="orange">Orange</option>
+                    </select></div>
+            </div>
+        </div>
+        <div class="mt-6 pt-6 border-t" style="border-color:var(--border-color);"><button onclick="saveSettings()"
+                class="w-full py-3 rounded-xl font-bold text-white transition"
+                style="background:var(--gradient-primary);"><i class="fas fa-save mr-2"></i>Save Settings</button></div>
+    </div>
+    <!-- Language Selector -->
+    <div class="flex gap-2 flex-wrap mb-4">
+        <button class="language-btn active" data-lang="en" onclick="changeLanguage('en')">🇬🇧 EN</button>
+        <button class="language-btn" data-lang="hi" onclick="changeLanguage('hi')">🇮🇳 HI</button>
+        <button class="language-btn" data-lang="ta" onclick="changeLanguage('ta')">🇮🇳 TA</button>
+        <button class="language-btn" data-lang="te" onclick="changeLanguage('te')">🇮🇳 TE</button>
+        <button class="language-btn" data-lang="kn" onclick="changeLanguage('kn')">🇮🇳 KN</button>
+        <button class="language-btn" data-lang="ml" onclick="changeLanguage('ml')">🇮🇳 ML</button>
+    </div>
+
+    <!-- Mobile Menu -->
+    <div id="mobileOverlay" class="mobile-menu-overlay" onclick="closeMobileMenu()"></div>
+    <div id="mobilePanel" class="mobile-menu-panel">
+        <div class="menu-header"><span class="logo">QSKILL</span><button class="close-btn"
+                onclick="closeMobileMenu()"><i class="fas fa-times"></i></button></div>
+        <a href="index.html" class="menu-item"><i class="fas fa-home"></i>Home</a>
+        <a href="courses.html" class="menu-item"><i class="fas fa-book"></i>Courses</a>
+        <a href="about.html" class="menu-item"><i class="fas fa-info-circle"></i>About</a>
+        <a href="blog.html" class="menu-item"><i class="fas fa-blog"></i>Blog</a>
+        <div id="mobileLoginLinks" class="pt-3">
+            <a href="student-login.html" class="menu-item" style="color:var(--color-primary);"><i
+                    class="fas fa-user-graduate"></i>Student</a>
+            <a href="instructor-login.html" class="menu-item"><i class="fas fa-chalkboard-teacher"></i>Instructor</a>
+        </div>
+    </div>
+
+    <!-- Navigation -->
+    <nav id="navbar" class="navbar fixed top-0 left-0 right-0 z-50 shadow-sm">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <a href="index.html" class="flex items-center group"><span class="text-2xl font-extrabold"
+                        style="color:var(--color-primary);">QSKILL</span><span class="ml-1 text-sm font-medium"
+                        style="color:var(--text-muted);">.com</span></a>
+                <div class="hidden md:flex items-center space-x-1">
+                    <a href="index.html" class="px-4 py-2 font-medium nav-link">Home</a>
+                    <a href="courses.html" class="px-4 py-2 font-medium nav-link">Courses</a>
+                    <a href="about.html" class="px-4 py-2 font-medium nav-link">About</a>
+                    <a href="blog.html" class="px-4 py-2 font-medium nav-link">Blog</a>
+                    <div class="h-6 w-px mx-2" style="background:var(--border-color);"></div>
+                    <div id="desktopLoginLinks">
+                        <a href="student-login.html"
+                            class="px-4 py-2 text-white rounded-lg font-medium shadow-md hover:shadow-lg transition"
+                            style="background:var(--gradient-primary);"><i
+                                class="fas fa-user-graduate mr-2"></i>Student</a>
+                        <a href="instructor-login.html" class="px-4 py-2 rounded-lg font-medium transition"
+                            style="background:var(--border-color);color:var(--text-secondary);"><i
+                                class="fas fa-chalkboard-teacher mr-2"></i>Instructor</a>
+                    </div>
+                    <button onclick="openSettings()" class="ml-1 p-2 rounded-lg transition"
+                        style="color:var(--text-secondary);"><i class="fas fa-cog text-xl"></i></button>
+                    <button onclick="toggleDarkMode()" class="p-2 rounded-lg transition"
+                        style="color:var(--text-secondary);"><i id="themeIcon" class="fas fa-moon text-xl"></i></button>
+                </div>
+                <div class="flex items-center gap-2 md:hidden">
+                    <button onclick="openSettings()" class="p-2 rounded-lg transition"
+                        style="color:var(--text-secondary);"><i class="fas fa-cog text-xl"></i></button>
+                    <button onclick="toggleDarkMode()" class="p-2 rounded-lg transition"
+                        style="color:var(--text-secondary);"><i id="mobileThemeIcon"
+                            class="fas fa-moon text-xl"></i></button>
+                    <button onclick="openMobileMenu()" class="text-2xl transition"
+                        style="color:var(--text-secondary);"><i class="fas fa-bars"></i></button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- ===== PAGE CONTENT ===== -->
+    <div class="detail-container">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+            <div class="grid lg:grid-cols-3 gap-8">
+                <div class="lg:col-span-2">
+                    <div class="video-placeholder mb-6" onclick="playVideo()">
+                        <i class="fas fa-play-circle play-btn"></i>
+                        <div
+                            class="absolute bottom-4 right-4 bg-black/50 backdrop-blur-sm px-4 py-2 rounded-lg text-white text-sm">
+                            <i class="fas fa-clock mr-2"></i>Preview</div>
+                    </div>
+                    <div style="background:var(--bg-card);border:1px solid var(--border-color);"
+                        class="rounded-2xl shadow-sm p-6">
+                        <h1 class="text-2xl md:text-3xl font-bold" style="color:var(--text-primary);">Web Development
+                            Bootcamp</h1>
+                        <div class="flex items-center gap-4 mt-2 text-sm" style="color:var(--text-secondary);">
+                            <span class="flex items-center"><i class="fas fa-star text-yellow-400 mr-1"></i>4.8 (1,234
+                                ratings)</span>
+                            <span><i class="fas fa-users mr-1"></i>1,234 students</span>
+                            <span><i class="fas fa-clock mr-1"></i>8 weeks</span>
+                        </div>
+                        <div class="flex gap-1 mt-6 border-b" style="border-color:var(--border-color);">
+                            <button class="tab-btn active" onclick="switchTab('overview')">Overview</button>
+                            <button class="tab-btn" onclick="switchTab('curriculum')">Curriculum</button>
+                            <button class="tab-btn" onclick="switchTab('reviews')">Reviews</button>
+                        </div>
+                        <div id="overview" class="tab-content active">
+                            <h3 class="font-bold mb-3" style="color:var(--text-primary);">What you'll learn</h3>
+                            <div class="grid md:grid-cols-2 gap-2" id="learningList"></div>
+                            <div class="mt-6 p-4 rounded-xl" style="background:var(--color-primary-bg);">
+                                <p class="text-sm" style="color:var(--text-secondary);"><i
+                                        class="fas fa-info-circle mr-2" style="color:var(--color-primary);"></i>This
+                                    course includes: 48 hours of video, 12 projects, and a certificate of completion.
+                                </p>
+                            </div>
+                        </div>
+                        <div id="curriculum" class="tab-content">
+                            <div class="space-y-2" id="curriculumContainer"></div>
+                        </div>
+                        <div id="reviews" class="tab-content">
+                            <div class="flex items-center justify-between mb-4">
+                                <h3 class="font-bold" style="color:var(--text-primary);">Student Reviews</h3><button
+                                    onclick="addReview()" class="px-4 py-2 rounded-lg text-white text-sm transition"
+                                    style="background:var(--gradient-primary);"><i class="fas fa-plus mr-1"></i>Add
+                                    Review</button>
+                            </div>
+                            <div id="reviewContainer"></div>
+                        </div>
+                    </div>
+                </div>
+                <div>
+                    <div style="background:var(--bg-card);border:1px solid var(--border-color);"
+                        class="sidebar-card rounded-2xl shadow-sm p-6">
+                        <div class="text-3xl font-bold" style="color:var(--color-primary);">$49</div>
+                        <p style="color:var(--text-secondary);" class="text-sm">Full lifetime access</p>
+                        <div class="space-y-2 mt-4 text-sm" style="color:var(--text-secondary);">
+                            <p><i class="fas fa-clock mr-2" style="color:var(--color-primary);"></i>8 weeks of content
+                            </p>
+                            <p><i class="fas fa-user mr-2" style="color:var(--color-primary);"></i>Instructor: John
+                                Smith</p>
+                            <p><i class="fas fa-certificate mr-2" style="color:var(--color-primary);"></i>Certificate
+                                included</p>
+                            <p><i class="fas fa-download mr-2" style="color:var(--color-primary);"></i>Downloadable
+                                resources</p>
+                        </div>
+                        <a href="course-enroll.html"
+                            class="enroll-btn w-full text-white py-3 rounded-xl font-bold flex items-center justify-center mt-6"><i
+                                class="fas fa-shopping-cart mr-2"></i>Enroll Now</a>
+                        <div class="mt-4 text-center text-xs" style="color:var(--text-muted);"><i
+                                class="fas fa-lock mr-1"></i>Secure payment · 30-day guarantee</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer style="background:var(--bg-footer);" class="text-white py-6 text-center text-sm">
+        <div class="max-w-7xl mx-auto px-4">&copy; 2026 QSKILL. All rights reserved.</div>
+    </footer>
+
+    <script>
+        function switchTab(tabId) {
+            document.querySelectorAll('.tab-content').forEach(tab => tab.classList.remove('active'));
+            document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+            document.getElementById(tabId).classList.add('active');
+            document.querySelector(`.tab-btn[onclick="switchTab('${tabId}')"]`).classList.add('active');
+        }
+
+        function toggleModule(header) {
+            const content = header.nextElementSibling;
+            const icon = header.querySelector('.module-icon');
+            content.classList.toggle('open');
+            icon.classList.toggle('fa-chevron-down');
+            icon.classList.toggle('fa-chevron-up');
+        }
+
+        function playVideo() {
+            // NO POPUP - Just redirect or do nothing
+            window.location.href = '#';
+        }
+
+        function addReview() {
+            // NO POPUP - Just do nothing or open a modal
+            // For now, it just redirects to the page
+            window.location.href = '#';
+        }
+
+        document.addEventListener('DOMContentLoaded', function () {
+            const learningPoints = ['HTML5 & CSS3 fundamentals', 'JavaScript & DOM manipulation', 'React.js & modern frameworks', 'Node.js & Express backend', 'Database with MongoDB', 'RESTful API development'];
+            const learningList = document.getElementById('learningList');
+            learningPoints.forEach(point => {
+                const li = document.createElement('div');
+                li.className = 'flex items-start';
+                li.innerHTML = `<i class="fas fa-check-circle mr-2 mt-1" style="color:var(--color-success);"></i><span style="color:var(--text-secondary);">${point}</span>`;
+                learningList.appendChild(li);
+            });
+
+            const curriculum = [
+                { module: 'Module 1: HTML & CSS', lessons: ['Introduction to HTML', 'CSS Styling', 'Responsive Design'] },
+                { module: 'Module 2: JavaScript', lessons: ['Variables & Functions', 'DOM Manipulation', 'Events'] },
+                { module: 'Module 3: React', lessons: ['Components & Props', 'State Management', 'Hooks'] }
+            ];
+            const curriculumContainer = document.getElementById('curriculumContainer');
+            curriculum.forEach(mod => {
+                const div = document.createElement('div');
+                div.className = 'module-item';
+                div.innerHTML = `
+                    <div class="module-header" onclick="toggleModule(this)">
+                        <span class="font-medium" style="color:var(--text-primary);">${mod.module}</span>
+                        <div class="flex items-center gap-2"><span class="text-xs" style="color:var(--text-muted);">${mod.lessons.length} lessons</span><i class="fas fa-chevron-down module-icon" style="color:var(--text-muted);"></i></div>
+                    </div>
+                    <div class="module-content"><ul class="space-y-1">${mod.lessons.map(lesson => `<li class="flex items-center text-sm" style="color:var(--text-secondary);"><i class="fas fa-play mr-2 text-xs" style="color:var(--color-primary);"></i>${lesson}</li>`).join('')}</ul></div>
+                `;
+                curriculumContainer.appendChild(div);
+            });
+
+            const reviews = [
+                { name: 'Sarah Johnson', rating: 5, text: 'Amazing course! The instructor explains everything clearly.', date: '2 days ago' },
+                { name: 'Mike Chen', rating: 5, text: 'Great content and projects. Highly recommended.', date: '1 week ago' },
+                { name: 'Emily Davis', rating: 4, text: 'Very comprehensive. Excellent overall.', date: '2 weeks ago' }
+            ];
+            const reviewContainer = document.getElementById('reviewContainer');
+            reviews.forEach(review => {
+                const div = document.createElement('div');
+                div.className = 'review-item';
+                div.innerHTML = `<div class="flex items-start justify-between"><div><p class="font-bold" style="color:var(--text-primary);">${review.name}</p><div class="text-yellow-400 text-sm">${'★'.repeat(review.rating)}${'☆'.repeat(5 - review.rating)}</div></div><span class="text-xs" style="color:var(--text-muted);">${review.date}</span></div><p class="text-sm mt-2" style="color:var(--text-secondary);">${review.text}</p>`;
+                reviewContainer.appendChild(div);
+            });
+        });
+
+        // ===== SHARED FUNCTIONS - NO POPUPS =====
+        let isDarkMode = localStorage.getItem('qskillDarkMode') === 'true';
+        function toggleDarkMode() { isDarkMode = !isDarkMode; localStorage.setItem('qskillDarkMode', isDarkMode); applyTheme(); updateSettingsToggle(); }
+        function toggleDarkModeFromSettings() { toggleDarkMode(); }
+        function applyTheme() {
+            const html = document.getElementById('htmlRoot');
+            const icon = document.getElementById('themeIcon');
+            const mobileIcon = document.getElementById('mobileThemeIcon');
+            if (isDarkMode) { html.classList.add('dark-mode'); if (icon) icon.className = 'fas fa-sun text-xl'; if (mobileIcon) mobileIcon.className = 'fas fa-sun text-xl'; }
+            else { html.classList.remove('dark-mode'); if (icon) icon.className = 'fas fa-moon text-xl'; if (mobileIcon) mobileIcon.className = 'fas fa-moon text-xl'; }
+        }
+        function updateSettingsToggle() { const toggle = document.querySelector('#settingsThemeToggle'); if (toggle) { isDarkMode ? toggle.classList.add('active') : toggle.classList.remove('active'); } }
+        function changeThemeColor(color) {
+            const colors = { blue: { start: '#2563eb', end: '#7c3aed' }, purple: { start: '#7c3aed', end: '#ec4899' }, green: { start: '#059669', end: '#14b8a6' }, red: { start: '#dc2626', end: '#f59e0b' }, orange: { start: '#f59e0b', end: '#ef4444' } };
+            const selected = colors[color] || colors.blue;
+            document.documentElement.style.setProperty('--color-primary', selected.start);
+            document.documentElement.style.setProperty('--color-secondary', selected.end);
+            localStorage.setItem('qskillThemeColor', color);
+        }
+        const savedColor = localStorage.getItem('qskillThemeColor') || 'blue';
+        const colorSelect = document.getElementById('themeColorSelect');
+        if (colorSelect) { colorSelect.value = savedColor; changeThemeColor(savedColor); }
+        function openSettings() { document.getElementById('settingsPanel').classList.add('active'); document.getElementById('settingsOverlay').classList.add('active'); document.body.style.overflow = 'hidden'; updateSettingsToggle(); }
+        function closeSettings() { document.getElementById('settingsPanel').classList.remove('active'); document.getElementById('settingsOverlay').classList.remove('active'); document.body.style.overflow = 'auto'; }
+        function saveSettings() { closeSettings(); }
+        function openMobileMenu() { document.getElementById('mobilePanel').classList.add('active'); document.getElementById('mobileOverlay').classList.add('active'); document.body.style.overflow = 'hidden'; }
+        function closeMobileMenu() { document.getElementById('mobilePanel').classList.remove('active'); document.getElementById('mobileOverlay').classList.remove('active'); document.body.style.overflow = 'auto'; }
+        function updateNavigation() {
+            const isStudent = sessionStorage.getItem('studentLoggedIn') === 'true';
+            const isInstructor = sessionStorage.getItem('instructorLoggedIn') === 'true';
+            const isAdmin = sessionStorage.getItem('adminLoggedIn') === 'true';
+            const studentName = sessionStorage.getItem('studentName') || 'Student';
+            const instructorName = sessionStorage.getItem('instructorName') || 'Instructor';
+            const desktopLogin = document.getElementById('desktopLoginLinks');
+            if (isStudent) {
+                desktopLogin.innerHTML = `<a href="student-dashboard.html" class="px-4 py-2 text-white rounded-lg font-medium shadow-md hover:shadow-lg transition" style="background:var(--gradient-primary);"><i class="fas fa-user mr-2"></i>${studentName}</a><button onclick="logout()" class="px-4 py-2 text-white rounded-lg font-medium transition" style="background:var(--color-danger);"><i class="fas fa-sign-out-alt mr-2"></i>Logout</button>`;
+            } else if (isInstructor) {
+                desktopLogin.innerHTML = `<a href="instructor-dashboard.html" class="px-4 py-2 text-white rounded-lg font-medium shadow-md hover:shadow-lg transition" style="background:var(--gradient-primary);"><i class="fas fa-user mr-2"></i>${instructorName}</a><button onclick="logout()" class="px-4 py-2 text-white rounded-lg font-medium transition" style="background:var(--color-danger);"><i class="fas fa-sign-out-alt mr-2"></i>Logout</button>`;
+            } else if (isAdmin) {
+                desktopLogin.innerHTML = `<a href="admin-dashboard.html" class="px-4 py-2 text-white rounded-lg font-medium shadow-md hover:shadow-lg transition" style="background:var(--gradient-primary);"><i class="fas fa-user-shield mr-2"></i>Admin</a><button onclick="logout()" class="px-4 py-2 text-white rounded-lg font-medium transition" style="background:var(--color-danger);"><i class="fas fa-sign-out-alt mr-2"></i>Logout</button>`;
+            } else {
+                desktopLogin.innerHTML = `<a href="student-login.html" class="px-4 py-2 text-white rounded-lg font-medium shadow-md hover:shadow-lg transition" style="background:var(--gradient-primary);"><i class="fas fa-user-graduate mr-2"></i>Student</a><a href="instructor-login.html" class="px-4 py-2 rounded-lg font-medium transition" style="background:var(--border-color);color:var(--text-secondary);"><i class="fas fa-chalkboard-teacher mr-2"></i>Instructor</a>`;
+            }
+            const mobileLogin = document.getElementById('mobileLoginLinks');
+            if (isStudent) {
+                mobileLogin.innerHTML = `<a href="student-dashboard.html" class="menu-item" style="color:var(--color-primary);font-weight:600;"><i class="fas fa-user"></i>${studentName}</a><button onclick="logout();closeMobileMenu();" class="menu-item" style="color:var(--color-danger);border:none;width:100%;text-align:left;background:none;cursor:pointer;"><i class="fas fa-sign-out-alt"></i>Logout</button>`;
+            } else if (isInstructor) {
+                mobileLogin.innerHTML = `<a href="instructor-dashboard.html" class="menu-item" style="color:var(--color-primary);font-weight:600;"><i class="fas fa-user"></i>${instructorName}</a><button onclick="logout();closeMobileMenu();" class="menu-item" style="color:var(--color-danger);border:none;width:100%;text-align:left;background:none;cursor:pointer;"><i class="fas fa-sign-out-alt"></i>Logout</button>`;
+            } else if (isAdmin) {
+                mobileLogin.innerHTML = `<a href="admin-dashboard.html" class="menu-item" style="color:var(--color-primary);font-weight:600;"><i class="fas fa-user-shield"></i>Admin</a><button onclick="logout();closeMobileMenu();" class="menu-item" style="color:var(--color-danger);border:none;width:100%;text-align:left;background:none;cursor:pointer;"><i class="fas fa-sign-out-alt"></i>Logout</button>`;
+            } else {
+                mobileLogin.innerHTML = `<a href="student-login.html" class="menu-item" style="color:var(--color-primary);"><i class="fas fa-user-graduate"></i>Student</a><a href="instructor-login.html" class="menu-item"><i class="fas fa-chalkboard-teacher"></i>Instructor</a>`;
+            }
+        }
+        function logout() {
+            sessionStorage.removeItem('studentLoggedIn'); sessionStorage.removeItem('studentEmail'); sessionStorage.removeItem('studentName');
+            sessionStorage.removeItem('instructorLoggedIn'); sessionStorage.removeItem('instructorEmail'); sessionStorage.removeItem('instructorName');
+            sessionStorage.removeItem('adminLoggedIn'); sessionStorage.removeItem('adminName');
+            window.location.reload();
+        }
+        document.addEventListener('keydown', function (e) {
+            if (e.key === 'Escape') { closeSettings(); closeMobileMenu(); }
+            if ((e.ctrlKey || e.metaKey) && e.key === 'd') { e.preventDefault(); toggleDarkMode(); }
+            if ((e.ctrlKey || e.metaKey) && e.key === 's') { e.preventDefault(); openSettings(); }
+        });
+        window.addEventListener('scroll', function () {
+            const navbar = document.getElementById('navbar');
+            if (window.scrollY > 100) { if (navbar) navbar.classList.add('navbar-scrolled'); }
+            else { if (navbar) navbar.classList.remove('navbar-scrolled'); }
+        });
+        document.addEventListener('DOMContentLoaded', function () {
+            applyTheme();
+            updateNavigation();
+            updateSettingsToggle();
+        });
+    </script>
+    <script src="translations.js"></script>
+</body>
+
+</html>

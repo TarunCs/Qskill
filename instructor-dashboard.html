@@ -1,0 +1,950 @@
+<!DOCTYPE html>
+<html lang="en" id="htmlRoot">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Instructor Dashboard - QSKILL</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+    <link rel="stylesheet" href="styles.css" />
+    <style>
+        .dashboard-container {
+            padding-top: 80px;
+            min-height: 100vh;
+            background: var(--bg-secondary);
+        }
+
+        .stat-card {
+            background: var(--bg-card);
+            border-radius: var(--radius-lg);
+            padding: 24px;
+            transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+            border: 1px solid var(--border-color);
+            cursor: pointer;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-6px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .stat-icon {
+            width: 52px;
+            height: 52px;
+            border-radius: var(--radius);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+        }
+
+        .welcome-banner {
+            background: var(--gradient-primary);
+            border-radius: var(--radius-xl);
+            padding: 32px;
+            color: white;
+        }
+
+        .course-card {
+            background: var(--bg-card);
+            border-radius: var(--radius-lg);
+            padding: 20px;
+            transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+            border: 1px solid var(--border-color);
+            margin-bottom: 16px;
+        }
+
+        .course-card:hover {
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .action-btn {
+            padding: 6px 14px;
+            border-radius: var(--radius);
+            border: none;
+            font-size: 0.75rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .action-btn-edit {
+            background: var(--color-primary-bg);
+            color: var(--color-primary);
+        }
+
+        .action-btn-edit:hover {
+            background: var(--color-primary);
+            color: white;
+        }
+
+        .action-btn-delete {
+            background: var(--color-danger-bg);
+            color: var(--color-danger);
+        }
+
+        .action-btn-delete:hover {
+            background: var(--color-danger);
+            color: white;
+        }
+
+        .action-btn-section {
+            background: var(--color-success-bg);
+            color: var(--color-success);
+        }
+
+        .action-btn-section:hover {
+            background: var(--color-success);
+            color: white;
+        }
+
+        .publish-badge {
+            display: inline-block;
+            padding: 2px 12px;
+            border-radius: var(--radius-full);
+            font-size: 0.6875rem;
+            font-weight: 600;
+        }
+
+        .publish-badge.published {
+            background: var(--color-success-bg);
+            color: var(--color-success);
+        }
+
+        .publish-badge.draft {
+            background: var(--color-warning-bg);
+            color: var(--color-warning);
+        }
+
+        .publish-badge.archived {
+            background: var(--color-danger-bg);
+            color: var(--color-danger);
+        }
+
+        .modal-overlay {
+            position: fixed;
+            inset: 0;
+            background: var(--bg-modal);
+            backdrop-filter: blur(12px);
+            z-index: 9998;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .modal-overlay.active {
+            display: flex;
+        }
+
+        .modal-content {
+            background: var(--bg-card);
+            border-radius: var(--radius-2xl);
+            max-width: 600px;
+            width: 100%;
+            padding: 32px;
+            max-height: 90vh;
+            overflow-y: auto;
+            border: 1px solid var(--border-color);
+            animation: slideUp 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            padding-bottom: 16px;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .modal-header h2 {
+            font-family: var(--font-display);
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .modal-header h2 i {
+            color: var(--color-primary);
+        }
+
+        .modal-header .close-btn {
+            font-size: 1.5rem;
+            color: var(--text-secondary);
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 4px;
+            transition: all 0.3s ease;
+        }
+
+        .modal-header .close-btn:hover {
+            transform: rotate(90deg);
+            color: var(--text-primary);
+        }
+
+        .form-input,
+        .form-select,
+        .form-textarea {
+            width: 100%;
+            padding: 12px 16px;
+            border: 2px solid var(--border-color);
+            border-radius: var(--radius);
+            transition: all 0.3s ease;
+            font-family: var(--font-body);
+            font-size: 0.9375rem;
+            background: var(--bg-input);
+            color: var(--text-primary);
+        }
+
+        .form-input:focus,
+        .form-select:focus,
+        .form-textarea:focus {
+            outline: none;
+            border-color: var(--color-primary);
+            box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.08);
+        }
+
+        .form-label {
+            display: block;
+            font-family: var(--font-display);
+            font-weight: 600;
+            font-size: 0.875rem;
+            color: var(--text-primary);
+            margin-bottom: 6px;
+        }
+
+        .section-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 16px;
+            background: var(--bg-secondary);
+            border-radius: var(--radius);
+            border: 1px solid var(--border-color);
+            transition: all 0.3s ease;
+            margin-bottom: 8px;
+        }
+
+        .section-item:hover {
+            border-color: var(--color-primary);
+        }
+
+        .section-item .section-info {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .section-item .section-info .num {
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            background: var(--color-primary);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.75rem;
+            font-weight: 700;
+        }
+
+        .section-item .section-actions {
+            display: flex;
+            gap: 6px;
+        }
+
+        .section-item .section-actions button {
+            padding: 4px 10px;
+            border-radius: var(--radius);
+            border: none;
+            font-size: 0.6875rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .section-item .section-actions .edit-section {
+            background: var(--color-primary-bg);
+            color: var(--color-primary);
+        }
+
+        .section-item .section-actions .edit-section:hover {
+            background: var(--color-primary);
+            color: white;
+        }
+
+        .section-item .section-actions .delete-section {
+            background: var(--color-danger-bg);
+            color: var(--color-danger);
+        }
+
+        .section-item .section-actions .delete-section:hover {
+            background: var(--color-danger);
+            color: white;
+        }
+
+        .activity-item {
+            padding: 12px 16px;
+            border-left: 3px solid var(--color-primary);
+            background: var(--bg-card);
+            border-radius: var(--radius);
+            margin-bottom: 10px;
+            border: 1px solid var(--border-color);
+        }
+
+        .student-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 10px 0;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .student-item:last-child {
+            border-bottom: none;
+        }
+
+        .status-selector {
+            display: flex;
+            gap: 8px;
+            margin-top: 8px;
+        }
+
+        .status-selector button {
+            padding: 4px 14px;
+            border-radius: var(--radius-full);
+            border: 2px solid var(--border-color);
+            background: transparent;
+            font-size: 0.75rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            color: var(--text-secondary);
+        }
+
+        .status-selector button:hover {
+            border-color: var(--color-primary);
+            color: var(--text-primary);
+        }
+
+        .status-selector button.active {
+            border-color: var(--color-primary);
+            background: var(--color-primary);
+            color: white;
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 40px 20px;
+        }
+
+        .empty-state .icon {
+            font-size: 48px;
+            color: var(--text-muted);
+            opacity: 0.5;
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Back to Top -->
+    <div id="backToTop" class="back-to-top" onclick="window.scrollTo({top:0,behavior:'smooth'})"><i
+            class="fas fa-arrow-up"></i></div>
+
+    <!-- Settings Panel -->
+    <div id="settingsOverlay" class="settings-overlay" onclick="closeSettings()"></div>
+    <div id="settingsPanel" class="settings-panel">
+        <div class="settings-header">
+            <h2><i class="fas fa-cog mr-2" style="color:var(--color-primary);"></i>Settings</h2><button
+                class="close-btn" onclick="closeSettings()"><i class="fas fa-times"></i></button>
+        </div>
+        <div class="setting-section">
+            <div class="setting-section-title"><i class="fas fa-palette" style="color:var(--color-primary);"></i>
+                Appearance</div>
+            <div class="setting-item">
+                <div class="info">
+                    <div class="label">🌙 Dark Mode</div>
+                    <div class="desc">Toggle dark/light theme</div>
+                </div>
+                <div class="control"><button id="settingsThemeToggle" class="toggle-switch"
+                        onclick="toggleDarkModeFromSettings()">
+                        <div class="toggle-slider"></div>
+                    </button></div>
+            </div>
+            <div class="setting-item">
+                <div class="info">
+                    <div class="label">🎨 Theme Color</div>
+                    <div class="desc">Choose accent color</div>
+                </div>
+                <div class="control"><select id="themeColorSelect" class="settings-select"
+                        onchange="changeThemeColor(this.value)">
+                        <option value="blue">Blue</option>
+                        <option value="purple">Purple</option>
+                        <option value="green">Green</option>
+                        <option value="red">Red</option>
+                        <option value="orange">Orange</option>
+                    </select></div>
+            </div>
+        </div>
+        <div id="instructorSettings" class="setting-section">
+            <div class="setting-section-title"><i class="fas fa-chalkboard-teacher"
+                    style="color:var(--color-primary);"></i> Instructor Preferences</div>
+            <div class="setting-item">
+                <div class="info">
+                    <div class="label">📊 Student Analytics</div>
+                    <div class="desc">Detailed progress reports</div>
+                </div>
+                <div class="control"><button class="toggle-switch active" onclick="toggleSetting(this)">
+                        <div class="toggle-slider"></div>
+                    </button></div>
+            </div>
+            <div class="setting-item">
+                <div class="info">
+                    <div class="label">✏️ Auto-Publish</div>
+                    <div class="desc">Auto-publish courses on creation</div>
+                </div>
+                <div class="control"><button class="toggle-switch" onclick="toggleSetting(this)">
+                        <div class="toggle-slider"></div>
+                    </button></div>
+            </div>
+            <div class="setting-item">
+                <div class="info">
+                    <div class="label">📅 Default Duration</div>
+                    <div class="desc">Set default course duration</div>
+                </div>
+                <div class="control"><select class="settings-select" onchange="saveSettings()">
+                        <option value="4">4 weeks</option>
+                        <option value="8" selected>8 weeks</option>
+                        <option value="12">12 weeks</option>
+                    </select></div>
+            </div>
+        </div>
+        <div class="mt-6 pt-6 border-t" style="border-color:var(--border-color);"><button onclick="saveSettings()"
+                class="w-full py-3 rounded-xl font-bold text-white transition"
+                style="background:var(--gradient-primary);"><i class="fas fa-save mr-2"></i>Save Settings</button></div>
+    </div>
+    <!-- Language Selector -->
+    <div class="flex gap-2 flex-wrap mb-4">
+        <button class="language-btn active" data-lang="en" onclick="changeLanguage('en')">🇬🇧 EN</button>
+        <button class="language-btn" data-lang="hi" onclick="changeLanguage('hi')">🇮🇳 HI</button>
+        <button class="language-btn" data-lang="ta" onclick="changeLanguage('ta')">🇮🇳 TA</button>
+        <button class="language-btn" data-lang="te" onclick="changeLanguage('te')">🇮🇳 TE</button>
+        <button class="language-btn" data-lang="kn" onclick="changeLanguage('kn')">🇮🇳 KN</button>
+        <button class="language-btn" data-lang="ml" onclick="changeLanguage('ml')">🇮🇳 ML</button>
+    </div>
+
+    <!-- Mobile Menu -->
+    <div id="mobileOverlay" class="mobile-menu-overlay" onclick="closeMobileMenu()"></div>
+    <div id="mobilePanel" class="mobile-menu-panel">
+        <div class="menu-header"><span class="logo">QSKILL</span><button class="close-btn"
+                onclick="closeMobileMenu()"><i class="fas fa-times"></i></button></div>
+        <a href="index.html" class="menu-item"><i class="fas fa-home"></i>Home</a>
+        <a href="courses.html" class="menu-item"><i class="fas fa-book"></i>Courses</a>
+        <a href="about.html" class="menu-item"><i class="fas fa-info-circle"></i>About</a>
+        <a href="blog.html" class="menu-item"><i class="fas fa-blog"></i>Blog</a>
+        <div id="mobileLoginLinks" class="pt-3"></div>
+    </div>
+
+    <!-- Navigation -->
+    <nav id="navbar" class="navbar fixed top-0 left-0 right-0 z-50 shadow-sm">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <a href="index.html" class="flex items-center group"><span class="text-2xl font-extrabold"
+                        style="color:var(--color-primary);">QSKILL</span><span class="ml-1 text-sm font-medium"
+                        style="color:var(--text-muted);">.com</span></a>
+                <div class="hidden md:flex items-center space-x-1">
+                    <a href="index.html" class="px-4 py-2 font-medium nav-link">Home</a>
+                    <a href="courses.html" class="px-4 py-2 font-medium nav-link">Courses</a>
+                    <a href="about.html" class="px-4 py-2 font-medium nav-link">About</a>
+                    <a href="blog.html" class="px-4 py-2 font-medium nav-link">Blog</a>
+                    <div class="h-6 w-px mx-2" style="background:var(--border-color);"></div>
+                    <div id="desktopLoginLinks"></div>
+                    <button onclick="openSettings()" class="ml-1 p-2 rounded-lg transition"
+                        style="color:var(--text-secondary);"><i class="fas fa-cog text-xl"></i></button>
+                    <button onclick="toggleDarkMode()" class="p-2 rounded-lg transition"
+                        style="color:var(--text-secondary);"><i id="themeIcon" class="fas fa-moon text-xl"></i></button>
+                </div>
+                <div class="flex items-center gap-2 md:hidden">
+                    <button onclick="openSettings()" class="p-2 rounded-lg transition"
+                        style="color:var(--text-secondary);"><i class="fas fa-cog text-xl"></i></button>
+                    <button onclick="toggleDarkMode()" class="p-2 rounded-lg transition"
+                        style="color:var(--text-secondary);"><i id="mobileThemeIcon"
+                            class="fas fa-moon text-xl"></i></button>
+                    <button onclick="openMobileMenu()" class="text-2xl transition"
+                        style="color:var(--text-secondary);"><i class="fas fa-bars"></i></button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- ===== PAGE CONTENT ===== -->
+    <div class="dashboard-container">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+
+            <div class="welcome-banner mb-8">
+                <div class="flex flex-wrap items-center justify-between">
+                    <div>
+                        <h1 class="text-2xl md:text-3xl font-bold" id="greeting">Welcome back, Instructor! 👨‍🏫</h1>
+                        <p class="text-blue-100 mt-1">Manage your courses, sections, and students.</p>
+                    </div>
+                    <div class="bg-white/20 backdrop-blur-sm px-4 py-2 rounded-lg text-sm"><i
+                            class="far fa-calendar-alt mr-2"></i><span id="currentDate"></span></div>
+                </div>
+            </div>
+
+            <div class="grid md:grid-cols-4 gap-6 mb-8">
+                <div class="stat-card">
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <p class="text-sm" style="color:var(--text-secondary);">Total Courses</p>
+                            <p class="text-2xl font-bold" style="color:var(--text-primary);" id="totalCourses">0</p>
+                        </div>
+                        <div class="stat-icon" style="background:var(--color-primary-bg);color:var(--color-primary);"><i
+                                class="fas fa-book"></i></div>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <p class="text-sm" style="color:var(--text-secondary);">Students</p>
+                            <p class="text-2xl font-bold" style="color:var(--text-primary);" id="totalStudents">0</p>
+                        </div>
+                        <div class="stat-icon" style="background:var(--color-success-bg);color:var(--color-success);"><i
+                                class="fas fa-users"></i></div>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <p class="text-sm" style="color:var(--text-secondary);">Published</p>
+                            <p class="text-2xl font-bold" style="color:var(--color-success);" id="publishedCount">0</p>
+                        </div>
+                        <div class="stat-icon" style="background:var(--color-success-bg);color:var(--color-success);"><i
+                                class="fas fa-check-circle"></i></div>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <p class="text-sm" style="color:var(--text-secondary);">Drafts</p>
+                            <p class="text-2xl font-bold" style="color:var(--color-warning);" id="draftCount">0</p>
+                        </div>
+                        <div class="stat-icon" style="background:var(--color-warning-bg);color:var(--color-warning);"><i
+                                class="fas fa-pencil-alt"></i></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="rounded-2xl shadow-sm p-6 mb-8"
+                style="background:var(--bg-card);border:1px solid var(--border-color);">
+                <div class="flex flex-wrap justify-between items-center mb-6">
+                    <h2 class="text-xl font-bold" style="color:var(--text-primary);">📖 My Courses</h2>
+                    <button onclick="openCreateCourse()"
+                        class="px-4 py-2 rounded-lg text-white text-sm font-semibold transition"
+                        style="background:var(--gradient-primary);"><i class="fas fa-plus mr-2"></i>Create
+                        Course</button>
+                </div>
+                <div id="coursesContainer"></div>
+            </div>
+
+            <div class="grid md:grid-cols-2 gap-6">
+                <div class="rounded-2xl shadow-sm p-6"
+                    style="background:var(--bg-card);border:1px solid var(--border-color);">
+                    <h2 class="text-xl font-bold mb-4" style="color:var(--text-primary);">📝 Recent Activity</h2>
+                    <div id="activityContainer"></div>
+                </div>
+                <div class="rounded-2xl shadow-sm p-6"
+                    style="background:var(--bg-card);border:1px solid var(--border-color);">
+                    <h2 class="text-xl font-bold mb-4" style="color:var(--text-primary);">👨‍🎓 Recent Students</h2>
+                    <div id="studentsContainer"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer style="background:var(--bg-footer);" class="text-white py-6 text-center text-sm">
+        <div class="max-w-7xl mx-auto px-4">&copy; 2026 QSKILL. All rights reserved.</div>
+    </footer>
+
+    <!-- ===== COURSE MODAL ===== -->
+    <div id="courseModal" class="modal-overlay">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 id="modalTitle"><i class="fas fa-plus-circle"></i> Create Course</h2><button class="close-btn"
+                    onclick="closeCourseModal()"><i class="fas fa-times"></i></button>
+            </div>
+            <form id="courseForm" onsubmit="handleCourseSubmit(event)">
+                <input type="hidden" id="editCourseId" />
+                <div class="mb-4"><label class="form-label">Course Title *</label><input type="text" required
+                        class="form-input" placeholder="e.g., Advanced JavaScript" id="courseTitleInput" /></div>
+                <div class="mb-4"><label class="form-label">Description *</label><textarea rows="3" required
+                        class="form-textarea" placeholder="Describe your course..." id="courseDescInput"></textarea>
+                </div>
+                <div class="grid grid-cols-2 gap-4 mb-4">
+                    <div><label class="form-label">Category</label><select required class="form-select"
+                            id="courseCategoryInput">
+                            <option value="web">Web Development</option>
+                            <option value="data">Data Science</option>
+                            <option value="marketing">Digital Marketing</option>
+                            <option value="ai">AI & ML</option>
+                            <option value="cloud">Cloud Computing</option>
+                            <option value="other">Other</option>
+                        </select></div>
+                    <div><label class="form-label">Price</label><input type="number" required class="form-input"
+                            placeholder="49" id="coursePriceInput" /></div>
+                </div>
+                <div class="mb-4"><label class="form-label">Video URL</label><input type="url" class="form-input"
+                        placeholder="https://www.youtube.com/embed/..." id="courseVideoInput" /></div>
+                <div class="mb-4">
+                    <label class="form-label">Status</label>
+                    <div class="status-selector">
+                        <button type="button" class="active" data-status="published" onclick="setStatus(this)">📢
+                            Published</button>
+                        <button type="button" data-status="draft" onclick="setStatus(this)">✏️ Draft</button>
+                        <button type="button" data-status="archived" onclick="setStatus(this)">📦 Archived</button>
+                    </div>
+                    <input type="hidden" id="courseStatusInput" value="published" />
+                </div>
+                <button type="submit" class="w-full py-3 rounded-xl font-bold text-white transition"
+                    style="background:var(--gradient-primary);"><i class="fas fa-save mr-2"></i><span
+                        id="submitBtnText">Create Course</span></button>
+            </form>
+        </div>
+    </div>
+
+    <!-- ===== SECTION MODAL ===== -->
+    <div id="sectionModal" class="modal-overlay">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 id="sectionModalTitle"><i class="fas fa-layer-group"></i> Add Section</h2><button class="close-btn"
+                    onclick="closeSectionModal()"><i class="fas fa-times"></i></button>
+            </div>
+            <form id="sectionForm" onsubmit="handleSectionSubmit(event)">
+                <input type="hidden" id="editSectionId" /><input type="hidden" id="sectionCourseId" />
+                <div class="mb-4"><label class="form-label">Section Title *</label><input type="text" required
+                        class="form-input" placeholder="e.g., Introduction to React" id="sectionTitleInput" /></div>
+                <div class="mb-4"><label class="form-label">Description</label><textarea rows="2" class="form-textarea"
+                        placeholder="What will students learn?" id="sectionDescInput"></textarea></div>
+                <div class="grid grid-cols-2 gap-4 mb-4">
+                    <div><label class="form-label">Order</label><input type="number" class="form-input" placeholder="1"
+                            id="sectionOrderInput" value="1" /></div>
+                    <div><label class="form-label">Lessons</label><input type="number" class="form-input"
+                            placeholder="5" id="sectionLessonsInput" value="5" /></div>
+                </div>
+                <button type="submit" class="w-full py-3 rounded-xl font-bold text-white transition"
+                    style="background:var(--gradient-primary);"><i class="fas fa-save mr-2"></i><span
+                        id="sectionSubmitBtnText">Add Section</span></button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        // ===== SESSION CHECK =====
+        if (sessionStorage.getItem('instructorLoggedIn') !== 'true') { window.location.href = 'instructor-login.html'; }
+        const instructorName = sessionStorage.getItem('instructorName') || 'Instructor';
+        document.querySelector('#greeting').textContent = `Welcome back, ${instructorName}! 👨‍🏫`;
+
+        let courses = [];
+        let sections = {};
+
+        function loadData() {
+            const saved = JSON.parse(localStorage.getItem('qskillCourses') || '[]');
+            const savedSections = JSON.parse(localStorage.getItem('qskillSections') || '{}');
+            if (saved.length === 0) {
+                courses = [
+                    { id: 1, title: 'Web Development Bootcamp', desc: 'Full-stack with HTML, CSS, JS & React.', category: 'web', price: '$49', students: 1234, rating: 4.8, instructor: instructorName, date: '2026-01-15', status: 'published' },
+                    { id: 2, title: 'Data Science Masterclass', desc: 'Python, Pandas, ML & Visualization.', category: 'data', price: '$79', students: 987, rating: 4.9, instructor: instructorName, date: '2026-02-01', status: 'published' },
+                    { id: 3, title: 'Digital Marketing Pro', desc: 'SEO, Social Media, Google Ads.', category: 'marketing', price: '$39', students: 876, rating: 4.7, instructor: instructorName, date: '2025-12-10', status: 'draft' }
+                ];
+                localStorage.setItem('qskillCourses', JSON.stringify(courses));
+            } else { courses = saved; }
+            if (Object.keys(savedSections).length === 0) {
+                sections = { '1': [{ id: 1, title: 'Module 1: HTML & CSS', desc: 'Learn HTML & CSS', order: 1, lessons: 5 }, { id: 2, title: 'Module 2: JavaScript', desc: 'Master JS', order: 2, lessons: 6 }], '2': [{ id: 1, title: 'Module 1: Python Basics', desc: 'Intro to Python', order: 1, lessons: 5 }], '3': [{ id: 1, title: 'Module 1: SEO', desc: 'SEO basics', order: 1, lessons: 3 }] };
+                localStorage.setItem('qskillSections', JSON.stringify(sections));
+            }
+        }
+
+        function saveData() { localStorage.setItem('qskillCourses', JSON.stringify(courses)); localStorage.setItem('qskillSections', JSON.stringify(sections)); }
+
+        function updateDateTime() {
+            const now = new Date();
+            document.getElementById('currentDate').textContent = now.toLocaleDateString('en-US', { weekday: 'short', month: 'short', day: 'numeric', year: 'numeric' });
+        }
+        updateDateTime();
+        setInterval(updateDateTime, 60000);
+
+        function openCreateCourse() {
+            document.getElementById('modalTitle').innerHTML = '<i class="fas fa-plus-circle"></i> Create Course';
+            document.getElementById('submitBtnText').textContent = 'Create Course';
+            document.getElementById('editCourseId').value = '';
+            document.getElementById('courseForm').reset();
+            document.getElementById('courseStatusInput').value = 'published';
+            document.querySelectorAll('.status-selector button').forEach(b => b.classList.remove('active'));
+            document.querySelector('.status-selector button[data-status="published"]').classList.add('active');
+            document.getElementById('courseModal').classList.add('active');
+        }
+
+        function openEditCourse(courseId) {
+            const course = courses.find(c => c.id === courseId);
+            if (!course) return;
+            document.getElementById('modalTitle').innerHTML = '<i class="fas fa-edit"></i> Edit Course';
+            document.getElementById('submitBtnText').textContent = 'Update Course';
+            document.getElementById('editCourseId').value = courseId;
+            document.getElementById('courseTitleInput').value = course.title;
+            document.getElementById('courseDescInput').value = course.desc;
+            document.getElementById('courseCategoryInput').value = course.category;
+            document.getElementById('coursePriceInput').value = course.price.replace('$', '');
+            document.getElementById('courseVideoInput').value = course.video || '';
+            document.getElementById('courseStatusInput').value = course.status || 'published';
+            document.querySelectorAll('.status-selector button').forEach(b => b.classList.remove('active'));
+            const statusBtn = document.querySelector(`.status-selector button[data-status="${course.status || 'published'}"]`);
+            if (statusBtn) statusBtn.classList.add('active');
+            document.getElementById('courseModal').classList.add('active');
+        }
+
+        function closeCourseModal() { document.getElementById('courseModal').classList.remove('active'); }
+
+        function setStatus(el) {
+            document.querySelectorAll('.status-selector button').forEach(b => b.classList.remove('active'));
+            el.classList.add('active');
+            document.getElementById('courseStatusInput').value = el.dataset.status;
+        }
+
+        function handleCourseSubmit(e) {
+            e.preventDefault();
+            const id = document.getElementById('editCourseId').value;
+            const title = document.getElementById('courseTitleInput').value;
+            const desc = document.getElementById('courseDescInput').value;
+            const category = document.getElementById('courseCategoryInput').value;
+            const price = document.getElementById('coursePriceInput').value;
+            const video = document.getElementById('courseVideoInput').value;
+            const status = document.getElementById('courseStatusInput').value;
+            if (id) {
+                const index = courses.findIndex(c => c.id === parseInt(id));
+                if (index !== -1) { courses[index] = { ...courses[index], title, desc, category, price: `$${price}`, video, status, lastUpdated: new Date().toISOString() }; }
+            } else {
+                const newCourse = { id: Date.now(), title, desc, category, price: `$${price}`, video, status, instructor: instructorName, date: new Date().toISOString().split('T')[0], students: 0, rating: 0 };
+                courses.push(newCourse);
+                sections[newCourse.id] = [];
+            }
+            saveData();
+            closeCourseModal();
+            renderDashboard();
+        }
+
+        function deleteCourse(courseId) {
+            // NO CONFIRM - Just delete
+            courses = courses.filter(c => c.id !== courseId);
+            delete sections[courseId];
+            saveData();
+            renderDashboard();
+        }
+
+        function openAddSection(courseId) {
+            document.getElementById('sectionModalTitle').innerHTML = '<i class="fas fa-layer-group"></i> Add Section';
+            document.getElementById('sectionSubmitBtnText').textContent = 'Add Section';
+            document.getElementById('editSectionId').value = '';
+            document.getElementById('sectionCourseId').value = courseId;
+            document.getElementById('sectionForm').reset();
+            document.getElementById('sectionOrderInput').value = (sections[courseId]?.length || 0) + 1;
+            document.getElementById('sectionModal').classList.add('active');
+        }
+
+        function openEditSection(courseId, sectionId) {
+            const section = sections[courseId]?.find(s => s.id === sectionId);
+            if (!section) return;
+            document.getElementById('sectionModalTitle').innerHTML = '<i class="fas fa-edit"></i> Edit Section';
+            document.getElementById('sectionSubmitBtnText').textContent = 'Update Section';
+            document.getElementById('editSectionId').value = sectionId;
+            document.getElementById('sectionCourseId').value = courseId;
+            document.getElementById('sectionTitleInput').value = section.title;
+            document.getElementById('sectionDescInput').value = section.desc || '';
+            document.getElementById('sectionOrderInput').value = section.order;
+            document.getElementById('sectionLessonsInput').value = section.lessons;
+            document.getElementById('sectionModal').classList.add('active');
+        }
+
+        function closeSectionModal() { document.getElementById('sectionModal').classList.remove('active'); }
+
+        function handleSectionSubmit(e) {
+            e.preventDefault();
+            const courseId = parseInt(document.getElementById('sectionCourseId').value);
+            const sectionId = document.getElementById('editSectionId').value;
+            const title = document.getElementById('sectionTitleInput').value;
+            const desc = document.getElementById('sectionDescInput').value;
+            const order = parseInt(document.getElementById('sectionOrderInput').value);
+            const lessons = parseInt(document.getElementById('sectionLessonsInput').value);
+            if (!sections[courseId]) sections[courseId] = [];
+            if (sectionId) {
+                const index = sections[courseId].findIndex(s => s.id === parseInt(sectionId));
+                if (index !== -1) { sections[courseId][index] = { ...sections[courseId][index], title, desc, order, lessons }; }
+            } else {
+                sections[courseId].push({ id: Date.now(), title, desc, order, lessons });
+            }
+            saveData();
+            closeSectionModal();
+            renderDashboard();
+        }
+
+        function deleteSection(courseId, sectionId) {
+            // NO CONFIRM - Just delete
+            sections[courseId] = sections[courseId].filter(s => s.id !== sectionId);
+            saveData();
+            renderDashboard();
+        }
+
+        function renderDashboard() {
+            loadData();
+            const total = courses.length;
+            const published = courses.filter(c => c.status === 'published').length;
+            const drafts = courses.filter(c => c.status === 'draft').length;
+            const totalStudents = courses.reduce((sum, c) => sum + (c.students || 0), 0);
+            document.getElementById('totalCourses').textContent = total;
+            document.getElementById('totalStudents').textContent = totalStudents.toLocaleString();
+            document.getElementById('publishedCount').textContent = published;
+            document.getElementById('draftCount').textContent = drafts;
+
+            const container = document.getElementById('coursesContainer');
+            if (courses.length === 0) {
+                container.innerHTML = `<div class="empty-state"><div class="icon"><i class="fas fa-book-open"></i></div><h3>No Courses Yet</h3><p>Create your first course!</p><button onclick="openCreateCourse()" class="mt-4 px-6 py-3 rounded-lg text-white font-semibold transition" style="background:var(--gradient-primary);"><i class="fas fa-plus mr-2"></i>Create Course</button></div>`;
+                return;
+            }
+            let html = '';
+            courses.forEach(course => {
+                const courseSections = sections[course.id] || [];
+                const statusColor = course.status === 'published' ? 'published' : course.status === 'draft' ? 'draft' : 'archived';
+                const statusLabel = course.status === 'published' ? '✅ Published' : course.status === 'draft' ? '📝 Draft' : '📦 Archived';
+                html += `<div class="course-card"><div class="flex flex-wrap items-start justify-between gap-4">
+                    <div class="flex-1 min-w-[200px]"><div class="flex items-center gap-3 flex-wrap"><h3 class="font-bold text-lg" style="color:var(--text-primary);">${course.title}</h3><span class="publish-badge ${statusColor}">${statusLabel}</span></div>
+                    <p class="text-sm mt-1" style="color:var(--text-secondary);">${course.desc}</p>
+                    <div class="flex flex-wrap items-center gap-4 mt-2 text-sm" style="color:var(--text-secondary);"><span><i class="fas fa-users mr-1"></i>${(course.students || 0).toLocaleString()}</span><span><i class="fas fa-dollar-sign mr-1"></i>${course.price}</span><span><i class="fas fa-calendar-alt mr-1"></i>${new Date(course.date).toLocaleDateString()}</span><span><i class="fas fa-layer-group mr-1"></i>${courseSections.length} sections</span></div></div>
+                    <div class="flex flex-wrap gap-2"><button onclick="openEditCourse(${course.id})" class="action-btn action-btn-edit"><i class="fas fa-edit"></i>Edit</button><button onclick="openAddSection(${course.id})" class="action-btn action-btn-section"><i class="fas fa-plus"></i>Section</button><button onclick="deleteCourse(${course.id})" class="action-btn action-btn-delete"><i class="fas fa-trash"></i>Delete</button></div></div>
+                    ${courseSections.length > 0 ? `<div class="mt-4 pt-4 border-t" style="border-color:var(--border-color);"><div class="flex justify-between items-center mb-3"><span class="text-sm font-semibold" style="color:var(--text-primary);">📚 Sections (${courseSections.length})</span><button onclick="openAddSection(${course.id})" class="text-xs font-semibold" style="color:var(--color-primary);"><i class="fas fa-plus mr-1"></i>Add</button></div>${courseSections.sort((a, b) => a.order - b.order).map(s => `<div class="section-item"><div class="section-info"><span class="num">${s.order}</span><div><div style="color:var(--text-primary);font-weight:500;">${s.title}</div><div style="color:var(--text-muted);font-size:0.75rem;">${s.lessons} lessons ${s.desc ? '· ' + s.desc : ''}</div></div></div><div class="section-actions"><button onclick="openEditSection(${course.id}, ${s.id})" class="edit-section"><i class="fas fa-edit"></i></button><button onclick="deleteSection(${course.id}, ${s.id})" class="delete-section"><i class="fas fa-trash"></i></button></div></div>`).join('')}</div>` : `<div class="mt-4 pt-4 border-t" style="border-color:var(--border-color);"><div class="text-center py-4 text-sm" style="color:var(--text-muted);"><i class="fas fa-layer-group mr-2"></i>No sections. <button onclick="openAddSection(${course.id})" class="font-semibold" style="color:var(--color-primary);">Add one</button></div></div>`}</div>`;
+            });
+            container.innerHTML = html;
+
+            const activities = [
+                { text: `📚 ${courses.length} courses in your library`, date: new Date() },
+                { text: `👨‍🎓 ${totalStudents.toLocaleString()} students enrolled`, date: new Date(Date.now() - 1000 * 60 * 60 * 2) },
+                { text: `📝 ${published} published, ${drafts} in draft`, date: new Date(Date.now() - 1000 * 60 * 60 * 5) }
+            ];
+            const activityContainer = document.getElementById('activityContainer');
+            activityContainer.innerHTML = '';
+            activities.forEach(activity => {
+                const div = document.createElement('div');
+                div.className = 'activity-item';
+                div.innerHTML = `<div class="flex justify-between items-start"><span class="text-sm" style="color:var(--text-primary);">${activity.text}</span><span class="text-xs" style="color:var(--text-muted);">${activity.date.toLocaleDateString()}</span></div>`;
+                activityContainer.appendChild(div);
+            });
+
+            const students = [
+                { name: 'Sarah Johnson', email: 'sarah@example.com', course: courses[0]?.title || 'Course', enrolled: new Date(Date.now() - 1000 * 60 * 60 * 2).toISOString() },
+                { name: 'Mike Chen', email: 'mike@example.com', course: courses[1]?.title || 'Course', enrolled: new Date(Date.now() - 1000 * 60 * 60 * 5).toISOString() },
+                { name: 'Emily Davis', email: 'emily@example.com', course: courses[0]?.title || 'Course', enrolled: new Date(Date.now() - 1000 * 60 * 60 * 12).toISOString() }
+            ];
+            const studentsContainer = document.getElementById('studentsContainer');
+            studentsContainer.innerHTML = '';
+            students.forEach(student => {
+                const div = document.createElement('div');
+                div.className = 'student-item';
+                const enrolled = new Date(student.enrolled);
+                div.innerHTML = `<div><div class="font-medium" style="color:var(--text-primary);">${student.name}</div><div class="text-xs" style="color:var(--text-secondary);">${student.email}</div></div><div class="text-right"><span class="text-xs" style="color:var(--text-secondary);">${student.course}</span><div class="text-xs" style="color:var(--text-muted);">${enrolled.toLocaleDateString()}</div></div>`;
+                studentsContainer.appendChild(div);
+            });
+        }
+
+        // ===== SHARED FUNCTIONS - NO POPUPS =====
+        let isDarkMode = localStorage.getItem('qskillDarkMode') === 'true';
+        function toggleDarkMode() { isDarkMode = !isDarkMode; localStorage.setItem('qskillDarkMode', isDarkMode); applyTheme(); updateSettingsToggle(); }
+        function toggleDarkModeFromSettings() { toggleDarkMode(); }
+        function applyTheme() {
+            const html = document.getElementById('htmlRoot');
+            const icon = document.getElementById('themeIcon');
+            const mobileIcon = document.getElementById('mobileThemeIcon');
+            if (isDarkMode) { html.classList.add('dark-mode'); if (icon) icon.className = 'fas fa-sun text-xl'; if (mobileIcon) mobileIcon.className = 'fas fa-sun text-xl'; }
+            else { html.classList.remove('dark-mode'); if (icon) icon.className = 'fas fa-moon text-xl'; if (mobileIcon) mobileIcon.className = 'fas fa-moon text-xl'; }
+        }
+        function updateSettingsToggle() { const toggle = document.querySelector('#settingsThemeToggle'); if (toggle) { isDarkMode ? toggle.classList.add('active') : toggle.classList.remove('active'); } }
+        function changeThemeColor(color) {
+            const colors = { blue: { start: '#2563eb', end: '#7c3aed' }, purple: { start: '#7c3aed', end: '#ec4899' }, green: { start: '#059669', end: '#14b8a6' }, red: { start: '#dc2626', end: '#f59e0b' }, orange: { start: '#f59e0b', end: '#ef4444' } };
+            const selected = colors[color] || colors.blue;
+            document.documentElement.style.setProperty('--color-primary', selected.start);
+            document.documentElement.style.setProperty('--color-secondary', selected.end);
+            localStorage.setItem('qskillThemeColor', color);
+        }
+        const savedColor = localStorage.getItem('qskillThemeColor') || 'blue';
+        const colorSelect = document.getElementById('themeColorSelect');
+        if (colorSelect) { colorSelect.value = savedColor; changeThemeColor(savedColor); }
+        function openSettings() { document.getElementById('settingsPanel').classList.add('active'); document.getElementById('settingsOverlay').classList.add('active'); document.body.style.overflow = 'hidden'; updateSettingsToggle(); }
+        function closeSettings() { document.getElementById('settingsPanel').classList.remove('active'); document.getElementById('settingsOverlay').classList.remove('active'); document.body.style.overflow = 'auto'; }
+        function toggleSetting(element) { element.classList.toggle('active'); }
+        function saveSettings() { closeSettings(); }
+        function openMobileMenu() { document.getElementById('mobilePanel').classList.add('active'); document.getElementById('mobileOverlay').classList.add('active'); document.body.style.overflow = 'hidden'; }
+        function closeMobileMenu() { document.getElementById('mobilePanel').classList.remove('active'); document.getElementById('mobileOverlay').classList.remove('active'); document.body.style.overflow = 'auto'; }
+        function updateNavigation() {
+            const isStudent = sessionStorage.getItem('studentLoggedIn') === 'true';
+            const isInstructor = sessionStorage.getItem('instructorLoggedIn') === 'true';
+            const isAdmin = sessionStorage.getItem('adminLoggedIn') === 'true';
+            const studentName = sessionStorage.getItem('studentName') || 'Student';
+            const instructorName = sessionStorage.getItem('instructorName') || 'Instructor';
+            const desktopLogin = document.getElementById('desktopLoginLinks');
+            if (isStudent) {
+                desktopLogin.innerHTML = `<span class="px-4 py-2 text-white rounded-lg font-medium shadow-md" style="background:var(--gradient-primary);"><i class="fas fa-user mr-2"></i>${studentName}</span><button onclick="logout()" class="px-4 py-2 text-white rounded-lg font-medium transition" style="background:var(--color-danger);"><i class="fas fa-sign-out-alt mr-2"></i>Logout</button>`;
+            } else if (isInstructor) {
+                desktopLogin.innerHTML = `<span class="px-4 py-2 text-white rounded-lg font-medium shadow-md" style="background:var(--gradient-primary);"><i class="fas fa-user mr-2"></i>${instructorName}</span><button onclick="logout()" class="px-4 py-2 text-white rounded-lg font-medium transition" style="background:var(--color-danger);"><i class="fas fa-sign-out-alt mr-2"></i>Logout</button>`;
+            } else if (isAdmin) {
+                desktopLogin.innerHTML = `<span class="px-4 py-2 text-white rounded-lg font-medium shadow-md" style="background:var(--gradient-primary);"><i class="fas fa-user-shield mr-2"></i>Admin</span><button onclick="logout()" class="px-4 py-2 text-white rounded-lg font-medium transition" style="background:var(--color-danger);"><i class="fas fa-sign-out-alt mr-2"></i>Logout</button>`;
+            } else {
+                desktopLogin.innerHTML = `<a href="student-login.html" class="px-4 py-2 text-white rounded-lg font-medium shadow-md hover:shadow-lg transition" style="background:var(--gradient-primary);"><i class="fas fa-user-graduate mr-2"></i>Student</a><a href="instructor-login.html" class="px-4 py-2 rounded-lg font-medium transition" style="background:var(--border-color);color:var(--text-secondary);"><i class="fas fa-chalkboard-teacher mr-2"></i>Instructor</a>`;
+            }
+            const mobileLogin = document.getElementById('mobileLoginLinks');
+            if (isStudent) {
+                mobileLogin.innerHTML = `<a href="student-dashboard.html" class="menu-item" style="color:var(--color-primary);font-weight:600;"><i class="fas fa-user"></i>${studentName}</a><button onclick="logout();closeMobileMenu();" class="menu-item" style="color:var(--color-danger);border:none;width:100%;text-align:left;background:none;cursor:pointer;"><i class="fas fa-sign-out-alt"></i>Logout</button>`;
+            } else if (isInstructor) {
+                mobileLogin.innerHTML = `<a href="instructor-dashboard.html" class="menu-item" style="color:var(--color-primary);font-weight:600;"><i class="fas fa-user"></i>${instructorName}</a><button onclick="logout();closeMobileMenu();" class="menu-item" style="color:var(--color-danger);border:none;width:100%;text-align:left;background:none;cursor:pointer;"><i class="fas fa-sign-out-alt"></i>Logout</button>`;
+            } else if (isAdmin) {
+                mobileLogin.innerHTML = `<a href="admin-dashboard.html" class="menu-item" style="color:var(--color-primary);font-weight:600;"><i class="fas fa-user-shield"></i>Admin</a><button onclick="logout();closeMobileMenu();" class="menu-item" style="color:var(--color-danger);border:none;width:100%;text-align:left;background:none;cursor:pointer;"><i class="fas fa-sign-out-alt"></i>Logout</button>`;
+            } else {
+                mobileLogin.innerHTML = `<a href="student-login.html" class="menu-item" style="color:var(--color-primary);"><i class="fas fa-user-graduate"></i>Student</a><a href="instructor-login.html" class="menu-item"><i class="fas fa-chalkboard-teacher"></i>Instructor</a>`;
+            }
+        }
+        function logout() {
+            sessionStorage.removeItem('studentLoggedIn'); sessionStorage.removeItem('studentEmail'); sessionStorage.removeItem('studentName');
+            sessionStorage.removeItem('instructorLoggedIn'); sessionStorage.removeItem('instructorEmail'); sessionStorage.removeItem('instructorName');
+            sessionStorage.removeItem('adminLoggedIn'); sessionStorage.removeItem('adminName');
+            window.location.href = 'instructor-login.html';
+        }
+        document.addEventListener('keydown', function (e) {
+            if (e.key === 'Escape') { closeSettings(); closeMobileMenu(); closeCourseModal(); closeSectionModal(); }
+            if ((e.ctrlKey || e.metaKey) && e.key === 'd') { e.preventDefault(); toggleDarkMode(); }
+            if ((e.ctrlKey || e.metaKey) && e.key === 's') { e.preventDefault(); openSettings(); }
+            if ((e.ctrlKey || e.metaKey) && e.key === 'c') { e.preventDefault(); openCreateCourse(); }
+        });
+        window.addEventListener('scroll', function () {
+            const navbar = document.getElementById('navbar');
+            const backToTop = document.getElementById('backToTop');
+            if (window.scrollY > 100) { if (navbar) navbar.classList.add('navbar-scrolled'); if (backToTop) backToTop.classList.add('visible'); }
+            else { if (navbar) navbar.classList.remove('navbar-scrolled'); if (backToTop) backToTop.classList.remove('visible'); }
+        });
+        document.addEventListener('DOMContentLoaded', function () {
+            applyTheme();
+            loadData();
+            renderDashboard();
+            updateSettingsToggle();
+            updateNavigation();
+        });
+    </script>
+    <script src="translations.js"></script>
+</body>
+
+</html>

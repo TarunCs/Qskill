@@ -1,0 +1,827 @@
+<!DOCTYPE html>
+<html lang="en" id="htmlRoot">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Admin Dashboard - QSKILL</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+    <link rel="stylesheet" href="styles.css" />
+    <style>
+        .admin-container {
+            padding-top: 80px;
+            min-height: 100vh;
+            background: var(--bg-secondary);
+        }
+
+        .stat-card {
+            background: var(--bg-card);
+            border-radius: var(--radius-lg);
+            padding: 24px;
+            transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+            border: 1px solid var(--border-color);
+        }
+
+        .stat-card:hover {
+            transform: translateY(-6px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .stat-icon {
+            width: 52px;
+            height: 52px;
+            border-radius: var(--radius);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+        }
+
+        .welcome-banner {
+            background: var(--gradient-primary);
+            border-radius: var(--radius-xl);
+            padding: 32px;
+            color: white;
+        }
+
+        .table-container {
+            background: var(--bg-card);
+            border-radius: var(--radius-xl);
+            border: 1px solid var(--border-color);
+            overflow: hidden;
+        }
+
+        .table-container .table-header {
+            padding: 16px 24px;
+            border-bottom: 1px solid var(--border-color);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+
+        .table-container .table-header h2 {
+            font-family: var(--font-display);
+            font-size: 1.125rem;
+            font-weight: 700;
+            color: var(--text-primary);
+        }
+
+        .table-container .table-header .badge-count {
+            background: var(--color-primary-bg);
+            color: var(--color-primary);
+            padding: 4px 12px;
+            border-radius: var(--radius-full);
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+
+        .table-container table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .table-container table thead {
+            background: var(--bg-secondary);
+        }
+
+        .table-container table th {
+            padding: 12px 16px;
+            text-align: left;
+            font-family: var(--font-display);
+            font-weight: 600;
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.04em;
+            color: var(--text-secondary);
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .table-container table td {
+            padding: 12px 16px;
+            font-size: 0.875rem;
+            color: var(--text-primary);
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .table-container table tr:hover td {
+            background: var(--bg-card-hover);
+        }
+
+        .role-badge {
+            display: inline-block;
+            padding: 2px 12px;
+            border-radius: var(--radius-full);
+            font-size: 0.6875rem;
+            font-weight: 600;
+        }
+
+        .role-badge.student {
+            background: var(--color-primary-bg);
+            color: var(--color-primary);
+        }
+
+        .role-badge.instructor {
+            background: var(--color-secondary-bg);
+            color: var(--color-secondary);
+        }
+
+        .status-badge {
+            display: inline-block;
+            padding: 2px 12px;
+            border-radius: var(--radius-full);
+            font-size: 0.6875rem;
+            font-weight: 600;
+        }
+
+        .status-badge.active {
+            background: var(--color-success-bg);
+            color: var(--color-success);
+        }
+
+        .status-badge.inactive {
+            background: var(--color-warning-bg);
+            color: var(--color-warning);
+        }
+
+        .status-badge.suspended {
+            background: var(--color-danger-bg);
+            color: var(--color-danger);
+        }
+
+        .action-btn {
+            padding: 4px 10px;
+            border-radius: var(--radius);
+            border: none;
+            font-size: 0.75rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .action-btn-edit {
+            background: var(--color-primary-bg);
+            color: var(--color-primary);
+        }
+
+        .action-btn-edit:hover {
+            background: var(--color-primary);
+            color: white;
+        }
+
+        .action-btn-delete {
+            background: var(--color-danger-bg);
+            color: var(--color-danger);
+        }
+
+        .action-btn-delete:hover {
+            background: var(--color-danger);
+            color: white;
+        }
+
+        .action-btn-suspend {
+            background: var(--color-warning-bg);
+            color: var(--color-warning);
+        }
+
+        .action-btn-suspend:hover {
+            background: var(--color-warning);
+            color: white;
+        }
+
+        .action-btn-activate {
+            background: var(--color-success-bg);
+            color: var(--color-success);
+        }
+
+        .action-btn-activate:hover {
+            background: var(--color-success);
+            color: white;
+        }
+
+        .modal-overlay {
+            position: fixed;
+            inset: 0;
+            background: var(--bg-modal);
+            backdrop-filter: blur(12px);
+            z-index: 9998;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .modal-overlay.active {
+            display: flex;
+        }
+
+        .modal-content {
+            background: var(--bg-card);
+            border-radius: var(--radius-2xl);
+            max-width: 500px;
+            width: 100%;
+            padding: 32px;
+            border: 1px solid var(--border-color);
+            animation: slideUp 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            padding-bottom: 16px;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .modal-header h2 {
+            font-family: var(--font-display);
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .modal-header .close-btn {
+            font-size: 1.5rem;
+            color: var(--text-secondary);
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 4px;
+            transition: all 0.3s ease;
+        }
+
+        .modal-header .close-btn:hover {
+            transform: rotate(90deg);
+            color: var(--text-primary);
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 12px 16px;
+            border: 2px solid var(--border-color);
+            border-radius: var(--radius);
+            transition: all 0.3s ease;
+            font-family: var(--font-body);
+            font-size: 0.9375rem;
+            background: var(--bg-input);
+            color: var(--text-primary);
+        }
+
+        .form-input:focus {
+            outline: none;
+            border-color: var(--color-primary);
+            box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.08);
+        }
+
+        .form-label {
+            display: block;
+            font-family: var(--font-display);
+            font-weight: 600;
+            font-size: 0.875rem;
+            color: var(--text-primary);
+            margin-bottom: 6px;
+        }
+
+        .search-box {
+            padding: 8px 16px;
+            border: 2px solid var(--border-color);
+            border-radius: var(--radius);
+            background: var(--bg-input);
+            color: var(--text-primary);
+            font-size: 0.875rem;
+            transition: all 0.3s ease;
+            min-width: 200px;
+        }
+
+        .search-box:focus {
+            outline: none;
+            border-color: var(--color-primary);
+            box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.08);
+        }
+
+        .filter-tabs {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+
+        .filter-tab {
+            padding: 6px 16px;
+            border-radius: var(--radius-full);
+            border: 2px solid var(--border-color);
+            background: transparent;
+            font-size: 0.75rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            color: var(--text-secondary);
+        }
+
+        .filter-tab:hover {
+            border-color: var(--color-primary);
+            color: var(--text-primary);
+        }
+
+        .filter-tab.active {
+            background: var(--color-primary);
+            color: white;
+            border-color: var(--color-primary);
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 40px 20px;
+        }
+
+        .empty-state .icon {
+            font-size: 48px;
+            color: var(--text-muted);
+            opacity: 0.5;
+        }
+
+        .admin-route {
+            font-family: var(--font-mono);
+            font-size: 0.6875rem;
+            color: var(--text-muted);
+            text-align: center;
+            padding: 4px;
+            opacity: 0.3;
+            user-select: none;
+        }
+
+        @media (max-width: 768px) {
+            .table-container {
+                overflow-x: auto;
+            }
+
+            .table-container table {
+                min-width: 600px;
+            }
+
+            .search-box {
+                min-width: 120px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Back to Top -->
+    <div id="backToTop" class="back-to-top" onclick="window.scrollTo({top:0,behavior:'smooth'})"><i
+            class="fas fa-arrow-up"></i></div>
+
+    <!-- Settings Panel -->
+    <div id="settingsOverlay" class="settings-overlay" onclick="closeSettings()"></div>
+    <div id="settingsPanel" class="settings-panel">
+        <div class="settings-header">
+            <h2><i class="fas fa-cog mr-2" style="color:var(--color-primary);"></i>Settings</h2><button
+                class="close-btn" onclick="closeSettings()"><i class="fas fa-times"></i></button>
+        </div>
+        <div class="setting-section">
+            <div class="setting-section-title"><i class="fas fa-palette" style="color:var(--color-primary);"></i>
+                Appearance</div>
+            <div class="setting-item">
+                <div class="info">
+                    <div class="label">🌙 Dark Mode</div>
+                    <div class="desc">Toggle dark/light theme</div>
+                </div>
+                <div class="control"><button id="settingsThemeToggle" class="toggle-switch"
+                        onclick="toggleDarkModeFromSettings()">
+                        <div class="toggle-slider"></div>
+                    </button></div>
+            </div>
+            <div class="setting-item">
+                <div class="info">
+                    <div class="label">🎨 Theme Color</div>
+                    <div class="desc">Choose accent color</div>
+                </div>
+                <div class="control"><select id="themeColorSelect" class="settings-select"
+                        onchange="changeThemeColor(this.value)">
+                        <option value="blue">Blue</option>
+                        <option value="purple">Purple</option>
+                        <option value="green">Green</option>
+                        <option value="red">Red</option>
+                        <option value="orange">Orange</option>
+                    </select></div>
+            </div>
+        </div>
+        <div class="setting-section">
+            <div class="setting-section-title"><i class="fas fa-database" style="color:var(--color-primary);"></i>
+                Database</div>
+            <div class="setting-item">
+                <div class="info">
+                    <div class="label">📊 Export Data</div>
+                    <div class="desc">Export all user data</div>
+                </div>
+                <div class="control"><button onclick="exportData()"
+                        class="px-4 py-2 rounded-lg font-semibold text-white"
+                        style="background:var(--gradient-primary);">Export</button></div>
+            </div>
+            <div class="setting-item">
+                <div class="info">
+                    <div class="label">🗑️ Clear Data</div>
+                    <div class="desc">Clear all user data</div>
+                </div>
+                <div class="control"><button onclick="clearAllData()"
+                        class="px-4 py-2 rounded-lg font-semibold text-white"
+                        style="background:var(--color-danger);">Clear</button></div>
+            </div>
+        </div>
+        <div class="mt-6 pt-6 border-t" style="border-color:var(--border-color);"><button onclick="saveSettings()"
+                class="w-full py-3 rounded-xl font-bold text-white transition"
+                style="background:var(--gradient-primary);"><i class="fas fa-save mr-2"></i>Save Settings</button></div>
+    </div>
+    <!-- Language Selector -->
+    <div class="flex gap-2 flex-wrap mb-4">
+        <button class="language-btn active" data-lang="en" onclick="changeLanguage('en')">🇬🇧 EN</button>
+        <button class="language-btn" data-lang="hi" onclick="changeLanguage('hi')">🇮🇳 HI</button>
+        <button class="language-btn" data-lang="ta" onclick="changeLanguage('ta')">🇮🇳 TA</button>
+        <button class="language-btn" data-lang="te" onclick="changeLanguage('te')">🇮🇳 TE</button>
+        <button class="language-btn" data-lang="kn" onclick="changeLanguage('kn')">🇮🇳 KN</button>
+        <button class="language-btn" data-lang="ml" onclick="changeLanguage('ml')">🇮🇳 ML</button>
+    </div>
+
+    <!-- Mobile Menu -->
+    <div id="mobileOverlay" class="mobile-menu-overlay" onclick="closeMobileMenu()"></div>
+    <div id="mobilePanel" class="mobile-menu-panel">
+        <div class="menu-header"><span class="logo">QSKILL</span><button class="close-btn"
+                onclick="closeMobileMenu()"><i class="fas fa-times"></i></button></div>
+        <a href="index.html" class="menu-item"><i class="fas fa-home"></i>Home</a>
+        <a href="courses.html" class="menu-item"><i class="fas fa-book"></i>Courses</a>
+        <a href="about.html" class="menu-item"><i class="fas fa-info-circle"></i>About</a>
+        <a href="blog.html" class="menu-item"><i class="fas fa-blog"></i>Blog</a>
+        <div id="mobileLoginLinks" class="pt-3">
+            <a href="#" class="menu-item" style="color:var(--color-primary);font-weight:600;"><i
+                    class="fas fa-shield-alt"></i>Admin Panel</a>
+            <button onclick="logout();closeMobileMenu();" class="menu-item"
+                style="color:var(--color-danger);border:none;width:100%;text-align:left;background:none;cursor:pointer;"><i
+                    class="fas fa-sign-out-alt"></i>Logout</button>
+        </div>
+    </div>
+
+    <!-- Navigation -->
+    <nav id="navbar" class="navbar fixed top-0 left-0 right-0 z-50 shadow-sm">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <a href="index.html" class="flex items-center group"><span class="text-2xl font-extrabold"
+                        style="color:var(--color-primary);">QSKILL</span><span class="ml-1 text-sm font-medium"
+                        style="color:var(--text-muted);">.com</span><span class="ml-2 text-xs font-mono"
+                        style="color:var(--color-danger);">[ADMIN]</span></a>
+                <div class="hidden md:flex items-center space-x-1">
+                    <span class="px-4 py-2 text-white rounded-lg font-medium shadow-md"
+                        style="background:var(--gradient-primary);"><i class="fas fa-shield-alt mr-2"></i>Admin
+                        Panel</span>
+                    <button onclick="logout()" class="px-4 py-2 text-white rounded-lg font-medium transition"
+                        style="background:var(--color-danger);"><i class="fas fa-sign-out-alt mr-2"></i>Logout</button>
+                    <button onclick="openSettings()" class="ml-1 p-2 rounded-lg transition"
+                        style="color:var(--text-secondary);"><i class="fas fa-cog text-xl"></i></button>
+                    <button onclick="toggleDarkMode()" class="p-2 rounded-lg transition"
+                        style="color:var(--text-secondary);"><i id="themeIcon" class="fas fa-moon text-xl"></i></button>
+                </div>
+                <div class="flex items-center gap-2 md:hidden">
+                    <button onclick="openSettings()" class="p-2 rounded-lg transition"
+                        style="color:var(--text-secondary);"><i class="fas fa-cog text-xl"></i></button>
+                    <button onclick="toggleDarkMode()" class="p-2 rounded-lg transition"
+                        style="color:var(--text-secondary);"><i id="mobileThemeIcon"
+                            class="fas fa-moon text-xl"></i></button>
+                    <button onclick="openMobileMenu()" class="text-2xl transition"
+                        style="color:var(--text-secondary);"><i class="fas fa-bars"></i></button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- ===== PAGE CONTENT ===== -->
+    <div class="admin-container">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+
+            <div class="welcome-banner mb-8">
+                <div class="flex flex-wrap items-center justify-between">
+                    <div>
+                        <h1 class="text-2xl md:text-3xl font-bold">Admin Dashboard</h1>
+                        <p class="text-blue-100 mt-1">Manage students and instructors.</p>
+                    </div>
+                    <div class="bg-white/20 backdrop-blur-sm px-4 py-2 rounded-lg text-sm"><i
+                            class="far fa-calendar-alt mr-2"></i><span id="currentDate"></span></div>
+                </div>
+            </div>
+
+            <div class="grid md:grid-cols-4 gap-6 mb-8">
+                <div class="stat-card">
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <p class="text-sm" style="color:var(--text-secondary);">Total Users</p>
+                            <p class="text-2xl font-bold" style="color:var(--text-primary);" id="totalUsers">0</p>
+                        </div>
+                        <div class="stat-icon" style="background:var(--color-primary-bg);color:var(--color-primary);"><i
+                                class="fas fa-users"></i></div>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <p class="text-sm" style="color:var(--text-secondary);">Students</p>
+                            <p class="text-2xl font-bold" style="color:var(--text-primary);" id="totalStudents">0</p>
+                        </div>
+                        <div class="stat-icon" style="background:var(--color-success-bg);color:var(--color-success);"><i
+                                class="fas fa-user-graduate"></i></div>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <p class="text-sm" style="color:var(--text-secondary);">Instructors</p>
+                            <p class="text-2xl font-bold" style="color:var(--text-primary);" id="totalInstructors">0</p>
+                        </div>
+                        <div class="stat-icon"
+                            style="background:var(--color-secondary-bg);color:var(--color-secondary);"><i
+                                class="fas fa-chalkboard-teacher"></i></div>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <p class="text-sm" style="color:var(--text-secondary);">Courses</p>
+                            <p class="text-2xl font-bold" style="color:var(--text-primary);" id="totalCourses">0</p>
+                        </div>
+                        <div class="stat-icon" style="background:var(--color-warning-bg);color:var(--color-warning);"><i
+                                class="fas fa-book"></i></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="table-container">
+                <div class="table-header">
+                    <div class="flex items-center gap-4 flex-wrap">
+                        <h2><i class="fas fa-users mr-2" style="color:var(--color-primary);"></i>Users</h2><span
+                            class="badge-count" id="userCount">0 users</span>
+                        <div class="filter-tabs"><button class="filter-tab active" data-filter="all"
+                                onclick="filterUsersByRole('all')">All</button><button class="filter-tab"
+                                data-filter="student" onclick="filterUsersByRole('student')">Students</button><button
+                                class="filter-tab" data-filter="instructor"
+                                onclick="filterUsersByRole('instructor')">Instructors</button></div>
+                    </div>
+                    <div><input type="text" id="searchUsers" class="search-box" placeholder="🔍 Search..."
+                            onkeyup="filterUsers()" /></div>
+                </div>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Name</th>
+                            <th>Email</th>
+                            <th>Role</th>
+                            <th>Status</th>
+                            <th>Joined</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="usersTableBody"></tbody>
+                </table>
+            </div>
+
+            <div class="mt-8 p-4 rounded-xl"
+                style="background:var(--color-warning-bg);border:1px solid rgba(217,119,6,0.15);">
+                <div class="flex items-center gap-3"><i class="fas fa-info-circle"
+                        style="color:var(--color-warning);"></i><span
+                        style="color:var(--text-secondary);font-size:0.875rem;">Admins are hidden from this list. You
+                        can manage all students and instructors here.</span></div>
+            </div>
+            <div class="admin-route mt-4">/api/admin/v2/secure/dashboard</div>
+        </div>
+    </div>
+
+    <footer style="background:var(--bg-footer);" class="text-white py-6 text-center text-sm">
+        <div class="max-w-7xl mx-auto px-4">&copy; 2026 QSKILL. All rights reserved.</div>
+    </footer>
+
+    <!-- Edit Modal -->
+    <div id="editModal" class="modal-overlay">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 id="editModalTitle"><i class="fas fa-user-edit"></i> Edit User</h2><button class="close-btn"
+                    onclick="closeEditModal()"><i class="fas fa-times"></i></button>
+            </div>
+            <form id="editForm" onsubmit="handleEditSubmit(event)">
+                <input type="hidden" id="editUserId" />
+                <div class="mb-4"><label class="form-label">Full Name</label><input type="text" required
+                        class="form-input" id="editName" /></div>
+                <div class="mb-4"><label class="form-label">Email</label><input type="email" required class="form-input"
+                        id="editEmail" /></div>
+                <div class="mb-4"><label class="form-label">Role</label><select class="form-input" id="editRole">
+                        <option value="student">Student</option>
+                        <option value="instructor">Instructor</option>
+                    </select></div>
+                <div class="mb-4"><label class="form-label">Status</label><select class="form-input" id="editStatus">
+                        <option value="active">Active</option>
+                        <option value="inactive">Inactive</option>
+                        <option value="suspended">Suspended</option>
+                    </select></div>
+                <button type="submit" class="w-full py-3 rounded-xl font-bold text-white transition"
+                    style="background:var(--gradient-primary);"><i class="fas fa-save mr-2"></i>Update User</button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        // ===== SESSION CHECK =====
+        if (sessionStorage.getItem('adminLoggedIn') !== 'true') { window.location.href = 'admin-login.html'; }
+
+        let allUsers = [];
+        let allCourses = [];
+        let currentFilter = 'all';
+
+        function loadData() {
+            const savedUsers = JSON.parse(localStorage.getItem('qskillUsers') || '[]');
+            if (savedUsers.length === 0) {
+                allUsers = [
+                    { id: 1, name: 'John Student', email: 'student@qskill.com', password: 'password123', role: 'student', status: 'active', joined: '2026-01-15' },
+                    { id: 2, name: 'Sarah Student', email: 'sarah@example.com', password: 'password123', role: 'student', status: 'active', joined: '2026-02-01' },
+                    { id: 3, name: 'Mike Student', email: 'mike@example.com', password: 'password123', role: 'student', status: 'active', joined: '2026-03-10' },
+                    { id: 4, name: 'Dr. John Smith', email: 'instructor@qskill.com', password: 'password123', role: 'instructor', status: 'active', joined: '2026-01-15' },
+                    { id: 5, name: 'Prof. Sarah Johnson', email: 'sarah.j@example.com', password: 'password123', role: 'instructor', status: 'active', joined: '2026-02-01' },
+                    { id: 999, name: 'Admin', email: 'admin@qskill.com', password: 'admin123', role: 'admin', status: 'active', joined: '2026-01-01' }
+                ];
+                localStorage.setItem('qskillUsers', JSON.stringify(allUsers));
+            } else { allUsers = savedUsers; }
+            allCourses = JSON.parse(localStorage.getItem('qskillCourses') || '[]');
+        }
+
+        function saveUsers() { localStorage.setItem('qskillUsers', JSON.stringify(allUsers)); }
+
+        function updateDateTime() {
+            const now = new Date();
+            document.getElementById('currentDate').textContent = now.toLocaleDateString('en-US', { weekday: 'short', month: 'short', day: 'numeric', year: 'numeric' });
+        }
+        updateDateTime();
+        setInterval(updateDateTime, 60000);
+
+        function renderUsers(filter = '') {
+            const tbody = document.getElementById('usersTableBody');
+            const searchTerm = filter.toLowerCase().trim();
+            let filteredUsers = allUsers.filter(u => u.role !== 'admin');
+            if (currentFilter !== 'all') { filteredUsers = filteredUsers.filter(u => u.role === currentFilter); }
+            if (searchTerm) { filteredUsers = filteredUsers.filter(u => u.name.toLowerCase().includes(searchTerm) || u.email.toLowerCase().includes(searchTerm)); }
+            const totalUsers = allUsers.filter(u => u.role !== 'admin').length;
+            const totalStudents = allUsers.filter(u => u.role === 'student').length;
+            const totalInstructors = allUsers.filter(u => u.role === 'instructor').length;
+            document.getElementById('totalUsers').textContent = totalUsers;
+            document.getElementById('totalStudents').textContent = totalStudents;
+            document.getElementById('totalInstructors').textContent = totalInstructors;
+            document.getElementById('totalCourses').textContent = allCourses.length;
+            document.getElementById('userCount').textContent = `${filteredUsers.length} users`;
+
+            if (filteredUsers.length === 0) {
+                tbody.innerHTML = `<tr><td colspan="7"><div class="empty-state"><div class="icon"><i class="fas fa-user-slash"></i></div><h3>No Users Found</h3></div></td></tr>`;
+                return;
+            }
+            tbody.innerHTML = filteredUsers.map((user, index) => {
+                const roleColor = user.role === 'student' ? 'student' : 'instructor';
+                const statusColor = user.status === 'active' ? 'active' : user.status === 'inactive' ? 'inactive' : 'suspended';
+                const joined = new Date(user.joined);
+                return `<tr><td style="color:var(--text-muted);font-size:0.75rem;">${index + 1}</td><td style="font-weight:500;color:var(--text-primary);">${user.name}</td><td style="color:var(--text-secondary);">${user.email}</td><td><span class="role-badge ${roleColor}">${user.role}</span></td><td><span class="status-badge ${statusColor}">${user.status}</span></td><td style="color:var(--text-muted);font-size:0.8125rem;">${joined.toLocaleDateString()}</td>
+                <td><div class="flex gap-1"><button onclick="openEditUser(${user.id})" class="action-btn action-btn-edit"><i class="fas fa-edit"></i></button>${user.status === 'active' ? `<button onclick="suspendUser(${user.id})" class="action-btn action-btn-suspend"><i class="fas fa-pause"></i></button>` : user.status === 'suspended' ? `<button onclick="activateUser(${user.id})" class="action-btn action-btn-activate"><i class="fas fa-play"></i></button>` : `<button onclick="activateUser(${user.id})" class="action-btn action-btn-activate"><i class="fas fa-play"></i></button>`}<button onclick="deleteUser(${user.id})" class="action-btn action-btn-delete"><i class="fas fa-trash"></i></button></div></td></tr>`;
+            }).join('');
+        }
+
+        function filterUsersByRole(role) { currentFilter = role; document.querySelectorAll('.filter-tab').forEach(tab => tab.classList.toggle('active', tab.dataset.filter === role)); filterUsers(); }
+        function filterUsers() { const search = document.getElementById('searchUsers').value; renderUsers(search); }
+
+        function openEditUser(userId) {
+            const user = allUsers.find(u => u.id === userId);
+            if (!user || user.role === 'admin') return;
+            document.getElementById('editUserId').value = userId;
+            document.getElementById('editName').value = user.name;
+            document.getElementById('editEmail').value = user.email;
+            document.getElementById('editRole').value = user.role;
+            document.getElementById('editStatus').value = user.status;
+            document.getElementById('editModalTitle').innerHTML = `<i class="fas fa-user-edit"></i> Edit ${user.name}`;
+            document.getElementById('editModal').classList.add('active');
+        }
+
+        function closeEditModal() { document.getElementById('editModal').classList.remove('active'); }
+
+        function handleEditSubmit(e) {
+            e.preventDefault();
+            const id = parseInt(document.getElementById('editUserId').value);
+            const user = allUsers.find(u => u.id === id);
+            if (user && user.role !== 'admin') {
+                user.name = document.getElementById('editName').value;
+                user.email = document.getElementById('editEmail').value;
+                user.role = document.getElementById('editRole').value;
+                user.status = document.getElementById('editStatus').value;
+                saveUsers();
+                renderUsers();
+                closeEditModal();
+            }
+        }
+
+        function suspendUser(userId) {
+            const user = allUsers.find(u => u.id === userId);
+            if (user && user.role !== 'admin') { user.status = 'suspended'; saveUsers(); renderUsers(); }
+        }
+
+        function activateUser(userId) {
+            const user = allUsers.find(u => u.id === userId);
+            if (user && user.role !== 'admin') { user.status = 'active'; saveUsers(); renderUsers(); }
+        }
+
+        function deleteUser(userId) {
+            const user = allUsers.find(u => u.id === userId);
+            if (user && user.role !== 'admin') {
+                allUsers = allUsers.filter(u => u.id !== userId);
+                saveUsers();
+                renderUsers();
+            }
+        }
+
+        function exportData() {
+            const exportUsers = allUsers.filter(u => u.role !== 'admin');
+            const data = { users: exportUsers, courses: allCourses, exportedAt: new Date().toISOString() };
+            const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `qskill-data-${new Date().toISOString().split('T')[0]}.json`;
+            a.click();
+            URL.revokeObjectURL(url);
+        }
+
+        function clearAllData() {
+            // NO CONFIRM - Just clear
+            allUsers = allUsers.filter(u => u.role === 'admin');
+            saveUsers();
+            renderUsers();
+        }
+
+        // ===== SHARED FUNCTIONS - NO POPUPS =====
+        let isDarkMode = localStorage.getItem('qskillDarkMode') === 'true';
+        function toggleDarkMode() { isDarkMode = !isDarkMode; localStorage.setItem('qskillDarkMode', isDarkMode); applyTheme(); updateSettingsToggle(); }
+        function toggleDarkModeFromSettings() { toggleDarkMode(); }
+        function applyTheme() {
+            const html = document.getElementById('htmlRoot');
+            const icon = document.getElementById('themeIcon');
+            const mobileIcon = document.getElementById('mobileThemeIcon');
+            if (isDarkMode) { html.classList.add('dark-mode'); if (icon) icon.className = 'fas fa-sun text-xl'; if (mobileIcon) mobileIcon.className = 'fas fa-sun text-xl'; }
+            else { html.classList.remove('dark-mode'); if (icon) icon.className = 'fas fa-moon text-xl'; if (mobileIcon) mobileIcon.className = 'fas fa-moon text-xl'; }
+        }
+        function updateSettingsToggle() { const toggle = document.querySelector('#settingsThemeToggle'); if (toggle) { isDarkMode ? toggle.classList.add('active') : toggle.classList.remove('active'); } }
+        function changeThemeColor(color) {
+            const colors = { blue: { start: '#2563eb', end: '#7c3aed' }, purple: { start: '#7c3aed', end: '#ec4899' }, green: { start: '#059669', end: '#14b8a6' }, red: { start: '#dc2626', end: '#f59e0b' }, orange: { start: '#f59e0b', end: '#ef4444' } };
+            const selected = colors[color] || colors.blue;
+            document.documentElement.style.setProperty('--color-primary', selected.start);
+            document.documentElement.style.setProperty('--color-secondary', selected.end);
+            localStorage.setItem('qskillThemeColor', color);
+        }
+        const savedColor = localStorage.getItem('qskillThemeColor') || 'blue';
+        const colorSelect = document.getElementById('themeColorSelect');
+        if (colorSelect) { colorSelect.value = savedColor; changeThemeColor(savedColor); }
+        function openSettings() { document.getElementById('settingsPanel').classList.add('active'); document.getElementById('settingsOverlay').classList.add('active'); document.body.style.overflow = 'hidden'; updateSettingsToggle(); }
+        function closeSettings() { document.getElementById('settingsPanel').classList.remove('active'); document.getElementById('settingsOverlay').classList.remove('active'); document.body.style.overflow = 'auto'; }
+        function saveSettings() { closeSettings(); }
+        function openMobileMenu() { document.getElementById('mobilePanel').classList.add('active'); document.getElementById('mobileOverlay').classList.add('active'); document.body.style.overflow = 'hidden'; }
+        function closeMobileMenu() { document.getElementById('mobilePanel').classList.remove('active'); document.getElementById('mobileOverlay').classList.remove('active'); document.body.style.overflow = 'auto'; }
+        function logout() {
+            sessionStorage.removeItem('adminLoggedIn');
+            sessionStorage.removeItem('adminName');
+            window.location.href = 'admin-login.html';
+        }
+        document.addEventListener('keydown', function (e) {
+            if (e.key === 'Escape') { closeSettings(); closeMobileMenu(); closeEditModal(); }
+            if ((e.ctrlKey || e.metaKey) && e.key === 'd') { e.preventDefault(); toggleDarkMode(); }
+            if ((e.ctrlKey || e.metaKey) && e.key === 's') { e.preventDefault(); openSettings(); }
+        });
+        window.addEventListener('scroll', function () {
+            const navbar = document.getElementById('navbar');
+            if (window.scrollY > 100) { if (navbar) navbar.classList.add('navbar-scrolled'); }
+            else { if (navbar) navbar.classList.remove('navbar-scrolled'); }
+        });
+        document.addEventListener('DOMContentLoaded', function () {
+            applyTheme();
+            loadData();
+            renderUsers();
+            updateSettingsToggle();
+            updateNavigation();
+        });
+        function updateNavigation() {
+            const desktopLogin = document.getElementById('desktopLoginLinks');
+            desktopLogin.innerHTML = `<span class="px-4 py-2 text-white rounded-lg font-medium shadow-md" style="background:var(--gradient-primary);"><i class="fas fa-user-shield mr-2"></i>Admin</span><button onclick="logout()" class="px-4 py-2 text-white rounded-lg font-medium transition" style="background:var(--color-danger);"><i class="fas fa-sign-out-alt mr-2"></i>Logout</button>`;
+            const mobileLogin = document.getElementById('mobileLoginLinks');
+            mobileLogin.innerHTML = `<a href="#" class="menu-item" style="color:var(--color-primary);font-weight:600;"><i class="fas fa-shield-alt"></i>Admin Panel</a><button onclick="logout();closeMobileMenu();" class="menu-item" style="color:var(--color-danger);border:none;width:100%;text-align:left;background:none;cursor:pointer;"><i class="fas fa-sign-out-alt"></i>Logout</button>`;
+        }
+        document.addEventListener('DOMContentLoaded', function () { updateNavigation(); });
+    </script>
+    <script src="translations.js"></script>
+</body>
+
+</html>
