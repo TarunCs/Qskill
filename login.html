@@ -1,0 +1,1132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Login - QSkill Career Solutions</title>
+ 
+    <!-- ===== POPPINS FONT ===== -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+ 
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+ 
+    <style>
+        /* ============================================================ */
+        /* ===== RESET & BASE ===== */
+        /* ============================================================ */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+ 
+        html, body {
+            font-family: 'Poppins', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            color: #1A1A1A;
+            line-height: 1.6;
+            min-height: 100vh;
+            height: 100%;
+            background: #FFFFFF;
+        }
+ 
+        h1, h2, h3, h4, h5, h6, .logo-text {
+            font-family: 'Poppins', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+        }
+ 
+        p {
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+        }
+ 
+        i.fas, i.fab, i.far {
+            font-family: "Font Awesome 6 Free", "Font Awesome 6 Brands";
+        }
+ 
+        /* ============================================================ */
+        /* ===== EXACT COLOR SYSTEM ===== */
+        /* ============================================================ */
+        :root {
+            --primary: #1F3C88;
+            --secondary: #2D5BFF;
+            --light-bg: #EAF1FF;
+            --white: #FFFFFF;
+            --text-dark: #1A1A1A;
+            --text-gray: #6B7280;
+            --border: #E5E7EB;
+            --orange: #FA7000;
+            --hero-bg: #DEEAFD;
+            --page-bg: #F3F6FA;
+        }
+ 
+        /* ============================================================ */
+        /* ===== PAGE - WHITE BACKGROUND ===== */
+        /* ============================================================ */
+        body {
+            background: #FFFFFF;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+ 
+        /* ============================================================ */
+        /* ===== MAIN CONTAINER - WHITE TO BLUE GRADIENT ===== */
+        /* ============================================================ */
+        .login-container {
+            width: 100%;
+            max-width: 460px;
+            position: relative;
+            z-index: 1;
+            border-radius: 24px;
+            overflow: hidden;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.06);
+            border: 1px solid var(--border);
+            background: linear-gradient(180deg, 
+                #FFFFFF 0%,
+                #FAFCFF 10%,
+                #F5F8FF 25%,
+                #F0F5FF 40%,
+                #EAF1FF 60%,
+                #DEEAFD 80%,
+                #D6E6FA 100%
+            );
+        }
+ 
+        /* ============================================================ */
+        /* ===== DECORATIVE DESIGNS - ONLY IN BLUE AREA ===== */
+        /* ============================================================ */
+        .login-container .design-shapes {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 60%;
+            z-index: 0;
+            pointer-events: none;
+            overflow: hidden;
+        }
+ 
+        .login-container .design-shapes .shape {
+            position: absolute;
+            border-radius: 50%;
+            background: rgba(31, 60, 136, 0.06);
+        }
+ 
+        /* Large circles */
+        .login-container .design-shapes .shape-1 {
+            width: 120px;
+            height: 120px;
+            bottom: 5%;
+            left: -30px;
+            background: rgba(31, 60, 136, 0.05);
+            animation: floatShape 8s ease-in-out infinite;
+        }
+ 
+        .login-container .design-shapes .shape-2 {
+            width: 80px;
+            height: 80px;
+            bottom: 25%;
+            right: -20px;
+            background: rgba(31, 60, 136, 0.04);
+            animation: floatShape 10s ease-in-out infinite reverse;
+        }
+ 
+        .login-container .design-shapes .shape-3 {
+            width: 60px;
+            height: 60px;
+            bottom: 45%;
+            left: 15%;
+            background: rgba(31, 60, 136, 0.03);
+            animation: floatShape 7s ease-in-out infinite 1s;
+        }
+ 
+        /* Small dots */
+        .login-container .design-shapes .dot {
+            position: absolute;
+            border-radius: 50%;
+            background: rgba(31, 60, 136, 0.08);
+        }
+ 
+        .login-container .design-shapes .dot-1 {
+            width: 8px;
+            height: 8px;
+            bottom: 15%;
+            right: 20%;
+            animation: floatDot 6s ease-in-out infinite;
+        }
+ 
+        .login-container .design-shapes .dot-2 {
+            width: 6px;
+            height: 6px;
+            bottom: 35%;
+            left: 30%;
+            animation: floatDot 8s ease-in-out infinite reverse;
+        }
+ 
+        .login-container .design-shapes .dot-3 {
+            width: 10px;
+            height: 10px;
+            bottom: 50%;
+            right: 35%;
+            animation: floatDot 7s ease-in-out infinite 0.5s;
+        }
+ 
+        .login-container .design-shapes .dot-4 {
+            width: 5px;
+            height: 5px;
+            bottom: 10%;
+            left: 45%;
+            animation: floatDot 9s ease-in-out infinite 1.5s;
+        }
+ 
+        .login-container .design-shapes .dot-5 {
+            width: 7px;
+            height: 7px;
+            bottom: 30%;
+            right: 45%;
+            animation: floatDot 6s ease-in-out infinite 2s;
+        }
+ 
+        /* Decorative ring */
+        .login-container .design-shapes .ring {
+            position: absolute;
+            border-radius: 50%;
+            border: 2px solid rgba(31, 60, 136, 0.04);
+            background: transparent;
+        }
+ 
+        .login-container .design-shapes .ring-1 {
+            width: 100px;
+            height: 100px;
+            bottom: 20%;
+            left: 10%;
+            animation: floatShape 12s ease-in-out infinite;
+        }
+ 
+        .login-container .design-shapes .ring-2 {
+            width: 60px;
+            height: 60px;
+            bottom: 40%;
+            right: 15%;
+            border-color: rgba(31, 60, 136, 0.03);
+            animation: floatShape 9s ease-in-out infinite reverse;
+        }
+ 
+        @keyframes floatShape {
+            0%, 100% { transform: translateY(0) scale(1); }
+            50% { transform: translateY(-20px) scale(1.05); }
+        }
+ 
+        @keyframes floatDot {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-15px); }
+        }
+ 
+        /* ============================================================ */
+        /* ===== LOGO - CENTERED ===== */
+        /* ============================================================ */
+        .login-brand {
+            text-align: center;
+            padding: 32px 32px 0;
+            background: transparent;
+            position: relative;
+            z-index: 1;
+        }
+ 
+        .login-brand .logo {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            margin-bottom: 4px;
+        }
+ 
+        .login-brand .logo img {
+            height: 48px;
+            width: auto;
+            display: block;
+        }
+ 
+        .login-brand .logo-text {
+            font-size: 26px;
+            font-weight: 700;
+            color: var(--text-dark);
+        }
+ 
+        .login-brand .logo-text .qskill {
+            color: var(--primary);
+        }
+ 
+        .login-brand .logo-text .careersolutions {
+            color: var(--orange);
+            font-weight: 300;
+        }
+ 
+        .login-brand .brand-subtitle {
+            color: var(--text-gray);
+            font-size: 12px;
+            font-weight: 300;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+        }
+ 
+        /* ============================================================ */
+        /* ===== LOGIN CARD ===== */
+        /* ============================================================ */
+        .login-card {
+            padding: 28px 32px 20px;
+            background: transparent;
+            position: relative;
+            z-index: 1;
+        }
+ 
+        .login-card .card-header {
+            text-align: center;
+            margin-bottom: 24px;
+        }
+ 
+        .login-card .card-header h1 {
+            font-size: 28px;
+            font-weight: 700;
+            color: var(--text-dark);
+        }
+ 
+        .login-card .card-header h1 span {
+            color: var(--primary);
+        }
+ 
+        .login-card .card-header p {
+            color: var(--text-gray);
+            font-size: 14px;
+            margin-top: 4px;
+            font-weight: 400;
+        }
+ 
+        /* ===== FORM ===== */
+        .login-form {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+ 
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+        }
+ 
+        .form-group label {
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--text-dark);
+        }
+ 
+        .form-group label .required {
+            color: #EF4444;
+        }
+ 
+        .input-wrapper {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            border: 1.5px solid rgba(0, 0, 0, 0.08);
+            border-radius: 12px;
+            padding: 12px 16px;
+            transition: 0.3s;
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(4px);
+        }
+ 
+        .input-wrapper:focus-within {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 4px rgba(31, 60, 136, 0.08);
+            background: rgba(255, 255, 255, 0.9);
+        }
+ 
+        .input-wrapper.error {
+            border-color: #EF4444;
+            box-shadow: 0 0 0 4px rgba(239, 68, 68, 0.08);
+        }
+ 
+        .input-wrapper.success {
+            border-color: #22C55E;
+            box-shadow: 0 0 0 4px rgba(34, 197, 94, 0.08);
+        }
+ 
+        .input-wrapper i:first-child {
+            color: var(--text-gray);
+            font-size: 17px;
+            min-width: 18px;
+            transition: 0.3s;
+        }
+ 
+        .input-wrapper:focus-within i:first-child {
+            color: var(--primary);
+        }
+ 
+        .input-wrapper input {
+            border: none;
+            outline: none;
+            flex: 1;
+            font-size: 14px;
+            font-family: 'Poppins', sans-serif;
+            color: var(--text-dark);
+            background: transparent;
+        }
+ 
+        .input-wrapper input::placeholder {
+            color: #B0B8C4;
+        }
+ 
+        .toggle-password {
+            cursor: pointer;
+            color: var(--text-gray);
+            font-size: 17px;
+            transition: 0.3s;
+            padding: 2px;
+        }
+ 
+        .toggle-password:hover {
+            color: var(--primary);
+        }
+ 
+        .error-message {
+            font-size: 11px;
+            color: #EF4444;
+            font-weight: 500;
+            display: none;
+            align-items: center;
+            gap: 4px;
+        }
+ 
+        .error-message.show {
+            display: flex;
+        }
+ 
+        /* ===== OPTIONS ===== */
+        .login-options {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 13px;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 2px;
+        }
+ 
+        .remember-me {
+            display: flex;
+            align-items: center;
+            gap: 7px;
+            color: var(--text-gray);
+            cursor: pointer;
+            font-weight: 400;
+        }
+ 
+        .remember-me input[type="checkbox"] {
+            width: 17px;
+            height: 17px;
+            accent-color: var(--primary);
+            cursor: pointer;
+            border-radius: 4px;
+        }
+ 
+        .forgot-link {
+            color: var(--primary);
+            text-decoration: none;
+            font-weight: 500;
+            transition: 0.3s;
+        }
+ 
+        .forgot-link:hover {
+            color: var(--secondary);
+            text-decoration: underline;
+        }
+ 
+        /* ===== LOGIN BUTTON ===== */
+        .login-submit-btn {
+            width: 100%;
+            padding: 14px;
+            background: var(--primary);
+            color: var(--white);
+            border: none;
+            border-radius: 999px;
+            font-size: 16px;
+            font-weight: 600;
+            font-family: 'Poppins', sans-serif;
+            cursor: pointer;
+            transition: 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            margin-top: 4px;
+            box-shadow: 0 4px 16px rgba(31, 60, 136, 0.2);
+        }
+ 
+        .login-submit-btn:hover {
+            background: var(--secondary);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 24px rgba(31, 60, 136, 0.3);
+        }
+ 
+        .login-submit-btn:active {
+            transform: translateY(0);
+        }
+ 
+        .login-submit-btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+ 
+        .login-submit-btn .spinner {
+            display: none;
+            width: 20px;
+            height: 20px;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            border-top: 2px solid #FFFFFF;
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+        }
+ 
+        .login-submit-btn.loading .spinner {
+            display: block;
+        }
+ 
+        .login-submit-btn.loading .btn-text {
+            display: none;
+        }
+ 
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+ 
+        /* ===== DIVIDER ===== */
+        .divider {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            margin: 20px 0 16px;
+        }
+ 
+        .divider::before,
+        .divider::after {
+            content: '';
+            flex: 1;
+            height: 1px;
+            background: rgba(0, 0, 0, 0.08);
+        }
+ 
+        .divider span {
+            color: var(--text-gray);
+            font-size: 12px;
+            font-weight: 400;
+            white-space: nowrap;
+        }
+ 
+        /* ===== SOCIAL LOGIN ===== */
+        .social-login {
+            display: flex;
+            gap: 12px;
+            justify-content: center;
+        }
+ 
+        .social-btn {
+            flex: 1;
+            padding: 11px;
+            border: 1.5px solid rgba(0, 0, 0, 0.08);
+            border-radius: 12px;
+            background: rgba(255, 255, 255, 0.6);
+            backdrop-filter: blur(4px);
+            cursor: pointer;
+            transition: 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            font-size: 13px;
+            font-weight: 500;
+            color: var(--text-dark);
+            font-family: 'Poppins', sans-serif;
+        }
+ 
+        .social-btn:hover {
+            border-color: var(--primary);
+            background: rgba(255, 255, 255, 0.9);
+            transform: translateY(-2px);
+        }
+ 
+        .social-btn i {
+            font-size: 18px;
+        }
+ 
+        .social-btn.google i {
+            color: #EA4335;
+        }
+ 
+        .social-btn.linkedin i {
+            color: #0A66C2;
+        }
+ 
+        /* ============================================================ */
+        /* ===== PHOTO SECTION - PNG WITH TRANSPARENT BACKGROUND ===== */
+        /* ============================================================ */
+        .login-photo-section {
+            margin-top: 0;
+            padding: 0;
+            background: transparent;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 200px;
+            z-index: 1;
+        }
+ 
+        /* Soft glow behind the PNG image */
+        .login-photo-section::before {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80%;
+            height: 60%;
+            background: radial-gradient(ellipse at center bottom, 
+                rgba(31, 60, 136, 0.12) 0%,
+                rgba(31, 60, 136, 0.06) 40%,
+                rgba(31, 60, 136, 0.02) 70%,
+                transparent 100%
+            );
+            border-radius: 50%;
+            z-index: 0;
+            pointer-events: none;
+        }
+ 
+        .login-photo-section::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 70%;
+            height: 70%;
+            background: radial-gradient(ellipse at center, 
+                rgba(31, 60, 136, 0.05) 0%,
+                rgba(31, 60, 136, 0.02) 50%,
+                transparent 100%
+            );
+            border-radius: 50%;
+            z-index: 0;
+            pointer-events: none;
+        }
+ 
+        .login-photo-wrapper {
+            position: relative;
+            width: 85%;
+            max-width: 320px;
+            aspect-ratio: 4 / 3;
+            overflow: visible;
+            background: transparent;
+            z-index: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+ 
+        .login-photo-wrapper img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            display: block;
+            position: relative;
+            z-index: 1;
+            filter: drop-shadow(0 10px 40px rgba(31, 60, 136, 0.12));
+        }
+ 
+        /* Subtle bottom shadow on the image itself */
+        .login-photo-wrapper::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 70%;
+            height: 30px;
+            background: radial-gradient(ellipse at center, 
+                rgba(31, 60, 136, 0.10) 0%,
+                rgba(31, 60, 136, 0.04) 50%,
+                transparent 100%
+            );
+            border-radius: 50%;
+            z-index: 0;
+            pointer-events: none;
+        }
+ 
+        /* ===== FOOTER ===== */
+        .login-footer {
+            text-align: center;
+            padding: 16px 32px 24px;
+            font-size: 12px;
+            color: var(--text-gray);
+            font-weight: 400;
+            background: transparent;
+            border-top: 1px solid rgba(0, 0, 0, 0.06);
+            position: relative;
+            z-index: 2;
+        }
+ 
+        .login-footer a {
+            color: var(--primary);
+            text-decoration: none;
+            font-weight: 500;
+            transition: 0.3s;
+        }
+ 
+        .login-footer a:hover {
+            color: var(--secondary);
+            text-decoration: underline;
+        }
+ 
+        /* ============================================================ */
+        /* ===== RESPONSIVE ===== */
+        /* ============================================================ */
+        @media (max-width: 480px) {
+            body {
+                padding: 12px;
+            }
+            .login-container {
+                max-width: 100%;
+                border-radius: 18px;
+            }
+            .login-brand {
+                padding: 24px 20px 0;
+            }
+            .login-brand .logo img {
+                height: 38px;
+            }
+            .login-brand .logo-text {
+                font-size: 20px;
+            }
+            .login-brand .brand-subtitle {
+                font-size: 10px;
+                letter-spacing: 2px;
+            }
+            .login-card {
+                padding: 20px 20px 16px;
+            }
+            .login-card .card-header h1 {
+                font-size: 22px;
+            }
+            .login-card .card-header p {
+                font-size: 13px;
+            }
+            .login-card .card-header {
+                margin-bottom: 18px;
+            }
+            .input-wrapper {
+                padding: 10px 14px;
+            }
+            .input-wrapper input {
+                font-size: 13px;
+            }
+            .login-submit-btn {
+                padding: 12px;
+                font-size: 14px;
+            }
+            .social-btn {
+                padding: 9px;
+                font-size: 12px;
+            }
+            .login-options {
+                font-size: 12px;
+            }
+            .login-footer {
+                padding: 14px 20px 18px;
+                font-size: 11px;
+            }
+            .login-photo-wrapper {
+                width: 90%;
+                max-width: 250px;
+            }
+            .login-photo-section::before {
+                width: 90%;
+                height: 50%;
+            }
+            .login-container .design-shapes .shape-1 {
+                width: 80px;
+                height: 80px;
+            }
+            .login-container .design-shapes .shape-2 {
+                width: 60px;
+                height: 60px;
+            }
+            .login-container .design-shapes .shape-3 {
+                width: 40px;
+                height: 40px;
+            }
+            .login-container .design-shapes .ring-1 {
+                width: 70px;
+                height: 70px;
+            }
+            .login-container .design-shapes .ring-2 {
+                width: 45px;
+                height: 45px;
+            }
+        }
+ 
+        @media (max-width: 360px) {
+            .login-brand .logo-text {
+                font-size: 17px;
+            }
+            .login-brand .logo img {
+                height: 32px;
+            }
+            .login-card .card-header h1 {
+                font-size: 19px;
+            }
+            .social-login {
+                flex-direction: column;
+            }
+            .input-wrapper {
+                padding: 8px 12px;
+            }
+            .input-wrapper input {
+                font-size: 12px;
+            }
+            .login-photo-wrapper {
+                width: 95%;
+                max-width: 200px;
+            }
+        }
+    </style>
+</head>
+<body>
+ 
+    <div class="login-container">
+ 
+        <!-- ===== DECORATIVE DESIGNS - ONLY IN BLUE AREA ===== -->
+        <div class="design-shapes">
+            <!-- Large Circles -->
+            <div class="shape shape-1"></div>
+            <div class="shape shape-2"></div>
+            <div class="shape shape-3"></div>
+            
+            <!-- Small Dots -->
+            <div class="dot dot-1"></div>
+            <div class="dot dot-2"></div>
+            <div class="dot dot-3"></div>
+            <div class="dot dot-4"></div>
+            <div class="dot dot-5"></div>
+            
+            <!-- Rings -->
+            <div class="ring ring-1"></div>
+            <div class="ring ring-2"></div>
+        </div>
+ 
+        <!-- ===== LOGO - CENTERED ===== -->
+        <div class="login-brand">
+            <div class="logo">
+                <img src="photo1.jpeg" alt="QSkill Logo" />
+                <span class="logo-text">
+                    <span class="qskill">qskill</span>
+                    <span class="careersolutions">careersolutions</span>
+                </span>
+            </div>
+            <div class="brand-subtitle">Career Solutions</div>
+        </div>
+ 
+        <!-- ===== LOGIN CARD ===== -->
+        <div class="login-card">
+            <div class="card-header">
+                <h1><span id="roleTitle">Student</span> Login</h1>
+                <p id="roleSubtitle">Welcome back! Please login to continue.</p>
+            </div>
+ 
+            <form class="login-form" id="loginForm" novalidate>
+                
+                <!-- Email -->
+                <div class="form-group">
+                    <label for="emailInput">Email <span class="required">*</span></label>
+                    <div class="input-wrapper" id="emailWrapper">
+                        <i class="fas fa-envelope"></i>
+                        <input 
+                            type="email" 
+                            id="emailInput" 
+                            placeholder="Enter your email address" 
+                            required
+                            autocomplete="email"
+                        />
+                    </div>
+                    <span class="error-message" id="emailError">
+                        <i class="fas fa-exclamation-circle"></i> Please enter a valid email address
+                    </span>
+                </div>
+ 
+                <!-- Password -->
+                <div class="form-group">
+                    <label for="passwordInput">Password <span class="required">*</span></label>
+                    <div class="input-wrapper" id="passwordWrapper">
+                        <i class="fas fa-lock"></i>
+                        <input 
+                            type="password" 
+                            id="passwordInput" 
+                            placeholder="Enter your password" 
+                            required
+                            autocomplete="current-password"
+                            minlength="6"
+                        />
+                        <i class="fas fa-eye toggle-password" id="togglePassword"></i>
+                    </div>
+                    <span class="error-message" id="passwordError">
+                        <i class="fas fa-exclamation-circle"></i> Password must be at least 6 characters
+                    </span>
+                </div>
+ 
+                <!-- Options -->
+                <div class="login-options">
+                    <label class="remember-me">
+                        <input type="checkbox" id="rememberMe" />
+                        Remember me
+                    </label>
+                    <a href="#" class="forgot-link">Forgot Password?</a>
+                </div>
+ 
+                <!-- Login Button -->
+                <button type="submit" class="login-submit-btn" id="loginSubmitBtn">
+                    <span class="btn-text">Login</span>
+                    <span class="spinner"></span>
+                </button>
+ 
+            </form>
+ 
+            <!-- Divider -->
+            <div class="divider">
+                <span>or continue with</span>
+            </div>
+ 
+            <!-- Social Login -->
+            <div class="social-login">
+                <button class="social-btn google" id="googleLogin">
+                    <i class="fab fa-google"></i> Google
+                </button>
+                <button class="social-btn linkedin" id="linkedinLogin">
+                    <i class="fab fa-linkedin-in"></i> LinkedIn
+                </button>
+            </div>
+        </div>
+ 
+        <!-- ===== PHOTO SECTION - PNG WITH TRANSPARENT BACKGROUND ===== -->
+        <div class="login-photo-section">
+            <div class="login-photo-wrapper">
+                <img src="photo6.png" alt="Working on laptop" />
+            </div>
+        </div>
+ 
+        <!-- ===== FOOTER ===== -->
+        <div class="login-footer">
+            © 2025 Qskill Career Solutions. All rights reserved.
+            <br />
+            <a href="index.html">← Back to Home</a>
+        </div>
+ 
+    </div>
+ 
+    <script>
+        // ============================================================ */
+        // ===== ROLE SELECTION (from URL) ===== */
+        // ============================================================ */
+ 
+        const params = new URLSearchParams(window.location.search);
+        const role = params.get('role') || 'student';
+ 
+        const roleConfig = {
+            student: {
+                title: 'Student',
+                subtitle: 'Welcome back! Please login to continue.'
+            },
+            instructor: {
+                title: 'Instructor',
+                subtitle: 'Welcome back! Please login to manage your classes.'
+            }
+        };
+ 
+        const config = roleConfig[role] || roleConfig.student;
+        document.getElementById('roleTitle').textContent = config.title;
+        document.getElementById('roleSubtitle').textContent = config.subtitle;
+ 
+        // ============================================================ */
+        // ===== TOGGLE PASSWORD ===== */
+        // ============================================================ */
+ 
+        const togglePassword = document.getElementById('togglePassword');
+        const passwordInput = document.getElementById('passwordInput');
+ 
+        togglePassword.addEventListener('click', function() {
+            const isPassword = passwordInput.type === 'password';
+            passwordInput.type = isPassword ? 'text' : 'password';
+            this.classList.toggle('fa-eye');
+            this.classList.toggle('fa-eye-slash');
+        });
+ 
+        // ============================================================ */
+        // ===== FORM VALIDATION ===== */
+        // ============================================================ */
+ 
+        const emailInput = document.getElementById('emailInput');
+        const emailWrapper = document.getElementById('emailWrapper');
+        const passwordWrapper = document.getElementById('passwordWrapper');
+        const emailError = document.getElementById('emailError');
+        const passwordError = document.getElementById('passwordError');
+        const loginForm = document.getElementById('loginForm');
+        const loginSubmitBtn = document.getElementById('loginSubmitBtn');
+ 
+        emailInput.addEventListener('blur', function() {
+            validateEmail();
+        });
+ 
+        emailInput.addEventListener('input', function() {
+            if (emailWrapper.classList.contains('error') || emailWrapper.classList.contains('success')) {
+                validateEmail();
+            }
+        });
+ 
+        function validateEmail() {
+            const email = emailInput.value.trim();
+            const isValid = email !== '' && /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+            
+            if (email === '') {
+                emailWrapper.classList.remove('success', 'error');
+                emailError.classList.remove('show');
+                return false;
+            }
+            
+            if (isValid) {
+                emailWrapper.classList.remove('error');
+                emailWrapper.classList.add('success');
+                emailError.classList.remove('show');
+                return true;
+            } else {
+                emailWrapper.classList.remove('success');
+                emailWrapper.classList.add('error');
+                emailError.classList.add('show');
+                return false;
+            }
+        }
+ 
+        passwordInput.addEventListener('blur', function() {
+            validatePassword();
+        });
+ 
+        passwordInput.addEventListener('input', function() {
+            if (passwordWrapper.classList.contains('error') || passwordWrapper.classList.contains('success')) {
+                validatePassword();
+            }
+        });
+ 
+        function validatePassword() {
+            const password = passwordInput.value;
+            const isValid = password.length >= 6;
+            
+            if (password === '') {
+                passwordWrapper.classList.remove('success', 'error');
+                passwordError.classList.remove('show');
+                return false;
+            }
+            
+            if (isValid) {
+                passwordWrapper.classList.remove('error');
+                passwordWrapper.classList.add('success');
+                passwordError.classList.remove('show');
+                return true;
+            } else {
+                passwordWrapper.classList.remove('success');
+                passwordWrapper.classList.add('error');
+                passwordError.classList.add('show');
+                return false;
+            }
+        }
+ 
+        function clearErrors() {
+            [emailWrapper, passwordWrapper].forEach(wrapper => {
+                wrapper.classList.remove('error', 'success');
+            });
+            [emailError, passwordError].forEach(error => {
+                error.classList.remove('show');
+            });
+        }
+ 
+        // ============================================================ */
+        // ===== FORM SUBMISSION ===== */
+        // ============================================================ */
+ 
+        loginForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const isEmailValid = validateEmail();
+            const isPasswordValid = validatePassword();
+            
+            if (!isEmailValid || !isPasswordValid) {
+                return;
+            }
+            
+            loginSubmitBtn.classList.add('loading');
+            loginSubmitBtn.disabled = true;
+            
+            setTimeout(() => {
+                const roleDisplay = role.charAt(0).toUpperCase() + role.slice(1);
+                alert(`✅ Login successful!\n\nWelcome back, ${roleDisplay}!`);
+                
+                loginSubmitBtn.classList.remove('loading');
+                loginSubmitBtn.disabled = false;
+                loginForm.reset();
+                clearErrors();
+                togglePassword.className = 'fas fa-eye toggle-password';
+                passwordInput.type = 'password';
+            }, 1500);
+        });
+ 
+        // ============================================================ */
+        // ===== FORGOT PASSWORD ===== */
+        // ============================================================ */
+ 
+        document.querySelector('.forgot-link').addEventListener('click', function(e) {
+            e.preventDefault();
+            alert('📧 Password reset link has been sent to your email!');
+        });
+ 
+        // ============================================================ */
+        // ===== SOCIAL LOGIN ===== */
+        // ============================================================ */
+ 
+        document.getElementById('googleLogin').addEventListener('click', function() {
+            alert('🔵 Google login is a demo. Please use email login.');
+        });
+ 
+        document.getElementById('linkedinLogin').addEventListener('click', function() {
+            alert('🔵 LinkedIn login is a demo. Please use email login.');
+        });
+ 
+        // ============================================================ */
+        // ===== KEYBOARD SHORTCUT ===== */
+        // ============================================================ */
+ 
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                loginForm.reset();
+                clearErrors();
+                togglePassword.className = 'fas fa-eye toggle-password';
+                passwordInput.type = 'password';
+            }
+        });
+ 
+        console.log('🔐 QSkill Career Solutions - Login Page');
+        console.log('👤 Current Role:', role);
+        console.log('💡 Tip: Press Escape to clear form');
+    </script>
+ 
+</body>
+</html>

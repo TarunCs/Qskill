@@ -1,0 +1,2092 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>QSkill Career Solutions</title>
+    
+    <!-- ===== POPPINS FONT ===== -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+    
+    <style>
+        /* ============================================================ */
+        /* ===== FONT SYSTEM: Poppins for headings/UI, Helvetica for description text ===== */
+        /* ============================================================ */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+ 
+        html, body {
+            font-family: 'Poppins', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            color: #1A1A1A;
+            background: #FFFFFF;
+            line-height: 1.6;
+        }
+ 
+        h1, h2, h3, h4, h5, h6, .logo-text {
+            font-family: 'Poppins', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+        }
+ 
+        p {
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+        }
+ 
+        i.fas, i.fab, i.far {
+            font-family: "Font Awesome 6 Free", "Font Awesome 6 Brands";
+        }
+ 
+        /* ============================================================ */
+        /* ===== EXACT COLOR SYSTEM ===== */
+        /* ============================================================ */
+        :root {
+            --primary: #1F3C88;
+            --secondary: #2D5BFF;
+            --light-bg: #EAF1FF;
+            --white: #FFFFFF;
+            --text-dark: #1A1A1A;
+            --text-gray: #6B7280;
+            --border: #E5E7EB;
+            --orange: #FA7000;
+            --star: #FBBF24;
+            --footer: #0B1E3C;
+            --hero-bg: #DEEAFD;
+        }
+ 
+        /* ============================================================ */
+        /* ===== NAVBAR ===== */
+        /* ============================================================ */
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 16px 60px;
+            background: #DEEAFD;
+            box-shadow: none;
+            position: relative;
+            z-index: 100;
+            border-bottom: 1px solid rgba(31, 60, 136, 0.05);
+        }
+ 
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+ 
+        .logo img {
+            height: 42px;
+            width: auto;
+            display: block;
+        }
+ 
+        .logo-text {
+            font-size: 22px;
+            font-weight: 700;
+        }
+ 
+        .logo-text .qskill {
+            color: var(--primary);
+        }
+ 
+        .logo-text .careersolutions {
+            color: var(--orange);
+            font-weight: 300;
+        }
+ 
+        .nav-links {
+            display: flex;
+            gap: 32px;
+            align-items: center;
+            list-style: none;
+        }
+ 
+        .nav-links a {
+            text-decoration: none;
+            color: var(--text-dark);
+            font-weight: 500;
+            font-size: 15px;
+            transition: 0.3s;
+        }
+ 
+        .nav-links a:hover {
+            color: var(--primary);
+        }
+ 
+        .nav-links a i {
+            font-size: 11px;
+            color: var(--text-gray);
+            margin-left: 4px;
+        }
+ 
+        .login-btn {
+            background: var(--primary);
+            color: var(--white) !important;
+            padding: 8px 24px;
+            border-radius: 999px;
+            font-weight: 600;
+            position: relative;
+            transition: 0.3s;
+            cursor: pointer;
+            display: inline-block;
+        }
+ 
+        .login-btn:hover {
+            background: var(--secondary);
+            transform: translateY(-1px);
+        }
+ 
+        /* ===== LOGIN DROPDOWN ===== */
+        .login-dropdown-wrapper {
+            position: relative;
+            display: inline-block;
+        }
+ 
+        .login-dropdown {
+            display: none;
+            position: absolute;
+            background: var(--white);
+            top: 44px;
+            right: 0;
+            box-shadow: 0 12px 32px rgba(0, 0, 0, 0.12);
+            border-radius: 14px;
+            padding: 6px 0;
+            min-width: 260px;
+            border: 1px solid var(--border);
+            z-index: 200;
+        }
+ 
+        .login-dropdown.show {
+            display: block;
+        }
+ 
+        .login-dropdown a {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            padding: 16px 22px;
+            color: var(--text-dark) !important;
+            text-decoration: none;
+            transition: 0.3s;
+        }
+ 
+        .login-dropdown a:not(:last-child) {
+            border-bottom: 1px solid var(--border);
+        }
+ 
+        .login-dropdown a:hover {
+            background: var(--light-bg);
+        }
+ 
+        .login-dropdown .dropdown-icon {
+            width: 42px;
+            height: 42px;
+            min-width: 42px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+ 
+        .login-dropdown .dropdown-icon i {
+            font-size: 17px;
+        }
+ 
+        .login-dropdown a[data-role="student"] .dropdown-icon {
+            background: var(--light-bg);
+        }
+ 
+        .login-dropdown a[data-role="student"] .dropdown-icon i {
+            color: var(--primary);
+        }
+ 
+        .login-dropdown a[data-role="instructor"] .dropdown-icon {
+            background: #FFEBDD;
+        }
+ 
+        .login-dropdown a[data-role="instructor"] .dropdown-icon i {
+            color: var(--orange);
+        }
+ 
+        .login-dropdown .dropdown-text {
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+        }
+ 
+        .login-dropdown .role-title {
+            font-weight: 600;
+            font-size: 15px;
+            color: var(--text-dark);
+        }
+ 
+        .login-dropdown .role-sub {
+            font-weight: 400;
+            font-size: 12px;
+            color: var(--text-gray);
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+        }
+ 
+        .login-dropdown a:hover .role-title {
+            color: var(--primary);
+        }
+ 
+        /* ============================================================ */
+        /* ===== HERO SECTION ===== */
+        /* ============================================================ */
+        .hero {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 20px 60px 40px;
+            min-height: 400px;
+            gap: 40px;
+            position: relative;
+            overflow: hidden;
+            
+            background: linear-gradient(90deg, #DEEAFD 0%, #DEEAFD 45%, rgba(222, 234, 253, 0.2) 65%, transparent 80%),
+                        url('photo2.jpeg');
+            background-size: cover, cover;
+            background-position: center;
+            background-repeat: no-repeat;
+        }
+ 
+        .hero-text {
+            flex: 1;
+            min-width: 280px;
+            position: relative;
+            z-index: 2;
+            color: var(--text-dark);
+        }
+ 
+        .hero-text .tag {
+            color: var(--orange);
+            font-weight: 600;
+            letter-spacing: 1.5px;
+            font-size: 12px;
+            text-transform: uppercase;
+        }
+ 
+        .hero-text h2 {
+            font-size: 42px;
+            font-weight: 700;
+            line-height: 1.15;
+            margin: 10px 0 8px;
+            color: var(--text-dark);
+        }
+ 
+        .hero-text h2 span {
+            color: var(--primary);
+        }
+ 
+        .hero-text p {
+            color: var(--text-gray);
+            font-size: 15px;
+            margin: 12px 0 20px;
+            max-width: 420px;
+            line-height: 1.6;
+            font-weight: 400;
+        }
+ 
+        .hero-text p .dot {
+            color: var(--orange);
+            font-weight: 700;
+            margin: 0 4px;
+        }
+ 
+        .hero-buttons {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+            align-items: center;
+        }
+ 
+        .btn-primary {
+            background: var(--primary);
+            color: var(--white);
+            border: none;
+            padding: 12px 28px;
+            border-radius: 999px;
+            font-weight: 600;
+            font-size: 14px;
+            cursor: pointer;
+            transition: 0.3s;
+            box-shadow: 0 4px 16px rgba(31, 60, 136, 0.25);
+            text-decoration: none;
+            display: inline-block;
+        }
+ 
+        .btn-primary:hover {
+            background: var(--secondary);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 24px rgba(31, 60, 136, 0.35);
+        }
+ 
+        .btn-secondary {
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(10px);
+            border: 1px solid var(--border);
+            color: var(--text-dark);
+            padding: 12px 28px;
+            border-radius: 999px;
+            font-weight: 600;
+            font-size: 14px;
+            cursor: pointer;
+            transition: 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+ 
+        .btn-secondary:hover {
+            border-color: var(--primary);
+            color: var(--primary);
+            background: var(--white);
+            transform: translateY(-2px);
+        }
+ 
+        .btn-schedule {
+            background: var(--orange);
+            color: var(--white);
+            border: none;
+            padding: 12px 16px;
+            border-radius: 999px;
+            font-weight: 600;
+            font-size: 16px;
+            cursor: pointer;
+            transition: 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 16px rgba(249, 115, 22, 0.3);
+            width: 46px;
+            height: 46px;
+        }
+ 
+        .btn-schedule:hover {
+            background: #ea580c;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 24px rgba(249, 115, 22, 0.4);
+        }
+ 
+        .btn-schedule i {
+            font-size: 18px;
+        }
+ 
+        .floating-icons {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+        }
+ 
+        .floating-icons i {
+            position: absolute;
+            color: var(--secondary);
+            opacity: 0.06;
+            font-size: 36px;
+        }
+ 
+        .floating-icons i:nth-child(1) { top: 15%; left: 5%; }
+        .floating-icons i:nth-child(2) { top: 10%; right: 10%; font-size: 44px; }
+        .floating-icons i:nth-child(3) { bottom: 20%; left: 8%; font-size: 32px; }
+        .floating-icons i:nth-child(4) { bottom: 15%; right: 5%; font-size: 40px; }
+ 
+        /* ============================================================ */
+        /* ===== FEATURE STRIP ===== */
+        /* ============================================================ */
+        .features {
+            display: flex;
+            justify-content: space-around;
+            padding: 40px 60px;
+            background: var(--white);
+            flex-wrap: wrap;
+            gap: 20px;
+            border-bottom: 1px solid var(--border);
+        }
+ 
+        .feature-item {
+            text-align: center;
+            flex: 1;
+            min-width: 140px;
+            padding: 12px;
+        }
+ 
+        .feature-item .icon-wrapper {
+            display: inline-block;
+            width: 64px;
+            height: 64px;
+            background: var(--light-bg);
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: 0.3s;
+            margin: 0 auto;
+        }
+ 
+        .feature-item .icon-wrapper i {
+            font-size: 28px;
+            color: var(--primary);
+        }
+ 
+        .feature-item:hover .icon-wrapper {
+            transform: translateY(-4px);
+            box-shadow: 0 4px 16px rgba(31, 60, 136, 0.12);
+            background: #d4e2ff;
+        }
+ 
+        .feature-item h4 {
+            margin-top: 12px;
+            font-size: 16px;
+            color: var(--text-dark);
+            font-weight: 600;
+        }
+ 
+        .feature-item p {
+            color: var(--text-gray);
+            font-size: 13px;
+            margin-top: 2px;
+            font-weight: 400;
+        }
+ 
+        /* ============================================================ */
+        /* ===== WHY QSKILL SECTION ===== */
+        /* ============================================================ */
+        .why-section {
+            padding: 70px 60px 50px;
+            background: var(--white);
+            text-align: center;
+        }
+ 
+        .why-section h2 {
+            font-size: 38px;
+            color: var(--primary);
+            font-weight: 700;
+        }
+ 
+        .why-section > p {
+            max-width: 820px;
+            margin: 14px auto 44px;
+            color: var(--text-gray);
+            font-size: 17px;
+            line-height: 1.8;
+            font-weight: 400;
+        }
+ 
+        .why-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+            gap: 30px;
+        }
+ 
+        .why-item {
+            text-align: center;
+            background: var(--white);
+            padding: 28px 16px;
+            border-radius: 16px;
+            transition: 0.3s;
+            box-shadow: 0 2px 12px rgba(0, 0, 0, 0.02);
+            border: 1px solid var(--border);
+        }
+ 
+        .why-item:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 8px 28px rgba(31, 60, 136, 0.06);
+            border-color: var(--secondary);
+        }
+ 
+        .why-item .icon-wrapper {
+            display: inline-block;
+            width: 60px;
+            height: 60px;
+            background: var(--light-bg);
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto;
+        }
+ 
+        .why-item .icon-wrapper i {
+            font-size: 30px;
+            color: var(--primary);
+        }
+ 
+        .why-item h4 {
+            margin-top: 14px;
+            font-size: 15px;
+            color: var(--text-dark);
+            font-weight: 600;
+        }
+ 
+        /* ============================================================ */
+        /* ===== COURSES SECTION ===== */
+        /* ============================================================ */
+        .courses {
+            padding: 70px 60px 50px;
+            background: var(--white);
+            text-align: center;
+            scroll-margin-top: 80px;
+        }
+ 
+        .courses-header {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 40px;
+            flex-wrap: wrap;
+            gap: 16px;
+            position: relative;
+        }
+ 
+        .courses-header .title-group {
+            text-align: center;
+        }
+ 
+        .courses-header .title-group h2 {
+            font-size: 38px;
+            color: var(--primary);
+            font-weight: 700;
+            margin-bottom: 4px;
+        }
+ 
+        .courses-header .title-group .sub {
+            color: var(--text-gray);
+            font-size: 16px;
+            font-weight: 400;
+        }
+ 
+        .courses-header .view-more-btn {
+            background: transparent;
+            border: 1.5px solid var(--primary);
+            color: var(--primary);
+            padding: 6px 18px;
+            border-radius: 999px;
+            font-weight: 500;
+            font-size: 12px;
+            cursor: pointer;
+            transition: 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            white-space: nowrap;
+            position: absolute;
+            right: 0;
+            top: 50%;
+            transform: translateY(-50%);
+        }
+ 
+        .courses-header .view-more-btn:hover {
+            background: var(--primary);
+            color: var(--white);
+            transform: translateY(-50%) translateY(-2px);
+            box-shadow: 0 4px 16px rgba(31, 60, 136, 0.2);
+        }
+ 
+        .courses-header .view-more-btn i {
+            font-size: 11px;
+        }
+ 
+        .course-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+        }
+ 
+        .course-card {
+            background: var(--white);
+            border-radius: 16px;
+            padding: 24px 24px 28px;
+            transition: 0.3s;
+            text-align: left;
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+            min-height: 420px;
+            border: 1px solid var(--border);
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.03);
+        }
+ 
+        .course-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 12px 40px rgba(31, 60, 136, 0.06);
+            border-color: var(--border);
+        }
+ 
+        .course-card .card-image {
+            width: 100%;
+            aspect-ratio: 16/9;
+            border-radius: 20px;
+            overflow: hidden;
+            margin-bottom: 20px;
+            position: relative;
+            padding: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #FFFFFF;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.04);
+            border: 1px solid #F1F5F9;
+            transition: all 0.3s ease;
+        }
+ 
+        .course-card:hover .card-image {
+            box-shadow: 0 8px 24px rgba(31, 60, 136, 0.08);
+            border-color: var(--light-bg);
+        }
+ 
+        .course-card .card-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            display: block;
+            transition: all 0.5s ease;
+            padding: 12px;
+            background: #FFFFFF;
+        }
+ 
+        .course-card:hover .card-image img {
+            transform: scale(1.02);
+        }
+ 
+        .course-card .card-image .image-badge {
+            position: absolute;
+            top: 12px;
+            left: 12px;
+            background: var(--primary);
+            color: var(--white);
+            padding: 4px 14px;
+            border-radius: 999px;
+            font-size: 11px;
+            font-weight: 500;
+            letter-spacing: 0.3px;
+            z-index: 2;
+            box-shadow: 0 2px 8px rgba(31, 60, 136, 0.15);
+            text-transform: uppercase;
+        }
+ 
+        .course-card:nth-child(2) .card-image .image-badge {
+            background: var(--secondary);
+        }
+ 
+        .course-card:nth-child(3) .card-image .image-badge {
+            background: var(--orange);
+        }
+ 
+        .course-card .card-image::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 40%;
+            background: linear-gradient(to top, rgba(31, 60, 136, 0.04), transparent);
+            opacity: 0;
+            transition: opacity 0.4s ease;
+            pointer-events: none;
+            border-radius: 0 0 20px 20px;
+        }
+ 
+        .course-card:hover .card-image::after {
+            opacity: 1;
+        }
+ 
+        .course-card h3 {
+            font-size: 19px;
+            color: var(--text-dark);
+            margin-bottom: 10px;
+            line-height: 1.3;
+            font-weight: 600;
+        }
+ 
+        .course-card p {
+            color: var(--text-gray);
+            font-size: 14px;
+            margin-bottom: 14px;
+            line-height: 1.6;
+            flex-grow: 0;
+            font-weight: 400;
+        }
+ 
+        .course-card .rating {
+            color: var(--star);
+            font-weight: 600;
+            font-size: 15px;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            margin-bottom: 18px;
+        }
+ 
+        .course-card .rating .star-icon {
+            font-size: 14px;
+            line-height: 1;
+            color: var(--star);
+        }
+ 
+        .course-card .rating span {
+            color: var(--text-gray);
+            font-weight: 400;
+            font-size: 14px;
+            margin-left: 2px;
+        }
+ 
+        .course-card .btn-group {
+            display: flex;
+            gap: 14px;
+            margin-top: auto;
+            flex-wrap: wrap;
+            padding-top: 4px;
+        }
+ 
+        .course-card .btn-group button {
+            padding: 7px 20px;
+            border-radius: 999px;
+            border: none;
+            font-weight: 500;
+            font-size: 13px;
+            cursor: pointer;
+            transition: 0.3s;
+            height: 36px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            letter-spacing: 0.2px;
+        }
+ 
+        .btn-outline {
+            background: transparent;
+            border: 1px solid var(--border) !important;
+            color: var(--text-gray);
+        }
+ 
+        .btn-outline:hover {
+            border-color: var(--primary) !important;
+            color: var(--primary);
+            background: var(--light-bg);
+        }
+ 
+        .btn-solid-small {
+            background: var(--primary);
+            color: var(--white);
+        }
+ 
+        .btn-solid-small:hover {
+            background: var(--secondary);
+        }
+ 
+        /* ============================================================ */
+        /* ===== CONTACT SECTION ===== */
+        /* ============================================================ */
+        .contact {
+            padding: 70px 60px 50px;
+            background: var(--white);
+            text-align: center;
+        }
+ 
+        .contact h2 {
+            font-size: 36px;
+            color: var(--primary);
+            font-weight: 700;
+        }
+ 
+        .contact-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 30px;
+            margin-top: 36px;
+        }
+ 
+        .contact-item {
+            background: var(--white);
+            padding: 28px 16px;
+            border-radius: 16px;
+            transition: 0.3s;
+            border: 1px solid var(--border);
+        }
+ 
+        .contact-item:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 28px rgba(31, 60, 136, 0.06);
+            border-color: var(--secondary);
+        }
+ 
+        .contact-item .icon-wrapper {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: var(--light-bg);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 14px;
+            transition: 0.3s;
+        }
+ 
+        .contact-item:hover .icon-wrapper {
+            transform: scale(1.08);
+        }
+ 
+        .contact-item i {
+            font-size: 24px;
+            color: var(--primary);
+        }
+ 
+        .contact-item:nth-child(2) .icon-wrapper {
+            background: #FFEBDD;
+        }
+ 
+        .contact-item:nth-child(2) i {
+            color: var(--orange);
+        }
+ 
+        .contact-item:nth-child(3) .icon-wrapper {
+            background: #E3F9EC;
+        }
+ 
+        .contact-item:nth-child(3) i {
+            color: #25D366;
+        }
+ 
+        .contact-item:nth-child(4) .icon-wrapper {
+            background: var(--light-bg);
+        }
+ 
+        .contact-item:nth-child(4) i {
+            color: var(--secondary);
+        }
+ 
+        .contact-item h4 {
+            font-size: 16px;
+            color: var(--text-dark);
+            font-weight: 600;
+        }
+ 
+        .contact-item p {
+            color: var(--text-gray);
+            font-size: 14px;
+            margin-top: 4px;
+            font-weight: 400;
+        }
+ 
+        /* ============================================================ */
+        /* ===== BOOKING MODAL ===== */
+        /* ============================================================ */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(4px);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+ 
+        .modal-overlay.active {
+            display: flex;
+        }
+ 
+        .modal-content {
+            background: var(--white);
+            border-radius: 24px;
+            max-width: 700px;
+            width: 100%;
+            max-height: 90vh;
+            overflow-y: auto;
+            padding: 30px 35px 35px;
+            position: relative;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.2);
+            animation: modalSlideIn 0.3s ease;
+        }
+ 
+        @keyframes modalSlideIn {
+            from {
+                opacity: 0;
+                transform: translateY(30px) scale(0.95);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+ 
+        .modal-close {
+            position: absolute;
+            top: 16px;
+            right: 20px;
+            background: var(--light-bg);
+            border: none;
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            font-size: 18px;
+            cursor: pointer;
+            transition: 0.3s;
+            color: var(--text-gray);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+ 
+        .modal-close:hover {
+            background: var(--border);
+            color: var(--text-dark);
+        }
+ 
+        .modal-content h2 {
+            font-size: 28px;
+            color: var(--primary);
+            font-weight: 700;
+            margin-bottom: 6px;
+        }
+ 
+        .modal-content .modal-sub {
+            color: var(--text-gray);
+            font-size: 15px;
+            margin-bottom: 24px;
+        }
+ 
+        .modal-calendar-nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 18px;
+        }
+ 
+        .modal-calendar-nav .month-year {
+            font-size: 18px;
+            font-weight: 600;
+            color: var(--text-dark);
+        }
+ 
+        .modal-calendar-nav .nav-arrows {
+            display: flex;
+            gap: 8px;
+        }
+ 
+        .modal-calendar-nav .nav-arrows button {
+            background: var(--white);
+            border: 1px solid var(--border);
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            cursor: pointer;
+            transition: 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-gray);
+        }
+ 
+        .modal-calendar-nav .nav-arrows button:hover {
+            border-color: var(--primary);
+            color: var(--primary);
+            background: var(--light-bg);
+        }
+ 
+        .modal-calendar-grid {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 6px;
+        }
+ 
+        .modal-calendar-grid .day-header {
+            font-weight: 600;
+            color: var(--text-gray);
+            font-size: 12px;
+            padding: 6px 0;
+            text-align: center;
+        }
+ 
+        .modal-calendar-grid .day-cell {
+            border-radius: 10px;
+            padding: 10px 4px;
+            text-align: center;
+            cursor: pointer;
+            transition: 0.3s;
+            border: 2px solid transparent;
+            min-height: 60px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            background: #FAFBFC;
+        }
+ 
+        .modal-calendar-grid .day-cell .day-number {
+            font-weight: 600;
+            font-size: 15px;
+            color: var(--text-dark);
+        }
+ 
+        .modal-calendar-grid .day-cell .day-slots {
+            font-size: 9px;
+            color: var(--text-gray);
+            margin-top: 2px;
+        }
+ 
+        .modal-calendar-grid .day-cell .day-slots.available {
+            color: #22c55e;
+            font-weight: 500;
+        }
+ 
+        .modal-calendar-grid .day-cell .day-slots.full {
+            color: #ef4444;
+        }
+ 
+        .modal-calendar-grid .day-cell:hover:not(.empty):not(.past):not(.no-slots) {
+            border-color: var(--primary);
+            background: var(--light-bg);
+        }
+ 
+        .modal-calendar-grid .day-cell.selected {
+            border-color: var(--primary);
+            background: var(--light-bg);
+        }
+ 
+        .modal-calendar-grid .day-cell.today {
+            border-color: var(--orange);
+            background: #fef3e8;
+        }
+ 
+        .modal-calendar-grid .day-cell.empty {
+            cursor: default;
+            background: transparent;
+        }
+ 
+        .modal-calendar-grid .day-cell.past {
+            opacity: 0.4;
+            cursor: not-allowed;
+            background: #f3f4f6;
+        }
+ 
+        .modal-calendar-grid .day-cell.no-slots {
+            opacity: 0.5;
+            cursor: not-allowed;
+            background: #f9fafb;
+        }
+ 
+        .modal-time-slots {
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 1px solid var(--border);
+        }
+ 
+        .modal-time-slots .selected-date {
+            font-weight: 600;
+            color: var(--text-dark);
+            margin-bottom: 14px;
+            font-size: 15px;
+        }
+ 
+        .modal-time-slots-grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            justify-content: center;
+        }
+ 
+        .modal-time-slots-grid .time-slot {
+            padding: 8px 18px;
+            border-radius: 999px;
+            border: 1.5px solid var(--border);
+            background: var(--white);
+            cursor: pointer;
+            transition: 0.3s;
+            font-size: 13px;
+            font-weight: 500;
+            color: var(--text-dark);
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+ 
+        .modal-time-slots-grid .time-slot:hover:not(.booked) {
+            border-color: var(--primary);
+            color: var(--primary);
+            background: var(--light-bg);
+        }
+ 
+        .modal-time-slots-grid .time-slot.selected-slot {
+            border-color: var(--primary);
+            background: var(--primary);
+            color: var(--white);
+        }
+ 
+        .modal-time-slots-grid .time-slot.booked {
+            opacity: 0.4;
+            cursor: not-allowed;
+            background: #f3f4f6;
+        }
+ 
+        .modal-time-slots-grid .time-slot .slot-count {
+            font-size: 10px;
+            color: var(--text-gray);
+            font-weight: 400;
+        }
+ 
+        .modal-time-slots-grid .time-slot.selected-slot .slot-count {
+            color: rgba(255,255,255,0.7);
+        }
+ 
+        .modal-time-slots-grid .time-slot .booked-icon {
+            color: #ef4444;
+            font-size: 12px;
+        }
+ 
+        .modal-time-slots-grid .time-slot .available-icon {
+            color: #22c55e;
+            font-size: 12px;
+        }
+ 
+        .modal-book-btn {
+            margin-top: 18px;
+            background: var(--primary);
+            color: var(--white);
+            border: none;
+            padding: 12px 40px;
+            border-radius: 999px;
+            font-weight: 600;
+            font-size: 15px;
+            cursor: pointer;
+            transition: 0.3s;
+            width: 100%;
+        }
+ 
+        .modal-book-btn:hover {
+            background: var(--secondary);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 16px rgba(31, 60, 136, 0.25);
+        }
+ 
+        .modal-book-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none;
+        }
+ 
+        /* ============================================================ */
+        /* ===== FOOTER ===== */
+        /* ============================================================ */
+        .footer {
+            background: var(--footer);
+            color: #e2e8f0;
+            padding: 60px 60px 24px;
+        }
+ 
+        .footer-top {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 40px;
+            margin-bottom: 36px;
+        }
+ 
+        .footer-top .footer-logo img {
+            height: 36px;
+            width: auto;
+            display: block;
+            margin-bottom: 10px;
+            background: var(--footer);
+            padding: 4px;
+            border-radius: 4px;
+        }
+ 
+        .footer-top h4 {
+            color: var(--white);
+            margin-bottom: 14px;
+            font-size: 17px;
+            font-weight: 600;
+        }
+ 
+        .footer-top a {
+            display: block;
+            color: #94a3b8;
+            text-decoration: none;
+            font-size: 14px;
+            margin-bottom: 8px;
+            transition: 0.3s;
+            font-weight: 400;
+        }
+ 
+        .footer-top a:hover {
+            color: var(--white);
+        }
+ 
+        .footer-social {
+            display: flex;
+            gap: 14px;
+            margin-top: 12px;
+        }
+ 
+        .footer-social i {
+            font-size: 20px;
+            color: #94a3b8;
+            transition: 0.3s;
+            cursor: pointer;
+        }
+ 
+        .footer-social i:hover {
+            color: var(--white);
+            transform: translateY(-2px);
+        }
+ 
+        .footer-bottom {
+            border-top: 1px solid #1e2a3a;
+            padding-top: 20px;
+            text-align: center;
+            font-size: 14px;
+            color: #94a3b8;
+            font-weight: 400;
+        }
+ 
+        /* ============================================================ */
+        /* ===== RESPONSIVE ===== */
+        /* ============================================================ */
+        @media (max-width: 992px) {
+            .hero {
+                flex-direction: column;
+                padding: 20px 30px 30px;
+                text-align: center;
+                min-height: 350px;
+                background: linear-gradient(180deg, #DEEAFD 0%, #DEEAFD 40%, rgba(222, 234, 253, 0.2) 60%, transparent 80%),
+                            url('photo2.jpeg');
+                background-size: cover, cover;
+                background-position: center;
+            }
+            .hero-text p {
+                margin: 12px auto 18px;
+            }
+            .hero-buttons {
+                justify-content: center;
+            }
+            .course-card {
+                min-height: auto;
+            }
+            .courses-header {
+                flex-direction: column;
+                text-align: center;
+                position: relative;
+            }
+            .courses-header .title-group {
+                text-align: center;
+            }
+            .courses-header .view-more-btn {
+                position: static;
+                transform: none;
+                margin: 0 auto;
+            }
+            .courses-header .view-more-btn:hover {
+                transform: translateY(-2px);
+            }
+            .modal-content {
+                padding: 24px 20px;
+                max-width: 95%;
+            }
+        }
+ 
+        @media (max-width: 768px) {
+            .navbar {
+                flex-direction: column;
+                padding: 16px 20px;
+                gap: 12px;
+                background: #DEEAFD;
+                position: relative;
+            }
+            .nav-links {
+                flex-wrap: wrap;
+                justify-content: center;
+                gap: 14px;
+            }
+            .hero {
+                padding: 16px 20px 24px;
+                min-height: 320px;
+            }
+            .hero-text h2 {
+                font-size: 28px;
+            }
+            .features {
+                padding: 30px 20px;
+                flex-direction: column;
+                align-items: center;
+            }
+            .why-section, .courses, .contact {
+                padding: 40px 20px;
+            }
+            .footer {
+                padding: 30px 20px;
+            }
+            .floating-icons {
+                display: none;
+            }
+            .course-card {
+                min-height: auto;
+                padding: 20px;
+            }
+            .course-card .card-image .image-badge {
+                font-size: 9px;
+                padding: 3px 10px;
+                top: 8px;
+                left: 8px;
+            }
+            .modal-content {
+                padding: 20px 16px;
+                max-width: 100%;
+                border-radius: 16px;
+                max-height: 95vh;
+            }
+            .modal-content h2 {
+                font-size: 22px;
+            }
+            .modal-calendar-grid .day-cell {
+                min-height: 44px;
+                padding: 4px 2px;
+                border-radius: 8px;
+            }
+            .modal-calendar-grid .day-cell .day-number {
+                font-size: 12px;
+            }
+            .modal-calendar-grid .day-cell .day-slots {
+                font-size: 7px;
+            }
+            .modal-calendar-grid .day-header {
+                font-size: 10px;
+                padding: 4px 0;
+            }
+            .modal-time-slots-grid .time-slot {
+                padding: 6px 12px;
+                font-size: 12px;
+            }
+            .btn-schedule {
+                width: 40px;
+                height: 40px;
+                padding: 10px;
+                font-size: 14px;
+            }
+            .btn-schedule i {
+                font-size: 14px;
+            }
+        }
+ 
+        @media (max-width: 480px) {
+            .hero-text h2 {
+                font-size: 22px;
+            }
+            .btn-primary, .btn-secondary {
+                padding: 10px 18px;
+                font-size: 12px;
+            }
+            .course-card {
+                padding: 16px;
+            }
+            .course-card .btn-group button {
+                padding: 6px 16px;
+                font-size: 12px;
+                height: 32px;
+            }
+            .course-card .card-image img {
+                padding: 6px;
+            }
+            .courses-header .title-group h2 {
+                font-size: 28px;
+            }
+            .courses-header .view-more-btn {
+                padding: 5px 14px;
+                font-size: 11px;
+            }
+            .modal-calendar-grid {
+                gap: 3px;
+            }
+            .modal-calendar-grid .day-cell {
+                min-height: 36px;
+                padding: 3px 1px;
+                border-radius: 6px;
+            }
+            .modal-calendar-grid .day-cell .day-number {
+                font-size: 11px;
+            }
+            .modal-calendar-grid .day-cell .day-slots {
+                display: none;
+            }
+            .modal-calendar-grid .day-header {
+                font-size: 9px;
+                padding: 3px 0;
+            }
+            .btn-schedule {
+                width: 36px;
+                height: 36px;
+                padding: 8px;
+                font-size: 12px;
+            }
+            .btn-schedule i {
+                font-size: 12px;
+            }
+        }
+    </style>
+</head>
+<body>
+ 
+    <!-- ============================================================ -->
+    <!-- ===== NAVBAR ===== -->
+    <!-- ============================================================ -->
+    <nav class="navbar">
+        <div class="logo">
+            <img src="photo1.jpeg" alt="QSkill Logo" />
+            <span class="logo-text">
+                <span class="qskill">qskill</span>
+                <span class="careersolutions">careersolutions</span>
+            </span>
+        </div>
+        <ul class="nav-links">
+            <li><a href="#">About Us</a></li>
+            <li><a href="#courses">Courses</a></li>
+            <li><a href="#contact">Contact Us</a></li>
+            <li class="login-dropdown-wrapper">
+                <a href="#" class="login-btn" id="loginDropdownBtn">Login <i class="fas fa-chevron-down"></i></a>
+                <div class="login-dropdown" id="loginDropdown">
+                    <a href="login.html?role=student" data-role="student">
+                        <span class="dropdown-icon"><i class="fas fa-user-graduate"></i></span>
+                        <span class="dropdown-text">
+                            <span class="role-title">Student</span>
+                            <span class="role-sub">Login as a student</span>
+                        </span>
+                    </a>
+                    <a href="login.html?role=instructor" data-role="instructor">
+                        <span class="dropdown-icon"><i class="fas fa-chalkboard-teacher"></i></span>
+                        <span class="dropdown-text">
+                            <span class="role-title">Instructor</span>
+                            <span class="role-sub">Login as an instructor</span>
+                        </span>
+                    </a>
+                </div>
+            </li>
+        </ul>
+    </nav>
+ 
+    <!-- ============================================================ -->
+    <!-- ===== HERO SECTION - Reduced height to show more photo ===== -->
+    <!-- ============================================================ -->
+    <section class="hero">
+        <div class="floating-icons">
+            <i class="fas fa-bug"></i>
+            <i class="fas fa-code"></i>
+            <i class="fas fa-cog"></i>
+            <i class="fas fa-chart-line"></i>
+        </div>
+ 
+        <div class="hero-text">
+            <p class="tag">WELCOME TO QSKILL CAREER SOLUTIONS</p>
+            <h2>Excel in <br /><span>Software testing</span></h2>
+            <p>
+                <span class="dot">●</span> Learn <span class="dot">●</span> Practice <span class="dot">●</span> Perform <br />
+                Build career in Software Testing
+            </p>
+            <div class="hero-buttons">
+                <a href="#courses" class="btn-primary">Explore Courses</a>
+                <button class="btn-secondary" id="openScheduleBtn2">
+                    Book a Demo Class
+                </button>
+                <button class="btn-schedule" id="openScheduleBtn">
+                    <i class="fas fa-calendar-alt"></i>
+                </button>
+            </div>
+        </div>
+    </section>
+ 
+    <!-- ===== FEATURE STRIP ===== -->
+    <section class="features">
+        <div class="feature-item">
+            <div class="icon-wrapper"><i class="fas fa-graduation-cap"></i></div>
+            <h4>Expert Trainers</h4>
+            <p>Industry professionals</p>
+        </div>
+        <div class="feature-item">
+            <div class="icon-wrapper"><i class="fas fa-briefcase"></i></div>
+            <h4>Job Assistance</h4>
+            <p>100% placement support</p>
+        </div>
+        <div class="feature-item">
+            <div class="icon-wrapper"><i class="fas fa-users"></i></div>
+            <h4>Hands-on Training</h4>
+            <p>Real-time projects</p>
+        </div>
+        <div class="feature-item">
+            <div class="icon-wrapper"><i class="fas fa-certificate"></i></div>
+            <h4>Certification</h4>
+            <p>Industry recognized</p>
+        </div>
+    </section>
+ 
+    <!-- ============================================================ -->
+    <!-- ===== WHY QSKILL SECTION ===== -->
+    <!-- ============================================================ -->
+    <section class="why-section">
+        <h2>Why QSkill ?</h2>
+        <p>At Qskill Career Solutions, we are committed to helping aspiring professionals build successful careers in software testing through industry-focused training, hands-on practical learning, expert mentorship and dedicated placement guidance. Our goal is to equip every student with the skills, confidence, and real-world experience needed to excel in today's competitive IT industry.</p>
+        <div class="why-grid">
+            <div class="why-item">
+                <div class="icon-wrapper"><i class="fas fa-book-open"></i></div>
+                <h4>Industry-Oriented Curriculum</h4>
+            </div>
+            <div class="why-item">
+                <div class="icon-wrapper"><i class="fas fa-laptop-code"></i></div>
+                <h4>Hands-on Training</h4>
+            </div>
+            <div class="why-item">
+                <div class="icon-wrapper"><i class="fas fa-cogs"></i></div>
+                <h4>Real-time Projects</h4>
+            </div>
+            <div class="why-item">
+                <div class="icon-wrapper"><i class="fas fa-user-check"></i></div>
+                <h4>Placement Assistance</h4>
+            </div>
+            <div class="why-item">
+                <div class="icon-wrapper"><i class="fas fa-star"></i></div>
+                <h4>Expert Trainers</h4>
+            </div>
+            <div class="why-item">
+                <div class="icon-wrapper"><i class="fas fa-certificate"></i></div>
+                <h4>Certification Support</h4>
+            </div>
+        </div>
+    </section>
+ 
+    <!-- ============================================================ -->
+    <!-- ===== COURSES SECTION ===== -->
+    <!-- ============================================================ -->
+    <section class="courses" id="courses">
+        <div class="courses-header">
+            <div class="title-group">
+                <h2>OUR COURSES</h2>
+                <p class="sub">Select Courses</p>
+            </div>
+            <button class="view-more-btn">
+                View More <i class="fas fa-arrow-right"></i>
+            </button>
+        </div>
+ 
+        <div class="course-grid">
+ 
+            <!-- CARD 1: Manual Testing - photo3.jpeg -->
+            <div class="course-card">
+                <div class="card-image">
+                    <img src="photo3.jpeg" alt="Manual Testing Course" />
+                    <span class="image-badge">📋 Manual</span>
+                </div>
+                <h3>Manual Testing (Software Testing)</h3>
+                <p>SDLC · STLC · test cases · defect tracking</p>
+                <div class="rating">
+                    <span class="star-icon">⭐</span> 4.8 <span>(320 reviews)</span>
+                </div>
+                <div class="btn-group">
+                    <button class="btn-outline">Download Curriculum</button>
+                    <button class="btn-solid-small">View More</button>
+                </div>
+            </div>
+ 
+            <!-- CARD 2: Automation Testing - photo4.jpeg -->
+            <div class="course-card">
+                <div class="card-image">
+                    <img src="photo4.jpeg" alt="Automation Testing Course" />
+                    <span class="image-badge">⚙️ Automation</span>
+                </div>
+                <h3>Automation Testing (Selenium)</h3>
+                <p>Real-time projects · Test frameworks · CI/CD pipeline</p>
+                <div class="rating">
+                    <span class="star-icon">⭐</span> 4.7 <span>(280 reviews)</span>
+                </div>
+                <div class="btn-group">
+                    <button class="btn-outline">Download Curriculum</button>
+                    <button class="btn-solid-small">View More</button>
+                </div>
+            </div>
+ 
+            <!-- CARD 3: Postman API Testing - photo5.jpeg -->
+            <div class="course-card">
+                <div class="card-image">
+                    <img src="photo5.jpeg" alt="Postman API Testing Course" />
+                    <span class="image-badge">🔌 API</span>
+                </div>
+                <h3>Postman API Testing</h3>
+                <p>REST concepts · test collections · automation</p>
+                <div class="rating">
+                    <span class="star-icon">⭐</span> 4.6 <span>(210 reviews)</span>
+                </div>
+                <div class="btn-group">
+                    <button class="btn-outline">Download Curriculum</button>
+                    <button class="btn-solid-small">View More</button>
+                </div>
+            </div>
+ 
+        </div>
+    </section>
+ 
+    <!-- ============================================================ -->
+    <!-- ===== CONTACT SECTION ===== -->
+    <!-- ============================================================ -->
+    <section class="contact" id="contact">
+        <h2>Enquiry / Contact Us</h2>
+        <div class="contact-grid">
+            <div class="contact-item">
+                <div class="icon-wrapper"><i class="fas fa-phone-alt"></i></div>
+                <h4>Phone</h4>
+                <p>+91 98765 43210</p>
+            </div>
+            <div class="contact-item">
+                <div class="icon-wrapper"><i class="fas fa-envelope"></i></div>
+                <h4>Email</h4>
+                <p>info@qskillcareersolutions.com</p>
+            </div>
+            <div class="contact-item">
+                <div class="icon-wrapper"><i class="fab fa-whatsapp"></i></div>
+                <h4>WhatsApp</h4>
+                <p>+91 98765 43210</p>
+            </div>
+            <div class="contact-item">
+                <div class="icon-wrapper"><i class="fas fa-clock"></i></div>
+                <h4>Support</h4>
+                <p>Mon – Sat<br />9 AM – 6 PM</p>
+            </div>
+        </div>
+    </section>
+ 
+    <!-- ============================================================ -->
+    <!-- ===== BOOKING MODAL ===== -->
+    <!-- ============================================================ -->
+    <div class="modal-overlay" id="bookingModal">
+        <div class="modal-content">
+            <button class="modal-close" id="closeModalBtn">
+                <i class="fas fa-times"></i>
+            </button>
+ 
+            <h2>📅 Schedule a Demo</h2>
+            <p class="modal-sub">Select a date (Monday to Saturday) and time slot. Each session is 1 hour with a maximum of 7 participants. Sundays are closed.</p>
+ 
+            <div class="modal-calendar-nav">
+                <div></div>
+                <span class="month-year" id="modalMonthYear">March 2026</span>
+                <div class="nav-arrows">
+                    <button id="modalNextMonth"><i class="fas fa-chevron-right"></i></button>
+                </div>
+            </div>
+ 
+            <div class="modal-calendar-grid" id="modalCalendarGrid"></div>
+ 
+            <div class="modal-time-slots" id="modalTimeSlots">
+                <p class="selected-date" id="modalSelectedDate">Select a date (Mon-Sat) to see available slots</p>
+                <div class="modal-time-slots-grid" id="modalTimeSlotsGrid"></div>
+                <button class="modal-book-btn" id="modalBookBtn" disabled>Book Now</button>
+            </div>
+        </div>
+    </div>
+ 
+    <!-- ===== FOOTER ===== -->
+    <footer class="footer">
+        <div class="footer-top">
+            <div class="footer-logo">
+                <img src="photo1.jpeg" alt="QSkill Logo" />
+                <p style="color:#94a3b8; font-size:14px; margin-top:8px; max-width:260px; font-weight:400;">
+                    Empowering careers with industry-ready Software Testing skills
+                </p>
+                <div class="footer-social">
+                    <i class="fab fa-facebook-f"></i>
+                    <i class="fab fa-instagram"></i>
+                    <i class="fab fa-linkedin-in"></i>
+                    <i class="fab fa-youtube"></i>
+                </div>
+            </div>
+            <div>
+                <h4>Quick Links</h4>
+                <a href="#">About Us</a>
+                <a href="#courses">Courses</a>
+                <a href="#">Blog</a>
+                <a href="#contact">Contact Us</a>
+                <a href="login.html">Login</a>
+            </div>
+            <div>
+                <h4>Important Links</h4>
+                <a href="#">Terms &amp; Conditions</a>
+                <a href="#">Privacy Policy</a>
+                <a href="#">Security Policy</a>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            © 2026 QSkill Career Solutions
+        </div>
+    </footer>
+ 
+    <script>
+        // ============================================================ */
+        // ===== LOGIN DROPDOWN ===== */
+        // ============================================================ */
+ 
+        const dropdownBtn = document.getElementById('loginDropdownBtn');
+        const dropdown = document.getElementById('loginDropdown');
+ 
+        // Toggle dropdown on click
+        dropdownBtn.addEventListener('click', function(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            dropdown.classList.toggle('show');
+        });
+ 
+        // Close dropdown when clicking outside
+        document.addEventListener('click', function(e) {
+            if (!dropdownBtn.contains(e.target) && !dropdown.contains(e.target)) {
+                dropdown.classList.remove('show');
+            }
+        });
+ 
+        // Close dropdown when pressing Escape
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                dropdown.classList.remove('show');
+            }
+        });
+ 
+        // ============================================================ */
+        // ===== BOOKING MODAL JAVASCRIPT ===== */
+        // ============================================================ */
+ 
+        const MAX_PARTICIPANTS = 7;
+        const SLOTS = [
+            '09:00', '10:00', '11:00', '12:00',
+            '14:00', '15:00', '16:00', '17:00'
+        ];
+ 
+        const MAX_MONTHS_FUTURE = 3;
+ 
+        let modalCurrentDate = new Date();
+        let modalSelectedDate = null;
+        let modalSelectedTimeSlot = null;
+        let modalBookedSlots = {};
+ 
+        function generateModalBookings() {
+            const today = new Date();
+            const bookings = {};
+            
+            for (let d = 0; d < 90; d++) {
+                const date = new Date(today);
+                date.setDate(today.getDate() + d);
+                const dateKey = date.toDateString();
+                
+                const dayOfWeek = date.getDay();
+                if (dayOfWeek === 0) continue;
+                
+                const slots = SLOTS.map(time => ({
+                    time: time,
+                    booked: Math.random() > 0.55
+                }));
+                
+                bookings[dateKey] = slots;
+            }
+            
+            return bookings;
+        }
+ 
+        modalBookedSlots = generateModalBookings();
+ 
+        const modal = document.getElementById('bookingModal');
+        const openBtn = document.getElementById('openScheduleBtn');
+        const openBtn2 = document.getElementById('openScheduleBtn2');
+        const closeBtn = document.getElementById('closeModalBtn');
+        const modalGrid = document.getElementById('modalCalendarGrid');
+        const modalMonthYear = document.getElementById('modalMonthYear');
+        const modalNextMonth = document.getElementById('modalNextMonth');
+        const modalTimeSlotsGrid = document.getElementById('modalTimeSlotsGrid');
+        const modalSelectedDateEl = document.getElementById('modalSelectedDate');
+        const modalBookBtn = document.getElementById('modalBookBtn');
+ 
+        function openModal() {
+            modal.classList.add('active');
+            document.body.style.overflow = 'hidden';
+            modalCurrentDate = new Date();
+            renderModalCalendar();
+        }
+ 
+        openBtn.addEventListener('click', openModal);
+        openBtn2.addEventListener('click', openModal);
+ 
+        closeBtn.addEventListener('click', closeModal);
+        modal.addEventListener('click', (e) => {
+            if (e.target === modal) closeModal();
+        });
+ 
+        function closeModal() {
+            modal.classList.remove('active');
+            document.body.style.overflow = '';
+            modalSelectedDate = null;
+            modalSelectedTimeSlot = null;
+            modalBookBtn.disabled = true;
+        }
+ 
+        function isWithinNext3Months(date) {
+            const today = new Date();
+            const maxDate = new Date(today);
+            maxDate.setMonth(today.getMonth() + MAX_MONTHS_FUTURE);
+            return date >= today && date <= maxDate;
+        }
+ 
+        function isWeekday(date) {
+            return date.getDay() !== 0;
+        }
+ 
+        function renderModalCalendar() {
+            const year = modalCurrentDate.getFullYear();
+            const month = modalCurrentDate.getMonth();
+            const today = new Date();
+            today.setHours(0, 0, 0, 0);
+            
+            const currentMonthDate = new Date(year, month, 1);
+            const maxDate = new Date(today);
+            maxDate.setMonth(today.getMonth() + MAX_MONTHS_FUTURE);
+            
+            if (currentMonthDate > maxDate) {
+                modalCurrentDate = new Date(maxDate.getFullYear(), maxDate.getMonth(), 1);
+                renderModalCalendar();
+                return;
+            }
+            
+            modalMonthYear.textContent = new Date(year, month).toLocaleString('default', { month: 'long', year: 'numeric' });
+            
+            const nextMonthDate = new Date(year, month + 1, 1);
+            modalNextMonth.style.display = nextMonthDate > maxDate ? 'none' : 'flex';
+            
+            const firstDay = new Date(year, month, 1).getDay();
+            const daysInMonth = new Date(year, month + 1, 0).getDate();
+            
+            modalGrid.innerHTML = '';
+            
+            const dayHeaders = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+            dayHeaders.forEach(day => {
+                const div = document.createElement('div');
+                div.className = 'day-header';
+                div.textContent = day;
+                modalGrid.appendChild(div);
+            });
+            
+            for (let i = 0; i < firstDay; i++) {
+                const div = document.createElement('div');
+                div.className = 'day-cell empty';
+                modalGrid.appendChild(div);
+            }
+            
+            for (let day = 1; day <= daysInMonth; day++) {
+                const dateObj = new Date(year, month, day);
+                const dateKey = dateObj.toDateString();
+                const isPast = dateObj < today;
+                const isToday = dateObj.toDateString() === today.toDateString();
+                const dayOfWeek = dateObj.getDay();
+                const isSunday = dayOfWeek === 0;
+                const isWeekday = dayOfWeek >= 1 && dayOfWeek <= 6;
+                const isWithinRange = isWithinNext3Months(dateObj);
+                
+                const div = document.createElement('div');
+                div.className = 'day-cell';
+                if (isPast || isSunday || !isWithinRange) div.classList.add('past');
+                if (isToday) div.classList.add('today');
+                
+                const dayNumber = document.createElement('span');
+                dayNumber.className = 'day-number';
+                dayNumber.textContent = day;
+                div.appendChild(dayNumber);
+                
+                if (isWeekday && !isPast && isWithinRange) {
+                    const slots = modalBookedSlots[dateKey] || [];
+                    const availableSlots = slots.filter(s => !s.booked).length;
+                    const totalSlots = slots.length;
+                    
+                    const slotInfo = document.createElement('span');
+                    slotInfo.className = 'day-slots';
+                    if (availableSlots > 0) {
+                        slotInfo.textContent = `${availableSlots} slots available`;
+                        slotInfo.className = 'day-slots available';
+                    } else if (totalSlots > 0) {
+                        slotInfo.textContent = 'Fully booked';
+                        slotInfo.className = 'day-slots full';
+                    } else {
+                        slotInfo.textContent = 'No slots';
+                        slotInfo.className = 'day-slots';
+                    }
+                    div.appendChild(slotInfo);
+                    
+                    div.style.cursor = 'pointer';
+                    div.addEventListener('click', () => {
+                        selectModalDate(dateObj);
+                    });
+                } else if (isSunday && !isPast && isWithinRange) {
+                    const slotInfo = document.createElement('span');
+                    slotInfo.className = 'day-slots';
+                    slotInfo.textContent = 'Closed';
+                    slotInfo.style.color = '#6B7280';
+                    div.appendChild(slotInfo);
+                    div.classList.add('no-slots');
+                } else if (!isWithinRange && !isPast) {
+                    const slotInfo = document.createElement('span');
+                    slotInfo.className = 'day-slots';
+                    slotInfo.textContent = '❌';
+                    slotInfo.style.color = '#ef4444';
+                    div.appendChild(slotInfo);
+                    div.classList.add('no-slots');
+                }
+                
+                modalGrid.appendChild(div);
+            }
+            
+            modalTimeSlotsGrid.innerHTML = '';
+            modalSelectedDateEl.textContent = 'Select a date (Mon-Sat) to see available slots';
+            modalBookBtn.disabled = true;
+            modalSelectedDate = null;
+            modalSelectedTimeSlot = null;
+        }
+ 
+        function selectModalDate(date) {
+            modalSelectedDate = date;
+            modalSelectedTimeSlot = null;
+            
+            document.querySelectorAll('.modal-calendar-grid .day-cell').forEach(el => {
+                el.classList.remove('selected');
+            });
+            
+            const cells = document.querySelectorAll('.modal-calendar-grid .day-cell');
+            const dateStr = date.toDateString();
+            cells.forEach((cell, index) => {
+                const dayNum = cell.querySelector('.day-number');
+                if (dayNum) {
+                    const cellDate = new Date(modalCurrentDate.getFullYear(), modalCurrentDate.getMonth(), parseInt(dayNum.textContent));
+                    if (cellDate.toDateString() === dateStr) {
+                        cell.classList.add('selected');
+                    }
+                }
+            });
+            
+            renderModalTimeSlots(date);
+        }
+ 
+        function renderModalTimeSlots(date) {
+            const dateKey = date.toDateString();
+            const slots = modalBookedSlots[dateKey] || [];
+            
+            modalSelectedDateEl.textContent = `Available slots for ${date.toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric', year: 'numeric' })}`;
+            
+            modalTimeSlotsGrid.innerHTML = '';
+            
+            if (slots.length === 0) {
+                const msg = document.createElement('p');
+                msg.style.color = '#6B7280';
+                msg.style.padding = '16px';
+                msg.textContent = 'No slots available for this date.';
+                modalTimeSlotsGrid.appendChild(msg);
+                modalBookBtn.disabled = true;
+                return;
+            }
+            
+            slots.forEach(slot => {
+                const div = document.createElement('div');
+                div.className = 'time-slot';
+                if (slot.booked) div.classList.add('booked');
+                
+                const timeSpan = document.createElement('span');
+                timeSpan.textContent = slot.time;
+                div.appendChild(timeSpan);
+                
+                const bookedCount = slot.booked ? Math.floor(Math.random() * 7) + 1 : 0;
+                const available = MAX_PARTICIPANTS - bookedCount;
+                
+                const countSpan = document.createElement('span');
+                countSpan.className = 'slot-count';
+                if (slot.booked) {
+                    countSpan.textContent = ` (${bookedCount}/${MAX_PARTICIPANTS} booked)`;
+                    const icon = document.createElement('span');
+                    icon.className = 'booked-icon';
+                    icon.innerHTML = ' ❌';
+                    div.appendChild(icon);
+                } else {
+                    countSpan.textContent = ` (${available} spots left)`;
+                    const icon = document.createElement('span');
+                    icon.className = 'available-icon';
+                    icon.innerHTML = ' ✅';
+                    div.appendChild(icon);
+                }
+                div.appendChild(countSpan);
+                
+                if (!slot.booked) {
+                    div.addEventListener('click', () => {
+                        document.querySelectorAll('.modal-time-slots-grid .time-slot').forEach(el => {
+                            el.classList.remove('selected-slot');
+                        });
+                        div.classList.add('selected-slot');
+                        modalSelectedTimeSlot = slot.time;
+                        modalBookBtn.disabled = false;
+                    });
+                }
+                
+                modalTimeSlotsGrid.appendChild(div);
+            });
+            
+            modalBookBtn.disabled = true;
+        }
+ 
+        modalNextMonth.addEventListener('click', () => {
+            const today = new Date();
+            const maxDate = new Date(today);
+            maxDate.setMonth(today.getMonth() + MAX_MONTHS_FUTURE);
+            
+            const nextMonthDate = new Date(modalCurrentDate.getFullYear(), modalCurrentDate.getMonth() + 1, 1);
+            if (nextMonthDate <= maxDate) {
+                modalCurrentDate.setMonth(modalCurrentDate.getMonth() + 1);
+                renderModalCalendar();
+            }
+        });
+ 
+        modalBookBtn.addEventListener('click', () => {
+            if (modalSelectedDate && modalSelectedTimeSlot) {
+                const dateStr = modalSelectedDate.toLocaleDateString('en-US', { 
+                    weekday: 'long', 
+                    month: 'long', 
+                    day: 'numeric', 
+                    year: 'numeric' 
+                });
+                alert(`✅ Booking Confirmed!\n\nDate: ${dateStr}\nTime: ${modalSelectedTimeSlot}\nDuration: 1 Hour\nMax Participants: 7\n\nThank you for booking a demo class with QSkill Career Solutions. We will contact you shortly.`);
+                
+                const dateKey = modalSelectedDate.toDateString();
+                const slots = modalBookedSlots[dateKey] || [];
+                const slotIndex = slots.findIndex(s => s.time === modalSelectedTimeSlot);
+                if (slotIndex !== -1) {
+                    slots[slotIndex].booked = true;
+                }
+                
+                modalSelectedTimeSlot = null;
+                modalBookBtn.disabled = true;
+                document.querySelectorAll('.modal-time-slots-grid .time-slot').forEach(el => {
+                    el.classList.remove('selected-slot');
+                });
+                
+                renderModalCalendar();
+                if (modalSelectedDate) {
+                    const dateKey2 = modalSelectedDate.toDateString();
+                    if (modalBookedSlots[dateKey2]) {
+                        renderModalTimeSlots(modalSelectedDate);
+                    }
+                }
+            }
+        });
+ 
+        renderModalCalendar();
+    </script>
+ 
+</body>
+</html>
