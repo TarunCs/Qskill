@@ -1,0 +1,683 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Free Demo - QSkill Career Solutions</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+    
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body {
+            font-family: 'Poppins', sans-serif;
+            color: #1A1A1A;
+            background: #FFFFFF;
+            line-height: 1.6;
+        }
+        
+        :root {
+            --primary: #1F3C88;
+            --secondary: #2D5BFF;
+            --light-bg: #EAF1FF;
+            --white: #FFFFFF;
+            --text-dark: #1A1A1A;
+            --text-gray: #6B7280;
+            --border: #E5E7EB;
+            --orange: #FA7000;
+            --star: #FBBF24;
+            --footer: #0B1E3C;
+        }
+        
+        /* ============================================================ */
+        /* ===== 1. HEADER ===== */
+        /* ============================================================ */
+        .header {
+            height: 76px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 80px;
+            background: var(--white);
+            border-bottom: 1px solid rgba(31, 60, 136, 0.08);
+            box-shadow: 0 2px 16px rgba(0,0,0,0.04);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        
+        .logo {
+            font-size: 24px;
+            font-weight: 700;
+            text-decoration: none;
+            color: var(--text-dark);
+            display: flex;
+            align-items: center;
+            gap: 2px;
+        }
+        
+        .logo .qskill { color: var(--primary); }
+        .logo .careersolutions { color: var(--orange); font-weight: 300; }
+        
+        .header-menu {
+            display: flex;
+            gap: 24px;
+            align-items: center;
+            list-style: none;
+        }
+        
+        .header-menu a {
+            text-decoration: none;
+            color: var(--text-dark);
+            font-size: 15px;
+            font-weight: 500;
+            transition: 0.3s;
+            padding: 6px 0;
+            border-bottom: 2px solid transparent;
+        }
+        
+        .header-menu a:hover {
+            color: var(--primary);
+            border-bottom-color: var(--primary);
+        }
+        
+        .login-btn {
+            background: var(--primary);
+            color: var(--white) !important;
+            padding: 8px 16px;
+            border-radius: 6px;
+            font-size: 14px;
+            font-weight: 500;
+            border: none;
+            cursor: pointer;
+            transition: 0.3s;
+            text-decoration: none !important;
+            border-bottom: none !important;
+        }
+        
+        .login-btn:hover {
+            background: var(--secondary);
+            transform: translateY(-2px);
+            border-bottom: none !important;
+        }
+        
+        /* ============================================================ */
+        /* ===== 1. HERO SECTION ===== */
+        /* ============================================================ */
+        .demo-hero {
+            padding: 60px 80px;
+            text-align: center;
+            background: linear-gradient(135deg, var(--light-bg), #FFFFFF);
+        }
+        
+        .demo-hero h1 {
+            font-size: 40px;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 8px;
+        }
+        
+        .demo-hero p {
+            font-size: 16px;
+            color: var(--text-gray);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        
+        /* ============================================================ */
+        /* ===== 2. FEATURE ICON ROW ===== */
+        /* ============================================================ */
+        .demo-features {
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+            padding: 40px 80px;
+            flex-wrap: wrap;
+            background: var(--white);
+            border-bottom: 1px solid var(--border);
+        }
+        
+        .demo-features .item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 14px;
+            font-weight: 500;
+        }
+        
+        .demo-features .item i {
+            font-size: 28px;
+            color: var(--primary);
+        }
+        
+        /* ============================================================ */
+        /* ===== 3. FORM SECTION ===== */
+        /* ============================================================ */
+        .demo-form-section {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 60px;
+            padding: 60px 80px;
+            background: var(--white);
+            align-items: start;
+        }
+        
+        .demo-form-section .form-card {
+            background: var(--white);
+            padding: 30px;
+            border-radius: 12px;
+            border: 1px solid var(--border);
+            box-shadow: 0 4px 20px rgba(0,0,0,0.04);
+        }
+        
+        .demo-form-section .form-card h3 {
+            font-size: 24px;
+            font-weight: 600;
+            margin-bottom: 20px;
+            color: var(--text-dark);
+        }
+        
+        .form-group {
+            margin-bottom: 16px;
+        }
+        
+        .form-group label {
+            font-size: 13px;
+            font-weight: 600;
+            display: block;
+            margin-bottom: 4px;
+            color: var(--text-dark);
+        }
+        
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            height: 44px;
+            padding: 0 14px;
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            font-size: 14px;
+            font-family: 'Poppins', sans-serif;
+            transition: 0.3s;
+            background: var(--white);
+        }
+        
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            border-color: var(--primary);
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(31, 60, 136, 0.1);
+        }
+        
+        .form-group textarea {
+            height: 80px;
+            padding: 10px 14px;
+            resize: vertical;
+        }
+        
+        .btn-full {
+            width: 100%;
+            height: 48px;
+            background: var(--primary);
+            color: var(--white);
+            border: none;
+            border-radius: 6px;
+            font-weight: 600;
+            font-size: 16px;
+            cursor: pointer;
+            transition: 0.3s;
+            font-family: 'Poppins', sans-serif;
+        }
+        
+        .btn-full:hover {
+            background: var(--secondary);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 16px rgba(31, 60, 136, 0.25);
+        }
+        
+        /* ============================================================ */
+        /* ===== 4. WHY ATTEND ===== */
+        /* ============================================================ */
+        .demo-why {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+        }
+        
+        .demo-why .card {
+            background: var(--light-bg);
+            padding: 20px;
+            border-radius: 12px;
+            text-align: center;
+            transition: 0.3s;
+        }
+        
+        .demo-why .card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 4px 16px rgba(0,0,0,0.06);
+        }
+        
+        .demo-why .card i {
+            font-size: 28px;
+            color: var(--primary);
+            margin-bottom: 8px;
+        }
+        
+        .demo-why .card h4 {
+            font-size: 15px;
+            font-weight: 600;
+            margin-bottom: 4px;
+        }
+        
+        .demo-why .card p {
+            font-size: 13px;
+            color: var(--text-gray);
+        }
+        
+        /* ============================================================ */
+        /* ===== 5. TESTIMONIALS ===== */
+        /* ============================================================ */
+        .demo-testimonial {
+            background: var(--light-bg);
+            padding: 24px;
+            border-radius: 12px;
+            margin-top: 24px;
+        }
+        
+        .demo-testimonial p {
+            font-size: 14px;
+            font-style: italic;
+            color: var(--text-dark);
+        }
+        
+        .demo-testimonial .author {
+            font-size: 13px;
+            font-weight: 600;
+            margin-top: 8px;
+        }
+        
+        .demo-testimonial .stars {
+            color: var(--star);
+            font-size: 14px;
+            margin-bottom: 6px;
+        }
+        
+        /* ============================================================ */
+        /* ===== 6. FAQ ===== */
+        /* ============================================================ */
+        .demo-faq {
+            margin-top: 24px;
+        }
+        
+        .demo-faq .faq-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 14px 0;
+            border-bottom: 1px solid var(--border);
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+        }
+        
+        .demo-faq .faq-item:last-child {
+            border-bottom: none;
+        }
+        
+        .demo-faq .faq-item i {
+            color: var(--primary);
+            font-size: 18px;
+        }
+        
+        /* ============================================================ */
+        /* ===== 7. CTA ===== */
+        /* ============================================================ */
+        .demo-cta {
+            background: var(--primary);
+            padding: 50px 80px;
+            text-align: center;
+            color: var(--white);
+            border-radius: 16px;
+            margin: 20px 80px 60px;
+        }
+        
+        .demo-cta h2 {
+            font-size: 20px;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+        
+        .demo-cta p {
+            font-size: 14px;
+            opacity: 0.85;
+            margin-bottom: 16px;
+        }
+        
+        .demo-cta .btn-white {
+            background: var(--white);
+            color: var(--primary);
+            border: none;
+            padding: 12px 32px;
+            border-radius: 6px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: 0.3s;
+            font-family: 'Poppins', sans-serif;
+        }
+        
+        .demo-cta .btn-white:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 16px rgba(0,0,0,0.2);
+        }
+        
+        /* ============================================================ */
+        /* ===== 8. FOOTER ===== */
+        /* ============================================================ */
+        .footer {
+            background: var(--footer);
+            color: #94a3b8;
+            padding: 50px 80px 24px;
+        }
+        
+        .footer-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 40px;
+            margin-bottom: 30px;
+        }
+        
+        .footer-grid h4 {
+            color: var(--white);
+            font-size: 16px;
+            margin-bottom: 14px;
+        }
+        
+        .footer-grid a {
+            display: block;
+            color: #94a3b8;
+            text-decoration: none;
+            font-size: 13px;
+            padding: 4px 0;
+            transition: 0.3s;
+        }
+        
+        .footer-grid a:hover {
+            color: var(--white);
+        }
+        
+        .footer-grid .social-icons {
+            display: flex;
+            gap: 14px;
+            margin-top: 10px;
+        }
+        
+        .footer-grid .social-icons i {
+            font-size: 20px;
+            color: #94a3b8;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+        
+        .footer-grid .social-icons i:hover {
+            color: var(--white);
+            transform: translateY(-2px);
+        }
+        
+        .footer-bottom {
+            border-top: 1px solid #1e2a3a;
+            padding-top: 20px;
+            text-align: center;
+            font-size: 12px;
+            color: #94a3b8;
+        }
+        
+        /* ============================================================ */
+        /* ===== RESPONSIVE ===== */
+        /* ============================================================ */
+        @media (max-width: 992px) {
+            .header { padding: 0 40px; }
+            .demo-hero { padding: 40px 40px; }
+            .demo-features { padding: 30px 40px; gap: 24px; }
+            .demo-form-section { padding: 40px 40px; grid-template-columns: 1fr; gap: 40px; }
+            .demo-cta { margin: 20px 40px 40px; padding: 40px; }
+            .footer { padding: 40px 40px 20px; }
+        }
+        
+        @media (max-width: 768px) {
+            .header { 
+                padding: 0 20px; 
+                flex-wrap: wrap; 
+                height: auto; 
+                padding: 12px 20px; 
+                gap: 10px; 
+            }
+            .header-menu { gap: 16px; flex-wrap: wrap; }
+            .header-menu a { font-size: 13px; }
+            .logo { font-size: 20px; }
+            
+            .demo-hero h1 { font-size: 30px; }
+            .demo-features { flex-direction: column; align-items: center; gap: 16px; }
+            .demo-why { grid-template-columns: 1fr 1fr; }
+            .demo-cta { margin: 16px 20px 30px; padding: 30px 20px; }
+            .footer { padding: 30px 20px 16px; }
+        }
+        
+        @media (max-width: 480px) {
+            .demo-hero h1 { font-size: 26px; }
+            .demo-why { grid-template-columns: 1fr; }
+            .demo-form-section .form-card { padding: 20px; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ============================================================ -->
+    <!-- ===== 1. HEADER ===== -->
+    <!-- ============================================================ -->
+    <header class="header">
+        <a href="#" class="logo">
+            <span class="qskill">Qskill</span><span class="careersolutions">careersolutions</span>
+        </a>
+        
+        <ul class="header-menu">
+            <li><a href="#">About Us</a></li>
+            <li><a href="#">Courses</a></li>
+            <li><a href="#">Blog</a></li>
+            <li><a href="#" class="login-btn">Login</a></li>
+        </ul>
+    </header>
+
+    <!-- ============================================================ -->
+    <!-- ===== 1. HERO SECTION ===== -->
+    <!-- ============================================================ -->
+    <section class="demo-hero">
+        <h1>📘 Book Your FREE Demo Class</h1>
+        <p>Experience our teaching methodology and interact with expert trainers before making a commitment.</p>
+    </section>
+
+    <!-- ============================================================ -->
+    <!-- ===== 2. FEATURE ICON ROW ===== -->
+    <!-- ============================================================ -->
+    <section class="demo-features">
+        <div class="item"><i class="fas fa-laptop"></i> Live Interactive Demo</div>
+        <div class="item"><i class="fas fa-user-tie"></i> Meet Expert Trainers</div>
+        <div class="item"><i class="fas fa-question-circle"></i> Q&A Session</div>
+        <div class="item"><i class="fas fa-clock"></i> 1-Hour Session</div>
+    </section>
+
+    <!-- ============================================================ -->
+    <!-- ===== 3. FORM SECTION ===== -->
+    <!-- ============================================================ -->
+    <section class="demo-form-section">
+        <div class="form-card">
+            <h3>📝 Schedule Your Demo</h3>
+            <form>
+                <div class="form-group">
+                    <label>Full Name <span style="color: var(--error);">*</span></label>
+                    <input type="text" placeholder="Enter your full name" required />
+                </div>
+                
+                <div class="form-group">
+                    <label>Email Address <span style="color: var(--error);">*</span></label>
+                    <input type="email" placeholder="you@example.com" required />
+                </div>
+                
+                <div class="form-group">
+                    <label>Phone Number <span style="color: var(--error);">*</span></label>
+                    <input type="tel" placeholder="+91 98765 43210" required />
+                </div>
+                
+                <div class="form-group">
+                    <label>Preferred Date <span style="color: var(--error);">*</span></label>
+                    <input type="date" required />
+                </div>
+                
+                <div class="form-group">
+                    <label>Preferred Time Slot</label>
+                    <select>
+                        <option value="">Select a time slot</option>
+                        <option>9:00 AM - 10:00 AM</option>
+                        <option>10:00 AM - 11:00 AM</option>
+                        <option>11:00 AM - 12:00 PM</option>
+                        <option>2:00 PM - 3:00 PM</option>
+                        <option>3:00 PM - 4:00 PM</option>
+                        <option>4:00 PM - 5:00 PM</option>
+                        <option>5:00 PM - 6:00 PM</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label>Message (Optional)</label>
+                    <textarea placeholder="Any specific topics or questions you'd like to cover..."></textarea>
+                </div>
+                
+                <button type="submit" class="btn-full">Book My FREE Demo <i class="fas fa-arrow-right"></i></button>
+            </form>
+        </div>
+        
+        <div>
+            <!-- ===== 4. WHY ATTEND ===== -->
+            <h3 style="font-size: 20px; font-weight: 600; margin-bottom: 16px;">🌟 Why Attend?</h3>
+            <div class="demo-why">
+                <div class="card">
+                    <i class="fas fa-chalkboard-teacher"></i>
+                    <h4>Expert Guidance</h4>
+                    <p>Learn from industry veterans</p>
+                </div>
+                <div class="card">
+                    <i class="fas fa-project-diagram"></i>
+                    <h4>Live Projects</h4>
+                    <p>Hands-on real-time scenarios</p>
+                </div>
+                <div class="card">
+                    <i class="fas fa-certificate"></i>
+                    <h4>Certification Path</h4>
+                    <p>Get industry recognized cert</p>
+                </div>
+                <div class="card">
+                    <i class="fas fa-users"></i>
+                    <h4>Peer Learning</h4>
+                    <p>Collaborate with fellow learners</p>
+                </div>
+            </div>
+            
+            <!-- ===== 5. TESTIMONIALS ===== -->
+            <div class="demo-testimonial">
+                <div class="stars"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div>
+                <p>"The demo class gave me clarity on how testing works in real projects. Highly recommend!"</p>
+                <div class="author">— Ananya S.</div>
+            </div>
+            
+            <!-- ===== 6. FAQ ===== -->
+            <div class="demo-faq">
+                <div class="faq-item" onclick="toggleDemoFAQ(this)">
+                    <span>How long is the demo session?</span>
+                    <i class="fas fa-plus"></i>
+                </div>
+                <div class="faq-item" onclick="toggleDemoFAQ(this)">
+                    <span>Is the demo completely free?</span>
+                    <i class="fas fa-plus"></i>
+                </div>
+                <div class="faq-item" onclick="toggleDemoFAQ(this)">
+                    <span>Can I ask questions during the demo?</span>
+                    <i class="fas fa-plus"></i>
+                </div>
+                <div class="faq-item" onclick="toggleDemoFAQ(this)">
+                    <span>What happens after the demo?</span>
+                    <i class="fas fa-plus"></i>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================================================ -->
+    <!-- ===== 7. CTA ===== -->
+    <!-- ============================================================ -->
+    <section class="demo-cta">
+        <h2>Ready to Start Your Journey?</h2>
+        <p>Join thousands of students who have transformed their careers with QSkill.</p>
+        <button class="btn-white">Book Free Demo Now <i class="fas fa-arrow-right"></i></button>
+    </section>
+
+    <!-- ============================================================ -->
+    <!-- ===== 8. FOOTER ===== -->
+    <!-- ============================================================ -->
+    <footer class="footer">
+        <div class="footer-grid">
+            <div>
+                <h4>QSkill Career Solutions</h4>
+                <p style="font-size:13px; color:#94a3b8;">Empowering careers with industry-ready Software Testing skills.</p>
+                <div class="social-icons">
+                    <i class="fab fa-facebook-f"></i>
+                    <i class="fab fa-instagram"></i>
+                    <i class="fab fa-linkedin-in"></i>
+                    <i class="fab fa-youtube"></i>
+                </div>
+            </div>
+            <div>
+                <h4>Quick Links</h4>
+                <a href="#">About Us</a>
+                <a href="#">Courses</a>
+                <a href="#">Blog</a>
+                <a href="#">Contact Us</a>
+            </div>
+            <div>
+                <h4>Resources</h4>
+                <a href="#">Terms &amp; Conditions</a>
+                <a href="#">Privacy Policy</a>
+                <a href="#">Security Policy</a>
+                <a href="#">Help Center</a>
+            </div>
+            <div>
+                <h4>Contact</h4>
+                <a href="#"><i class="fas fa-phone-alt"></i> +91 98765 43210</a>
+                <a href="#"><i class="fas fa-envelope"></i> info@qskillcareersolutions.com</a>
+                <a href="#"><i class="fas fa-clock"></i> Mon - Sat | 9AM - 6PM</a>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            © 2026 QSkill Career Solutions. All Rights Reserved.
+        </div>
+    </footer>
+
+    <script>
+        function toggleDemoFAQ(element) {
+            const icon = element.querySelector('i');
+            if (icon.classList.contains('fa-plus')) {
+                icon.className = 'fas fa-minus';
+                // You could show an answer here
+            } else {
+                icon.className = 'fas fa-plus';
+            }
+        }
+    </script>
+
+</body>
+</html>
