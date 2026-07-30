@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Student Dashboard - QSkill</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+
+    <!-- ===== SHARED CSS ===== -->
+    <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+    <!-- ===== TOAST ===== -->
+    <div class="toast" id="toast">
+        <i class="fas fa-check-circle" id="toastIcon"></i>
+        <span id="toastMessage">Success!</span>
+    </div>
+
+    <!-- ===== HEADER ===== -->
+    <header class="header">
+        <a href="index.html" class="logo">
+            <span class="qskill">Q</span><span class="careersolutions">Solutions</span>
+        </a>
+
+        <ul class="header-menu">
+            <li><a href="dashboard.html" class="active">Dashboard</a></li>
+            <li><a href="courses.html">My Courses</a></li>
+            <li><a href="#">Assignments</a></li>
+            <li><a href="#">Certificates</a></li>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="#" onclick="logout()" style="color: #EF4444;">Logout</a></li>
+        </ul>
+
+        <div class="user-profile">
+            <span class="name">Tejaswini</span>
+            <span class="role-badge">Student</span>
+            <div class="avatar">T</div>
+        </div>
+    </header>
+
+    <!-- ===== WELCOME ===== -->
+    <section class="welcome-section">
+        <h1>Welcome Back, <span>Tejaswini!</span> 👩‍💻</h1>
+        <p>Continue your learning journey. You have 3 ongoing courses.</p>
+    </section>
+
+    <!-- ===== STATS ===== -->
+    <section class="stats-grid">
+        <div class="stat-card">
+            <div class="stat-icon"><i class="fas fa-book-open"></i></div>
+            <div class="number">3</div>
+            <div class="label">Active Courses</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-icon"><i class="fas fa-chart-line"></i></div>
+            <div class="number">70%</div>
+            <div class="label">Avg. Progress</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-icon"><i class="fas fa-tasks"></i></div>
+            <div class="number">5</div>
+            <div class="label">Assignments Due</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-icon"><i class="fas fa-star"></i></div>
+            <div class="number">4.8</div>
+            <div class="label">Overall Rating</div>
+        </div>
+    </section>
+
+    <!-- ===== DASHBOARD GRID ===== -->
+    <section class="dashboard-grid">
+
+        <div>
+            <!-- Continue Learning -->
+            <div class="dash-card" style="margin-bottom: 24px;">
+                <div class="card-title"><i class="fas fa-play-circle"></i> Continue Learning</div>
+
+                <div class="course-progress">
+                    <div class="course-name">
+                        <span>Automation Testing (Selenium)</span>
+                        <span>70%</span>
+                    </div>
+                    <div class="progress-bar"><div class="fill" style="width:70%;"></div></div>
+                    <div style="font-size:13px; color:var(--text-gray);">Module 4: Selenium WebDriver</div>
+                    <button class="resume-btn">Resume <i class="fas fa-arrow-right" style="font-size:12px;"></i></button>
+                </div>
+
+                <div class="course-progress" style="margin-top:16px;">
+                    <div class="course-name">
+                        <span>Manual Testing</span>
+                        <span>90%</span>
+                    </div>
+                    <div class="progress-bar"><div class="fill green" style="width:90%;"></div></div>
+                    <div style="font-size:13px; color:var(--text-gray);">Module 6: Defect Tracking</div>
+                    <button class="resume-btn">Resume <i class="fas fa-arrow-right" style="font-size:12px;"></i></button>
+                </div>
+
+                <div class="course-progress" style="margin-top:16px;">
+                    <div class="course-name">
+                        <span>Postman API Testing</span>
+                        <span>45%</span>
+                    </div>
+                    <div class="progress-bar"><div class="fill orange" style="width:45%;"></div></div>
+                    <div style="font-size:13px; color:var(--text-gray);">Module 3: REST Concepts</div>
+                    <button class="resume-btn">Resume <i class="fas fa-arrow-right" style="font-size:12px;"></i></button>
+                </div>
+            </div>
+
+            <!-- Course Materials -->
+            <div class="dash-card">
+                <div class="card-title"><i class="fas fa-folder-open"></i> Course Materials</div>
+
+                <div class="file-item">
+                    <div class="file-info"><i class="fas fa-file-pdf"></i><span>Selenium_Notes.pdf</span></div>
+                    <a class="download-link"><i class="fas fa-download"></i> Download</a>
+                </div>
+                <div class="file-item">
+                    <div class="file-info"><i class="fas fa-file-code"></i><span>TestNG_Examples.java</span></div>
+                    <a class="download-link"><i class="fas fa-download"></i> Download</a>
+                </div>
+                <div class="file-item">
+                    <div class="file-info"><i class="fas fa-file-video"></i><span>Recorded_Session_3.mp4</span></div>
+                    <a class="download-link"><i class="fas fa-download"></i> Download</a>
+                </div>
+                <div class="file-item">
+                    <div class="file-info"><i class="fas fa-file-alt"></i><span>Assignment_2_Instructions.docx</span></div>
+                    <a class="download-link"><i class="fas fa-download"></i> Download</a>
+                </div>
+            </div>
+        </div>
+
+        <div>
+            <!-- Quick Actions -->
+            <div class="dash-card" style="margin-bottom: 24px;">
+                <div class="card-title"><i class="fas fa-bolt"></i> Quick Actions</div>
+                <div class="quick-actions">
+                    <button class="quick-action"><i class="fas fa-video"></i><span class="label">Join Class</span></button>
+                    <button class="quick-action"><i class="fas fa-tasks"></i><span class="label">Assignments</span></button>
+                    <button class="quick-action"><i class="fas fa-certificate"></i><span class="label">Certificate</span></button>
+                    <button class="quick-action"><i class="fas fa-question-circle"></i><span class="label">Help</span></button>
+                </div>
+            </div>
+
+            <!-- Announcements -->
+            <div class="dash-card" style="margin-bottom: 24px;">
+                <div class="card-title"><i class="fas fa-bullhorn"></i> Announcements</div>
+
+                <div class="announcement">
+                    <i class="fas fa-file-alt"></i>
+                    <div class="content">New assignment posted: API Testing<span class="time">2 hours ago</span></div>
+                </div>
+                <div class="announcement">
+                    <i class="fas fa-calendar-check"></i>
+                    <div class="content">Live session tomorrow at 5 PM<span class="time">1 day ago</span></div>
+                </div>
+                <div class="announcement">
+                    <i class="fas fa-trophy"></i>
+                    <div class="content">Certification exam now available<span class="time">3 days ago</span></div>
+                </div>
+                <div class="announcement">
+                    <i class="fas fa-users"></i>
+                    <div class="content">New batch starting next week<span class="time">5 days ago</span></div>
+                </div>
+            </div>
+
+            <!-- Support -->
+            <div class="dash-card">
+                <div class="card-title"><i class="fas fa-headset"></i> Support</div>
+                <div class="support-item"><i class="fas fa-envelope"></i><a href="mailto:support@qskill.com">support@qskill.com</a></div>
+                <div class="support-item"><i class="fas fa-phone-alt"></i><a href="tel:+919876543210">+91 98765 43210</a></div>
+                <div class="support-item"><i class="fas fa-comment-dots"></i><span>Live chat (9 AM - 6 PM)</span></div>
+                <div class="support-item"><i class="fas fa-clock"></i><span>Mon - Sat | 9 AM - 6 PM</span></div>
+            </div>
+        </div>
+
+    </section>
+
+    <!-- ===== FOOTER ===== -->
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="copyright">© 2026 QSkill Career Solutions. All Rights Reserved.</div>
+            <div class="footer-links">
+                <a href="#">Privacy Policy</a>
+                <a href="#">Terms of Service</a>
+                <a href="#">Contact</a>
+                <a href="index.html">Home</a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- ===== SHARED JAVASCRIPT ===== -->
+    <script src="script.js"></script>
+
+    <script>
+        // ===== SESSION CHECK =====
+        const studentLoggedIn = localStorage.getItem('qskillStudentLoggedIn');
+        if (!studentLoggedIn) {
+            window.location.href = 'login.html';
+        }
+    </script>
+
+</body>
+</html>
