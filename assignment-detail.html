@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Assignment Details - Instructor | QSkill</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+    
+    <link rel="stylesheet" href="style.css" />
+    
+    <style>
+        .page-wrapper {
+            padding: 30px 80px 60px;
+            background: #FAFBFC;
+            min-height: 100vh;
+        }
+
+        .page-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 16px;
+            margin-bottom: 30px;
+        }
+
+        .page-header h1 {
+            font-size: 28px;
+            font-weight: 700;
+            color: var(--text-dark);
+        }
+        .page-header h1 span { color: var(--primary); }
+
+        .back-btn {
+            background: var(--white);
+            border: 1px solid var(--border);
+            padding: 8px 20px;
+            border-radius: 999px;
+            font-weight: 500;
+            color: var(--text-dark);
+            text-decoration: none;
+            transition: 0.3s;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .back-btn:hover {
+            border-color: var(--primary);
+            color: var(--primary);
+            background: var(--light-bg);
+        }
+
+        .assignment-card {
+            background: var(--white);
+            border-radius: 16px;
+            padding: 30px;
+            border: 1px solid var(--border);
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .assignment-card .status-badge {
+            display: inline-block;
+            padding: 4px 16px;
+            border-radius: 999px;
+            font-size: 14px;
+            font-weight: 500;
+        }
+        .status-badge.pending { background: #FEF3C7; color: #d97706; }
+        .status-badge.submitted { background: #DCFCE7; color: #16a34a; }
+        .status-badge.late { background: #FEE2E2; color: #dc2626; }
+
+        .assignment-card .meta-row {
+            display: flex;
+            gap: 30px;
+            flex-wrap: wrap;
+            margin: 16px 0;
+            padding: 12px 0;
+            border-top: 1px solid var(--border);
+            border-bottom: 1px solid var(--border);
+        }
+        .assignment-card .meta-row .meta-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 14px;
+            color: var(--text-gray);
+        }
+        .assignment-card .meta-row .meta-item strong {
+            color: var(--text-dark);
+        }
+
+        .assignment-card .section-title {
+            font-size: 18px;
+            font-weight: 600;
+            margin: 20px 0 12px;
+            color: var(--text-dark);
+        }
+
+        .submission-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 0;
+            border-bottom: 1px solid #F1F5F9;
+        }
+        .submission-item:last-child { border-bottom: none; }
+        .submission-item .name { font-weight: 500; }
+        .submission-item .date { font-size: 13px; color: var(--text-gray); }
+        .submission-item .view-btn {
+            background: var(--light-bg);
+            border: none;
+            padding: 4px 16px;
+            border-radius: 999px;
+            font-size: 12px;
+            font-weight: 500;
+            color: var(--primary);
+            cursor: pointer;
+            transition: 0.3s;
+        }
+        .submission-item .view-btn:hover {
+            background: var(--primary);
+            color: var(--white);
+        }
+
+        .empty-state {
+            color: var(--text-gray);
+            font-size: 14px;
+            padding: 10px 0;
+        }
+
+        @media (max-width: 768px) {
+            .page-wrapper { padding: 20px; }
+            .assignment-card { padding: 20px; }
+            .assignment-card .meta-row { gap: 16px; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="toast" id="toast">
+        <i class="fas fa-check-circle" id="toastIcon"></i>
+        <span id="toastMessage">Success!</span>
+    </div>
+
+    <!-- ============================================================ -->
+    <!-- ===== NAVBAR ===== -->
+    <!-- ============================================================ -->
+    <nav class="navbar">
+        <a href="instructor-dashboard.html" class="logo">
+            <img src="images/logo.png" alt="QSkill Logo" />
+            <span class="logo-text">
+                <span class="qskill">Qskill</span>
+                <span class="careersolutions">careersolutions</span>
+            </span>
+        </a>
+        <ul class="nav-links">
+            <li><a href="instructor-dashboard.html">Dashboard</a></li>
+            <li><a href="instructor-my-courses.html">My Courses</a></li>
+            <li><a href="#" onclick="logout()" style="color: #EF4444;">Logout</a></li>
+        </ul>
+    </nav>
+
+    <!-- ============================================================ -->
+    <!-- ===== MAIN CONTENT ===== -->
+    <!-- ============================================================ -->
+    <section class="page-wrapper">
+        <div class="page-header">
+            <h1>📋 <span>Assignment Details</span></h1>
+            <a href="instructor-dashboard.html" class="back-btn">
+                <i class="fas fa-arrow-left"></i> Back to Dashboard
+            </a>
+        </div>
+
+        <div class="assignment-card" id="assignmentCard">
+            <!-- Data will be rendered by JavaScript -->
+            <div style="text-align:center; padding:20px; color: var(--text-gray);">
+                <i class="fas fa-spinner fa-spin" style="font-size:24px;"></i>
+                <p>Loading assignment...</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================================================ -->
+    <!-- ===== FOOTER ===== -->
+    <!-- ============================================================ -->
+    <footer class="footer">
+        <div class="footer-top">
+            <div class="footer-logo">
+                <img src="images/logo.png" alt="QSkill Logo" />
+                <p>Empowering careers with industry-ready Software Testing skills.</p>
+                <div class="footer-social">
+                    <i class="fab fa-instagram"></i>
+                    <i class="fab fa-whatsapp"></i>
+                    <i class="fas fa-envelope"></i>
+                </div>
+            </div>
+            <div>
+                <h4>Quick Links</h4>
+                <a href="index.html">Home</a>
+                <a href="courses.html">Courses</a>
+                <a href="contact.html">Contact</a>
+                <a href="demo.html">Free Demo</a>
+                <a href="login.html">Login</a>
+            </div>
+            <div>
+                <h4>Important Links</h4>
+                <a href="#">Terms &amp; Conditions</a>
+                <a href="#">Privacy Policy</a>
+                <a href="#">Security Policy</a>
+            </div>
+            <div class="footer-contact">
+                <h4>Contact Us</h4>
+                <p><i class="fas fa-phone-alt"></i> +91 99999 99999</p>
+                <p><i class="fas fa-envelope"></i> info@qskillcareersolutions.com</p>
+                <p><i class="fas fa-clock"></i> Mon - Sat | 9AM - 6PM</p>
+            </div>
+        </div>
+        <div class="footer-bottom">© 2026 QSkill Career Solutions. All Rights Reserved.</div>
+    </footer>
+
+    <!-- ============================================================ -->
+    <!-- ===== SCRIPTS ===== -->
+    <!-- ============================================================ -->
+    <script>
+        // ===== SESSION CHECK =====
+        (function checkSession() {
+            const instructorLoggedIn = localStorage.getItem('qskillInstructorLoggedIn');
+            const adminLoggedIn = localStorage.getItem('qskillAdminLoggedIn');
+            if (instructorLoggedIn !== 'true' && adminLoggedIn !== 'true') {
+                window.location.href = 'login.html';
+            }
+        })();
+
+        // ===== ASSIGNMENT DATA =====
+        const assignmentData = {
+            1: {
+                title: 'Module 4: WebDriver',
+                course: 'Automation Testing (Selenium)',
+                due: 'Tomorrow, 11:59 PM',
+                status: 'Pending',
+                description: 'Complete the WebDriver tasks for the Selenium project. Write automated tests for the login, registration, and product search functionality. Ensure the tests are stable and follow the Page Object Model pattern.',
+                submissions: [
+                    { name: 'Tejaswini Reddy', date: '2026-08-04', status: 'Submitted' },
+                    { name: 'Arjun Kumar', date: '2026-08-03', status: 'Submitted' }
+                ]
+            },
+            2: {
+                title: 'API Testing Collection',
+                course: 'Postman API Testing',
+                due: '2 days left',
+                status: 'Pending',
+                description: 'Create a Postman collection for the user authentication API. Include requests for registration, login, and password reset. Add test scripts to validate response codes and response bodies.',
+                submissions: [
+                    { name: 'Priya Sharma', date: '2026-08-05', status: 'Submitted' }
+                ]
+            },
+            3: {
+                title: 'Test Cases for Login',
+                course: 'Manual Testing',
+                due: '5 days left',
+                status: 'Submitted',
+                description: 'Write detailed test cases for the login functionality. Cover positive and negative scenarios. Include test case ID, description, steps, expected result, and actual result fields.',
+                submissions: [
+                    { name: 'Rahul Gupta', date: '2026-08-02', status: 'Submitted' },
+                    { name: 'Sneha Patel', date: '2026-08-01', status: 'Submitted' },
+                    { name: 'Vikram Singh', date: '2026-08-04', status: 'Submitted' }
+                ]
+            },
+            4: {
+                title: 'Jenkins Pipeline Setup',
+                course: 'DevOps',
+                due: '1 week left',
+                status: 'Late',
+                description: 'Set up a Jenkins pipeline for the project. Configure the pipeline to run automated tests on every push. Set up email notifications for build failures.',
+                submissions: []
+            }
+        };
+
+        // ===== RENDER ASSIGNMENT DETAILS =====
+        function renderAssignment() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const id = urlParams.get('id');
+            const card = document.getElementById('assignmentCard');
+
+            if (!id || !assignmentData[id]) {
+                card.innerHTML = `
+                    <div style="text-align:center; padding:30px;">
+                        <i class="fas fa-exclamation-circle" style="font-size:48px; color:var(--error);"></i>
+                        <h2 style="margin:12px 0; color:var(--text-dark);">Assignment Not Found</h2>
+                        <p style="color:var(--text-gray);">The assignment you are looking for does not exist.</p>
+                        <a href="instructor-dashboard.html" class="back-btn" style="margin-top:16px;">
+                            <i class="fas fa-arrow-left"></i> Back to Dashboard
+                        </a>
+                    </div>
+                `;
+                return;
+            }
+
+            const data = assignmentData[id];
+            const statusClass = data.status.toLowerCase();
+
+            let submissionsHtml = '';
+            if (data.submissions && data.submissions.length > 0) {
+                data.submissions.forEach(sub => {
+                    submissionsHtml += `
+                        <div class="submission-item">
+                            <div>
+                                <span class="name">${sub.name}</span>
+                                <span class="date">• Submitted on ${sub.date}</span>
+                            </div>
+                            <span style="background:#DCFCE7; color:#16a34a; padding:2px 12px; border-radius:999px; font-size:12px; font-weight:500;">${sub.status}</span>
+                        </div>
+                    `;
+                });
+            } else {
+                submissionsHtml = `<div class="empty-state">No submissions yet.</div>`;
+            }
+
+            card.innerHTML = `
+                <h1 style="font-size:26px; font-weight:700; color:var(--text-dark);">${data.title}</h1>
+                <span class="status-badge ${statusClass}">${data.status}</span>
+
+                <div class="meta-row">
+                    <div class="meta-item"><strong>📘 Course:</strong> ${data.course}</div>
+                    <div class="meta-item"><strong>📅 Due:</strong> ${data.due}</div>
+                    <div class="meta-item"><strong>📊 Submissions:</strong> ${data.submissions ? data.submissions.length : 0}</div>
+                </div>
+
+                <div class="section-title">📝 Description</div>
+                <p style="color:var(--text-gray); line-height:1.8; font-size:15px;">${data.description}</p>
+
+                <div class="section-title">📂 Submissions</div>
+                <div class="submission-list">
+                    ${submissionsHtml}
+                </div>
+
+                <div style="margin-top:24px; display:flex; gap:12px; flex-wrap:wrap;">
+                    <button class="back-btn" onclick="window.location.href='instructor-dashboard.html'" style="background:var(--light-bg); border-color:transparent; cursor:pointer;">
+                        <i class="fas fa-arrow-left"></i> Back
+                    </button>
+                    <button class="back-btn" onclick="alert('Downloading submissions...')" style="background:var(--primary); color:var(--white); border-color:var(--primary); cursor:pointer;">
+                        <i class="fas fa-download"></i> Download All
+                    </button>
+                </div>
+            `;
+        }
+
+        // ===== LOGOUT =====
+        function logout() {
+            if (confirm('Are you sure you want to logout?')) {
+                localStorage.removeItem('qskillInstructorLoggedIn');
+                localStorage.removeItem('qskillAdminLoggedIn');
+                localStorage.removeItem('qskillStudentLoggedIn');
+                localStorage.removeItem('qskillUser');
+                localStorage.removeItem('qskillStudentId');
+                showToast('👋 Logged out successfully', 'info');
+                setTimeout(() => window.location.href = 'login.html', 500);
+            }
+        }
+
+        // ===== TOAST =====
+        function showToast(message, type = 'success') {
+            const toast = document.getElementById('toast');
+            const toastIcon = document.getElementById('toastIcon');
+            const toastMessage = document.getElementById('toastMessage');
+            if (!toast) return;
+            toastIcon.className = type === 'success' ? 'fas fa-check-circle' :
+                                 type === 'error' ? 'fas fa-exclamation-circle' :
+                                 'fas fa-info-circle';
+            toastMessage.textContent = message;
+            toast.className = 'toast ' + type;
+            setTimeout(() => toast.classList.add('show'), 10);
+            setTimeout(() => toast.classList.remove('show'), 4000);
+        }
+
+        // ===== INIT =====
+        document.addEventListener('DOMContentLoaded', renderAssignment);
+    </script>
+
+</body>
+</html>

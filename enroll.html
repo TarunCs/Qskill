@@ -1,0 +1,1381 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Enroll Now - QSkill Career Solutions</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+    
+    <link rel="stylesheet" href="style.css" />
+    
+    <style>
+        /* ============================================================ */
+        /* ===== ENROLL PAGE STYLES ===== */
+        /* ============================================================ */
+        .enroll-wrapper {
+            padding: 40px 80px 60px;
+            background: var(--white);
+        }
+
+        .enroll-header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .enroll-header h1 {
+            font-size: 36px;
+            font-weight: 700;
+            color: var(--text-dark);
+        }
+
+        .enroll-header h1 span {
+            color: var(--primary);
+        }
+
+        .enroll-header p {
+            color: var(--text-gray);
+            font-size: 16px;
+            margin-top: 6px;
+        }
+
+        /* ===== ENROLL GRID ===== */
+        .enroll-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 50px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        /* ===== LEFT SIDE - COURSE SUMMARY ===== */
+        .course-summary {
+            background: var(--white);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 30px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04);
+        }
+
+        .course-summary .course-image {
+            width: 100%;
+            max-height: 200px;
+            object-fit: contain;
+            border-radius: 12px;
+            background: #F5F8FF;
+            padding: 16px;
+            border: 1px solid var(--border);
+            margin-bottom: 16px;
+        }
+
+        .course-summary h3 {
+            font-size: 20px;
+            font-weight: 600;
+            color: var(--text-dark);
+            margin-bottom: 6px;
+        }
+
+        .course-summary .course-meta {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin: 10px 0 14px;
+        }
+
+        .course-summary .course-meta span {
+            font-size: 13px;
+            color: var(--text-gray);
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .course-summary .course-meta span i {
+            color: var(--primary);
+        }
+
+        .course-summary .price-breakdown {
+            background: var(--light-bg);
+            border-radius: 12px;
+            padding: 16px 20px;
+            margin: 14px 0;
+        }
+
+        .course-summary .price-breakdown .price-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 6px 0;
+            font-size: 14px;
+            color: var(--text-dark);
+        }
+
+        .course-summary .price-breakdown .price-row.total {
+            border-top: 2px solid var(--border);
+            margin-top: 6px;
+            padding-top: 10px;
+            font-weight: 700;
+            font-size: 18px;
+            color: var(--primary);
+        }
+
+        .course-summary .price-breakdown .price-row .discount-text {
+            color: var(--success);
+            font-weight: 600;
+        }
+
+        .course-summary .what-includes {
+            list-style: none;
+            padding: 0;
+            margin-top: 12px;
+        }
+
+        .course-summary .what-includes li {
+            padding: 5px 0;
+            font-size: 13px;
+            color: var(--text-dark);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .course-summary .what-includes li i {
+            color: var(--success);
+        }
+
+        /* ===== RIGHT SIDE - PAYMENT FORM ===== */
+        .payment-form {
+            background: var(--white);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 30px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04);
+        }
+
+        .payment-form h3 {
+            font-size: 20px;
+            font-weight: 600;
+            color: var(--text-dark);
+            margin-bottom: 6px;
+        }
+
+        .payment-form .form-sub {
+            color: var(--text-gray);
+            font-size: 14px;
+            margin-bottom: 20px;
+        }
+
+        .form-group {
+            margin-bottom: 16px;
+        }
+
+        .form-group label {
+            font-size: 13px;
+            font-weight: 600;
+            display: block;
+            margin-bottom: 4px;
+            color: var(--text-dark);
+        }
+
+        .form-group label .required {
+            color: var(--error);
+        }
+
+        .form-group input,
+        .form-group select {
+            width: 100%;
+            height: 44px;
+            padding: 0 14px;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            font-size: 14px;
+            font-family: 'Poppins', sans-serif;
+            transition: 0.3s;
+            background: var(--white);
+            color: var(--text-dark);
+        }
+
+        .form-group input:focus,
+        .form-group select:focus {
+            border-color: var(--primary);
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(31, 60, 136, 0.1);
+        }
+
+        .form-group .input-wrapper {
+            display: flex;
+            align-items: center;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            transition: 0.3s;
+            background: var(--white);
+        }
+
+        .form-group .input-wrapper:focus-within {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(31, 60, 136, 0.1);
+        }
+
+        .form-group .input-wrapper .prefix {
+            padding: 0 12px;
+            font-size: 14px;
+            color: var(--text-gray);
+            font-weight: 500;
+            border-right: 1px solid var(--border);
+        }
+
+        .form-group .input-wrapper input {
+            border: none;
+            outline: none;
+            flex: 1;
+            height: 42px;
+            padding: 0 14px;
+            font-size: 14px;
+            font-family: 'Poppins', sans-serif;
+            background: transparent;
+            color: var(--text-dark);
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 14px;
+        }
+
+        /* ===== PAYMENT METHODS ===== */
+        .payment-methods {
+            margin: 20px 0;
+        }
+
+        .payment-methods .method-label {
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--text-dark);
+            display: block;
+            margin-bottom: 10px;
+        }
+
+        .payment-methods .method-options {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+            gap: 10px;
+        }
+
+        .payment-methods .method-option {
+            padding: 12px 16px;
+            border: 2px solid var(--border);
+            border-radius: 10px;
+            cursor: pointer;
+            transition: 0.3s;
+            text-align: center;
+            background: var(--white);
+        }
+
+        .payment-methods .method-option:hover {
+            border-color: var(--primary);
+            background: var(--light-bg);
+        }
+
+        .payment-methods .method-option.selected {
+            border-color: var(--primary);
+            background: var(--light-bg);
+            box-shadow: 0 0 0 3px rgba(31, 60, 136, 0.1);
+        }
+
+        .payment-methods .method-option i {
+            font-size: 24px;
+            display: block;
+            margin-bottom: 4px;
+            color: var(--text-dark);
+        }
+
+        .payment-methods .method-option .method-name {
+            font-size: 12px;
+            font-weight: 500;
+            color: var(--text-dark);
+        }
+
+        .payment-methods .method-option .method-name .badge {
+            background: var(--success);
+            color: var(--white);
+            font-size: 9px;
+            padding: 1px 8px;
+            border-radius: 999px;
+            margin-left: 4px;
+        }
+
+        .payment-methods .method-option.selected i {
+            color: var(--primary);
+        }
+
+        /* ===== UPI OPTIONS ===== */
+        .upi-options {
+            display: none;
+            margin-top: 12px;
+            padding: 16px;
+            background: var(--light-bg);
+            border-radius: 10px;
+        }
+
+        .upi-options.show {
+            display: block;
+        }
+
+        .upi-options .upi-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+            gap: 10px;
+        }
+
+        .upi-options .upi-item {
+            padding: 10px;
+            border: 2px solid transparent;
+            border-radius: 8px;
+            cursor: pointer;
+            text-align: center;
+            transition: 0.3s;
+            background: var(--white);
+        }
+
+        .upi-options .upi-item:hover {
+            border-color: var(--primary);
+        }
+
+        .upi-options .upi-item.selected-upi {
+            border-color: var(--primary);
+            background: var(--light-bg);
+        }
+
+        .upi-options .upi-item i {
+            font-size: 28px;
+            display: block;
+            margin-bottom: 4px;
+        }
+
+        .upi-options .upi-item .upi-name {
+            font-size: 11px;
+            font-weight: 500;
+            color: var(--text-dark);
+        }
+
+        /* ===== CARD DETAILS ===== */
+        .card-details {
+            display: none;
+            margin-top: 12px;
+            padding: 16px;
+            background: var(--light-bg);
+            border-radius: 10px;
+        }
+
+        .card-details.show {
+            display: block;
+        }
+
+        /* ===== SECURE BADGE ===== */
+        .secure-badge {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            margin-top: 16px;
+            padding: 12px;
+            background: #F0FDF4;
+            border-radius: 8px;
+            color: #16a34a;
+            font-size: 13px;
+            font-weight: 500;
+        }
+
+        .secure-badge i {
+            font-size: 18px;
+        }
+
+        /* ===== SUBMIT BUTTON ===== */
+        .btn-pay {
+            width: 100%;
+            background: var(--primary);
+            color: var(--white);
+            border: none;
+            padding: 16px;
+            border-radius: 999px;
+            font-weight: 600;
+            font-size: 18px;
+            cursor: pointer;
+            transition: 0.3s;
+            font-family: 'Poppins', sans-serif;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            box-shadow: 0 4px 16px rgba(31, 60, 136, 0.25);
+            margin-top: 20px;
+        }
+
+        .btn-pay:hover {
+            background: var(--secondary);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 24px rgba(31, 60, 136, 0.35);
+        }
+
+        .btn-pay:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        /* ============================================================ */
+        /* ===== LOGIN BUTTON - SAME AS INDEX ===== */
+        /* ============================================================ */
+        .login-btn {
+            background: var(--primary) !important;
+            color: var(--white) !important;
+            padding: 10px 28px !important;
+            border-radius: 999px !important;
+            font-weight: 600 !important;
+            font-size: 15px !important;
+            transition: 0.3s !important;
+            cursor: pointer !important;
+            display: inline-block !important;
+            border: none !important;
+            text-decoration: none !important;
+            border-bottom: none !important;
+            font-family: 'Poppins', sans-serif !important;
+            box-shadow: 0 2px 8px rgba(31, 60, 136, 0.12) !important;
+            line-height: 1.4 !important;
+            letter-spacing: 1px !important;
+        }
+
+        .login-btn i {
+            margin-left: 8px !important;
+            font-size: 12px !important;
+        }
+
+        .login-btn:hover {
+            background: var(--secondary) !important;
+            transform: translateY(-2px) !important;
+            border-bottom: none !important;
+            box-shadow: 0 4px 16px rgba(31, 60, 136, 0.25) !important;
+        }
+
+        /* ============================================================ */
+        /* ===== LOGIN DROPDOWN ===== */
+        /* ============================================================ */
+        .login-dropdown-wrapper {
+            position: relative;
+            display: inline-block;
+        }
+
+        .login-dropdown {
+            display: none;
+            position: absolute;
+            background: var(--white);
+            top: 48px;
+            right: 0;
+            box-shadow: 0 12px 32px rgba(0, 0, 0, 0.12);
+            border-radius: 14px;
+            padding: 6px 0;
+            min-width: 260px;
+            border: 1px solid var(--border);
+            z-index: 200;
+        }
+
+        .login-dropdown.show {
+            display: block;
+        }
+
+        .login-dropdown a {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            padding: 14px 22px;
+            color: var(--text-dark) !important;
+            text-decoration: none;
+            transition: 0.3s;
+            border-bottom: none !important;
+        }
+
+        .login-dropdown a:not(:last-child) {
+            border-bottom: 1px solid var(--border) !important;
+        }
+
+        .login-dropdown a:hover {
+            background: var(--light-bg);
+        }
+
+        .login-dropdown .dropdown-icon {
+            width: 42px;
+            height: 42px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .login-dropdown .dropdown-icon i {
+            font-size: 17px;
+        }
+
+        .login-dropdown a[data-role="student"] .dropdown-icon {
+            background: var(--light-bg);
+        }
+
+        .login-dropdown a[data-role="student"] .dropdown-icon i {
+            color: var(--primary);
+        }
+
+        .login-dropdown a[data-role="instructor"] .dropdown-icon {
+            background: #FFEBDD;
+        }
+
+        .login-dropdown a[data-role="instructor"] .dropdown-icon i {
+            color: var(--orange);
+        }
+
+        .login-dropdown .dropdown-text {
+            display: flex !important;
+            flex-direction: column !important;
+            gap: 2px !important;
+        }
+
+        .login-dropdown .role-title {
+            font-weight: 600;
+            font-size: 15px;
+            color: var(--text-dark);
+        }
+
+        .login-dropdown .role-sub {
+            font-weight: 400;
+            font-size: 12px;
+            color: var(--text-gray);
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+        }
+
+        .login-dropdown a:hover .role-title {
+            color: var(--primary);
+        }
+
+        /* ============================================================ */
+        /* ===== SUCCESS MODAL ===== */
+        /* ============================================================ */
+        .success-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(4px);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .success-modal.active {
+            display: flex;
+        }
+
+        .success-modal .modal-content {
+            background: var(--white);
+            border-radius: 24px;
+            max-width: 480px;
+            width: 100%;
+            padding: 40px 35px;
+            text-align: center;
+            animation: modalSlideIn 0.4s ease;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.2);
+        }
+
+        @keyframes modalSlideIn {
+            from {
+                opacity: 0;
+                transform: translateY(30px) scale(0.95);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+
+        .success-modal .modal-content .success-icon {
+            width: 80px;
+            height: 80px;
+            background: #DCFCE7;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 16px;
+        }
+
+        .success-modal .modal-content .success-icon i {
+            font-size: 40px;
+            color: #16a34a;
+        }
+
+        .success-modal .modal-content h2 {
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--text-dark);
+        }
+
+        .success-modal .modal-content p {
+            color: var(--text-gray);
+            font-size: 15px;
+            margin: 8px 0 20px;
+            line-height: 1.7;
+        }
+
+        .success-modal .modal-content .order-details {
+            background: var(--light-bg);
+            border-radius: 12px;
+            padding: 16px;
+            text-align: left;
+            margin-bottom: 20px;
+        }
+
+        .success-modal .modal-content .order-details .detail-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 4px 0;
+            font-size: 14px;
+            color: var(--text-dark);
+        }
+
+        .success-modal .modal-content .order-details .detail-row .label {
+            color: var(--text-gray);
+        }
+
+        .success-modal .modal-content .btn-continue {
+            background: var(--primary);
+            color: var(--white);
+            border: none;
+            padding: 14px 40px;
+            border-radius: 999px;
+            font-weight: 600;
+            font-size: 16px;
+            cursor: pointer;
+            transition: 0.3s;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        .success-modal .modal-content .btn-continue:hover {
+            background: var(--secondary);
+            transform: translateY(-2px);
+        }
+
+        /* ============================================================ */
+        /* ===== RESPONSIVE ===== */
+        /* ============================================================ */
+        @media (max-width: 992px) {
+            .enroll-wrapper { padding: 30px 40px 40px; }
+            .enroll-grid { grid-template-columns: 1fr; gap: 30px; max-width: 600px; }
+            .enroll-header h1 { font-size: 30px; }
+        }
+
+        @media (max-width: 768px) {
+            .enroll-wrapper { padding: 20px; }
+            .enroll-header h1 { font-size: 26px; }
+            .form-row { grid-template-columns: 1fr; }
+            .payment-methods .method-options { grid-template-columns: 1fr 1fr; }
+            .course-summary { padding: 20px; }
+            .payment-form { padding: 20px; }
+        }
+
+        @media (max-width: 480px) {
+            .enroll-header h1 { font-size: 22px; }
+            .payment-methods .method-options { grid-template-columns: 1fr 1fr; }
+            .payment-methods .method-option { padding: 10px 12px; }
+            .payment-methods .method-option i { font-size: 20px; }
+            .success-modal .modal-content { padding: 30px 20px; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ===== TOAST ===== -->
+    <div class="toast" id="toast">
+        <i class="fas fa-check-circle" id="toastIcon"></i>
+        <span id="toastMessage">Success!</span>
+    </div>
+
+    <!-- ============================================================ -->
+    <!-- ===== NAVBAR ===== -->
+    <!-- ============================================================ -->
+    <nav class="navbar">
+        <a href="index.html" class="logo">
+            <img src="images/logo.png" alt="QSkill Logo" />
+            <span class="logo-text">
+                <span class="qskill">Qskill</span>
+                <span class="careersolutions">careersolutions</span>
+            </span>
+        </a>
+        <ul class="nav-links">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="about.html">About Us</a></li>
+            <li><a href="courses.html" style="font-weight:600;">Courses</a></li>
+            <li class="login-dropdown-wrapper">
+                <a href="#" class="login-btn" id="loginDropdownBtn">Login <i class="fas fa-chevron-down"></i></a>
+                <div class="login-dropdown" id="loginDropdown">
+                    <a href="login.html?role=student" data-role="student">
+                        <span class="dropdown-icon"><i class="fas fa-user-graduate"></i></span>
+                        <span class="dropdown-text">
+                            <span class="role-title">Student</span>
+                            <span class="role-sub">Login as a student</span>
+                        </span>
+                    </a>
+                    <a href="login.html?role=instructor" data-role="instructor">
+                        <span class="dropdown-icon"><i class="fas fa-chalkboard-teacher"></i></span>
+                        <span class="dropdown-text">
+                            <span class="role-title">Instructor</span>
+                            <span class="role-sub">Login as an instructor</span>
+                        </span>
+                    </a>
+                </div>
+            </li>
+        </ul>
+    </nav>
+
+    <!-- ============================================================ -->
+    <!-- ===== ENROLL PAGE ===== -->
+    <!-- ============================================================ -->
+    <section class="enroll-wrapper">
+        
+        <div class="enroll-header">
+            <h1>Enroll Now &amp; <span>Start Learning</span></h1>
+            <p>Complete your payment and get instant access to your course</p>
+        </div>
+
+        <div class="enroll-grid">
+            <!-- ========================================================== -->
+            <!-- LEFT SIDE - COURSE SUMMARY -->
+            <!-- ========================================================== -->
+            <div class="course-summary">
+                <img src="images/manual-testing.jpg" alt="Course" class="course-image" id="courseImage" />
+                <h3 id="courseTitle">Manual Testing</h3>
+                <div class="course-meta">
+                    <span><i class="fas fa-signal"></i> <span id="metaLevel">Beginner</span></span>
+                    <span><i class="fas fa-clock"></i> <span id="metaDuration">6 Weeks</span></span>
+                    <span><i class="fas fa-certificate"></i> Certificate Included</span>
+                </div>
+
+                <div class="price-breakdown">
+                    <div class="price-row">
+                        <span>Course Price</span>
+                        <span id="originalPrice">₹8,999</span>
+                    </div>
+                    <div class="price-row">
+                        <span>Discount</span>
+                        <span class="discount-text" id="discountText">- ₹4,000 (44% OFF)</span>
+                    </div>
+                    <div class="price-row total">
+                        <span>Total Amount</span>
+                        <span id="totalPrice">₹4,999</span>
+                    </div>
+                </div>
+
+                <h4 style="font-size:15px; font-weight:600; color:var(--text-dark);">What's Included:</h4>
+                <ul class="what-includes">
+                    <li><i class="fas fa-check-circle"></i> 60+ Hours of Live Training</li>
+                    <li><i class="fas fa-check-circle"></i> Real-time Projects</li>
+                    <li><i class="fas fa-check-circle"></i> Study Materials &amp; PDFs</li>
+                    <li><i class="fas fa-check-circle"></i> Practice Test Cases</li>
+                    <li><i class="fas fa-check-circle"></i> Mock Interviews</li>
+                    <li><i class="fas fa-check-circle"></i> Placement Assistance</li>
+                    <li><i class="fas fa-check-circle"></i> Completion Certificate</li>
+                </ul>
+            </div>
+
+            <!-- ========================================================== -->
+            <!-- RIGHT SIDE - PAYMENT FORM -->
+            <!-- ========================================================== -->
+            <div class="payment-form">
+                <h3>Payment Details</h3>
+                <p class="form-sub">Fill in your details and choose a payment method</p>
+
+                <form id="paymentForm" onsubmit="handlePayment(event)">
+                    <!-- Student Name -->
+                    <div class="form-group">
+                        <label>Full Name <span class="required">*</span></label>
+                        <input type="text" id="studentName" placeholder="Enter your full name" required />
+                    </div>
+
+                    <!-- Email -->
+                    <div class="form-group">
+                        <label>Email Address <span class="required">*</span></label>
+                        <input type="email" id="studentEmail" placeholder="Enter your email address" required />
+                    </div>
+
+                    <!-- Phone -->
+                    <div class="form-group">
+                        <label>Phone Number <span class="required">*</span></label>
+                        <div class="input-wrapper">
+                            <span class="prefix">+91</span>
+                            <input type="tel" id="studentPhone" placeholder="Enter your phone number" required />
+                        </div>
+                    </div>
+
+                    <!-- ===== PAYMENT METHODS ===== -->
+                    <div class="payment-methods">
+                        <span class="method-label">Select Payment Method</span>
+                        <div class="method-options">
+                            <div class="method-option selected" data-method="card" onclick="selectMethod('card')">
+                                <i class="fas fa-credit-card"></i>
+                                <span class="method-name">Card</span>
+                            </div>
+                            <div class="method-option" data-method="upi" onclick="selectMethod('upi')">
+                                <i class="fas fa-mobile-alt"></i>
+                                <span class="method-name">UPI</span>
+                            </div>
+                            <div class="method-option" data-method="netbanking" onclick="selectMethod('netbanking')">
+                                <i class="fas fa-university"></i>
+                                <span class="method-name">Net Banking</span>
+                            </div>
+                            <div class="method-option" data-method="wallet" onclick="selectMethod('wallet')">
+                                <i class="fas fa-wallet"></i>
+                                <span class="method-name">Wallet</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- ===== CARD DETAILS ===== -->
+                    <div class="card-details show" id="cardDetails">
+                        <div class="form-group">
+                            <label>Card Number <span class="required">*</span></label>
+                            <input type="text" id="cardNumber" placeholder="1234 5678 9012 3456" maxlength="19" oninput="formatCardNumber(this)" />
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label>Expiry Date <span class="required">*</span></label>
+                                <input type="text" id="expiryDate" placeholder="MM/YY" maxlength="5" oninput="formatExpiry(this)" />
+                            </div>
+                            <div class="form-group">
+                                <label>CVV <span class="required">*</span></label>
+                                <input type="password" id="cvv" placeholder="123" maxlength="4" />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>Cardholder Name <span class="required">*</span></label>
+                            <input type="text" id="cardholderName" placeholder="Name on card" />
+                        </div>
+                    </div>
+
+                    <!-- ===== UPI OPTIONS ===== -->
+                    <div class="upi-options" id="upiOptions">
+                        <p style="font-size:13px; color:var(--text-gray); margin-bottom:10px;">Select your UPI app:</p>
+                        <div class="upi-grid">
+                            <div class="upi-item" data-upi="googlepay" onclick="selectUPI(this)">
+                                <i class="fas fa-google-pay" style="color:#4285F4;"></i>
+                                <span class="upi-name">Google Pay</span>
+                            </div>
+                            <div class="upi-item" data-upi="phonepe" onclick="selectUPI(this)">
+                                <i class="fas fa-mobile-alt" style="color:#5F259F;"></i>
+                                <span class="upi-name">PhonePe</span>
+                            </div>
+                            <div class="upi-item" data-upi="paytm" onclick="selectUPI(this)">
+                                <i class="fas fa-paytm" style="color:#00BAF2;"></i>
+                                <span class="upi-name">Paytm</span>
+                            </div>
+                            <div class="upi-item" data-upi="amazonpay" onclick="selectUPI(this)">
+                                <i class="fab fa-amazon-pay" style="color:#FF9900;"></i>
+                                <span class="upi-name">Amazon Pay</span>
+                            </div>
+                            <div class="upi-item" data-upi="bhim" onclick="selectUPI(this)">
+                                <i class="fas fa-bhim" style="color:#0057B3;"></i>
+                                <span class="upi-name">BHIM UPI</span>
+                            </div>
+                            <div class="upi-item" data-upi="other" onclick="selectUPI(this)">
+                                <i class="fas fa-qrcode" style="color:#6B7280;"></i>
+                                <span class="upi-name">Other UPI</span>
+                            </div>
+                        </div>
+                        <div class="form-group" style="margin-top:12px;">
+                            <label>UPI ID</label>
+                            <input type="text" id="upiId" placeholder="example@upi" />
+                        </div>
+                    </div>
+
+                    <!-- ===== NET BANKING OPTIONS ===== -->
+                    <div class="upi-options" id="netbankingOptions">
+                        <p style="font-size:13px; color:var(--text-gray); margin-bottom:10px;">Select your bank:</p>
+                        <div class="upi-grid">
+                            <div class="upi-item" data-bank="sbi" onclick="selectBank(this)">
+                                <i class="fas fa-university" style="color:#1B4A8B;"></i>
+                                <span class="upi-name">SBI</span>
+                            </div>
+                            <div class="upi-item" data-bank="hdfc" onclick="selectBank(this)">
+                                <i class="fas fa-university" style="color:#004C8C;"></i>
+                                <span class="upi-name">HDFC</span>
+                            </div>
+                            <div class="upi-item" data-bank="icici" onclick="selectBank(this)">
+                                <i class="fas fa-university" style="color:#F26522;"></i>
+                                <span class="upi-name">ICICI</span>
+                            </div>
+                            <div class="upi-item" data-bank="axis" onclick="selectBank(this)">
+                                <i class="fas fa-university" style="color:#862633;"></i>
+                                <span class="upi-name">Axis</span>
+                            </div>
+                            <div class="upi-item" data-bank="kotak" onclick="selectBank(this)">
+                                <i class="fas fa-university" style="color:#1A2D5A;"></i>
+                                <span class="upi-name">Kotak</span>
+                            </div>
+                            <div class="upi-item" data-bank="yes" onclick="selectBank(this)">
+                                <i class="fas fa-university" style="color:#1A2D5A;"></i>
+                                <span class="upi-name">Yes Bank</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- ===== WALLET OPTIONS ===== -->
+                    <div class="upi-options" id="walletOptions">
+                        <p style="font-size:13px; color:var(--text-gray); margin-bottom:10px;">Select your wallet:</p>
+                        <div class="upi-grid">
+                            <div class="upi-item" data-wallet="paytm" onclick="selectWallet(this)">
+                                <i class="fas fa-paytm" style="color:#00BAF2;"></i>
+                                <span class="upi-name">Paytm</span>
+                            </div>
+                            <div class="upi-item" data-wallet="amazon" onclick="selectWallet(this)">
+                                <i class="fab fa-amazon-pay" style="color:#FF9900;"></i>
+                                <span class="upi-name">Amazon Pay</span>
+                            </div>
+                            <div class="upi-item" data-wallet="google" onclick="selectWallet(this)">
+                                <i class="fas fa-google-pay" style="color:#4285F4;"></i>
+                                <span class="upi-name">Google Pay</span>
+                            </div>
+                            <div class="upi-item" data-wallet="phonepe" onclick="selectWallet(this)">
+                                <i class="fas fa-mobile-alt" style="color:#5F259F;"></i>
+                                <span class="upi-name">PhonePe</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- ===== SECURE BADGE ===== -->
+                    <div class="secure-badge">
+                        <i class="fas fa-lock"></i>
+                        <span>Your payment is secure and encrypted</span>
+                    </div>
+
+                    <!-- ===== PAY NOW BUTTON ===== -->
+                    <button type="submit" class="btn-pay" id="payButton">
+                        <i class="fas fa-lock"></i> Pay <span id="payAmount">₹4,999</span> Now
+                    </button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================================================ -->
+    <!-- ===== SUCCESS MODAL ===== -->
+    <!-- ============================================================ -->
+    <div class="success-modal" id="successModal">
+        <div class="modal-content">
+            <div class="success-icon">
+                <i class="fas fa-check-circle"></i>
+            </div>
+            <h2>🎉 Payment Successful!</h2>
+            <p>Your enrollment is complete. Check your email for course access details.</p>
+            <div class="order-details">
+                <div class="detail-row">
+                    <span class="label">Course</span>
+                    <span id="orderCourse">Manual Testing</span>
+                </div>
+                <div class="detail-row">
+                    <span class="label">Amount Paid</span>
+                    <span id="orderAmount">₹4,999</span>
+                </div>
+                <div class="detail-row">
+                    <span class="label">Payment Method</span>
+                    <span id="orderMethod">Card</span>
+                </div>
+                <div class="detail-row">
+                    <span class="label">Order ID</span>
+                    <span id="orderId">QSK-2026-001</span>
+                </div>
+            </div>
+            <button class="btn-continue" onclick="window.location.href='dashboard.html'">
+                <i class="fas fa-arrow-right"></i> Go to Dashboard
+            </button>
+        </div>
+    </div>
+
+    <!-- ============================================================ -->
+    <!-- ===== FOOTER ===== -->
+    <!-- ============================================================ -->
+    <footer class="footer">
+        <div class="footer-top">
+            <div class="footer-logo">
+                <img src="images/logo.png" alt="QSkill Logo" />
+                <p>Empowering careers with industry-ready Software Testing skills.</p>
+                <div class="footer-social">
+                    <i class="fab fa-instagram"></i>
+                    <i class="fab fa-whatsapp"></i>
+                    <i class="fas fa-envelope"></i>
+                </div>
+            </div>
+            <div>
+                <h4>Quick Links</h4>
+                <a href="index.html">Home</a>
+                <a href="courses.html">Courses</a>
+                <a href="contact.html">Contact</a>
+                <a href="demo.html">Free Demo</a>
+                <a href="login.html">Login</a>
+            </div>
+            <div>
+                <h4>Important Links</h4>
+                <a href="#">Terms &amp; Conditions</a>
+                <a href="#">Privacy Policy</a>
+                <a href="#">Security Policy</a>
+            </div>
+            <div class="footer-contact">
+                <h4>Contact Us</h4>
+                <p><i class="fas fa-phone-alt"></i> +91 99999 99999</p>
+                <p><i class="fas fa-envelope"></i> info@qskillcareersolutions.com</p>
+                <p><i class="fas fa-clock"></i> Mon - Sat | 9AM - 6PM</p>
+            </div>
+        </div>
+        <div class="footer-bottom">© 2026 QSkill Career Solutions. All Rights Reserved.</div>
+    </footer>
+
+    <!-- ============================================================ -->
+    <!-- ===== SCRIPTS ===== -->
+    <!-- ============================================================ -->
+    <script>
+        // ============================================================ */
+        // ===== GET COURSE PARAMETER FROM URL ===== */
+        // ============================================================ */
+        const urlParams = new URLSearchParams(window.location.search);
+        const courseParam = urlParams.get('course');
+
+        // ============================================================ */
+        // ===== COURSE DATA ===== */
+        // ============================================================ */
+        const courseData = {
+            'manual': {
+                title: 'Manual Testing',
+                image: 'images/manual-testing.jpg',
+                level: 'Beginner',
+                duration: '6 Weeks',
+                price: '₹4,999',
+                originalPrice: '₹8,999',
+                discount: '44% OFF'
+            },
+            'automation': {
+                title: 'Automation Testing (Java + Selenium)',
+                image: 'images/photo11.jpeg',
+                level: 'Intermediate',
+                duration: '12 Weeks',
+                price: '₹7,999',
+                originalPrice: '₹12,999',
+                discount: '38% OFF'
+            },
+            'api': {
+                title: 'Postman API Testing',
+                image: 'images/photo12.jpeg',
+                level: 'Beginner to Intermediate',
+                duration: '4 Weeks',
+                price: '₹3,999',
+                originalPrice: '₹6,999',
+                discount: '43% OFF'
+            },
+            'playwright': {
+                title: 'Playwright Automation',
+                image: 'images/photo10.jpeg',
+                level: 'Intermediate',
+                duration: '8 Weeks',
+                price: '₹6,999',
+                originalPrice: '₹10,999',
+                discount: '36% OFF'
+            },
+            'cypress': {
+                title: 'Cypress Automation',
+                image: 'images/photo13.jpeg',
+                level: 'Intermediate',
+                duration: '8 Weeks',
+                price: '₹6,499',
+                originalPrice: '₹9,999',
+                discount: '35% OFF'
+            },
+            'restassured': {
+                title: 'REST Assured API Testing',
+                image: 'images/photo14.jpeg',
+                level: 'Intermediate to Advanced',
+                duration: '6 Weeks',
+                price: '₹5,999',
+                originalPrice: '₹9,499',
+                discount: '37% OFF'
+            }
+        };
+
+        // ============================================================ */
+        // ===== LOAD COURSE DATA ===== */
+        // ============================================================ */
+        function loadCourse(courseId) {
+            const course = courseData[courseId] || courseData['manual'];
+            
+            document.getElementById('courseImage').src = course.image;
+            document.getElementById('courseTitle').textContent = course.title;
+            document.getElementById('metaLevel').textContent = course.level;
+            document.getElementById('metaDuration').textContent = course.duration;
+            document.getElementById('originalPrice').textContent = course.originalPrice;
+            document.getElementById('discountText').textContent = `- ₹${parseInt(course.originalPrice.replace('₹','').replace(',','')) - parseInt(course.price.replace('₹','').replace(',',''))} (${course.discount})`;
+            document.getElementById('totalPrice').textContent = course.price;
+            document.getElementById('payAmount').textContent = course.price;
+            
+            // Store for order details
+            window.selectedCourse = course;
+        }
+
+        // ============================================================ */
+        // ===== PAYMENT METHOD SELECTION ===== */
+        // ============================================================ */
+        let selectedMethod = 'card';
+        let selectedUPI = '';
+        let selectedBank = '';
+        let selectedWallet = '';
+
+        function selectMethod(method) {
+            selectedMethod = method;
+            
+            // Update UI
+            document.querySelectorAll('.method-option').forEach(el => {
+                el.classList.remove('selected');
+            });
+            document.querySelector(`.method-option[data-method="${method}"]`).classList.add('selected');
+            
+            // Hide all payment details
+            document.getElementById('cardDetails').classList.remove('show');
+            document.getElementById('upiOptions').classList.remove('show');
+            document.getElementById('netbankingOptions').classList.remove('show');
+            document.getElementById('walletOptions').classList.remove('show');
+            
+            // Show selected payment details
+            if (method === 'card') {
+                document.getElementById('cardDetails').classList.add('show');
+            } else if (method === 'upi') {
+                document.getElementById('upiOptions').classList.add('show');
+            } else if (method === 'netbanking') {
+                document.getElementById('netbankingOptions').classList.add('show');
+            } else if (method === 'wallet') {
+                document.getElementById('walletOptions').classList.add('show');
+            }
+        }
+
+        function selectUPI(element) {
+            document.querySelectorAll('.upi-item').forEach(el => el.classList.remove('selected-upi'));
+            element.classList.add('selected-upi');
+            selectedUPI = element.dataset.upi;
+        }
+
+        function selectBank(element) {
+            document.querySelectorAll('.upi-item').forEach(el => el.classList.remove('selected-upi'));
+            element.classList.add('selected-upi');
+            selectedBank = element.dataset.bank;
+        }
+
+        function selectWallet(element) {
+            document.querySelectorAll('.upi-item').forEach(el => el.classList.remove('selected-upi'));
+            element.classList.add('selected-upi');
+            selectedWallet = element.dataset.wallet;
+        }
+
+        // ============================================================ */
+        // ===== FORMAT CARD NUMBER ===== */
+        // ============================================================ */
+        function formatCardNumber(input) {
+            let value = input.value.replace(/\D/g, '');
+            if (value.length > 16) value = value.slice(0, 16);
+            let formatted = '';
+            for (let i = 0; i < value.length; i++) {
+                if (i > 0 && i % 4 === 0) formatted += ' ';
+                formatted += value[i];
+            }
+            input.value = formatted;
+        }
+
+        function formatExpiry(input) {
+            let value = input.value.replace(/\D/g, '');
+            if (value.length > 4) value = value.slice(0, 4);
+            if (value.length >= 2) {
+                input.value = value.slice(0, 2) + '/' + value.slice(2);
+            } else {
+                input.value = value;
+            }
+        }
+
+        // ============================================================ */
+        // ===== HANDLE PAYMENT ===== */
+        // ============================================================ */
+        function handlePayment(event) {
+            event.preventDefault();
+            
+            const name = document.getElementById('studentName').value.trim();
+            const email = document.getElementById('studentEmail').value.trim();
+            const phone = document.getElementById('studentPhone').value.trim();
+            
+            // Basic validation
+            if (!name || !email || !phone) {
+                showToast('⚠️ Please fill in all required fields', 'error');
+                return;
+            }
+            
+            // Validate email
+            if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+                showToast('⚠️ Please enter a valid email address', 'error');
+                return;
+            }
+            
+            // Validate phone
+            if (phone.length < 10) {
+                showToast('⚠️ Please enter a valid phone number', 'error');
+                return;
+            }
+            
+            // Payment method validation
+            if (selectedMethod === 'card') {
+                const cardNumber = document.getElementById('cardNumber').value.replace(/\s/g, '');
+                const expiry = document.getElementById('expiryDate').value;
+                const cvv = document.getElementById('cvv').value;
+                const cardholder = document.getElementById('cardholderName').value.trim();
+                
+                if (cardNumber.length < 16) {
+                    showToast('⚠️ Please enter a valid card number', 'error');
+                    return;
+                }
+                if (!expiry || expiry.length < 5) {
+                    showToast('⚠️ Please enter a valid expiry date', 'error');
+                    return;
+                }
+                if (!cvv || cvv.length < 3) {
+                    showToast('⚠️ Please enter a valid CVV', 'error');
+                    return;
+                }
+                if (!cardholder) {
+                    showToast('⚠️ Please enter cardholder name', 'error');
+                    return;
+                }
+            }
+            
+            if (selectedMethod === 'upi') {
+                const upiId = document.getElementById('upiId').value.trim();
+                if (!upiId) {
+                    showToast('⚠️ Please enter your UPI ID', 'error');
+                    return;
+                }
+            }
+            
+            // Show loading state
+            const payBtn = document.getElementById('payButton');
+            payBtn.disabled = true;
+            payBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Processing...';
+            
+            // Simulate payment processing
+            setTimeout(() => {
+                // Show success modal
+                const modal = document.getElementById('successModal');
+                const orderId = 'QSK-' + new Date().getFullYear() + '-' + String(Math.floor(Math.random() * 1000)).padStart(3, '0');
+                
+                document.getElementById('orderCourse').textContent = window.selectedCourse.title;
+                document.getElementById('orderAmount').textContent = window.selectedCourse.price;
+                document.getElementById('orderMethod').textContent = selectedMethod.charAt(0).toUpperCase() + selectedMethod.slice(1);
+                document.getElementById('orderId').textContent = orderId;
+                
+                modal.classList.add('active');
+                document.body.style.overflow = 'hidden';
+                
+                // Reset button
+                payBtn.disabled = false;
+                payBtn.innerHTML = '<i class="fas fa-lock"></i> Pay ' + window.selectedCourse.price + ' Now';
+                
+                // Show success toast
+                showToast('✅ Payment successful! Welcome to the course.', 'success');
+                
+            }, 2000);
+        }
+
+        // ============================================================ */
+        // ===== CLOSE MODAL ON OVERLAY CLICK ===== */
+        // ============================================================ */
+        document.getElementById('successModal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                this.classList.remove('active');
+                document.body.style.overflow = '';
+            }
+        });
+
+        // ============================================================ */
+        // ===== TOAST FUNCTION ===== */
+        // ============================================================ */
+        function showToast(message, type = 'success') {
+            const toast = document.getElementById('toast');
+            const toastIcon = document.getElementById('toastIcon');
+            const toastMessage = document.getElementById('toastMessage');
+            
+            if (!toast) return;
+            
+            toastIcon.className = type === 'success' ? 'fas fa-check-circle' : 
+                                type === 'error' ? 'fas fa-exclamation-circle' : 
+                                'fas fa-info-circle';
+            
+            toastMessage.textContent = message;
+            toast.className = 'toast ' + type;
+            
+            setTimeout(() => {
+                toast.classList.add('show');
+            }, 10);
+            
+            setTimeout(() => {
+                toast.classList.remove('show');
+            }, 4000);
+        }
+
+        // ============================================================ */
+        // ===== LOGIN DROPDOWN ===== */
+        // ============================================================ */
+        const dropdownBtn = document.getElementById('loginDropdownBtn');
+        const dropdown = document.getElementById('loginDropdown');
+
+        if (dropdownBtn && dropdown) {
+            dropdownBtn.addEventListener('click', function(e) {
+                e.preventDefault();
+                e.stopPropagation();
+                dropdown.classList.toggle('show');
+            });
+
+            document.addEventListener('click', function(e) {
+                if (!dropdownBtn.contains(e.target) && !dropdown.contains(e.target)) {
+                    dropdown.classList.remove('show');
+                }
+            });
+
+            document.addEventListener('keydown', function(e) {
+                if (e.key === 'Escape') {
+                    dropdown.classList.remove('show');
+                }
+            });
+        }
+
+        // ============================================================ */
+        // ===== INITIALIZE ===== */
+        // ============================================================ */
+        document.addEventListener('DOMContentLoaded', function() {
+            // Load course data
+            if (courseParam && courseData[courseParam]) {
+                loadCourse(courseParam);
+            } else {
+                loadCourse('manual');
+            }
+            
+            // Set default payment method
+            selectMethod('card');
+        });
+
+        console.log('💳 QSkill Enroll Page Loaded');
+        console.log('📌 Payment methods: Card, UPI, Net Banking, Wallet');
+        console.log('🔒 Secure payment processing');
+    </script>
+
+</body>
+</html>

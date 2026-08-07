@@ -1,0 +1,797 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Assignment Review - Instructor | QSkill</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+    
+    <link rel="stylesheet" href="style.css" />
+    
+    <style>
+        .page-wrapper {
+            padding: 30px 80px 60px;
+            background: #FAFBFC;
+            min-height: 100vh;
+        }
+
+        .page-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 16px;
+            margin-bottom: 30px;
+        }
+
+        .page-header h1 {
+            font-size: 28px;
+            font-weight: 700;
+            color: var(--text-dark);
+        }
+        .page-header h1 span { color: var(--primary); }
+
+        .back-btn {
+            background: var(--white);
+            border: 1px solid var(--border);
+            padding: 8px 20px;
+            border-radius: 999px;
+            font-weight: 500;
+            color: var(--text-dark);
+            text-decoration: none;
+            transition: 0.3s;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .back-btn:hover {
+            border-color: var(--primary);
+            color: var(--primary);
+            background: var(--light-bg);
+        }
+
+        .review-card {
+            background: var(--white);
+            border-radius: 16px;
+            padding: 30px;
+            border: 1px solid var(--border);
+            max-width: 850px;
+            margin: 0 auto;
+        }
+
+        .review-card .assignment-title {
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--text-dark);
+            margin-bottom: 4px;
+        }
+
+        .review-card .assignment-meta {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+            font-size: 14px;
+            color: var(--text-gray);
+            margin: 8px 0 16px;
+        }
+        .review-card .assignment-meta i { margin-right: 4px; color: var(--primary); }
+
+        .review-card .description-box {
+            background: #F5F7FA;
+            padding: 14px 16px;
+            border-radius: 8px;
+            font-size: 14px;
+            color: var(--text-dark);
+            line-height: 1.7;
+            margin-bottom: 20px;
+        }
+
+        .section-title {
+            font-size: 16px;
+            font-weight: 600;
+            color: var(--text-dark);
+            margin: 16px 0 10px;
+        }
+
+        /* Submission Item */
+        .submission-item {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            padding: 12px 0;
+            border-bottom: 1px solid #F1F5F9;
+            flex-wrap: wrap;
+        }
+        .submission-item:last-child { border-bottom: none; }
+        .submission-item .file-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+            flex-shrink: 0;
+        }
+        .submission-item .file-info { flex: 1; min-width: 180px; }
+        .submission-item .file-info .name {
+            font-weight: 500;
+            font-size: 14px;
+            color: var(--text-dark);
+        }
+        .submission-item .file-info .meta {
+            font-size: 12px;
+            color: var(--text-gray);
+        }
+        .submission-item .status-badge {
+            font-size: 12px;
+            font-weight: 500;
+            padding: 3px 14px;
+            border-radius: 999px;
+            white-space: nowrap;
+        }
+        .submission-item .status-badge.pending { background: #FEF3C7; color: #d97706; }
+        .submission-item .status-badge.approved { background: #DCFCE7; color: #16a34a; }
+        .submission-item .status-badge.rejected { background: #FEE2E2; color: #dc2626; }
+
+        .submission-item .btn-group {
+            display: flex;
+            gap: 6px;
+            flex-wrap: wrap;
+        }
+        .submission-item .btn-group button {
+            padding: 4px 14px;
+            border: none;
+            border-radius: 999px;
+            font-size: 12px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: 0.3s;
+            font-family: 'Poppins', sans-serif;
+        }
+        .submission-item .btn-group .view-btn {
+            background: var(--light-bg);
+            color: var(--primary);
+        }
+        .submission-item .btn-group .view-btn:hover {
+            background: var(--primary);
+            color: var(--white);
+        }
+        .submission-item .btn-group .download-btn {
+            background: #EAF1FF;
+            color: var(--primary);
+        }
+        .submission-item .btn-group .download-btn:hover {
+            background: var(--primary);
+            color: var(--white);
+        }
+
+        .rejection-reason-box {
+            font-size: 13px;
+            color: #dc2626;
+            padding: 6px 12px 6px 54px;
+            background: #FEE2E2;
+            border-radius: 6px;
+            margin: -4px 0 4px;
+            display: none;
+        }
+        .rejection-reason-box.show {
+            display: block;
+        }
+
+        /* Action Section */
+        .action-section {
+            margin-top: 24px;
+            padding-top: 20px;
+            border-top: 1px solid var(--border);
+        }
+        .action-section .action-label {
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--text-dark);
+            margin-bottom: 10px;
+        }
+        .action-row {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            padding: 10px 0;
+            border-top: 1px solid #F1F5F9;
+            flex-wrap: wrap;
+        }
+        .action-row .student-name {
+            font-weight: 500;
+            font-size: 14px;
+            min-width: 150px;
+        }
+        .action-row .status-text {
+            font-size: 13px;
+        }
+        .action-row .status-text.approved { color: #16a34a; }
+        .action-row .status-text.rejected { color: #dc2626; }
+        .action-row .status-text.pending { color: #d97706; }
+
+        .btn-approve {
+            background: #DCFCE7;
+            color: #16a34a;
+            border: none;
+            padding: 6px 20px;
+            border-radius: 999px;
+            font-weight: 600;
+            font-size: 13px;
+            cursor: pointer;
+            transition: 0.3s;
+            font-family: 'Poppins', sans-serif;
+        }
+        .btn-approve:hover {
+            background: #16a34a;
+            color: var(--white);
+            transform: translateY(-2px);
+        }
+
+        .btn-reject {
+            background: #FEE2E2;
+            color: #dc2626;
+            border: none;
+            padding: 6px 20px;
+            border-radius: 999px;
+            font-weight: 600;
+            font-size: 13px;
+            cursor: pointer;
+            transition: 0.3s;
+            font-family: 'Poppins', sans-serif;
+        }
+        .btn-reject:hover {
+            background: #dc2626;
+            color: var(--white);
+            transform: translateY(-2px);
+        }
+
+        .rejection-input {
+            display: none;
+            margin-top: 8px;
+            width: 100%;
+        }
+        .rejection-input.show {
+            display: block;
+        }
+        .rejection-input textarea {
+            width: 100%;
+            padding: 8px 12px;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            font-size: 13px;
+            font-family: 'Poppins', sans-serif;
+            resize: vertical;
+            height: 60px;
+        }
+        .rejection-input textarea:focus {
+            border-color: var(--primary);
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(31,60,136,0.1);
+        }
+        .btn-submit-reject {
+            background: #dc2626;
+            color: var(--white);
+            border: none;
+            padding: 6px 20px;
+            border-radius: 999px;
+            font-weight: 600;
+            font-size: 13px;
+            cursor: pointer;
+            transition: 0.3s;
+            font-family: 'Poppins', sans-serif;
+            margin-top: 6px;
+        }
+        .btn-submit-reject:hover {
+            background: #b91c1c;
+            transform: translateY(-2px);
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 30px 20px;
+            color: var(--text-gray);
+        }
+        .empty-state i { font-size: 48px; color: var(--border); margin-bottom: 12px; }
+
+        @media (max-width: 768px) {
+            .page-wrapper { padding: 20px; }
+            .review-card { padding: 20px; }
+            .submission-item { flex-direction: column; align-items: stretch; }
+            .submission-item .btn-group { justify-content: center; }
+            .action-row { flex-direction: column; align-items: stretch; }
+            .action-row .student-name { min-width: auto; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="toast" id="toast">
+        <i class="fas fa-check-circle" id="toastIcon"></i>
+        <span id="toastMessage">Success!</span>
+    </div>
+
+    <!-- ============================================================ -->
+    <!-- ===== NAVBAR ===== -->
+    <!-- ============================================================ -->
+    <nav class="navbar">
+        <a href="instructor-dashboard.html" class="logo">
+            <img src="images/logo.png" alt="QSkill Logo" />
+            <span class="logo-text">
+                <span class="qskill">Qskill</span>
+                <span class="careersolutions">careersolutions</span>
+            </span>
+        </a>
+        <ul class="nav-links">
+            <li><a href="instructor-dashboard.html">Dashboard</a></li>
+            <li><a href="instructor-my-courses.html">My Courses</a></li>
+            <li><a href="#" onclick="logout()" style="color: #EF4444;">Logout</a></li>
+        </ul>
+    </nav>
+
+    <!-- ============================================================ -->
+    <!-- ===== MAIN CONTENT ===== -->
+    <!-- ============================================================ -->
+    <section class="page-wrapper">
+        <div class="page-header">
+            <h1>📋 <span>Assignment Review</span></h1>
+            <a href="instructor-dashboard.html" class="back-btn">
+                <i class="fas fa-arrow-left"></i> Back to Dashboard
+            </a>
+        </div>
+
+        <div id="reviewContent" class="review-card">
+            <div style="text-align:center; padding:30px;">
+                <i class="fas fa-spinner fa-spin" style="font-size:28px; color:var(--primary);"></i>
+                <p style="margin-top:10px; color:var(--text-gray);">Loading assignment data...</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================================================ -->
+    <!-- ===== FOOTER ===== -->
+    <!-- ============================================================ -->
+    <footer class="footer">
+        <div class="footer-top">
+            <div class="footer-logo">
+                <img src="images/logo.png" alt="QSkill Logo" />
+                <p>Empowering careers with industry-ready Software Testing skills.</p>
+                <div class="footer-social">
+                    <i class="fab fa-instagram"></i>
+                    <i class="fab fa-whatsapp"></i>
+                    <i class="fas fa-envelope"></i>
+                </div>
+            </div>
+            <div>
+                <h4>Quick Links</h4>
+                <a href="index.html">Home</a>
+                <a href="courses.html">Courses</a>
+                <a href="contact.html">Contact</a>
+                <a href="demo.html">Free Demo</a>
+                <a href="login.html">Login</a>
+            </div>
+            <div>
+                <h4>Important Links</h4>
+                <a href="#">Terms &amp; Conditions</a>
+                <a href="#">Privacy Policy</a>
+                <a href="#">Security Policy</a>
+            </div>
+            <div class="footer-contact">
+                <h4>Contact Us</h4>
+                <p><i class="fas fa-phone-alt"></i> +91 99999 99999</p>
+                <p><i class="fas fa-envelope"></i> info@qskillcareersolutions.com</p>
+                <p><i class="fas fa-clock"></i> Mon - Sat | 9AM - 6PM</p>
+            </div>
+        </div>
+        <div class="footer-bottom">© 2026 QSkill Career Solutions. All Rights Reserved.</div>
+    </footer>
+
+    <!-- ============================================================ -->
+    <!-- ===== SCRIPTS ===== -->
+    <!-- ============================================================ -->
+    <script>
+        // ============================================================ */
+        // ===== SESSION CHECK ===== */
+        // ============================================================ */
+        const instructorLoggedIn = localStorage.getItem('qskillInstructorLoggedIn');
+        const adminLoggedIn = localStorage.getItem('qskillAdminLoggedIn');
+        if (instructorLoggedIn !== 'true' && adminLoggedIn !== 'true') {
+            window.location.href = 'login.html';
+        }
+
+        // ============================================================ */
+        // ===== DATA ===== */
+        // ============================================================ */
+        const assignmentData = {
+            1: {
+                id: 1,
+                title: 'Module 4: WebDriver',
+                course: 'automation',
+                courseName: 'Automation Testing (Selenium)',
+                due: '2026-08-06',
+                dueDisplay: 'Tomorrow, 11:59 PM',
+                description: 'Complete the WebDriver tasks for the Selenium project. Write automated tests for the login, registration, and product search functionality. Ensure the tests are stable and follow the Page Object Model pattern.'
+            },
+            2: {
+                id: 2,
+                title: 'API Testing Collection',
+                course: 'api',
+                courseName: 'Postman API Testing',
+                due: '2026-08-08',
+                dueDisplay: '2 days left',
+                description: 'Create a Postman collection for the user authentication API. Include requests for registration, login, and password reset. Add test scripts to validate response codes and response bodies.'
+            },
+            3: {
+                id: 3,
+                title: 'Test Cases for Login',
+                course: 'manual',
+                courseName: 'Manual Testing',
+                due: '2026-08-11',
+                dueDisplay: '5 days left',
+                description: 'Write detailed test cases for the login functionality. Cover positive and negative scenarios. Include test case ID, description, steps, expected result, and actual result fields.'
+            },
+            4: {
+                id: 4,
+                title: 'Jenkins Pipeline Setup',
+                course: 'automation',
+                courseName: 'Automation Testing (Selenium)',
+                due: '2026-08-03',
+                dueDisplay: '1 week left',
+                description: 'Set up a Jenkins pipeline for the project. Configure the pipeline to run automated tests on every push. Set up email notifications for build failures.'
+            }
+        };
+
+        // ============================================================ */
+        // ===== LOGOUT ===== */
+        // ============================================================ */
+        function logout() {
+            if (confirm('Are you sure you want to logout?')) {
+                localStorage.removeItem('qskillInstructorLoggedIn');
+                localStorage.removeItem('qskillAdminLoggedIn');
+                localStorage.removeItem('qskillStudentLoggedIn');
+                localStorage.removeItem('qskillUser');
+                localStorage.removeItem('qskillStudentId');
+                showToast('👋 Logged out successfully', 'info');
+                setTimeout(() => window.location.href = 'login.html', 500);
+            }
+        }
+
+        // ============================================================ */
+        // ===== TOAST ===== */
+        // ============================================================ */
+        function showToast(message, type = 'success') {
+            const toast = document.getElementById('toast');
+            const toastIcon = document.getElementById('toastIcon');
+            const toastMessage = document.getElementById('toastMessage');
+            if (!toast) return;
+            toastIcon.className = type === 'success' ? 'fas fa-check-circle' :
+                                 type === 'error' ? 'fas fa-exclamation-circle' :
+                                 'fas fa-info-circle';
+            toastMessage.textContent = message;
+            toast.className = 'toast ' + type;
+            setTimeout(() => toast.classList.add('show'), 10);
+            setTimeout(() => toast.classList.remove('show'), 4000);
+        }
+
+        // ============================================================ */
+        // ===== GET FILE INFO ===== */
+        // ============================================================ */
+        function getFileInfo(fileName) {
+            const ext = fileName.split('.').pop().toLowerCase();
+            const map = {
+                'pdf': { icon: 'fa-file-pdf', color: '#dc2626', label: 'PDF' },
+                'docx': { icon: 'fa-file-word', color: '#2563EB', label: 'Word' },
+                'doc': { icon: 'fa-file-word', color: '#2563EB', label: 'Word' },
+                'pptx': { icon: 'fa-file-powerpoint', color: '#d97706', label: 'PowerPoint' },
+                'ppt': { icon: 'fa-file-powerpoint', color: '#d97706', label: 'PowerPoint' },
+                'xlsx': { icon: 'fa-file-excel', color: '#16a34a', label: 'Excel' },
+                'xls': { icon: 'fa-file-excel', color: '#16a34a', label: 'Excel' }
+            };
+            return map[ext] || { icon: 'fa-file', color: '#6B7280', label: 'File' };
+        }
+
+        // ============================================================ */
+        // ===== GET STUDENT SUBMISSIONS ===== */
+        // ============================================================ */
+        function getStudentSubmissions(assignmentId) {
+            const students = JSON.parse(localStorage.getItem('qskillStudents')) || {};
+            const submissions = [];
+
+            Object.keys(students).forEach(sid => {
+                const student = students[sid];
+                const subKey = 'qskillSubmissions_' + sid;
+                const subData = JSON.parse(localStorage.getItem(subKey)) || {};
+                if (subData[assignmentId]) {
+                    submissions.push({
+                        studentId: sid,
+                        studentName: student.name || 'Student',
+                        studentEmail: student.email || sid,
+                        submission: subData[assignmentId]
+                    });
+                }
+            });
+
+            // Generate sample data if no real submissions
+            if (submissions.length === 0 && assignmentId) {
+                const sampleFiles = [
+                    { name: 'Selenium_WebDriver_Tests.docx' },
+                    { name: 'API_Collection_Report.pdf' },
+                    { name: 'Login_Test_Cases.docx' },
+                    { name: 'Jenkins_Pipeline_Setup.pptx' }
+                ];
+                const sampleStudents = [
+                    { id: 'QSK24012345', name: 'Tejaswini Reddy', email: 'tejaswini@example.com' },
+                    { id: 'QSK24067890', name: 'Arjun Kumar', email: 'arjun@example.com' },
+                    { id: 'QSK24011111', name: 'Priya Sharma', email: 'priya@example.com' }
+                ];
+                const statuses = ['submitted', 'submitted', 'submitted', 'completed', 'rejected'];
+
+                sampleStudents.forEach((s, idx) => {
+                    const fileIdx = (assignmentId + idx) % sampleFiles.length;
+                    const statusIdx = (assignmentId + idx * 2) % statuses.length;
+                    submissions.push({
+                        studentId: s.id,
+                        studentName: s.name,
+                        studentEmail: s.email,
+                        submission: {
+                            fileName: sampleFiles[fileIdx].name,
+                            submittedAt: new Date(Date.now() - (idx + 1) * 3600000).toISOString(),
+                            status: statuses[statusIdx],
+                            rejectionReason: statuses[statusIdx] === 'rejected' ? 'Please resubmit with proper formatting and include all test cases.' : '',
+                            fileType: getFileInfo(sampleFiles[fileIdx].name).label
+                        }
+                    });
+                });
+            }
+
+            return submissions;
+        }
+
+        // ============================================================ */
+        // ===== UPDATE SUBMISSION STATUS ===== */
+        // ============================================================ */
+        function updateSubmissionStatus(studentId, assignmentId, status, rejectionReason = '') {
+            const subKey = 'qskillSubmissions_' + studentId;
+            let submissions = JSON.parse(localStorage.getItem(subKey)) || {};
+            if (submissions[assignmentId]) {
+                submissions[assignmentId].status = status;
+                if (rejectionReason) {
+                    submissions[assignmentId].rejectionReason = rejectionReason;
+                }
+                localStorage.setItem(subKey, JSON.stringify(submissions));
+            }
+
+            const progressKey = 'qskillStudentAssignments_' + studentId;
+            let progress = JSON.parse(localStorage.getItem(progressKey)) || {};
+            progress[assignmentId] = status;
+            localStorage.setItem(progressKey, JSON.stringify(progress));
+
+            showToast(`✅ Submission ${status === 'completed' ? 'approved' : 'rejected'} successfully!`, 'success');
+            renderReview();
+        }
+
+        // ============================================================ */
+        // ===== DOWNLOAD SUBMISSION ===== */
+        // ============================================================ */
+        function downloadSubmission(fileName, studentName) {
+            const content = `📄 Assignment Submission\n\n` +
+                `Student: ${studentName}\n` +
+                `File: ${fileName}\n` +
+                `Downloaded: ${new Date().toLocaleString()}\n\n` +
+                `This is a simulated download of the student's submitted file.\n` +
+                `In a real application, the actual file content would be stored on the server.\n\n` +
+                `--- Sample Content ---\n` +
+                `1. Test Case 1: Verify login with valid credentials\n` +
+                `2. Test Case 2: Verify login with invalid credentials\n` +
+                `3. Test Case 3: Verify password reset functionality\n` +
+                `4. Test Case 4: Verify registration with valid data\n\n` +
+                `All test cases passed successfully.`;
+
+            const blob = new Blob([content], { type: 'text/plain' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = fileName.replace(/\.[^.]+$/, '') + '_submission.txt';
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+
+            showToast(`📥 Downloading: ${fileName}`, 'success');
+        }
+
+        // ============================================================ */
+        // ===== VIEW SUBMISSION ===== */
+        // ============================================================ */
+        function viewSubmission(fileName, studentName) {
+            const content = `📄 Assignment Submission Preview\n\n` +
+                `Student: ${studentName}\n` +
+                `File: ${fileName}\n` +
+                `Submitted: ${new Date().toLocaleString()}\n\n` +
+                `--- Content Preview ---\n` +
+                `This is a preview of the submitted file.\n` +
+                `In a real application, the actual file content would be displayed here.\n\n` +
+                `File Type: ${getFileInfo(fileName).label}\n` +
+                `File Size: ${(Math.random() * 500 + 50).toFixed(1)} KB`;
+
+            alert(content);
+        }
+
+        // ============================================================ */
+        // ===== SHOW REJECT INPUT ===== */
+        // ============================================================ */
+        function showRejectInput(id) {
+            const el = document.getElementById(id);
+            if (el) {
+                el.classList.toggle('show');
+            }
+        }
+
+        // ============================================================ */
+        // ===== APPROVE SUBMISSION ===== */
+        // ============================================================ */
+        function approveSubmission(studentId, assignmentId) {
+            if (confirm('Are you sure you want to approve this submission?')) {
+                updateSubmissionStatus(studentId, assignmentId, 'completed');
+            }
+        }
+
+        // ============================================================ */
+        // ===== REJECT SUBMISSION ===== */
+        // ============================================================ */
+        function rejectSubmission(studentId, assignmentId) {
+            const reasonTextarea = document.getElementById('reason-' + studentId);
+            const reason = reasonTextarea ? reasonTextarea.value.trim() : '';
+
+            if (!reason) {
+                showToast('⚠️ Please provide a reason for rejection.', 'error');
+                return;
+            }
+
+            if (confirm('Are you sure you want to reject this submission?')) {
+                updateSubmissionStatus(studentId, assignmentId, 'rejected', reason);
+            }
+        }
+
+        // ============================================================ */
+        // ===== RENDER REVIEW ===== */
+        // ============================================================ */
+        function renderReview() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const id = urlParams.get('id');
+            const container = document.getElementById('reviewContent');
+
+            if (!id || !assignmentData[id]) {
+                container.innerHTML = `
+                    <div style="text-align:center; padding:30px;">
+                        <i class="fas fa-exclamation-circle" style="font-size:48px; color:var(--error);"></i>
+                        <h2 style="margin:12px 0; color:var(--text-dark);">Assignment Not Found</h2>
+                        <p style="color:var(--text-gray);">The assignment you are looking for does not exist.</p>
+                        <a href="instructor-dashboard.html" class="back-btn" style="margin-top:16px; display:inline-block;">
+                            <i class="fas fa-arrow-left"></i> Back to Dashboard
+                        </a>
+                    </div>
+                `;
+                return;
+            }
+
+            const assign = assignmentData[id];
+            const submissions = getStudentSubmissions(id);
+
+            let html = `
+                <div class="assignment-title">${assign.title}</div>
+                <div class="assignment-meta">
+                    <span><i class="fas fa-book"></i> ${assign.courseName}</span>
+                    <span><i class="fas fa-calendar-alt"></i> Due: ${assign.dueDisplay}</span>
+                    <span><i class="fas fa-users"></i> ${submissions.length} submission(s)</span>
+                </div>
+                <div class="section-title">📝 Description</div>
+                <div class="description-box">${assign.description}</div>
+                <div class="section-title">📂 Student Submissions</div>
+            `;
+
+            if (submissions.length === 0) {
+                html += `<div class="empty-state"><i class="fas fa-file-alt"></i><p>No students have submitted this assignment yet.</p></div>`;
+            } else {
+                submissions.forEach((sub) => {
+                    const fileInfo = getFileInfo(sub.submission.fileName);
+                    const status = sub.submission.status || 'pending';
+                    const statusClass = status === 'completed' ? 'approved' :
+                                       status === 'rejected' ? 'rejected' : 'pending';
+                    const statusLabel = status === 'completed' ? '✅ Approved' :
+                                       status === 'rejected' ? '❌ Rejected' : '⏳ Pending';
+
+                    html += `
+                        <div class="submission-item" id="sub-${sub.studentId}">
+                            <div class="file-icon" style="background: ${fileInfo.color}20; color: ${fileInfo.color};">
+                                <i class="fas ${fileInfo.icon}"></i>
+                            </div>
+                            <div class="file-info">
+                                <div class="name">${sub.studentName}</div>
+                                <div class="meta">
+                                    ${sub.studentEmail} • 
+                                    <i class="fas ${fileInfo.icon}" style="color:${fileInfo.color};"></i> ${sub.submission.fileName} • 
+                                    <i class="fas fa-clock"></i> ${new Date(sub.submission.submittedAt).toLocaleDateString()}
+                                </div>
+                            </div>
+                            <span class="status-badge ${statusClass}">${statusLabel}</span>
+                            <div class="btn-group">
+                                <button class="view-btn" onclick="viewSubmission('${sub.submission.fileName}', '${sub.studentName}')">
+                                    <i class="fas fa-eye"></i> View
+                                </button>
+                                <button class="download-btn" onclick="downloadSubmission('${sub.submission.fileName}', '${sub.studentName}')">
+                                    <i class="fas fa-download"></i> Download
+                                </button>
+                            </div>
+                        </div>
+                        ${status === 'rejected' && sub.submission.rejectionReason ? `
+                            <div class="rejection-reason-box show">
+                                <i class="fas fa-exclamation-circle"></i> Reason: ${sub.submission.rejectionReason}
+                            </div>
+                        ` : ''}
+                    `;
+                });
+            }
+
+            // Action section for pending submissions
+            const pendingSubmissions = submissions.filter(s => s.submission.status !== 'completed' && s.submission.status !== 'rejected');
+
+            if (pendingSubmissions.length > 0) {
+                html += `
+                    <div class="action-section">
+                        <div class="action-label">✏️ Review Pending Submissions</div>
+                `;
+
+                pendingSubmissions.forEach((sub) => {
+                    const rejectId = 'reject-' + sub.studentId;
+                    html += `
+                        <div class="action-row">
+                            <span class="student-name">${sub.studentName}</span>
+                            <button class="btn-approve" onclick="approveSubmission('${sub.studentId}', ${id})">
+                                <i class="fas fa-check-circle"></i> Approve
+                            </button>
+                            <button class="btn-reject" onclick="showRejectInput('${rejectId}')">
+                                <i class="fas fa-times-circle"></i> Reject
+                            </button>
+                            <div class="rejection-input" id="${rejectId}">
+                                <textarea id="reason-${sub.studentId}" placeholder="Enter rejection reason..."></textarea>
+                                <button class="btn-submit-reject" onclick="rejectSubmission('${sub.studentId}', ${id})">
+                                    <i class="fas fa-paper-plane"></i> Submit Rejection
+                                </button>
+                            </div>
+                        </div>
+                    `;
+                });
+
+                html += `</div>`;
+            } else if (submissions.length > 0) {
+                html += `
+                    <div class="action-section">
+                        <div style="padding:12px 0; color:var(--success); font-weight:500;">
+                            <i class="fas fa-check-circle"></i> All submissions have been reviewed!
+                        </div>
+                    </div>
+                `;
+            }
+
+            container.innerHTML = html;
+        }
+
+        // ============================================================ */
+        // ===== INIT ===== */
+        // ============================================================ */
+        document.addEventListener('DOMContentLoaded', function() {
+            renderReview();
+        });
+
+        console.log('📋 Instructor Assignment Review Page Loaded');
+        console.log('📌 Click "Download" to download student submissions.');
+    </script>
+
+</body>
+</html>

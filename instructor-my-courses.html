@@ -1,0 +1,645 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>My Courses - Instructor | QSkill</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+    
+    <link rel="stylesheet" href="style.css" />
+    
+    <style>
+        .page-wrapper {
+            padding: 30px 80px 60px;
+            background: #f0f4f8;
+            min-height: 100vh;
+        }
+
+        .page-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 16px;
+            margin-bottom: 30px;
+        }
+
+        .page-header h1 {
+            font-size: 28px;
+            font-weight: 700;
+            color: var(--text-dark);
+        }
+        .page-header h1 span {
+            color: var(--primary);
+        }
+
+        .back-btn {
+            background: var(--white);
+            border: 1px solid var(--border);
+            padding: 8px 20px;
+            border-radius: 999px;
+            font-weight: 500;
+            color: var(--text-dark);
+            text-decoration: none;
+            transition: 0.3s;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .back-btn:hover {
+            border-color: var(--primary);
+            color: var(--primary);
+            background: var(--light-bg);
+            transform: translateX(-4px);
+        }
+
+        /* Stats */
+        .stats-row {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 16px;
+            margin-bottom: 30px;
+        }
+
+        .stat-card {
+            background: var(--white);
+            padding: 18px 22px;
+            border-radius: 14px;
+            border: 1px solid var(--border);
+            text-align: center;
+            transition: 0.3s;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.02);
+        }
+        .stat-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 24px rgba(0,0,0,0.06);
+        }
+        .stat-card .number {
+            font-size: 28px;
+            font-weight: 700;
+            color: var(--primary);
+        }
+        .stat-card .label {
+            font-size: 13px;
+            color: var(--text-gray);
+        }
+        .stat-card .number.green { color: #16a34a; }
+        .stat-card .number.orange { color: #d97706; }
+
+        /* Search & Tabs */
+        .search-box {
+            position: relative;
+            margin-bottom: 20px;
+        }
+        .search-box input {
+            width: 100%;
+            padding: 10px 16px 10px 44px;
+            border: 1.5px solid var(--border);
+            border-radius: 12px;
+            font-size: 14px;
+            font-family: 'Poppins', sans-serif;
+            transition: 0.3s;
+            background: var(--white);
+            color: var(--text-dark);
+        }
+        .search-box input:focus {
+            border-color: var(--primary);
+            outline: none;
+            box-shadow: 0 0 0 4px rgba(31,60,136,0.08);
+        }
+        .search-box i {
+            position: absolute;
+            left: 16px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-gray);
+        }
+
+        .course-tabs {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+            margin-bottom: 20px;
+        }
+        .course-tab {
+            padding: 6px 18px;
+            border: 1px solid var(--border);
+            border-radius: 999px;
+            background: var(--white);
+            font-size: 13px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: 0.3s;
+            color: var(--text-gray);
+            font-family: 'Poppins', sans-serif;
+        }
+        .course-tab:hover {
+            border-color: var(--primary);
+            color: var(--primary);
+            background: var(--light-bg);
+        }
+        .course-tab.active {
+            background: var(--primary);
+            color: var(--white);
+            border-color: var(--primary);
+        }
+
+        /* ===== REDESIGNED COURSE CARD ===== */
+        .course-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(380px, 1fr));
+            gap: 24px;
+        }
+
+        .course-card {
+            background: var(--white);
+            border-radius: 16px;
+            padding: 24px;
+            border: 1px solid var(--border);
+            transition: 0.3s;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.03);
+            display: flex;
+            flex-direction: column;
+        }
+        .course-card:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 12px 40px rgba(31,60,136,0.08);
+            border-color: var(--primary);
+        }
+
+        .course-card .course-header {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            margin-bottom: 16px;
+            padding-bottom: 14px;
+            border-bottom: 1px solid #F1F5F9;
+        }
+        .course-card .course-header .icon {
+            width: 48px;
+            height: 48px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+        .course-card .course-header .icon i {
+            font-size: 22px;
+            color: #fff;
+        }
+        .course-card .course-header .info {
+            flex: 1;
+            min-width: 0;
+        }
+        .course-card .course-header .info h3 {
+            font-size: 18px;
+            font-weight: 600;
+            color: var(--text-dark);
+            line-height: 1.4;
+            margin: 0;
+            word-wrap: break-word;
+            white-space: normal;
+            overflow: visible;
+        }
+        .course-card .course-header .info .count {
+            font-size: 13px;
+            color: var(--text-gray);
+            margin-top: 2px;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+        .course-card .course-header .info .count i {
+            color: var(--primary);
+        }
+
+        /* ===== STUDENT LIST – NO CUTOFF ===== */
+        .course-card .student-list {
+            flex: 1;
+            overflow: visible;          /* ← No scrollbar, show all */
+            max-height: none;           /* ← Remove height limit */
+            padding-right: 0;
+        }
+
+        .student-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 8px 4px;
+            border-bottom: 1px solid #F5F7FA;
+            transition: 0.2s;
+        }
+        .student-item:last-child {
+            border-bottom: none;
+        }
+        .student-item:hover {
+            background: #FAFBFC;
+            border-radius: 8px;
+            padding-left: 8px;
+            padding-right: 8px;
+        }
+
+        .student-item .avatar {
+            width: 34px;
+            height: 34px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            font-size: 14px;
+            color: #fff;
+            flex-shrink: 0;
+        }
+        .student-item .info {
+            flex: 1;
+            min-width: 0;
+        }
+        .student-item .info .name {
+            font-weight: 500;
+            font-size: 14px;
+            color: var(--text-dark);
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        .student-item .info .email {
+            font-size: 12px;
+            color: var(--text-gray);
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        .student-item .progress-badge {
+            font-size: 12px;
+            font-weight: 600;
+            padding: 3px 12px;
+            border-radius: 999px;
+            white-space: nowrap;
+            flex-shrink: 0;
+        }
+        .student-item .progress-badge.high {
+            background: #DCFCE7;
+            color: #16a34a;
+        }
+        .student-item .progress-badge.medium {
+            background: #FEF3C7;
+            color: #d97706;
+        }
+        .student-item .progress-badge.low {
+            background: #FEE2E2;
+            color: #dc2626;
+        }
+
+        .empty-message {
+            text-align: center;
+            padding: 20px 0;
+            color: var(--text-gray);
+            font-size: 14px;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .page-wrapper { padding: 20px; }
+            .course-grid { grid-template-columns: 1fr; }
+            .stats-row { grid-template-columns: 1fr 1fr; }
+            .course-card .course-header .info h3 { font-size: 16px; }
+        }
+        @media (max-width: 480px) {
+            .stats-row { grid-template-columns: 1fr; }
+            .student-item { flex-wrap: wrap; gap: 6px; }
+            .student-item .info { min-width: 100%; }
+            .student-item .progress-badge { align-self: flex-start; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="toast" id="toast">
+        <i class="fas fa-check-circle" id="toastIcon"></i>
+        <span id="toastMessage">Success!</span>
+    </div>
+
+    <!-- ===== NAVBAR ===== -->
+    <nav class="navbar">
+        <a href="instructor-dashboard.html" class="logo">
+            <img src="images/logo.png" alt="QSkill Logo" />
+            <span class="logo-text">
+                <span class="qskill">Qskill</span>
+                <span class="careersolutions">careersolutions</span>
+            </span>
+        </a>
+        <ul class="nav-links">
+            <li><a href="instructor-dashboard.html">Dashboard</a></li>
+            <li><a href="instructor-my-courses.html" class="active">My Courses</a></li>
+            <li><a href="#" onclick="logout()" style="color: #EF4444;">Logout</a></li>
+        </ul>
+    </nav>
+
+    <!-- ===== MAIN ===== -->
+    <section class="page-wrapper">
+        <div class="page-header">
+            <h1>📚 My <span>Courses</span></h1>
+            <a href="instructor-dashboard.html" class="back-btn">
+                <i class="fas fa-arrow-left"></i> Back to Dashboard
+            </a>
+        </div>
+
+        <!-- Stats -->
+        <div class="stats-row">
+            <div class="stat-card">
+                <div class="number" id="totalCourses">6</div>
+                <div class="label">Total Courses</div>
+            </div>
+            <div class="stat-card">
+                <div class="number green" id="totalStudents">25</div>
+                <div class="label">👨‍🎓 Total Students</div>
+            </div>
+            <div class="stat-card">
+                <div class="number orange" id="avgProgress">68%</div>
+                <div class="label">📊 Avg. Progress</div>
+            </div>
+        </div>
+
+        <!-- Tabs & Search -->
+        <div class="course-tabs">
+            <button class="course-tab active" data-filter="all" onclick="filterCourses('all')">All Courses</button>
+            <button class="course-tab" data-filter="active" onclick="filterCourses('active')">Active</button>
+            <button class="course-tab" data-filter="completed" onclick="filterCourses('completed')">Completed</button>
+        </div>
+
+        <div class="search-box">
+            <i class="fas fa-search"></i>
+            <input type="text" id="searchInput" placeholder="Search students by name, email, or ID..." oninput="filterStudents()" />
+        </div>
+
+        <!-- Course Grid -->
+        <div class="course-grid" id="courseGrid">
+            <!-- Rendered by JavaScript -->
+        </div>
+    </section>
+
+    <!-- ===== FOOTER ===== -->
+    <footer class="footer">
+        <div class="footer-top">
+            <div class="footer-logo">
+                <img src="images/logo.png" alt="QSkill Logo" />
+                <p>Empowering careers with industry-ready Software Testing skills.</p>
+                <div class="footer-social">
+                    <i class="fab fa-instagram"></i>
+                    <i class="fab fa-whatsapp"></i>
+                    <i class="fas fa-envelope"></i>
+                </div>
+            </div>
+            <div>
+                <h4>Quick Links</h4>
+                <a href="index.html">Home</a>
+                <a href="courses.html">Courses</a>
+                <a href="contact.html">Contact</a>
+                <a href="demo.html">Free Demo</a>
+                <a href="login.html">Login</a>
+            </div>
+            <div>
+                <h4>Important Links</h4>
+                <a href="#">Terms &amp; Conditions</a>
+                <a href="#">Privacy Policy</a>
+                <a href="#">Security Policy</a>
+            </div>
+            <div class="footer-contact">
+                <h4>Contact Us</h4>
+                <p><i class="fas fa-phone-alt"></i> +91 99999 99999</p>
+                <p><i class="fas fa-envelope"></i> info@qskillcareersolutions.com</p>
+                <p><i class="fas fa-clock"></i> Mon - Sat | 9AM - 6PM</p>
+            </div>
+        </div>
+        <div class="footer-bottom">© 2026 QSkill Career Solutions. All Rights Reserved.</div>
+    </footer>
+
+    <!-- ============================================================ -->
+    <!-- ===== SCRIPTS ===== -->
+    <!-- ============================================================ -->
+    <script>
+        // ===== SESSION CHECK =====
+        const instructorLoggedIn = localStorage.getItem('qskillInstructorLoggedIn');
+        const adminLoggedIn = localStorage.getItem('qskillAdminLoggedIn');
+        if (instructorLoggedIn !== 'true' && adminLoggedIn !== 'true') {
+            window.location.href = 'login.html';
+        }
+
+        // ===== COURSE DATA =====
+        const courseColors = {
+            manual: '#2563EB',
+            automation: '#16a34a',
+            api: '#d97706',
+            playwright: '#7C3AED',
+            cypress: '#D81B60',
+            restassured: '#0D47A1'
+        };
+        const courseIcons = {
+            manual: 'fa-file-alt',
+            automation: 'fa-code',
+            api: 'fa-plug',
+            playwright: 'fa-cogs',
+            cypress: 'fa-sync-alt',
+            restassured: 'fa-wifi'
+        };
+        const courseNames = {
+            manual: 'Manual Testing',
+            automation: 'Automation Testing (Selenium)',
+            api: 'Postman API Testing',
+            playwright: 'Playwright Automation',
+            cypress: 'Cypress Automation',
+            restassured: 'REST Assured API Testing'
+        };
+
+        const studentData = [
+            { id: 'QSK2601001', name: 'Aarav Sharma', email: 'aarav.sharma@email.com', progress: 92, course: 'automation' },
+            { id: 'QSK2601002', name: 'Priya Patel', email: 'priya.patel@email.com', progress: 78, course: 'automation' },
+            { id: 'QSK2601003', name: 'Rahul Verma', email: 'rahul.verma@email.com', progress: 45, course: 'automation' },
+            { id: 'QSK2601004', name: 'Sneha Reddy', email: 'sneha.reddy@email.com', progress: 63, course: 'automation' },
+            { id: 'QSK2601005', name: 'Vikram Singh', email: 'vikram.singh@email.com', progress: 30, course: 'automation' },
+            { id: 'QSK2601006', name: 'Ananya Nair', email: 'ananya.nair@email.com', progress: 88, course: 'manual' },
+            { id: 'QSK2601007', name: 'Arjun Kumar', email: 'arjun.kumar@email.com', progress: 95, course: 'manual' },
+            { id: 'QSK2601008', name: 'Kavya Menon', email: 'kavya.menon@email.com', progress: 55, course: 'manual' },
+            { id: 'QSK2601009', name: 'Rohan Gupta', email: 'rohan.gupta@email.com', progress: 72, course: 'manual' },
+            { id: 'QSK2601010', name: 'Iyer Krishnan', email: 'krishnan.iyer@email.com', progress: 40, course: 'manual' },
+            { id: 'QSK2601011', name: 'Meera Pillai', email: 'meera.pillai@email.com', progress: 82, course: 'api' },
+            { id: 'QSK2601012', name: 'Suresh Babu', email: 'suresh.babu@email.com', progress: 60, course: 'api' },
+            { id: 'QSK2601013', name: 'Divya Rao', email: 'divya.rao@email.com', progress: 35, course: 'api' },
+            { id: 'QSK2601014', name: 'Tejaswini Reddy', email: 'tejaswini.reddy@email.com', progress: 91, course: 'playwright' },
+            { id: 'QSK2601015', name: 'Aditya Joshi', email: 'aditya.joshi@email.com', progress: 70, course: 'playwright' },
+            { id: 'QSK2601016', name: 'Nisha Desai', email: 'nisha.desai@email.com', progress: 50, course: 'playwright' },
+            { id: 'QSK2601017', name: 'Ravi Shankar', email: 'ravi.shankar@email.com', progress: 85, course: 'cypress' },
+            { id: 'QSK2601018', name: 'Lakshmi Nair', email: 'lakshmi.nair@email.com', progress: 65, course: 'cypress' },
+            { id: 'QSK2601019', name: 'Deepak Pandey', email: 'deepak.pandey@email.com', progress: 42, course: 'restassured' },
+            { id: 'QSK2601020', name: 'Sana Khan', email: 'sana.khan@email.com', progress: 77, course: 'restassured' },
+            { id: 'QSK2601021', name: 'Manoj Reddy', email: 'manoj.reddy@email.com', progress: 55, course: 'restassured' },
+            { id: 'QSK2601022', name: 'Pooja Sharma', email: 'pooja.sharma@email.com', progress: 90, course: 'automation' },
+            { id: 'QSK2601023', name: 'Ganesh Iyer', email: 'ganesh.iyer@email.com', progress: 48, course: 'manual' },
+            { id: 'QSK2601024', name: 'Seema Pillai', email: 'seema.pillai@email.com', progress: 73, course: 'api' },
+            { id: 'QSK2601025', name: 'Naveen Kumar', email: 'naveen.kumar@email.com', progress: 30, course: 'cypress' }
+        ];
+
+        // ===== STATS =====
+        function updateStats() {
+            const total = studentData.length;
+            document.getElementById('totalStudents').textContent = total;
+            const avg = Math.round(studentData.reduce((sum, s) => sum + s.progress, 0) / total);
+            document.getElementById('avgProgress').textContent = avg + '%';
+        }
+
+        // ===== HELPERS =====
+        function getStudentsByCourse(courseId) {
+            return studentData.filter(s => s.course === courseId);
+        }
+
+        function getProgressBadge(progress) {
+            if (progress >= 80) return 'high';
+            if (progress >= 50) return 'medium';
+            return 'low';
+        }
+
+        function getProgressLabel(progress) {
+            if (progress >= 80) return '✅ ' + progress + '%';
+            if (progress >= 50) return '📈 ' + progress + '%';
+            return '📉 ' + progress + '%';
+        }
+
+        // ===== RENDER =====
+        let currentFilter = 'all';
+        let searchQuery = '';
+
+        function renderCourses(filter = 'all', query = '') {
+            const grid = document.getElementById('courseGrid');
+            const courseIds = Object.keys(courseNames);
+            let filteredCourseIds = courseIds;
+
+            if (filter === 'active') {
+                filteredCourseIds = courseIds.filter(cid => getStudentsByCourse(cid).length > 0);
+            } else if (filter === 'completed') {
+                filteredCourseIds = courseIds.filter(cid => {
+                    const students = getStudentsByCourse(cid);
+                    return students.length > 0 && students.every(s => s.progress === 100);
+                });
+            }
+
+            let html = '';
+            filteredCourseIds.forEach(cid => {
+                const students = getStudentsByCourse(cid);
+                const color = courseColors[cid] || '#6B7280';
+                const icon = courseIcons[cid] || 'fa-book';
+                const name = courseNames[cid] || cid;
+
+                let filteredStudents = students;
+                if (query.trim()) {
+                    const q = query.toLowerCase().trim();
+                    filteredStudents = students.filter(s =>
+                        s.name.toLowerCase().includes(q) ||
+                        s.email.toLowerCase().includes(q) ||
+                        s.id.toLowerCase().includes(q)
+                    );
+                }
+
+                const count = filteredStudents.length;
+
+                html += `
+                    <div class="course-card">
+                        <div class="course-header">
+                            <div class="icon" style="background: ${color};">
+                                <i class="fas ${icon}"></i>
+                            </div>
+                            <div class="info">
+                                <h3>${name}</h3>
+                                <div class="count">
+                                    <i class="fas fa-user-graduate"></i> ${count} student${count !== 1 ? 's' : ''}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="student-list">
+                            ${count === 0 ? `<div class="empty-message">${query.trim() ? 'No matching students found.' : 'No students enrolled yet.'}</div>` :
+                            filteredStudents.map(s => `
+                                <div class="student-item">
+                                    <div class="avatar" style="background: ${color};">
+                                        ${s.name.charAt(0)}
+                                    </div>
+                                    <div class="info">
+                                        <div class="name">${s.name}</div>
+                                        <div class="email">${s.email}</div>
+                                    </div>
+                                    <span class="progress-badge ${getProgressBadge(s.progress)}">${getProgressLabel(s.progress)}</span>
+                                </div>
+                            `).join('')}
+                        </div>
+                    </div>
+                `;
+            });
+
+            if (html === '') {
+                html = `
+                    <div style="grid-column:1/-1; text-align:center; padding:40px 0;">
+                        <i class="fas fa-book-open" style="font-size:48px; color:var(--border);"></i>
+                        <h3 style="margin:12px 0; color:var(--text-dark);">No courses found</h3>
+                        <p style="color:var(--text-gray);">Try changing your filter or search query.</p>
+                    </div>
+                `;
+            }
+
+            grid.innerHTML = html;
+        }
+
+        // ===== FILTERS =====
+        function filterCourses(filter) {
+            currentFilter = filter;
+            document.querySelectorAll('.course-tab').forEach(tab => {
+                tab.classList.toggle('active', tab.dataset.filter === filter);
+            });
+            renderCourses(filter, searchQuery);
+        }
+
+        function filterStudents() {
+            const input = document.getElementById('searchInput');
+            searchQuery = input.value;
+            renderCourses(currentFilter, searchQuery);
+        }
+
+        // ===== LOGOUT & TOAST =====
+        function logout() {
+            if (confirm('Are you sure you want to logout?')) {
+                localStorage.removeItem('qskillInstructorLoggedIn');
+                localStorage.removeItem('qskillAdminLoggedIn');
+                localStorage.removeItem('qskillStudentLoggedIn');
+                localStorage.removeItem('qskillUser');
+                localStorage.removeItem('qskillStudentId');
+                showToast('👋 Logged out successfully', 'info');
+                setTimeout(() => window.location.href = 'login.html', 500);
+            }
+        }
+
+        function showToast(message, type = 'success') {
+            const toast = document.getElementById('toast');
+            const toastIcon = document.getElementById('toastIcon');
+            const toastMessage = document.getElementById('toastMessage');
+            if (!toast) return;
+            toastIcon.className = type === 'success' ? 'fas fa-check-circle' :
+                                 type === 'error' ? 'fas fa-exclamation-circle' :
+                                 'fas fa-info-circle';
+            toastMessage.textContent = message;
+            toast.className = 'toast ' + type;
+            setTimeout(() => toast.classList.add('show'), 10);
+            setTimeout(() => toast.classList.remove('show'), 4000);
+        }
+
+        // ===== INIT =====
+        document.addEventListener('DOMContentLoaded', function() {
+            updateStats();
+            renderCourses('all', '');
+        });
+    </script>
+
+</body>
+</html> 

@@ -1,0 +1,642 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Course Progress - QSkill</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+
+    <link rel="stylesheet" href="style.css" />
+
+    <style>
+        .page-wrapper {
+            padding: 30px 80px 60px;
+            background: #FAFBFC;
+            min-height: 100vh;
+        }
+
+        .page-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 16px;
+            margin-bottom: 30px;
+        }
+
+        .page-header h1 {
+            font-size: 28px;
+            font-weight: 700;
+            color: var(--text-dark);
+        }
+        .page-header h1 span { color: var(--primary); }
+
+        .back-btn {
+            background: var(--white);
+            border: 1px solid var(--border);
+            padding: 8px 20px;
+            border-radius: 999px;
+            font-weight: 500;
+            color: var(--text-dark);
+            text-decoration: none;
+            transition: 0.3s;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .back-btn:hover {
+            border-color: var(--primary);
+            color: var(--primary);
+            background: var(--light-bg);
+        }
+
+        .course-info-card {
+            background: var(--white);
+            border-radius: 16px;
+            padding: 24px 30px;
+            border: 1px solid var(--border);
+            margin-bottom: 24px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 16px;
+        }
+
+        .course-info-card .info h2 {
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--text-dark);
+        }
+        .course-info-card .info p {
+            color: var(--text-gray);
+            font-size: 14px;
+        }
+        .course-info-card .progress-circle {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        .course-info-card .progress-circle .circle {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: var(--light-bg);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            font-weight: 700;
+            color: var(--primary);
+            position: relative;
+        }
+        .course-info-card .progress-circle .circle .ring {
+            position: absolute;
+            top: -3px;
+            left: -3px;
+            width: 66px;
+            height: 66px;
+            border-radius: 50%;
+            border: 4px solid var(--primary);
+            border-top-color: transparent;
+            transform: rotate(-90deg);
+        }
+        .course-info-card .progress-circle .label {
+            font-size: 14px;
+            color: var(--text-gray);
+        }
+
+        .resume-btn {
+            background: var(--primary);
+            color: var(--white);
+            border: none;
+            padding: 10px 28px;
+            border-radius: 999px;
+            font-weight: 600;
+            font-size: 15px;
+            cursor: pointer;
+            transition: 0.3s;
+            font-family: 'Poppins', sans-serif;
+            text-decoration: none;
+            display: inline-block;
+        }
+        .resume-btn:hover {
+            background: var(--secondary);
+            transform: translateY(-2px);
+        }
+
+        .section-card {
+            background: var(--white);
+            border-radius: 16px;
+            padding: 24px 30px;
+            border: 1px solid var(--border);
+            margin-bottom: 24px;
+        }
+
+        .section-card .section-title {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 16px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .section-card .section-title i {
+            color: var(--primary);
+        }
+
+        .module-item {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            padding: 12px 0;
+            border-bottom: 1px solid #F1F5F9;
+        }
+        .module-item:last-child { border-bottom: none; }
+        .module-item .module-icon {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+            flex-shrink: 0;
+        }
+        .module-item .module-icon.done {
+            background: #DCFCE7;
+            color: #16a34a;
+        }
+        .module-item .module-icon.pending {
+            background: #FEF3C7;
+            color: #d97706;
+        }
+        .module-item .module-icon.not-started {
+            background: #F1F5F9;
+            color: #9CA3AF;
+        }
+        .module-item .module-info {
+            flex: 1;
+        }
+        .module-item .module-info .title {
+            font-weight: 500;
+            font-size: 14px;
+            color: var(--text-dark);
+        }
+        .module-item .module-info .desc {
+            font-size: 12px;
+            color: var(--text-gray);
+        }
+        .module-item .module-status {
+            font-size: 12px;
+            font-weight: 500;
+            padding: 2px 12px;
+            border-radius: 999px;
+        }
+        .module-item .module-status.done {
+            background: #DCFCE7;
+            color: #16a34a;
+        }
+        .module-item .module-status.pending {
+            background: #FEF3C7;
+            color: #d97706;
+        }
+        .module-item .module-status.not-started {
+            background: #F1F5F9;
+            color: #9CA3AF;
+        }
+
+        .assignment-item {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            padding: 10px 0;
+            border-bottom: 1px solid #F1F5F9;
+        }
+        .assignment-item:last-child { border-bottom: none; }
+        .assignment-item .assign-info { flex: 1; }
+        .assignment-item .assign-info .title {
+            font-weight: 500;
+            font-size: 14px;
+            color: var(--text-dark);
+        }
+        .assignment-item .assign-info .meta {
+            font-size: 12px;
+            color: var(--text-gray);
+        }
+        .assignment-item .assign-status {
+            font-size: 12px;
+            font-weight: 500;
+            padding: 2px 12px;
+            border-radius: 999px;
+        }
+        .assignment-item .assign-status.completed {
+            background: #DCFCE7;
+            color: #16a34a;
+        }
+        .assignment-item .assign-status.pending {
+            background: #FEF3C7;
+            color: #d97706;
+        }
+        .assignment-item .assign-status.late {
+            background: #FEE2E2;
+            color: #dc2626;
+        }
+        .assignment-item .assign-status.in-progress {
+            background: #DBEAFE;
+            color: #2563EB;
+        }
+
+        @media (max-width: 768px) {
+            .page-wrapper { padding: 20px; }
+            .course-info-card { flex-direction: column; align-items: stretch; text-align: center; }
+            .course-info-card .progress-circle { justify-content: center; }
+            .section-card { padding: 20px; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="toast" id="toast">
+        <i class="fas fa-check-circle" id="toastIcon"></i>
+        <span id="toastMessage">Success!</span>
+    </div>
+
+    <!-- ============================================================ -->
+    <!-- ===== HEADER ===== -->
+    <!-- ============================================================ -->
+    <header class="header">
+        <a href="index.html" class="logo">
+            <span class="qskill">Q</span><span class="careersolutions">Solutions</span>
+        </a>
+        <ul class="header-menu">
+            <li><a href="dashboard.html">Dashboard</a></li>
+            <li><a href="all-courses.html">Courses</a></li>
+            <li><a href="my-courses.html">My Courses</a></li>
+            <li><a href="student-assignments.html">Assignments</a></li>
+            <li><a href="#" onclick="logout()" style="color: #EF4444;">Logout</a></li>
+        </ul>
+        <div class="user-profile">
+            <span class="name" id="studentName">Student</span>
+            <span class="role-badge">Student</span>
+            <div class="avatar" id="studentAvatar">S</div>
+        </div>
+    </header>
+
+    <!-- ============================================================ -->
+    <!-- ===== MAIN CONTENT ===== -->
+    <!-- ============================================================ -->
+    <section class="page-wrapper" id="pageWrapper">
+        <div class="page-header">
+            <h1>📖 Course <span>Progress</span></h1>
+            <a href="my-courses.html" class="back-btn">
+                <i class="fas fa-arrow-left"></i> Back to My Courses
+            </a>
+        </div>
+
+        <div id="courseContent">
+            <!-- Content rendered by JavaScript -->
+            <div style="text-align:center; padding:40px;">
+                <i class="fas fa-spinner fa-spin" style="font-size:32px; color:var(--primary);"></i>
+                <p style="margin-top:12px; color:var(--text-gray);">Loading course data...</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================================================ -->
+    <!-- ===== FOOTER ===== -->
+    <!-- ============================================================ -->
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="copyright">© 2026 QSkill Career Solutions. All Rights Reserved.</div>
+            <div class="footer-links">
+                <a href="#">Privacy Policy</a>
+                <a href="#">Terms of Service</a>
+                <a href="#">Contact</a>
+                <a href="index.html">Home</a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- ============================================================ -->
+    <!-- ===== SCRIPTS ===== -->
+    <!-- ============================================================ -->
+    <script>
+        // ============================================================ */
+        // ===== SESSION CHECK ===== */
+        // ============================================================ */
+        const studentLoggedIn = localStorage.getItem('qskillStudentLoggedIn');
+        if (!studentLoggedIn) {
+            window.location.href = 'login.html';
+        }
+
+        // ============================================================ */
+        // ===== LOGOUT ===== */
+        // ============================================================ */
+        function logout() {
+            if (confirm('Are you sure you want to logout?')) {
+                localStorage.removeItem('qskillStudentLoggedIn');
+                localStorage.removeItem('qskillStudentId');
+                localStorage.removeItem('qskillUser');
+                window.location.href = 'login.html';
+            }
+        }
+
+        // ============================================================ */
+        // ===== DATA ===== */
+        // ============================================================ */
+        const courseInfoMap = {
+            'manual': {
+                title: 'Manual Testing',
+                description: 'Learn SDLC, STLC, test cases, defect tracking and more.',
+                icon: 'fa-file-alt',
+                modules: [
+                    'Module 1: Software Testing Fundamentals',
+                    'Module 2: SDLC Models',
+                    'Module 3: Testing Types',
+                    'Module 4: Defect Management',
+                    'Module 5: Test Documentation',
+                    'Module 6: Real-time Project'
+                ]
+            },
+            'automation': {
+                title: 'Automation Testing (Selenium)',
+                description: 'Learn Selenium with real-time projects, frameworks and CI/CD pipeline.',
+                icon: 'fa-code',
+                modules: [
+                    'Module 1: Core Java Basics',
+                    'Module 2: Selenium WebDriver',
+                    'Module 3: TestNG Framework',
+                    'Module 4: Page Object Model',
+                    'Module 5: CI/CD Integration'
+                ]
+            },
+            'api': {
+                title: 'Postman API Testing',
+                description: 'Learn REST API testing, Postman collections, automation and reporting.',
+                icon: 'fa-plug',
+                modules: [
+                    'Module 1: API Fundamentals',
+                    'Module 2: Postman Basics',
+                    'Module 3: Automation Testing',
+                    'Module 4: Reporting & CI/CD'
+                ]
+            },
+            'playwright': {
+                title: 'Playwright Automation',
+                description: 'Learn end-to-end test automation using Microsoft Playwright.',
+                icon: 'fa-cogs',
+                modules: [
+                    'Module 1: Playwright Introduction',
+                    'Module 2: Locators & Actions',
+                    'Module 3: Advanced Features',
+                    'Module 4: CI/CD Integration'
+                ]
+            },
+            'cypress': {
+                title: 'Cypress Automation',
+                description: 'Learn modern UI automation using Cypress with real-world projects.',
+                icon: 'fa-sync-alt',
+                modules: [
+                    'Module 1: Cypress Introduction',
+                    'Module 2: Testing with Cypress',
+                    'Module 3: Advanced Features',
+                    'Module 4: CI/CD & Projects'
+                ]
+            },
+            'restassured': {
+                title: 'REST Assured API Testing',
+                description: 'Learn API automation using REST Assured with Java and integrate with frameworks.',
+                icon: 'fa-wifi',
+                modules: [
+                    'Module 1: REST Assured Introduction',
+                    'Module 2: Advanced Testing',
+                    'Module 3: Test Framework Integration',
+                    'Module 4: CI/CD & Projects'
+                ]
+            }
+        };
+
+        // Assignment data (same as before)
+        const assignmentData = {
+            1: {
+                id: 1,
+                title: 'Module 4: WebDriver',
+                course: 'automation',
+                courseName: 'Automation Testing (Selenium)',
+                due: '2026-08-06',
+                dueDisplay: 'Tomorrow, 11:59 PM',
+                description: 'Complete the WebDriver tasks for the Selenium project.'
+            },
+            2: {
+                id: 2,
+                title: 'API Testing Collection',
+                course: 'api',
+                courseName: 'Postman API Testing',
+                due: '2026-08-08',
+                dueDisplay: '2 days left',
+                description: 'Create a Postman collection for the user authentication API.'
+            },
+            3: {
+                id: 3,
+                title: 'Test Cases for Login',
+                course: 'manual',
+                courseName: 'Manual Testing',
+                due: '2026-08-11',
+                dueDisplay: '5 days left',
+                description: 'Write detailed test cases for the login functionality.'
+            },
+            4: {
+                id: 4,
+                title: 'Jenkins Pipeline Setup',
+                course: 'automation',
+                courseName: 'Automation Testing (Selenium)',
+                due: '2026-08-03',
+                dueDisplay: '1 week left',
+                description: 'Set up a Jenkins pipeline for the project.'
+            }
+        };
+
+        // ============================================================ */
+        // ===== GET STUDENT ID ===== */
+        // ============================================================ */
+        function getStudentId() {
+            return localStorage.getItem('qskillStudentId') || 'QSK24012345';
+        }
+
+        // ============================================================ */
+        // ===== GET STUDENT MODULE PROGRESS ===== */
+        // ============================================================ */
+        function getModuleProgress(courseId) {
+            const studentId = getStudentId();
+            const key = 'qskillModuleProgress_' + studentId + '_' + courseId;
+            let progress = JSON.parse(localStorage.getItem(key)) || {};
+            return progress;
+        }
+
+        function updateModuleProgress(courseId, moduleIndex, status) {
+            const studentId = getStudentId();
+            const key = 'qskillModuleProgress_' + studentId + '_' + courseId;
+            let progress = JSON.parse(localStorage.getItem(key)) || {};
+            progress[moduleIndex] = status;
+            localStorage.setItem(key, JSON.stringify(progress));
+        }
+
+        // ============================================================ */
+        // ===== GET STUDENT ASSIGNMENT PROGRESS ===== */
+        // ============================================================ */
+        function getStudentAssignments() {
+            const studentId = getStudentId();
+            const key = 'qskillStudentAssignments_' + studentId;
+            let progress = JSON.parse(localStorage.getItem(key)) || {};
+            return progress;
+        }
+
+        // ============================================================ */
+        // ===== RENDER COURSE PROGRESS ===== */
+        // ============================================================ */
+        function renderCourseProgress() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const courseId = urlParams.get('course');
+
+            if (!courseId || !courseInfoMap[courseId]) {
+                document.getElementById('courseContent').innerHTML = `
+                    <div style="text-align:center; padding:40px;">
+                        <i class="fas fa-exclamation-circle" style="font-size:48px; color:var(--error);"></i>
+                        <h2 style="margin:12px 0; color:var(--text-dark);">Course Not Found</h2>
+                        <p style="color:var(--text-gray);">The course you are looking for does not exist.</p>
+                        <a href="my-courses.html" class="back-btn" style="margin-top:16px; display:inline-block;">
+                            <i class="fas fa-arrow-left"></i> Go to My Courses
+                        </a>
+                    </div>
+                `;
+                return;
+            }
+
+            const course = courseInfoMap[courseId];
+            const moduleProgress = getModuleProgress(courseId);
+            const assignmentProgress = getStudentAssignments();
+
+            // Calculate overall progress
+            const totalModules = course.modules.length;
+            let completedModules = 0;
+            let inProgressModules = 0;
+            course.modules.forEach((mod, idx) => {
+                const status = moduleProgress[idx] || 'not-started';
+                if (status === 'completed') completedModules++;
+                else if (status === 'in-progress') inProgressModules++;
+            });
+            const progressPercent = totalModules > 0 ? Math.round((completedModules / totalModules) * 100) : 0;
+
+            // Get assignments for this course
+            const courseAssignments = Object.values(assignmentData).filter(a => a.course === courseId);
+
+            // Build HTML
+            let html = `
+                <!-- Course Info -->
+                <div class="course-info-card">
+                    <div class="info">
+                        <h2>${course.title}</h2>
+                        <p>${course.description}</p>
+                    </div>
+                    <div class="progress-circle">
+                        <div class="circle">
+                            <span>${progressPercent}%</span>
+                            <div class="ring" style="border-color: var(--primary); border-top-color: transparent; transform: rotate(${progressPercent * 3.6 - 90}deg);"></div>
+                        </div>
+                        <div class="label">Overall Progress</div>
+                    </div>
+                </div>
+
+                <!-- Modules -->
+                <div class="section-card">
+                    <div class="section-title">
+                        <i class="fas fa-list-ul"></i> Course Modules
+                        <span style="font-size:14px; font-weight:400; color:var(--text-gray); margin-left:auto;">
+                            ${completedModules}/${totalModules} completed
+                        </span>
+                    </div>
+                    ${course.modules.map((mod, idx) => {
+                        const status = moduleProgress[idx] || 'not-started';
+                        const statusClass = status === 'completed' ? 'done' :
+                                           status === 'in-progress' ? 'pending' : 'not-started';
+                        const iconClass = status === 'completed' ? 'done' :
+                                         status === 'in-progress' ? 'pending' : 'not-started';
+                        const statusLabel = status === 'completed' ? '✅ Completed' :
+                                           status === 'in-progress' ? '⏳ In Progress' : '🔲 Not Started';
+                        return `
+                            <div class="module-item">
+                                <div class="module-icon ${iconClass}">
+                                    <i class="fas ${status === 'completed' ? 'fa-check' : status === 'in-progress' ? 'fa-clock' : 'fa-circle'}"></i>
+                                </div>
+                                <div class="module-info">
+                                    <div class="title">${mod}</div>
+                                    <div class="desc">${status === 'completed' ? 'You have completed this module' : status === 'in-progress' ? 'Currently learning' : 'Not started yet'}</div>
+                                </div>
+                                <span class="module-status ${statusClass}">${statusLabel}</span>
+                            </div>
+                        `;
+                    }).join('')}
+                </div>
+
+                <!-- Assignments -->
+                <div class="section-card">
+                    <div class="section-title">
+                        <i class="fas fa-tasks"></i> Assignments
+                        <span style="font-size:14px; font-weight:400; color:var(--text-gray); margin-left:auto;">
+                            ${courseAssignments.filter(a => assignmentProgress[a.id] === 'completed').length}/${courseAssignments.length} done
+                        </span>
+                    </div>
+                    ${courseAssignments.length === 0 ? `
+                        <p style="color: var(--text-gray); font-size:14px; padding:10px 0;">No assignments for this course yet.</p>
+                    ` : courseAssignments.map(assign => {
+                        const status = assignmentProgress[assign.id] || 'pending';
+                        const statusClass = status === 'completed' ? 'completed' :
+                                           status === 'in-progress' ? 'in-progress' :
+                                           status === 'late' ? 'late' : 'pending';
+                        const statusLabel = status === 'completed' ? '✅ Completed' :
+                                           status === 'in-progress' ? '🔄 In Progress' :
+                                           status === 'late' ? '⏰ Late' : '⏳ Pending';
+                        return `
+                            <div class="assignment-item">
+                                <div class="assign-info">
+                                    <div class="title">${assign.title}</div>
+                                    <div class="meta"><i class="fas fa-calendar-alt"></i> ${assign.dueDisplay}</div>
+                                </div>
+                                <span class="assign-status ${statusClass}">${statusLabel}</span>
+                            </div>
+                        `;
+                    }).join('')}
+                </div>
+
+                <!-- Resume Button -->
+                <div style="text-align:center; margin-top:10px;">
+                    <a href="courses-detail.html?course=${courseId}" class="resume-btn">
+                        <i class="fas fa-play"></i> Resume Learning
+                    </a>
+                </div>
+            `;
+
+            document.getElementById('courseContent').innerHTML = html;
+
+            // Update student name
+            const userData = JSON.parse(localStorage.getItem('qskillUser') || '{}');
+            const name = userData.name || 'Student';
+            document.getElementById('studentName').textContent = name;
+            document.getElementById('studentAvatar').textContent = name.charAt(0).toUpperCase();
+        }
+
+        // ============================================================ */
+        // ===== INIT ===== */
+        // ============================================================ */
+        document.addEventListener('DOMContentLoaded', function() {
+            renderCourseProgress();
+        });
+    </script>
+
+</body>
+</html>

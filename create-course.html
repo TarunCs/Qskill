@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Create Course - Instructor | QSkill</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+    
+    <link rel="stylesheet" href="style.css" />
+    
+    <style>
+        .page-wrapper {
+            padding: 30px 80px 60px;
+            background: linear-gradient(135deg, #FAFBFC 0%, #F0F4F8 100%);
+            min-height: 100vh;
+        }
+        .page-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 16px;
+            margin-bottom: 30px;
+        }
+        .page-header h1 {
+            font-size: 28px;
+            font-weight: 700;
+            color: var(--text-dark);
+        }
+        .page-header h1 span { color: var(--primary); }
+        .back-btn {
+            background: var(--white);
+            border: 1px solid var(--border);
+            padding: 8px 20px;
+            border-radius: 999px;
+            font-weight: 500;
+            color: var(--text-dark);
+            text-decoration: none;
+            transition: 0.3s;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .back-btn:hover {
+            border-color: var(--primary);
+            color: var(--primary);
+            background: var(--light-bg);
+            transform: translateX(-4px);
+        }
+        .form-card {
+            background: var(--white);
+            border-radius: 20px;
+            padding: 35px 40px;
+            border: 1px solid var(--border);
+            max-width: 700px;
+            margin: 0 auto;
+            box-shadow: 0 8px 30px rgba(0,0,0,0.04);
+            transition: box-shadow 0.3s;
+        }
+        .form-card:hover {
+            box-shadow: 0 12px 40px rgba(31,60,136,0.08);
+        }
+        .form-group {
+            margin-bottom: 22px;
+        }
+        .form-group label {
+            font-size: 14px;
+            font-weight: 600;
+            display: block;
+            margin-bottom: 6px;
+            color: var(--text-dark);
+        }
+        .form-group label .required { color: var(--error); }
+        .form-group .input-group {
+            position: relative;
+            display: flex;
+            align-items: center;
+            border: 1.5px solid var(--border);
+            border-radius: 12px;
+            transition: all 0.3s;
+            background: #FAFBFC;
+        }
+        .form-group .input-group:focus-within {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 4px rgba(31,60,136,0.08);
+            background: var(--white);
+        }
+        .form-group .input-group i {
+            padding: 0 14px;
+            color: var(--text-gray);
+            font-size: 18px;
+            transition: 0.3s;
+        }
+        .form-group .input-group:focus-within i {
+            color: var(--primary);
+        }
+        .form-group .input-group input,
+        .form-group .input-group select,
+        .form-group .input-group textarea {
+            width: 100%;
+            padding: 12px 14px 12px 0;
+            border: none;
+            outline: none;
+            font-size: 14px;
+            font-family: 'Poppins', sans-serif;
+            background: transparent;
+            color: var(--text-dark);
+        }
+        .form-group .input-group textarea { height: 90px; resize: vertical; }
+        .form-group .input-group select { cursor: pointer; }
+        .file-upload-area {
+            border: 2px dashed var(--border);
+            border-radius: 14px;
+            padding: 30px;
+            text-align: center;
+            cursor: pointer;
+            transition: 0.3s;
+            background: #FAFBFC;
+        }
+        .file-upload-area:hover {
+            border-color: var(--primary);
+            background: var(--light-bg);
+            transform: translateY(-2px);
+        }
+        .file-upload-area i {
+            font-size: 42px;
+            color: var(--primary);
+            display: block;
+            margin-bottom: 8px;
+            transition: 0.3s;
+        }
+        .file-upload-area:hover i { transform: scale(1.1); }
+        .file-upload-area p { color: var(--text-gray); font-size: 14px; }
+        .file-upload-area .supported { font-size: 12px; color: #aaa; }
+        .file-upload-area .file-name { margin-top: 8px; font-weight: 500; color: var(--primary); }
+        .btn-submit {
+            width: 100%;
+            background: var(--primary);
+            color: var(--white);
+            border: none;
+            padding: 14px;
+            border-radius: 999px;
+            font-weight: 600;
+            font-size: 16px;
+            cursor: pointer;
+            transition: 0.3s;
+            font-family: 'Poppins', sans-serif;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            box-shadow: 0 4px 16px rgba(31,60,136,0.15);
+        }
+        .btn-submit:hover {
+            background: var(--secondary);
+            transform: translateY(-3px);
+            box-shadow: 0 8px 28px rgba(31,60,136,0.25);
+        }
+        .btn-submit:active { transform: translateY(0); }
+        .success-message {
+            display: none;
+            background: #DCFCE7;
+            color: #16a34a;
+            padding: 14px 20px;
+            border-radius: 12px;
+            margin-top: 16px;
+            align-items: center;
+            gap: 12px;
+            font-weight: 500;
+            animation: fadeInUp 0.5s ease;
+        }
+        .success-message.show { display: flex; }
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(15px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        @media (max-width: 768px) {
+            .page-wrapper { padding: 20px; }
+            .form-card { padding: 24px 20px; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="toast" id="toast">
+        <i class="fas fa-check-circle" id="toastIcon"></i>
+        <span id="toastMessage">Success!</span>
+    </div>
+
+    <nav class="navbar">
+        <a href="instructor-dashboard.html" class="logo">
+            <img src="images/logo.png" alt="QSkill Logo" />
+            <span class="logo-text">
+                <span class="qskill">Qskill</span>
+                <span class="careersolutions">careersolutions</span>
+            </span>
+        </a>
+        <ul class="nav-links">
+            <li><a href="instructor-dashboard.html">Dashboard</a></li>
+            <li><a href="instructor-my-courses.html">My Courses</a></li>
+            <li><a href="#" onclick="logout()" style="color: #EF4444;">Logout</a></li>
+        </ul>
+    </nav>
+
+    <section class="page-wrapper">
+        <div class="page-header">
+            <h1>📘 Create <span>New Course</span></h1>
+            <a href="instructor-dashboard.html" class="back-btn">
+                <i class="fas fa-arrow-left"></i> Back
+            </a>
+        </div>
+
+        <div class="form-card">
+            <form id="createCourseForm" onsubmit="handleCreateCourse(event)">
+                <div class="form-group">
+                    <label>Course Title <span class="required">*</span></label>
+                    <div class="input-group">
+                        <i class="fas fa-heading"></i>
+                        <input type="text" id="courseTitle" placeholder="e.g. Advanced Selenium" required />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>Category <span class="required">*</span></label>
+                    <div class="input-group">
+                        <i class="fas fa-tag"></i>
+                        <select id="courseCategory" required>
+                            <option value="">Select category</option>
+                            <option value="manual">Manual Testing</option>
+                            <option value="automation">Automation Testing</option>
+                            <option value="api">API Testing</option>
+                            <option value="playwright">Playwright</option>
+                            <option value="cypress">Cypress</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>Description <span class="required">*</span></label>
+                    <div class="input-group">
+                        <i class="fas fa-align-left" style="align-self:flex-start; padding-top:14px;"></i>
+                        <textarea id="courseDescription" placeholder="Describe your course content and objectives" required></textarea>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>Upload Course Video (Optional)</label>
+                    <div class="file-upload-area" onclick="document.getElementById('videoUpload').click()">
+                        <i class="fas fa-cloud-upload-alt"></i>
+                        <p>Click to upload a video file</p>
+                        <span class="supported">MP4, AVI, MOV • Max 100MB</span>
+                        <input type="file" id="videoUpload" accept="video/*" style="display:none;" onchange="updateFileName(this)" />
+                        <div id="videoFileName" class="file-name"></div>
+                    </div>
+                </div>
+                <button type="submit" class="btn-submit">
+                    <i class="fas fa-check-circle"></i> Create Course
+                </button>
+                <div class="success-message" id="successMessage">
+                    <i class="fas fa-check-circle"></i> <span id="successText">Course created successfully!</span>
+                </div>
+            </form>
+        </div>
+    </section>
+
+    <footer class="footer">...</footer>
+
+    <script>
+        function updateFileName(input) {
+            const name = input.files[0] ? input.files[0].name : '';
+            document.getElementById('videoFileName').textContent = name ? '📹 ' + name : '';
+        }
+
+        function handleCreateCourse(e) {
+            e.preventDefault();
+            const title = document.getElementById('courseTitle').value.trim();
+            const category = document.getElementById('courseCategory').value;
+            const desc = document.getElementById('courseDescription').value.trim();
+
+            if (!title || !category || !desc) {
+                showToast('Please fill in all required fields.', 'error');
+                return;
+            }
+
+            // Show success message
+            const msg = document.getElementById('successMessage');
+            document.getElementById('successText').textContent = `✅ Course "${title}" created successfully!`;
+            msg.classList.add('show');
+            document.getElementById('createCourseForm').reset();
+            document.getElementById('videoFileName').textContent = '';
+            setTimeout(() => msg.classList.remove('show'), 4000);
+            showToast('✅ Course created successfully!', 'success');
+        }
+
+        function logout() { /* ... */ }
+        function showToast(message, type) { /* ... */ }
+    </script>
+</body>
+</html>
