@@ -1,0 +1,1716 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Course Detail - QSkill Career Solutions</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+    
+    <link rel="stylesheet" href="style.css" />
+    
+    <style>
+        /* ============================================================ */
+        /* ===== COURSE DETAIL PAGE STYLES ===== */
+        /* ============================================================ */
+        .course-detail-wrapper {
+            padding: 30px 80px 60px;
+            background: var(--white);
+        }
+
+        /* ===== COURSE GRID ===== */
+        .course-detail-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 40px;
+        }
+
+        /* ===== LEFT SIDE - COURSE INFO ===== */
+        .course-detail-left .course-image {
+            width: 100%;
+            max-height: 320px;
+            object-fit: contain;
+            border-radius: 16px;
+            background: #F5F8FF;
+            padding: 24px;
+            border: 1px solid var(--border);
+        }
+        .course-detail-left h1 {
+            font-size: 32px;
+            font-weight: 700;
+            margin-top: 18px;
+            color: var(--text-dark);
+            line-height: 1.2;
+        }
+        .course-detail-left .course-description {
+            font-size: 15px;
+            color: var(--text-gray);
+            line-height: 1.8;
+            margin: 10px 0 14px;
+        }
+        
+        /* ===== RATING & ENROLLMENT ===== */
+        .course-detail-left .rating-row {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            flex-wrap: wrap;
+            margin: 10px 0 14px;
+        }
+        .course-detail-left .rating-row .stars {
+            color: var(--star);
+            font-size: 18px;
+        }
+        .course-detail-left .rating-row .rating-num {
+            font-weight: 600;
+            font-size: 16px;
+            color: var(--text-dark);
+        }
+        .course-detail-left .rating-row .reviews {
+            color: var(--text-gray);
+            font-size: 14px;
+        }
+        .course-detail-left .rating-row .enrolled {
+            color: var(--text-gray);
+            font-size: 14px;
+        }
+        .course-detail-left .rating-row .enrolled i {
+            color: var(--primary);
+        }
+
+        /* ===== COURSE TAGS ===== */
+        .course-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin: 10px 0 16px;
+        }
+        .course-tags .tag {
+            background: var(--light-bg);
+            color: var(--primary);
+            padding: 6px 16px;
+            border-radius: 999px;
+            font-size: 13px;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .course-tags .tag i {
+            font-size: 13px;
+        }
+        .course-tags .tag.orange {
+            background: #FFEBDD;
+            color: var(--orange);
+        }
+        .course-tags .tag.green {
+            background: #DCFCE7;
+            color: #16a34a;
+        }
+        .course-tags .tag.purple {
+            background: #EDE7F6;
+            color: #7C3AED;
+        }
+
+        /* ============================================================ */
+        /* ===== BUTTON CONTAINER - SIDE BY SIDE ===== */
+        /* ============================================================ */
+        .course-action-buttons {
+            display: flex;
+            flex-direction: row;        /* ← Horizontal layout */
+            flex-wrap: wrap;            /* ← Wrap if needed */
+            align-items: center;
+            gap: 14px;                  /* ← Space between buttons */
+            margin:16px 0 20px;
+        }
+
+        .btn-download-curriculum,
+        .btn-enroll-now {
+            padding: 10px 28px;
+            height: 44px;
+            border-radius: 999px;
+            font-weight: 600;
+            font-size: 14px;
+            cursor: pointer;
+            transition: 0.3s;
+            font-family: 'Poppins', sans-serif;
+            display: inline-flex;       /* ← Take only needed width */
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            white-space: nowrap;        /* ← Prevent text from wrapping */
+            text-decoration: none;
+            line-height: 1;
+            box-sizing: border-box;
+            flex-shrink: 0;             /* ← Prevent shrinking */
+            border: 2px solid transparent;
+            background: transparent;
+            width: auto;
+            margin: 0px;                /* ← Take only needed width */
+        }
+
+        .btn-download-curriculum {
+            border-color: var(--primary);
+            color: var(--primary);
+        }
+
+        .btn-download-curriculum:hover {
+            background: var(--primary);
+            color: var(--white);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 16px rgba(31, 60, 136, 0.2);
+        }
+
+        .btn-enroll-now {
+            background: var(--primary);
+            color: var(--white);
+            border-color: var(--primary);
+        }
+
+        .btn-enroll-now:hover {
+            background: var(--secondary);
+            border-color: var(--secondary);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 16px rgba(31, 60, 136, 0.25);
+        }
+
+        /* ============================================================ */
+        /* ===== TABS - LEFT ALIGNED ===== */
+        /* ============================================================ */
+        .course-tabs {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 4px;
+            margin: 20px 0 20px;
+            background: var(--white);
+            padding: 6px;
+            border-radius: 12px;
+            border: 1px solid var(--border);
+            justify-content: flex-start;
+        }
+        .course-tab {
+            padding: 10px 22px;
+            border: none;
+            border-radius: 8px;
+            font-family: 'Poppins', sans-serif;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: 0.3s;
+            background: transparent;
+            color: var(--text-gray);
+        }
+        .course-tab:hover {
+            background: var(--light-bg);
+            color: var(--text-dark);
+        }
+        .course-tab.active {
+            background: var(--primary);
+            color: var(--white);
+        }
+        .course-tab i {
+            margin-right: 6px;
+        }
+
+        .tab-content {
+            display: none;
+            animation: fadeIn 0.4s ease;
+            padding: 10px 0 20px;
+        }
+        .tab-content.active {
+            display: block;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(15px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* ============================================================ */
+        /* ===== TAB: OVERVIEW - SINGLE COLUMN ===== */
+        /* ============================================================ */
+        .overview-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 0;
+        }
+
+        .overview-grid .about-text {
+            font-size: 14px;
+            color: var(--text-gray);
+            line-height: 1.8;
+        }
+
+        /* ===== HIGHLIGHTS - SINGLE LINE ===== */
+        .highlights-single {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin: 14px 0 0;
+            padding: 0;
+            list-style: none;
+        }
+
+        .highlights-single li {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            background: var(--light-bg);
+            padding: 4px 14px;
+            border-radius: 999px;
+            font-size: 13px;
+            color: var(--primary);
+            font-weight: 500;
+        }
+
+        .highlights-single li i {
+            font-size: 13px;
+            color: var(--primary);
+        }
+
+        /* ============================================================ */
+        /* ===== TAB: CONTENT (MODULES) ===== */
+        /* ============================================================ */
+        .module-item {
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            margin-bottom: 10px;
+            overflow: hidden;
+        }
+        .module-header {
+            padding: 14px 20px;
+            background: #FAFBFC;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-weight: 500;
+            font-size: 15px;
+            transition: 0.3s;
+        }
+        .module-header:hover {
+            background: var(--light-bg);
+        }
+        .module-header .module-info {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        .module-header .module-info .lecture-count {
+            font-size: 12px;
+            color: var(--text-gray);
+            font-weight: 400;
+        }
+        .module-header i {
+            transition: 0.3s;
+            color: var(--primary);
+        }
+        .module-body {
+            padding: 0 20px;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+        }
+        .module-body.open {
+            max-height: 500px;
+            padding: 14px 20px;
+        }
+        .module-body ul {
+            list-style: none;
+            padding: 0;
+        }
+        .module-body ul li {
+            padding: 4px 0;
+            font-size: 14px;
+            color: var(--text-dark);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .module-body ul li i {
+            color: var(--primary);
+            font-size: 10px;
+        }
+
+        /* ============================================================ */
+        /* ===== TAB: REVIEWS ===== */
+        /* ============================================================ */
+        .review-item {
+            border-bottom: 1px solid var(--border);
+            padding: 16px 0;
+        }
+        .review-item:last-child {
+            border-bottom: none;
+        }
+        .review-item .review-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+        .review-item .review-header .name {
+            font-weight: 600;
+            font-size: 15px;
+            color: var(--text-dark);
+        }
+        .review-item .review-header .badge-verified {
+            background: #DCFCE7;
+            color: #16a34a;
+            padding: 2px 12px;
+            border-radius: 999px;
+            font-size: 11px;
+            font-weight: 500;
+        }
+        .review-item .review-stars {
+            color: var(--star);
+            font-size: 14px;
+        }
+        .review-item .review-text {
+            font-size: 14px;
+            color: var(--text-gray);
+            margin: 6px 0;
+            line-height: 1.7;
+        }
+        .review-item .review-date {
+            font-size: 12px;
+            color: var(--text-gray);
+        }
+
+        /* ============================================================ */
+        /* ===== TAB: FAQ ===== */
+        /* ============================================================ */
+        .faq-item {
+            border-bottom: 1px solid var(--border);
+            padding: 16px 0;
+        }
+        .faq-item:last-child {
+            border-bottom: none;
+        }
+        .faq-question {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+            font-size: 15px;
+            font-weight: 500;
+            color: var(--text-dark);
+        }
+        .faq-question i {
+            color: var(--primary);
+            transition: 0.3s;
+            font-size: 18px;
+        }
+        .faq-answer {
+            font-size: 14px;
+            color: var(--text-gray);
+            padding-top: 10px;
+            display: none;
+            line-height: 1.7;
+        }
+        .faq-answer.open {
+            display: block;
+        }
+
+        /* ============================================================ */
+        /* ===== RIGHT SIDEBAR - PRICING CARD ===== */
+        /* ============================================================ */
+        .course-detail-right .pricing-card {
+            background: var(--white);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 28px 24px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.06);
+            position: relative;
+            top: 0;
+        }
+        .course-detail-right .pricing-card .price-current {
+            font-size: 32px;
+            font-weight: 700;
+            color: var(--primary);
+        }
+        .course-detail-right .pricing-card .price-old {
+            font-size: 18px;
+            color: var(--text-gray);
+            text-decoration: line-through;
+            margin-left: 10px;
+        }
+        .course-detail-right .pricing-card .discount-badge {
+            background: #FEE2E2;
+            color: #dc2626;
+            padding: 3px 14px;
+            border-radius: 999px;
+            font-size: 13px;
+            font-weight: 600;
+            margin-left: 10px;
+        }
+
+        .course-detail-right .pricing-card .features-list {
+            list-style: none;
+            padding: 16px 0;
+            border-top: 1px solid var(--border);
+            border-bottom: 1px solid var(--border);
+            margin: 16px 0;
+        }
+        .course-detail-right .pricing-card .features-list li {
+            padding: 6px 0;
+            font-size: 14px;
+            color: var(--text-dark);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .course-detail-right .pricing-card .features-list li i {
+            color: var(--success);
+            width: 18px;
+            font-size: 14px;
+        }
+
+        .course-detail-right .pricing-card .btn-enroll-full {
+            width: 100%;
+            background: var(--primary);
+            color: var(--white);
+            border: none;
+            padding: 14px;
+            border-radius: 999px;
+            font-weight: 600;
+            font-size: 16px;
+            cursor: pointer;
+            transition: 0.3s;
+            font-family: 'Poppins', sans-serif;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            box-shadow: 0 4px 16px rgba(31, 60, 136, 0.2);
+        }
+        .course-detail-right .pricing-card .btn-enroll-full:hover {
+            background: var(--secondary);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 24px rgba(31, 60, 136, 0.35);
+        }
+
+        /* ===== RIGHT SIDEBAR - WHAT YOU'LL LEARN ===== */
+        .sidebar-section {
+            margin-top: 24px;
+            background: var(--white);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 20px;
+        }
+        .sidebar-section h4 {
+            font-size: 16px;
+            font-weight: 600;
+            color: var(--text-dark);
+            margin-bottom: 12px;
+        }
+
+        .sidebar-section .learn-list {
+            list-style: none;
+            padding: 0;
+        }
+        .sidebar-section .learn-list li {
+            padding: 5px 0;
+            font-size: 13px;
+            color: var(--text-dark);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .sidebar-section .learn-list li i {
+            color: var(--success);
+            font-size: 13px;
+        }
+
+        /* ===== RIGHT SIDEBAR - TOOLS ===== */
+        .tools-grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 6px;
+        }
+        .tools-grid .tool-item {
+            background: var(--light-bg);
+            padding: 8px 16px;
+            border-radius: 8px;
+            font-size: 13px;
+            font-weight: 500;
+            color: var(--primary);
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .tools-grid .tool-item i {
+            font-size: 16px;
+        }
+
+        /* ===== RIGHT SIDEBAR - STUDENT REVIEWS ===== */
+        .sidebar-section .review-mini {
+            margin-top: 4px;
+        }
+        .sidebar-section .review-mini .review-row {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .sidebar-section .review-mini .review-row .big-rating {
+            font-size: 22px;
+            font-weight: 700;
+            color: var(--text-dark);
+        }
+        .sidebar-section .review-mini .review-row .stars {
+            color: var(--star);
+        }
+        .sidebar-section .review-mini .review-row .count {
+            font-size: 13px;
+            color: var(--text-gray);
+        }
+        .sidebar-section .review-mini .review-text {
+            font-size: 13px;
+            color: var(--text-gray);
+            margin: 8px 0 4px;
+        }
+        .sidebar-section .review-mini .review-text strong {
+            color: var(--text-dark);
+        }
+
+        /* ============================================================ */
+        /* ===== FOOTER CTA ===== */
+        /* ============================================================ */
+        .footer-cta {
+            margin-top: 50px;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            border-radius: 16px;
+            padding: 40px 60px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+        .footer-cta .cta-text h3 {
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--white);
+            margin-bottom: 4px;
+        }
+        .footer-cta .cta-text p {
+            color: rgba(255,255,255,0.8);
+            font-size: 15px;
+        }
+        .footer-cta .cta-text .phone {
+            font-weight: 600;
+            font-size: 18px;
+            color: var(--white);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-top: 4px;
+        }
+        .footer-cta .cta-buttons {
+            display: flex;
+            gap: 14px;
+            flex-wrap: wrap;
+        }
+        .footer-cta .cta-buttons .btn-white {
+            background: var(--white);
+            color: var(--primary);
+            border: none;
+            padding: 12px 32px;
+            border-radius: 999px;
+            font-weight: 600;
+            font-size: 15px;
+            cursor: pointer;
+            transition: 0.3s;
+            font-family: 'Poppins', sans-serif;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .footer-cta .cta-buttons .btn-white:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 24px rgba(0,0,0,0.2);
+        }
+        .footer-cta .cta-buttons .btn-outline-white {
+            background: transparent;
+            color: var(--white);
+            border: 2px solid rgba(255,255,255,0.6);
+            padding: 10px 28px;
+            border-radius: 999px;
+            font-weight: 600;
+            font-size: 15px;
+            cursor: pointer;
+            transition: 0.3s;
+            font-family: 'Poppins', sans-serif;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .footer-cta .cta-buttons .btn-outline-white:hover {
+            background: rgba(255,255,255,0.15);
+            border-color: var(--white);
+        }
+
+        /* ============================================================ */
+        /* ===== LOGIN BUTTON - SAME AS COURSES PAGE ===== */
+        /* ============================================================ */
+        .login-btn {
+            background: var(--primary) !important;
+            color: var(--white) !important;
+            padding: 10px 28px !important;
+            border-radius: 999px !important;
+            font-weight: 600 !important;
+            font-size: 15px !important;
+            transition: 0.3s !important;
+            cursor: pointer !important;
+            display: inline-block !important;
+            border: none !important;
+            text-decoration: none !important;
+            border-bottom: none !important;
+            font-family: 'Poppins', sans-serif !important;
+            box-shadow: 0 2px 8px rgba(31, 60, 136, 0.12) !important;
+            line-height: 1.4 !important;
+            letter-spacing: 1px !important;
+        }
+
+        .login-btn i {
+            margin-left: 8px !important;
+            font-size: 12px !important;
+        }
+
+        .login-btn:hover {
+            background: var(--secondary) !important;
+            transform: translateY(-2px) !important;
+            border-bottom: none !important;
+            box-shadow: 0 4px 16px rgba(31, 60, 136, 0.25) !important;
+        }
+
+        /* ============================================================ */
+        /* ===== LOGIN DROPDOWN ===== */
+        /* ============================================================ */
+        .login-dropdown-wrapper {
+            position: relative;
+            display: inline-block;
+        }
+
+        .login-dropdown {
+            display: none;
+            position: absolute;
+            background: var(--white);
+            top: 48px;
+            right: 0;
+            box-shadow: 0 12px 32px rgba(0, 0, 0, 0.12);
+            border-radius: 14px;
+            padding: 6px 0;
+            min-width: 260px;
+            border: 1px solid var(--border);
+            z-index: 200;
+        }
+
+        .login-dropdown.show {
+            display: block;
+        }
+
+        .login-dropdown a {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            padding: 14px 22px;
+            color: var(--text-dark) !important;
+            text-decoration: none;
+            transition: 0.3s;
+            border-bottom: none !important;
+        }
+
+        .login-dropdown a:not(:last-child) {
+            border-bottom: 1px solid var(--border) !important;
+        }
+
+        .login-dropdown a:hover {
+            background: var(--light-bg);
+        }
+
+        .login-dropdown .dropdown-icon {
+            width: 42px;
+            height: 42px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .login-dropdown .dropdown-icon i {
+            font-size: 17px;
+        }
+
+        .login-dropdown a[data-role="student"] .dropdown-icon {
+            background: var(--light-bg);
+        }
+
+        .login-dropdown a[data-role="student"] .dropdown-icon i {
+            color: var(--primary);
+        }
+
+        .login-dropdown a[data-role="instructor"] .dropdown-icon {
+            background: #FFEBDD;
+        }
+
+        .login-dropdown a[data-role="instructor"] .dropdown-icon i {
+            color: var(--orange);
+        }
+
+        .login-dropdown .dropdown-text {
+            display: flex !important;
+            flex-direction: column !important;
+            gap: 2px !important;
+        }
+
+        .login-dropdown .role-title {
+            font-weight: 600;
+            font-size: 15px;
+            color: var(--text-dark);
+        }
+
+        .login-dropdown .role-sub {
+            font-weight: 400;
+            font-size: 12px;
+            color: var(--text-gray);
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+        }
+
+        .login-dropdown a:hover .role-title {
+            color: var(--primary);
+        }
+
+        /* ============================================================ */
+        /* ===== RESPONSIVE ===== */
+        /* ============================================================ */
+        @media (max-width: 992px) {
+            .course-detail-wrapper { padding: 20px 40px 40px; }
+            .course-detail-grid { grid-template-columns: 1fr; gap: 30px; }
+            .course-detail-right .pricing-card { position: relative; top: 0; }
+            .footer-cta { flex-direction: column; text-align: center; padding: 30px 30px; }
+        }
+
+        @media (max-width: 768px) {
+            .course-detail-wrapper { padding: 15px 20px 30px; }
+            .course-detail-left h1 { font-size: 24px; }
+            .course-tabs { gap: 4px; padding: 4px; }
+            .course-tab { padding: 6px 12px; font-size: 12px; }
+            .course-action-buttons { flex-direction: column; width: 100%; }
+            .btn-download-curriculum, .btn-enroll-now { width: 100%; justify-content: center; }
+            .highlights-single { gap: 8px; }
+            .highlights-single li { font-size: 11px; padding: 3px 10px; }
+            .footer-cta { padding: 24px 20px; }
+            .footer-cta .cta-text h3 { font-size: 20px; }
+            .footer-cta .cta-buttons { flex-direction: column; width: 100%; }
+            .footer-cta .cta-buttons .btn-white,
+            .footer-cta .cta-buttons .btn-outline-white { width: 100%; justify-content: center; }
+        }
+
+        @media (max-width: 480px) {
+            .course-detail-left h1 { font-size: 20px; }
+            .course-tab { font-size: 10px; padding: 4px 8px; }
+            .course-tags .tag { font-size: 11px; padding: 4px 12px; }
+            .course-detail-right .pricing-card { padding: 20px 16px; }
+            .course-detail-right .pricing-card .price-current { font-size: 26px; }
+            .highlights-single li { font-size: 10px; padding: 2px 8px; }
+            .footer-cta .cta-text .phone { font-size: 15px; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ===== TOAST ===== -->
+    <div class="toast" id="toast">
+        <i class="fas fa-check-circle" id="toastIcon"></i>
+        <span id="toastMessage">Success!</span>
+    </div>
+
+    <!-- ============================================================ -->
+    <!-- ===== NAVBAR - MATCHING COURSES.HTML ===== -->
+    <!-- ============================================================ -->
+    <nav class="navbar">
+        <a href="index.html" class="logo">
+            <img src="images/logo.png" alt="QSkill Logo" />
+            <span class="logo-text">
+                <span class="qskill">Qskill</span>
+                <span class="careersolutions">careersolutions</span>
+            </span>
+        </a>
+        <ul class="nav-links">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="about.html">About Us</a></li>
+            <li><a href="courses.html" style="font-weight:600;">Courses</a></li>
+            <li><a href="contact.html">Contact</a></li>
+            <li class="login-dropdown-wrapper">
+                <a href="#" class="login-btn" id="loginDropdownBtn">Login <i class="fas fa-chevron-down"></i></a>
+                <div class="login-dropdown" id="loginDropdown">
+                    <a href="login.html?role=student" data-role="student">
+                        <span class="dropdown-icon"><i class="fas fa-user-graduate"></i></span>
+                        <span class="dropdown-text">
+                            <span class="role-title">Student</span>
+                            <span class="role-sub">Login as a student</span>
+                        </span>
+                    </a>
+                    <a href="login.html?role=instructor" data-role="instructor">
+                        <span class="dropdown-icon"><i class="fas fa-chalkboard-teacher"></i></span>
+                        <span class="dropdown-text">
+                            <span class="role-title">Instructor</span>
+                            <span class="role-sub">Login as an instructor</span>
+                        </span>
+                    </a>
+                </div>
+            </li>
+        </ul>
+    </nav>
+
+    <!-- ============================================================ -->
+    <!-- ===== COURSE DETAIL ===== -->
+    <!-- ============================================================ -->
+    <section class="course-detail-wrapper" id="courseDetail">
+        
+        <div class="course-detail-grid">
+            <!-- ========================================================== -->
+            <!-- LEFT SIDE - COURSE INFO -->
+            <!-- ========================================================== -->
+            <div class="course-detail-left">
+                <!-- Course Image -->
+                <img src="images/manual-testing.jpg" alt="Course" class="course-image" id="courseImage" />
+                
+                <!-- Course Title -->
+                <h1 id="courseTitle">Java + Selenium Automation Testing</h1>
+                
+                <!-- Description -->
+                <p class="course-description" id="courseDescription">Learn Selenium with real-time projects, test automation frameworks, CI/CD pipeline integration, and hands-on experience with industry-standard tools.</p>
+                
+                <!-- Rating & Enrollment -->
+                <div class="rating-row">
+                    <span class="stars" id="courseStars">⭐⭐⭐⭐⭐</span>
+                    <span class="rating-num" id="courseRating">4.7</span>
+                    <span class="reviews" id="courseReviews">(280 Reviews)</span>
+                    <span class="enrolled"><i class="fas fa-user-graduate"></i> <span id="courseEnrolled">1,250</span> students enrolled</span>
+                </div>
+                
+                <!-- Course Tags -->
+                <div class="course-tags">
+                    <span class="tag"><i class="fas fa-signal"></i> <span id="metaLevel">Intermediate</span></span>
+                    <span class="tag orange"><i class="fas fa-clock"></i> <span id="metaDuration">12 Weeks</span></span>
+                    <span class="tag green"><i class="fas fa-globe"></i> English</span>
+                    <span class="tag purple"><i class="fas fa-certificate"></i> Certificate Included</span>
+                </div>
+                
+                <!-- ===== BUTTONS - SIDE BY SIDE ===== -->
+                <div class="course-action-buttons">
+                    <button class="btn-download-curriculum" onclick="alert('📄 Downloading curriculum...')">
+                        <i class="fas fa-download"></i> Curriculum
+                    </button>
+                    <button class="btn-enroll-now" id="enrollNowBtn" onclick="goToEnroll()">
+                        Enroll Now <i class="fas fa-arrow-right"></i>
+                    </button>
+                </div>
+
+                <!-- ========================================================== -->
+                <!-- ===== TABS - LEFT ALIGNED ===== -->
+                <!-- ========================================================== -->
+                <div class="course-tabs">
+                    <button class="course-tab active" data-tab="overview"><i class="fas fa-info-circle"></i> Course Overview</button>
+                    <button class="course-tab" data-tab="content"><i class="fas fa-book"></i> Course Content</button>
+                    <button class="course-tab" data-tab="reviews"><i class="fas fa-star"></i> Reviews</button>
+                    <button class="course-tab" data-tab="faq"><i class="fas fa-question-circle"></i> FAQ</button>
+                </div>
+
+                <!-- ========================================================== -->
+                <!-- TAB 1: COURSE OVERVIEW - SINGLE COLUMN -->
+                <!-- ========================================================== -->
+                <div class="tab-content active" id="tab-overview">
+                    <div class="overview-grid">
+                        <div>
+                            <h3 style="font-size:18px; font-weight:600; color:var(--text-dark); margin-bottom:8px; text-align:left;">About This Course</h3>
+                            <p class="about-text" id="overviewDescription" style="text-align:left;">
+                                This Automation Testing course is designed for professionals who want to master Selenium WebDriver and build robust test automation frameworks. You will learn from basic concepts to advanced topics like CI/CD integration and Page Object Model.
+                            </p>
+                            <p class="about-text" style="margin-top:12px; text-align:left;">
+                                <strong>Who this course is for:</strong> Freshers, career switchers, developers looking to understand testing, and anyone who wants to build a career in software quality assurance.
+                            </p>
+                            <!-- ===== HIGHLIGHTS - SINGLE LINE ===== -->
+                            <ul class="highlights-single">
+                                <li><i class="fas fa-video"></i> Live Interactive</li>
+                                <li><i class="fas fa-project-diagram"></i> Real-time Projects</li>
+                                <li><i class="fas fa-infinity"></i> Lifetime Access</li>
+                                <li><i class="fas fa-headset"></i> Dedicated Support</li>
+                                <li><i class="fas fa-certificate"></i> Certification</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ========================================================== -->
+                <!-- TAB 2: COURSE CONTENT -->
+                <!-- ========================================================== -->
+                <div class="tab-content" id="tab-content">
+                    <p style="font-size:14px; color:var(--text-gray); margin-bottom:16px; text-align:left;">
+                        <strong>Total Modules:</strong> <span id="totalModules">5</span> &nbsp;|&nbsp; <strong>Total Lectures:</strong> <span id="totalLectures">22</span> &nbsp;|&nbsp; <strong>Duration:</strong> <span id="totalDuration">12 Weeks</span>
+                    </p>
+                    <div class="modules" id="modulesContainer">
+                        <!-- Modules will be injected here -->
+                    </div>
+                    <button class="btn-download-curriculum" style="margin-top:16px; width:auto;" onclick="alert('📄 Downloading detailed curriculum...')">
+                        <i class="fas fa-download"></i> Download Detailed Curriculum
+                    </button>
+                </div>
+
+                <!-- ========================================================== -->
+                <!-- TAB 3: REVIEWS -->
+                <!-- ========================================================== -->
+                <div class="tab-content" id="tab-reviews">
+                    <div style="display:flex; align-items:center; gap:20px; margin-bottom:20px; flex-wrap:wrap; text-align:left;">
+                        <div>
+                            <span style="font-size:36px; font-weight:700; color:var(--text-dark);" id="reviewRating">4.7</span>
+                            <span style="color:var(--star); font-size:20px;" id="reviewStars">⭐⭐⭐⭐⭐</span>
+                            <p style="font-size:14px; color:var(--text-gray);" id="reviewCount">Based on 280 reviews</p>
+                        </div>
+                    </div>
+
+                    <div class="review-item">
+                        <div class="review-header">
+                            <span class="name">Rahul Sharma</span>
+                            <span class="badge-verified"><i class="fas fa-check"></i> Verified Student</span>
+                        </div>
+                        <div class="review-stars">⭐⭐⭐⭐⭐</div>
+                        <p class="review-text">"This course was amazing! The trainer explained everything clearly and the real-time projects helped me get a job in testing."</p>
+                        <div class="review-date">Published 2 weeks ago</div>
+                    </div>
+
+                    <div class="review-item">
+                        <div class="review-header">
+                            <span class="name">Priya Patel</span>
+                            <span class="badge-verified"><i class="fas fa-check"></i> Verified Student</span>
+                        </div>
+                        <div class="review-stars">⭐⭐⭐⭐⭐</div>
+                        <p class="review-text">"I switched from manual testing to automation after this course. The content is very practical and industry-focused."</p>
+                        <div class="review-date">Published 1 month ago</div>
+                    </div>
+
+                    <div class="review-item">
+                        <div class="review-header">
+                            <span class="name">Arjun Kumar</span>
+                            <span class="badge-verified"><i class="fas fa-check"></i> Verified Student</span>
+                        </div>
+                        <div class="review-stars">⭐⭐⭐⭐</div>
+                        <p class="review-text">"Great course for beginners. The placement assistance was very helpful. I got placed in a top MNC after completing this course."</p>
+                        <div class="review-date">Published 2 months ago</div>
+                    </div>
+                </div>
+
+                <!-- ========================================================== -->
+                <!-- TAB 4: FAQ -->
+                <!-- ========================================================== -->
+                <div class="tab-content" id="tab-faq">
+                    <div class="faq-item">
+                        <div class="faq-question" onclick="toggleFAQ(this)">
+                            <span>What are the prerequisites for this course?</span>
+                            <i class="fas fa-plus"></i>
+                        </div>
+                        <div class="faq-answer">No prior experience is required. Basic computer knowledge is enough to start this course.</div>
+                    </div>
+                    <div class="faq-item">
+                        <div class="faq-question" onclick="toggleFAQ(this)">
+                            <span>Will I get a certificate after completion?</span>
+                            <i class="fas fa-plus"></i>
+                        </div>
+                        <div class="faq-answer">Yes, you will receive an industry-recognized certificate upon completion of the course.</div>
+                    </div>
+                    <div class="faq-item">
+                        <div class="faq-question" onclick="toggleFAQ(this)">
+                            <span>Is there placement assistance?</span>
+                            <i class="fas fa-plus"></i>
+                        </div>
+                        <div class="faq-answer">Yes, we provide dedicated placement assistance including resume building, mock interviews, and job referrals.</div>
+                    </div>
+                    <div class="faq-item">
+                        <div class="faq-question" onclick="toggleFAQ(this)">
+                            <span>Can I attend a demo class before enrolling?</span>
+                            <i class="fas fa-plus"></i>
+                        </div>
+                        <div class="faq-answer">Absolutely! We offer free demo classes. You can experience our teaching methodology before enrolling.</div>
+                    </div>
+                    <div class="faq-item">
+                        <div class="faq-question" onclick="toggleFAQ(this)">
+                            <span>What is the refund policy?</span>
+                            <i class="fas fa-plus"></i>
+                        </div>
+                        <div class="faq-answer">We offer a 7-day money-back guarantee if you are not satisfied with the course content.</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ========================================================== -->
+            <!-- RIGHT SIDEBAR -->
+            <!-- ========================================================== -->
+            <div class="course-detail-right">
+                <!-- ===== PRICING CARD ===== -->
+                <div class="pricing-card">
+                    <div>
+                        <span class="price-current" id="priceCurrent">₹7,999</span>
+                        <span class="price-old" id="priceOld">₹12,999</span>
+                        <span class="discount-badge" id="discountBadge">38% OFF</span>
+                    </div>
+                    <ul class="features-list">
+                        <li><i class="fas fa-check-circle"></i> 60+ Hours of Live Training</li>
+                        <li><i class="fas fa-check-circle"></i> Real-time Projects</li>
+                        <li><i class="fas fa-check-circle"></i> Study Materials &amp; PDFs</li>
+                        <li><i class="fas fa-check-circle"></i> Practice Test Cases</li>
+                        <li><i class="fas fa-check-circle"></i> Mock Interviews</li>
+                        <li><i class="fas fa-check-circle"></i> Placement Assistance</li>
+                        <li><i class="fas fa-check-circle"></i> Completion Certificate</li>
+                    </ul>
+                    <button class="btn-enroll-full" onclick="goToEnroll()">
+                        Enroll Now <i class="fas fa-arrow-right"></i>
+                    </button>
+                </div>
+
+                <!-- ===== WHAT YOU'LL LEARN - RIGHT SIDEBAR ===== -->
+                <div class="sidebar-section">
+                    <h4><i class="fas fa-graduation-cap" style="color:var(--primary); margin-right:8px;"></i> What You'll Learn</h4>
+                    <ul class="learn-list" id="sidebarLearnList">
+                        <li><i class="fas fa-check-circle"></i> Core Java Programming</li>
+                        <li><i class="fas fa-check-circle"></i> Selenium WebDriver</li>
+                        <li><i class="fas fa-check-circle"></i> Locators &amp; Waits</li>
+                        <li><i class="fas fa-check-circle"></i> TestNG Framework</li>
+                        <li><i class="fas fa-check-circle"></i> Data-Driven Testing</li>
+                        <li><i class="fas fa-check-circle"></i> POM Design Pattern</li>
+                        <li><i class="fas fa-check-circle"></i> Cross-Browser Testing</li>
+                    </ul>
+                </div>
+
+                <!-- ===== TOOLS & TECHNOLOGIES ===== -->
+                <div class="sidebar-section">
+                    <h4><i class="fas fa-tools" style="color:var(--primary); margin-right:8px;"></i> Tools &amp; Technologies</h4>
+                    <div class="tools-grid">
+                        <span class="tool-item"><i class="fab fa-java"></i> Java</span>
+                        <span class="tool-item"><i class="fas fa-code"></i> Selenium</span>
+                        <span class="tool-item"><i class="fas fa-vial"></i> TestNG</span>
+                        <span class="tool-item"><i class="fas fa-cubes"></i> Maven</span>
+                        <span class="tool-item"><i class="fas fa-table"></i> Excel</span>
+                        <span class="tool-item"><i class="fas fa-code-branch"></i> Git</span>
+                    </div>
+                </div>
+
+                <!-- ===== STUDENT REVIEWS ===== -->
+                <div class="sidebar-section">
+                    <h4><i class="fas fa-star" style="color:var(--star); margin-right:8px;"></i> Student Reviews</h4>
+                    <div class="review-mini">
+                        <div class="review-row">
+                            <span class="big-rating">4.7</span>
+                            <span class="stars">⭐⭐⭐⭐⭐</span>
+                            <span class="count">(280 reviews)</span>
+                        </div>
+                        <p class="review-text"><strong>Rahul S.</strong> — "Amazing course! Got placed immediately."</p>
+                        <p class="review-text"><strong>Priya P.</strong> — "Best automation course I've taken."</p>
+                        <p class="review-text"><strong>Arjun K.</strong> — "Very practical and industry-focused."</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ============================================================ -->
+        <!-- ===== FOOTER CTA ===== -->
+        <!-- ============================================================ -->
+        <div class="footer-cta">
+            <div class="cta-text">
+                <h3>📞 Have Questions?</h3>
+                <p>Our experts are here to help you with any queries about the course.</p>
+                <div class="phone">
+                    <i class="fas fa-phone-alt"></i> +91 99999 99999
+                </div>
+            </div>
+            <div class="cta-buttons">
+                <button class="btn-white" onclick="window.location.href='contact.html'">
+                    <i class="fas fa-envelope"></i> Enquire Now
+                </button>
+                <button class="btn-outline-white" onclick="window.location.href='demo.html'">
+                    <i class="fas fa-calendar-alt"></i> Book Free Demo
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================================================ -->
+    <!-- ===== FOOTER ===== -->
+    <!-- ============================================================ -->
+    <footer class="footer">
+        <div class="footer-top">
+            <div class="footer-logo">
+                <img src="images/logo.png" alt="QSkill Logo" />
+                <p>Empowering careers with industry-ready Software Testing skills.</p>
+                <div class="footer-social">
+                    <i class="fab fa-instagram"></i>
+                    <i class="fab fa-whatsapp"></i>
+                    <i class="fas fa-envelope"></i>
+                </div>
+            </div>
+            <div>
+                <h4>Quick Links</h4>
+                <a href="index.html">Home</a>
+                <a href="courses.html">Courses</a>
+                <a href="contact.html">Contact</a>
+                <a href="demo.html">Free Demo</a>
+                <a href="login.html">Login</a>
+            </div>
+            <div>
+                <h4>Important Links</h4>
+                <a href="#">Terms &amp; Conditions</a>
+                <a href="#">Privacy Policy</a>
+                <a href="#">Security Policy</a>
+            </div>
+            <div class="footer-contact">
+                <h4>Contact Us</h4>
+                <p><i class="fas fa-phone-alt"></i> +91 99999 99999</p>
+                <p><i class="fas fa-envelope"></i> info@qskillcareersolutions.com</p>
+                <p><i class="fas fa-clock"></i> Mon - Sat | 9AM - 6PM</p>
+            </div>
+        </div>
+        <div class="footer-bottom">© 2026 QSkill Career Solutions. All Rights Reserved.</div>
+    </footer>
+
+    <!-- ============================================================ -->
+    <!-- ===== SCRIPTS ===== -->
+    <!-- ============================================================ -->
+    <script>
+        // ============================================================ */
+        // ===== GO TO ENROLL PAGE WITH COURSE PARAMETER ===== */
+        // ============================================================ */
+        function goToEnroll() {
+            const courseId = getCourseId();
+            if (courseId) {
+                window.location.href = 'enroll.html?course=' + courseId;
+            } else {
+                window.location.href = 'enroll.html';
+            }
+        }
+
+        // ============================================================ */
+        // ===== GET CURRENT COURSE ID ===== */
+        // ============================================================ */
+        function getCourseId() {
+            const urlParams = new URLSearchParams(window.location.search);
+            return urlParams.get('course') || 'manual';
+        }
+
+        // ============================================================ */
+        // ===== GET COURSE PARAMETER FROM URL ===== */
+        // ============================================================ */
+        const urlParams = new URLSearchParams(window.location.search);
+        const courseParam = urlParams.get('course');
+
+        // ============================================================ */
+        // ===== COURSE DATA ===== */
+        // ============================================================ */
+        const courseData = {
+            'manual': {
+                id: 'manual',
+                title: 'Manual Testing',
+                image: 'images/manual-testing.jpg',
+                description: 'Learn the fundamentals of software testing, SDLC, STLC, test cases, defect tracking and more. Build a strong foundation in manual testing with real-world projects.',
+                rating: '4.8',
+                reviews: '(320 Reviews)',
+                stars: '⭐⭐⭐⭐⭐',
+                enrolled: '980',
+                level: 'Beginner',
+                duration: '6 Weeks',
+                badge: '⭐ Best Seller',
+                priceCurrent: '₹4,999',
+                priceOld: '₹8,999',
+                discount: '44% OFF',
+                totalModules: 6,
+                totalLectures: 25,
+                overviewDescription: 'This Manual Testing course is designed for beginners and aspiring software testers. You will learn the complete software testing lifecycle, from requirement analysis to defect tracking. The course covers both theoretical concepts and practical hands-on experience with real-world projects.',
+                tools: ['Jira', 'SQL', 'Postman', 'Excel'],
+                whatLearn: [
+                    'SDLC &amp; STLC',
+                    'Writing test cases',
+                    'Bug tracking',
+                    'Jira usage',
+                    'SQL queries for testing',
+                    'API testing basics',
+                    'Real-time project experience'
+                ],
+                modules: [
+                    {
+                        title: 'Module 1: Software Testing Fundamentals',
+                        lectures: 4,
+                        topics: ['What is Software Testing?', 'Why Testing is Important', 'Software Development Life Cycle (SDLC)', 'Software Testing Life Cycle (STLC)']
+                    },
+                    {
+                        title: 'Module 2: SDLC Models',
+                        lectures: 3,
+                        topics: ['Waterfall Model', 'Agile Methodology', 'V-Model']
+                    },
+                    {
+                        title: 'Module 3: Testing Types',
+                        lectures: 5,
+                        topics: ['Functional Testing', 'Non-Functional Testing', 'Smoke &amp; Sanity Testing', 'Regression Testing', 'User Acceptance Testing (UAT)']
+                    },
+                    {
+                        title: 'Module 4: Defect Management',
+                        lectures: 3,
+                        topics: ['Defect Life Cycle', 'Bug Reporting', 'Defect Tracking Tools']
+                    },
+                    {
+                        title: 'Module 5: Test Documentation',
+                        lectures: 4,
+                        topics: ['Test Plan', 'Test Strategy', 'Test Case Writing', 'Test Summary Report']
+                    },
+                    {
+                        title: 'Module 6: Real-time Project',
+                        lectures: 6,
+                        topics: ['Project Overview', 'Test Case Design', 'Execution &amp; Reporting', 'Project Submission']
+                    }
+                ]
+            },
+            'automation': {
+                id: 'automation',
+                title: 'Automation Testing (Java + Selenium)',
+                image: 'images/photo11.jpeg',
+                description: 'Learn Selenium with real-time projects, test automation frameworks, CI/CD pipeline integration, and hands-on experience with industry-standard tools.',
+                rating: '4.7',
+                reviews: '(280 Reviews)',
+                stars: '⭐⭐⭐⭐⭐',
+                enrolled: '1,250',
+                level: 'Intermediate',
+                duration: '12 Weeks',
+                badge: '⭐ Popular',
+                priceCurrent: '₹7,999',
+                priceOld: '₹12,999',
+                discount: '38% OFF',
+                totalModules: 5,
+                totalLectures: 22,
+                overviewDescription: 'This Automation Testing course is designed for professionals who want to master Selenium WebDriver and build robust test automation frameworks. You will learn from basic concepts to advanced topics like CI/CD integration and Page Object Model.',
+                tools: ['Java', 'Selenium', 'TestNG', 'Maven', 'Excel', 'Git'],
+                whatLearn: [
+                    'Core Java Programming',
+                    'Selenium WebDriver',
+                    'Locators &amp; Waits',
+                    'TestNG Framework',
+                    'Data-Driven Testing',
+                    'POM Design Pattern',
+                    'Cross-Browser Testing'
+                ],
+                modules: [
+                    {
+                        title: 'Module 1: Core Java Basics',
+                        lectures: 5,
+                        topics: ['Java Introduction', 'OOP Concepts', 'Collections', 'Exception Handling']
+                    },
+                    {
+                        title: 'Module 2: Selenium WebDriver',
+                        lectures: 6,
+                        topics: ['WebDriver Architecture', 'Locators (ID, Name, XPath, CSS)', 'Handling Web Elements', 'Waits in Selenium']
+                    },
+                    {
+                        title: 'Module 3: TestNG Framework',
+                        lectures: 4,
+                        topics: ['TestNG Annotations', 'Assertions', 'Test Suites', 'Parameterization']
+                    },
+                    {
+                        title: 'Module 4: Page Object Model',
+                        lectures: 4,
+                        topics: ['POM Architecture', 'Page Factory', 'Reusable Components', 'Test Case Design']
+                    },
+                    {
+                        title: 'Module 5: CI/CD Integration',
+                        lectures: 3,
+                        topics: ['Jenkins Setup', 'Pipeline Creation', 'Automated Testing', 'Reporting']
+                    }
+                ]
+            },
+            'api': {
+                id: 'api',
+                title: 'Postman API Testing',
+                image: 'images/photo12.jpeg',
+                description: 'Learn REST API testing, Postman collections, automation workflows, reporting, and integration with CI/CD pipelines using real-world APIs.',
+                rating: '4.6',
+                reviews: '(210 Reviews)',
+                stars: '⭐⭐⭐⭐⭐',
+                enrolled: '870',
+                level: 'Beginner to Intermediate',
+                duration: '4 Weeks',
+                badge: '⭐ Trending',
+                priceCurrent: '₹3,999',
+                priceOld: '₹6,999',
+                discount: '43% OFF',
+                totalModules: 4,
+                totalLectures: 16,
+                overviewDescription: 'This API Testing course covers everything from API fundamentals to advanced automation using Postman. You will learn to test REST APIs, create automated test suites, and integrate them into CI/CD pipelines.',
+                tools: ['Postman', 'Newman', 'Jenkins', 'Git'],
+                whatLearn: [
+                    'REST API Concepts',
+                    'Postman Collections',
+                    'Automation Testing',
+                    'Data-Driven Testing',
+                    'Reporting &amp; Monitoring',
+                    'CI/CD Integration',
+                    'Real-time Projects'
+                ],
+                modules: [
+                    {
+                        title: 'Module 1: API Fundamentals',
+                        lectures: 4,
+                        topics: ['What is API?', 'REST vs SOAP', 'HTTP Methods', 'Status Codes']
+                    },
+                    {
+                        title: 'Module 2: Postman Basics',
+                        lectures: 4,
+                        topics: ['Postman Installation', 'Creating Requests', 'Variables &amp; Environments', 'Collections']
+                    },
+                    {
+                        title: 'Module 3: Automation Testing',
+                        lectures: 4,
+                        topics: ['Test Scripts', 'Assertions', 'Data-Driven Testing', 'Newman CLI']
+                    },
+                    {
+                        title: 'Module 4: Reporting &amp; CI/CD',
+                        lectures: 4,
+                        topics: ['HTML Reports', 'Jenkins Integration', 'Pipeline Setup', 'Monitoring']
+                    }
+                ]
+            },
+            'playwright': {
+                id: 'playwright',
+                title: 'Playwright Automation',
+                image: 'images/photo10.jpeg',
+                description: 'Learn end-to-end test automation using Microsoft Playwright with modern frameworks, cross-browser testing, and advanced debugging techniques.',
+                rating: '4.5',
+                reviews: '(180 Reviews)',
+                stars: '⭐⭐⭐⭐⭐',
+                enrolled: '620',
+                level: 'Intermediate',
+                duration: '8 Weeks',
+                badge: '⭐ Modern',
+                priceCurrent: '₹6,999',
+                priceOld: '₹10,999',
+                discount: '36% OFF',
+                totalModules: 4,
+                totalLectures: 18,
+                overviewDescription: 'This Playwright course teaches you modern end-to-end testing with Microsoft Playwright. You will learn cross-browser testing, auto-waiting, network interception, and advanced debugging techniques.',
+                tools: ['Playwright', 'Node.js', 'TypeScript', 'Git'],
+                whatLearn: [
+                    'Playwright Setup',
+                    'Cross-Browser Testing',
+                    'Auto-Waiting',
+                    'Network Interception',
+                    'API Testing',
+                    'CI/CD Integration',
+                    'Real-time Project'
+                ],
+                modules: [
+                    {
+                        title: 'Module 1: Playwright Introduction',
+                        lectures: 4,
+                        topics: ['What is Playwright?', 'Installation &amp; Setup', 'First Test Script', 'Test Runner']
+                    },
+                    {
+                        title: 'Module 2: Locators &amp; Actions',
+                        lectures: 5,
+                        topics: ['Selectors', 'Auto-Waiting', 'Interactions', 'Assertions']
+                    },
+                    {
+                        title: 'Module 3: Advanced Features',
+                        lectures: 5,
+                        topics: ['Network Interception', 'API Testing', 'Visual Testing', 'Debugging']
+                    },
+                    {
+                        title: 'Module 4: CI/CD Integration',
+                        lectures: 4,
+                        topics: ['Jenkins Integration', 'GitHub Actions', 'Reporting', 'Real-time Project']
+                    }
+                ]
+            },
+            'cypress': {
+                id: 'cypress',
+                title: 'Cypress Automation',
+                image: 'images/photo13.jpeg',
+                description: 'Learn modern UI automation using Cypress with real-world projects, time-travel debugging, and seamless integration with modern JavaScript frameworks.',
+                rating: '4.4',
+                reviews: '(150 Reviews)',
+                stars: '⭐⭐⭐⭐⭐',
+                enrolled: '540',
+                level: 'Intermediate',
+                duration: '8 Weeks',
+                badge: '⭐ Modern',
+                priceCurrent: '₹6,499',
+                priceOld: '₹9,999',
+                discount: '35% OFF',
+                totalModules: 4,
+                totalLectures: 17,
+                overviewDescription: 'This Cypress course teaches you modern UI automation with Cypress. You will learn time-travel debugging, API testing, CI/CD integration, and build real-world projects with modern JavaScript frameworks.',
+                tools: ['Cypress', 'Node.js', 'JavaScript', 'Git'],
+                whatLearn: [
+                    'Cypress Setup',
+                    'Writing Tests',
+                    'Time-Travel Debugging',
+                    'API Testing',
+                    'CI/CD Integration',
+                    'Real-world Projects',
+                    'Modern JavaScript'
+                ],
+                modules: [
+                    {
+                        title: 'Module 1: Cypress Introduction',
+                        lectures: 4,
+                        topics: ['What is Cypress?', 'Installation &amp; Setup', 'Writing First Test', 'Cypress Dashboard']
+                    },
+                    {
+                        title: 'Module 2: Testing with Cypress',
+                        lectures: 5,
+                        topics: ['Selectors &amp; Assertions', 'Interactions', 'Time-Travel Debugging', 'Fixtures &amp; Data']
+                    },
+                    {
+                        title: 'Module 3: Advanced Features',
+                        lectures: 4,
+                        topics: ['API Testing', 'Custom Commands', 'Video Recording', 'Parallel Testing']
+                    },
+                    {
+                        title: 'Module 4: CI/CD &amp; Projects',
+                        lectures: 4,
+                        topics: ['CI/CD Integration', 'Real-time Project', 'Reporting', 'Best Practices']
+                    }
+                ]
+            },
+            'restassured': {
+                id: 'restassured',
+                title: 'REST Assured API Testing',
+                image: 'images/photo14.jpeg',
+                description: 'Learn API automation using REST Assured with Java, integrate with test frameworks, and build robust API test suites for enterprise applications.',
+                rating: '4.3',
+                reviews: '(120 Reviews)',
+                stars: '⭐⭐⭐⭐⭐',
+                enrolled: '450',
+                level: 'Intermediate to Advanced',
+                duration: '6 Weeks',
+                badge: '⭐ Advanced',
+                priceCurrent: '₹5,999',
+                priceOld: '₹9,499',
+                discount: '37% OFF',
+                totalModules: 4,
+                totalLectures: 16,
+                overviewDescription: 'This REST Assured course teaches you API automation with Java. You will learn to build robust API test suites, integrate with TestNG, and implement enterprise-level API testing strategies.',
+                tools: ['Java', 'REST Assured', 'TestNG', 'Maven', 'Git'],
+                whatLearn: [
+                    'REST Assured Basics',
+                    'Request &amp; Response Handling',
+                    'TestNG Integration',
+                    'Data-Driven Testing',
+                    'Reporting &amp; CI/CD',
+                    'Real-world Projects',
+                    'Enterprise API Testing'
+                ],
+                modules: [
+                    {
+                        title: 'Module 1: REST Assured Introduction',
+                        lectures: 4,
+                        topics: ['What is REST Assured?', 'Setup &amp; Configuration', 'Making GET Requests', 'Response Validation']
+                    },
+                    {
+                        title: 'Module 2: Advanced Testing',
+                        lectures: 4,
+                        topics: ['POST, PUT, DELETE Requests', 'Request Specification', 'Response Specification', 'Authentication']
+                    },
+                    {
+                        title: 'Module 3: Test Framework Integration',
+                        lectures: 4,
+                        topics: ['TestNG Integration', 'Data-Driven Testing', 'Assertions', 'Test Suites']
+                    },
+                    {
+                        title: 'Module 4: CI/CD &amp; Projects',
+                        lectures: 4,
+                        topics: ['Reporting', 'Jenkins Integration', 'Real-time Project', 'Best Practices']
+                    }
+                ]
+            }
+        };
+
+        // ============================================================ */
+        // ===== LOAD COURSE DATA ===== */
+        // ============================================================ */
+        function loadCourse(courseId) {
+            const course = courseData[courseId];
+            if (!course) {
+                loadCourse('manual');
+                return;
+            }
+
+            // Image
+            const img = document.getElementById('courseImage');
+            if (course.image) {
+                img.src = course.image;
+                img.style.display = 'block';
+            } else {
+                img.style.display = 'none';
+                const placeholder = document.createElement('div');
+                placeholder.style.cssText = 'width:100%; max-height:300px; background:#F5F8FF; border-radius:16px; padding:20px; border:1px solid var(--border); display:flex; align-items:center; justify-content:center; font-size:60px; color:var(--primary); opacity:0.6;';
+                placeholder.textContent = '🎯';
+                img.parentNode.insertBefore(placeholder, img);
+            }
+
+            // Title & Description
+            document.getElementById('courseTitle').textContent = course.title;
+            document.getElementById('courseDescription').textContent = course.description;
+
+            // Rating
+            document.getElementById('courseStars').textContent = course.stars;
+            document.getElementById('courseRating').textContent = course.rating;
+            document.getElementById('courseReviews').textContent = course.reviews;
+            document.getElementById('courseEnrolled').textContent = course.enrolled;
+
+            // Tags
+            document.getElementById('metaLevel').textContent = course.level;
+            document.getElementById('metaDuration').textContent = course.duration;
+
+            // Pricing
+            document.getElementById('priceCurrent').textContent = course.priceCurrent;
+            document.getElementById('priceOld').textContent = course.priceOld;
+            document.getElementById('discountBadge').textContent = course.discount;
+
+            // Overview Description
+            document.getElementById('overviewDescription').textContent = course.overviewDescription;
+
+            // What You'll Learn (Sidebar)
+            const sidebarLearnList = document.getElementById('sidebarLearnList');
+            sidebarLearnList.innerHTML = '';
+            if (course.whatLearn) {
+                course.whatLearn.forEach(item => {
+                    const li = document.createElement('li');
+                    li.innerHTML = `<i class="fas fa-check-circle"></i> ${item}`;
+                    sidebarLearnList.appendChild(li);
+                });
+            }
+
+            // Tools
+            const toolsGrid = document.querySelector('.tools-grid');
+            toolsGrid.innerHTML = '';
+            course.tools.forEach(tool => {
+                const span = document.createElement('span');
+                span.className = 'tool-item';
+                span.innerHTML = `<i class="fas fa-code"></i> ${tool}`;
+                toolsGrid.appendChild(span);
+            });
+
+            // Total modules, lectures, duration
+            document.getElementById('totalModules').textContent = course.totalModules;
+            document.getElementById('totalLectures').textContent = course.totalLectures;
+            document.getElementById('totalDuration').textContent = course.duration;
+
+            // Review rating
+            document.getElementById('reviewRating').textContent = course.rating;
+            document.getElementById('reviewStars').textContent = course.stars;
+            document.getElementById('reviewCount').textContent = `Based on ${course.reviews}`;
+
+            // Modules (Content tab)
+            const modulesContainer = document.getElementById('modulesContainer');
+            modulesContainer.innerHTML = '';
+            course.modules.forEach((module, index) => {
+                const moduleDiv = document.createElement('div');
+                moduleDiv.className = 'module-item';
+                moduleDiv.innerHTML = `
+                    <div class="module-header" onclick="toggleModule(this)">
+                        <div class="module-info">
+                            <span>${module.title}</span>
+                            <span class="lecture-count">${module.lectures} lectures</span>
+                        </div>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="module-body">
+                        <ul>
+                            ${module.topics.map(topic => `<li><i class="fas fa-circle"></i> ${topic}</li>`).join('')}
+                        </ul>
+                    </div>
+                `;
+                modulesContainer.appendChild(moduleDiv);
+            });
+        }
+
+        // ============================================================ */
+        // ===== MODULE TOGGLE ===== */
+        // ============================================================ */
+        function toggleModule(element) {
+            const body = element.nextElementSibling;
+            const icon = element.querySelector('i');
+            if (body.classList.contains('open')) {
+                body.classList.remove('open');
+                icon.className = 'fas fa-chevron-down';
+            } else {
+                body.classList.add('open');
+                icon.className = 'fas fa-chevron-up';
+            }
+        }
+
+        // ============================================================ */
+        // ===== TAB SWITCHING ===== */
+        // ============================================================ */
+        document.querySelectorAll('.course-tab').forEach(tab => {
+            tab.addEventListener('click', function() {
+                document.querySelectorAll('.course-tab').forEach(t => t.classList.remove('active'));
+                this.classList.add('active');
+                const tabId = this.dataset.tab;
+                document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+                document.getElementById('tab-' + tabId).classList.add('active');
+            });
+        });
+
+        // ============================================================ */
+        // ===== FAQ TOGGLE ===== */
+        // ============================================================ */
+        function toggleFAQ(element) {
+            const answer = element.nextElementSibling;
+            const icon = element.querySelector('i');
+            if (answer.classList.contains('open')) {
+                answer.classList.remove('open');
+                icon.className = 'fas fa-plus';
+            } else {
+                answer.classList.add('open');
+                icon.className = 'fas fa-minus';
+            }
+        }
+
+        // ============================================================ */
+        // ===== LOAD COURSE BASED ON URL PARAMETER ===== */
+        // ============================================================ */
+        if (courseParam && courseData[courseParam]) {
+            loadCourse(courseParam);
+        } else {
+            loadCourse('manual');
+        }
+
+        // ============================================================ */
+        // ===== LOGIN DROPDOWN ===== */
+        // ============================================================ */
+        const dropdownBtn = document.getElementById('loginDropdownBtn');
+        const dropdown = document.getElementById('loginDropdown');
+        if (dropdownBtn && dropdown) {
+            dropdownBtn.addEventListener('click', function(e) {
+                e.preventDefault();
+                e.stopPropagation();
+                dropdown.classList.toggle('show');
+            });
+            document.addEventListener('click', function(e) {
+                if (!dropdownBtn.contains(e.target) && !dropdown.contains(e.target)) {
+                    dropdown.classList.remove('show');
+                }
+            });
+            document.addEventListener('keydown', function(e) {
+                if (e.key === 'Escape') {
+                    dropdown.classList.remove('show');
+                }
+            });
+        }
+
+        console.log('📚 Course Detail Page Loaded');
+        console.log('🔗 Enroll button links to enroll.html?course=' + getCourseId());
+    </script>
+
+</body>
+</html>
