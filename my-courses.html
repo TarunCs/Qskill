@@ -1,0 +1,578 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>My Courses - QSkill Career Solutions</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+
+    <link rel="stylesheet" href="style.css" />
+
+    <style>
+        .page-header {
+            padding: 40px 80px 20px;
+            background: var(--white);
+            border-bottom: 1px solid var(--border);
+        }
+
+        .page-header h1 {
+            font-size: 32px;
+            font-weight: 700;
+            color: var(--text-dark);
+        }
+
+        .page-header h1 span {
+            color: var(--primary);
+        }
+
+        .page-header p {
+            color: var(--text-gray);
+            font-size: 16px;
+            margin-top: 4px;
+        }
+
+        .my-courses-section {
+            padding: 40px 80px 60px;
+            background: var(--white);
+        }
+
+        .my-courses-section .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+            gap: 16px;
+        }
+
+        .my-courses-section .section-header h2 {
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--text-dark);
+        }
+
+        .my-courses-section .section-header .course-count {
+            color: var(--text-gray);
+            font-size: 14px;
+            background: var(--light-bg);
+            padding: 4px 16px;
+            border-radius: 999px;
+        }
+
+        .my-courses-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 30px;
+        }
+
+        .my-course-card {
+            background: var(--white);
+            border-radius: 16px;
+            padding: 24px;
+            border: 1px solid var(--border);
+            transition: 0.3s;
+            position: relative;
+        }
+
+        .my-course-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.06);
+            border-color: var(--primary);
+        }
+
+        .my-course-card .course-status {
+            position: absolute;
+            top: 16px;
+            right: 16px;
+            padding: 4px 14px;
+            border-radius: 999px;
+            font-size: 12px;
+            font-weight: 500;
+        }
+
+        .my-course-card .course-status.in-progress {
+            background: #DBEAFE;
+            color: #2563EB;
+        }
+
+        .my-course-card .course-status.completed {
+            background: #DCFCE7;
+            color: #16a34a;
+        }
+
+        .my-course-card .course-status.not-started {
+            background: #FEF3C7;
+            color: #d97706;
+        }
+
+        .my-course-card .course-image {
+            width: 100%;
+            aspect-ratio: 16/9;
+            border-radius: 12px;
+            overflow: hidden;
+            margin-bottom: 16px;
+            background: var(--light-bg);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .my-course-card .course-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            padding: 12px;
+        }
+
+        .my-course-card .course-image .placeholder {
+            font-size: 40px;
+            color: var(--primary);
+            opacity: 0.4;
+        }
+
+        .my-course-card h3 {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 6px;
+            color: var(--text-dark);
+        }
+
+        .my-course-card .instructor {
+            font-size: 14px;
+            color: var(--text-gray);
+            margin-bottom: 12px;
+        }
+
+        .my-course-card .instructor i {
+            margin-right: 4px;
+        }
+
+        .my-course-card .progress-section {
+            margin: 12px 0;
+        }
+
+        .my-course-card .progress-section .progress-label {
+            display: flex;
+            justify-content: space-between;
+            font-size: 13px;
+            color: var(--text-gray);
+            margin-bottom: 4px;
+        }
+
+        .my-course-card .progress-section .progress-bar {
+            height: 6px;
+            background: var(--border);
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .my-course-card .progress-section .progress-bar .fill {
+            height: 100%;
+            border-radius: 10px;
+            background: var(--primary);
+            transition: width 0.5s ease;
+        }
+
+        .my-course-card .progress-section .progress-bar .fill.orange {
+            background: var(--orange);
+        }
+
+        .my-course-card .progress-section .progress-bar .fill.green {
+            background: var(--success);
+        }
+
+        .my-course-card .btn-group {
+            display: flex;
+            gap: 12px;
+            margin-top: 16px;
+            flex-wrap: wrap;
+        }
+
+        .my-course-card .btn-group .btn-resume {
+            background: var(--primary);
+            color: var(--white);
+            border: none;
+            padding: 8px 20px;
+            border-radius: 6px;
+            font-weight: 500;
+            font-size: 14px;
+            cursor: pointer;
+            transition: 0.3s;
+            font-family: 'Poppins', sans-serif;
+            flex: 1;
+            text-decoration: none;
+            text-align: center;
+            display: inline-block;
+        }
+
+        .my-course-card .btn-group .btn-resume:hover {
+            background: var(--secondary);
+            transform: translateY(-2px);
+        }
+
+        .my-course-card .btn-group .btn-details {
+            background: transparent;
+            color: var(--text-dark);
+            border: 1px solid var(--border);
+            padding: 8px 16px;
+            border-radius: 6px;
+            font-weight: 500;
+            font-size: 14px;
+            cursor: pointer;
+            transition: 0.3s;
+            font-family: 'Poppins', sans-serif;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .my-course-card .btn-group .btn-details:hover {
+            border-color: var(--primary);
+            color: var(--primary);
+            background: var(--light-bg);
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 60px 20px;
+        }
+
+        .empty-state i {
+            font-size: 64px;
+            color: var(--border);
+            margin-bottom: 16px;
+        }
+
+        .empty-state h3 {
+            font-size: 24px;
+            font-weight: 600;
+            color: var(--text-dark);
+            margin-bottom: 8px;
+        }
+
+        .empty-state p {
+            color: var(--text-gray);
+            font-size: 16px;
+            max-width: 400px;
+            margin: 0 auto 20px;
+        }
+
+        .empty-state .btn-explore {
+            background: var(--primary);
+            color: var(--white);
+            border: none;
+            padding: 12px 32px;
+            border-radius: 999px;
+            font-weight: 600;
+            font-size: 16px;
+            cursor: pointer;
+            transition: 0.3s;
+            font-family: 'Poppins', sans-serif;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .empty-state .btn-explore:hover {
+            background: var(--secondary);
+            transform: translateY(-2px);
+        }
+
+        @media (max-width: 992px) {
+            .page-header {
+                padding: 30px 40px 15px;
+            }
+            .my-courses-section {
+                padding: 30px 40px 40px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .page-header {
+                padding: 20px;
+            }
+            .page-header h1 {
+                font-size: 26px;
+            }
+            .my-courses-section {
+                padding: 20px;
+            }
+            .my-courses-grid {
+                grid-template-columns: 1fr;
+            }
+            .my-courses-section .section-header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .page-header h1 {
+                font-size: 22px;
+            }
+            .my-course-card {
+                padding: 16px;
+            }
+            .my-course-card .btn-group {
+                flex-direction: column;
+            }
+            .my-course-card .btn-group .btn-resume,
+            .my-course-card .btn-group .btn-details {
+                width: 100%;
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ===== TOAST ===== -->
+    <div class="toast" id="toast">
+        <i class="fas fa-check-circle" id="toastIcon"></i>
+        <span id="toastMessage">Success!</span>
+    </div>
+
+    <!-- ============================================================ -->
+    <!-- ===== HEADER - SAME AS DASHBOARD ===== -->
+    <!-- ============================================================ -->
+    <header class="header">
+        <a href="index.html" class="logo">
+            <img src="images/logo.png" alt="QSkill Logo" />
+            <span class="logo-text">
+                <span class="qskill">Qskill</span>
+                <span class="careersolutions">careersolutions</span>
+            </span>
+        </a>
+
+        <ul class="header-menu">
+            <li><a href="dashboard.html">Dashboard</a></li>
+            <li><a href="all-courses.html">Courses</a></li>
+            <li><a href="my-courses.html" class="active">My Courses</a></li>
+            <li><a href="student-assignments.html">Assignments</a></li>
+            <li><a href="#" onclick="logout()" style="color: #EF4444;">Logout</a></li>
+        </ul>
+
+        <div class="user-profile">
+            <span class="name" id="studentName">Tejaswini</span>
+            <span class="role-badge">Student</span>
+            <div class="avatar" id="studentAvatar">T</div>
+        </div>
+    </header>
+
+    <!-- ============================================================ -->
+    <!-- ===== PAGE HEADER ===== -->
+    <!-- ============================================================ -->
+    <section class="page-header">
+        <h1>My <span>Courses</span></h1>
+        <p>Track your progress and continue learning</p>
+    </section>
+
+    <!-- ============================================================ -->
+    <!-- ===== MY COURSES (ONLY ENROLLED) ===== -->
+    <!-- ============================================================ -->
+    <section class="my-courses-section" id="myCoursesSection">
+
+        <div class="section-header">
+            <h2>Enrolled Courses</h2>
+            <span class="course-count" id="courseCount">0 Courses</span>
+        </div>
+
+        <div class="my-courses-grid" id="myCoursesGrid">
+            <!-- Courses will be rendered by JavaScript -->
+        </div>
+
+    </section>
+
+    <!-- ============================================================ -->
+    <!-- ===== FOOTER ===== -->
+    <!-- ============================================================ -->
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="copyright">© 2026 QSkill Career Solutions. All Rights Reserved.</div>
+            <div class="footer-links">
+                <a href="#">Privacy Policy</a>
+                <a href="#">Terms of Service</a>
+                <a href="#">Contact</a>
+                <a href="index.html">Home</a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- ============================================================ -->
+    <!-- ===== SCRIPTS ===== -->
+    <!-- ============================================================ -->
+    <script src="script.js"></script>
+
+    <script>
+        // ===== SESSION CHECK =====
+        const studentLoggedIn = localStorage.getItem('qskillStudentLoggedIn');
+        if (!studentLoggedIn) {
+            window.location.href = 'login.html';
+        }
+
+        // ===== LOGOUT FUNCTION =====
+        function logout() {
+            if (confirm('Are you sure you want to logout?')) {
+                localStorage.removeItem('qskillStudentLoggedIn');
+                localStorage.removeItem('qskillStudentId');
+                localStorage.removeItem('qskillUser');
+                window.location.href = 'login.html';
+            }
+        }
+
+        // ===== UPDATE STUDENT NAME =====
+        function updateStudentName() {
+            const userData = JSON.parse(localStorage.getItem('qskillUser') || '{}');
+            const name = userData.name || 'Student';
+            const nameEl = document.getElementById('studentName');
+            const avatarEl = document.getElementById('studentAvatar');
+            if (nameEl) nameEl.textContent = name;
+            if (avatarEl) avatarEl.textContent = name.charAt(0).toUpperCase();
+        }
+
+        // ============================================================ */
+        // ===== COURSE DATA WITH UPDATED IMAGES ===== */
+        // ============================================================ */
+        const allCoursesData = {
+            'manual': {
+                title: 'Manual Testing',
+                instructor: 'Priya Patel',
+                status: 'completed',
+                progress: 100,
+                image: 'images/manual-testing.jpg',
+                placeholder: false,
+                courseId: 'manual'
+            },
+            'automation': {
+                title: 'Automation Testing (Selenium)',
+                instructor: 'Rahul Sharma',
+                status: 'in-progress',
+                progress: 70,
+                image: 'images/photo11.jpeg',
+                placeholder: false,
+                courseId: 'automation'
+            },
+            'api': {
+                title: 'Postman API Testing',
+                instructor: 'Vikram Singh',
+                status: 'in-progress',
+                progress: 45,
+                image: 'images/photo12.jpeg',
+                placeholder: false,
+                courseId: 'api'
+            },
+            'playwright': {
+                title: 'Playwright Automation',
+                instructor: 'Ananya Reddy',
+                status: 'not-started',
+                progress: 0,
+                image: 'images/photo10.jpeg',
+                placeholder: false,
+                courseId: 'playwright'
+            },
+            'cypress': {
+                title: 'Cypress Automation',
+                instructor: 'Suresh Kumar',
+                status: 'not-started',
+                progress: 0,
+                image: 'images/photo13.jpeg',
+                placeholder: false,
+                courseId: 'cypress'
+            },
+            'rest': {
+                title: 'REST Assured API Testing',
+                instructor: 'Meera Nair',
+                status: 'not-started',
+                progress: 0,
+                image: 'images/photo14.jpeg',
+                placeholder: false,
+                courseId: 'restassured'
+            }
+        };
+
+        // ============================================================ */
+        // ===== ENROLLED COURSES (From localStorage) ===== */
+        // ============================================================ */
+        let enrolledCourses = JSON.parse(localStorage.getItem('enrolledCourses')) || [];
+
+        // Default enrolled courses
+        if (enrolledCourses.length === 0) {
+            enrolledCourses = ['automation', 'manual', 'api'];
+            localStorage.setItem('enrolledCourses', JSON.stringify(enrolledCourses));
+        }
+
+        // ============================================================ */
+        // ===== RENDER ENROLLED COURSES ===== */
+        // ============================================================ */
+        function renderEnrolledCourses() {
+            const grid = document.getElementById('myCoursesGrid');
+            const count = document.getElementById('courseCount');
+
+            const enrolledData = enrolledCourses.map(id => {
+                const course = allCoursesData[id];
+                if (!course) return null;
+                return { id, ...course };
+            }).filter(c => c !== null);
+
+            count.textContent = `${enrolledData.length} Courses`;
+
+            if (enrolledData.length === 0) {
+                grid.innerHTML = `
+                    <div class="empty-state">
+                        <i class="fas fa-book-open"></i>
+                        <h3>No Courses Enrolled Yet</h3>
+                        <p>You haven't enrolled in any courses yet. Browse our available courses and start learning!</p>
+                        <a href="all-courses.html" class="btn-explore">Explore Courses</a>
+                    </div>
+                `;
+                return;
+            }
+
+            grid.innerHTML = enrolledData.map(course => `
+                <div class="my-course-card">
+                    <span class="course-status ${course.status}">
+                        ${course.status === 'in-progress' ? 'In Progress' : 
+                         course.status === 'completed' ? 'Completed' : 'Not Started'}
+                    </span>
+                    <div class="course-image">
+                        ${course.image ? `<img src="${course.image}" alt="${course.title}" />` : 
+                        `<div class="placeholder">${course.placeholderIcon}</div>`}
+                    </div>
+                    <h3>${course.title}</h3>
+                    <p class="instructor"><i class="fas fa-user-tie"></i> ${course.instructor}</p>
+                    <div class="progress-section">
+                        <div class="progress-label">
+                            <span>Progress</span>
+                            <span>${course.progress}%</span>
+                        </div>
+                        <div class="progress-bar">
+                            <div class="fill ${course.progress === 100 ? 'green' : course.progress > 50 ? '' : 'orange'}" 
+                                 style="width:${course.progress}%;"></div>
+                        </div>
+                    </div>
+                    <div class="btn-group">
+                        <a href="course-progress.html?course=${course.courseId}" class="btn-resume">
+                            ${course.status === 'completed' ? 'Review' : 'Resume'} <i class="fas fa-arrow-right"></i>
+                        </a>
+                        <a href="course-progress.html?course=${course.courseId}" class="btn-details">Details</a>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // ============================================================ */
+        // ===== INITIALIZE ===== */
+        // ============================================================ */
+        document.addEventListener('DOMContentLoaded', function() {
+            updateStudentName();
+            renderEnrolledCourses();
+        });
+
+        console.log('📚 My Courses Page Loaded');
+        console.log('📌 Enrolled Courses:', enrolledCourses);
+    </script>
+
+</body>
+</html>

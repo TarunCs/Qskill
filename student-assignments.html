@@ -1,0 +1,1144 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>My Assignments - Student | QSkill</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap"
+        rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+
+    <link rel="stylesheet" href="style.css" />
+
+    <style>
+        .page-wrapper {
+            padding: 30px 80px 60px;
+            background: #FAFBFC;
+            min-height: 100vh;
+        }
+
+        .page-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 16px;
+            margin-bottom: 30px;
+        }
+
+        .page-header h1 {
+            font-size: 28px;
+            font-weight: 700;
+            color: var(--text-dark);
+        }
+
+        .page-header h1 span {
+            color: var(--primary);
+        }
+
+        .back-btn {
+            background: var(--white);
+            border: 1px solid var(--border);
+            padding: 8px 20px;
+            border-radius: 999px;
+            font-weight: 500;
+            color: var(--text-dark);
+            text-decoration: none;
+            transition: 0.3s;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .back-btn:hover {
+            border-color: var(--primary);
+            color: var(--primary);
+            background: var(--light-bg);
+        }
+
+        .assign-stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+            gap: 16px;
+            margin-bottom: 30px;
+        }
+
+        .assign-stat-card {
+            background: var(--white);
+            padding: 16px 20px;
+            border-radius: 12px;
+            border: 1px solid var(--border);
+            text-align: center;
+        }
+
+        .assign-stat-card .number {
+            font-size: 28px;
+            font-weight: 700;
+            color: var(--text-dark);
+        }
+
+        .assign-stat-card .label {
+            font-size: 13px;
+            color: var(--text-gray);
+        }
+
+        .assign-stat-card .number.completed {
+            color: #16a34a;
+        }
+
+        .assign-stat-card .number.pending {
+            color: #d97706;
+        }
+
+        .assign-stat-card .number.rejected {
+            color: #dc2626;
+        }
+
+        .assignment-list-card {
+            background: var(--white);
+            border-radius: 16px;
+            padding: 24px;
+            border: 1px solid var(--border);
+        }
+
+        .assignment-list-card .card-title {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 16px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .assignment-list-card .card-title i {
+            color: var(--primary);
+        }
+
+        .assignment-row {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            padding: 14px 0;
+            border-bottom: 1px solid #F1F5F9;
+            transition: 0.3s;
+        }
+
+        .assignment-row:last-child {
+            border-bottom: none;
+        }
+
+        .assignment-row:hover {
+            background: #FAFBFC;
+            padding-left: 8px;
+            padding-right: 8px;
+            border-radius: 8px;
+        }
+
+        .assignment-row .info {
+            flex: 1;
+        }
+
+        .assignment-row .info .title {
+            font-weight: 600;
+            font-size: 15px;
+            color: var(--text-dark);
+        }
+
+        .assignment-row .info .meta {
+            font-size: 13px;
+            color: var(--text-gray);
+        }
+
+        .assignment-row .info .meta i {
+            margin-right: 4px;
+        }
+
+        .assignment-row .status-badge {
+            font-size: 12px;
+            font-weight: 500;
+            padding: 4px 16px;
+            border-radius: 999px;
+            white-space: nowrap;
+        }
+
+        .assignment-row .status-badge.completed {
+            background: #DCFCE7;
+            color: #16a34a;
+        }
+
+        .assignment-row .status-badge.pending {
+            background: #FEF3C7;
+            color: #d97706;
+        }
+
+        .assignment-row .status-badge.rejected {
+            background: #FEE2E2;
+            color: #dc2626;
+        }
+
+        .assignment-row .status-badge.submitted {
+            background: #DBEAFE;
+            color: #2563EB;
+        }
+
+        .assignment-row .view-btn {
+            background: var(--light-bg);
+            border: none;
+            padding: 6px 18px;
+            border-radius: 999px;
+            font-size: 13px;
+            font-weight: 500;
+            color: var(--primary);
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .assignment-row .view-btn:hover {
+            background: var(--primary);
+            color: var(--white);
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 40px 20px;
+            color: var(--text-gray);
+        }
+
+        .empty-state i {
+            font-size: 48px;
+            color: var(--border);
+            margin-bottom: 12px;
+        }
+
+        .filter-tabs {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+            margin-bottom: 16px;
+        }
+
+        .filter-tab {
+            padding: 6px 18px;
+            border: 1px solid var(--border);
+            border-radius: 999px;
+            background: var(--white);
+            font-size: 13px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: 0.3s;
+            color: var(--text-gray);
+            font-family: 'Poppins', sans-serif;
+        }
+
+        .filter-tab:hover {
+            border-color: var(--primary);
+            color: var(--primary);
+            background: var(--light-bg);
+        }
+
+        .filter-tab.active {
+            background: var(--primary);
+            color: var(--white);
+            border-color: var(--primary);
+        }
+
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(4px);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .modal-overlay.active {
+            display: flex;
+        }
+
+        .modal-content {
+            background: var(--white);
+            border-radius: 20px;
+            max-width: 580px;
+            width: 100%;
+            max-height: 90vh;
+            overflow-y: auto;
+            padding: 30px 32px;
+            position: relative;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.2);
+            animation: modalSlideIn 0.3s ease;
+        }
+
+        @keyframes modalSlideIn {
+            from {
+                opacity: 0;
+                transform: translateY(30px) scale(0.95);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 14px;
+            right: 18px;
+            background: var(--light-bg);
+            border: none;
+            width: 34px;
+            height: 34px;
+            border-radius: 50%;
+            font-size: 18px;
+            cursor: pointer;
+            transition: 0.3s;
+            color: var(--text-gray);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-close:hover {
+            background: var(--border);
+            color: var(--text-dark);
+        }
+
+        .modal-content h2 {
+            font-size: 22px;
+            font-weight: 700;
+            color: var(--text-dark);
+            margin-bottom: 4px;
+            padding-right: 30px;
+        }
+
+        .modal-content .modal-course {
+            font-size: 14px;
+            color: var(--text-gray);
+            margin-bottom: 8px;
+        }
+
+        .modal-content .modal-status {
+            display: inline-block;
+            font-size: 13px;
+            font-weight: 500;
+            padding: 3px 14px;
+            border-radius: 999px;
+            margin-bottom: 12px;
+        }
+
+        .modal-content .modal-status.completed {
+            background: #DCFCE7;
+            color: #16a34a;
+        }
+
+        .modal-content .modal-status.pending {
+            background: #FEF3C7;
+            color: #d97706;
+        }
+
+        .modal-content .modal-status.rejected {
+            background: #FEE2E2;
+            color: #dc2626;
+        }
+
+        .modal-content .modal-status.submitted {
+            background: #DBEAFE;
+            color: #2563EB;
+        }
+
+        .modal-content .modal-due {
+            font-size: 14px;
+            color: var(--text-gray);
+            margin-bottom: 12px;
+        }
+
+        .modal-content .modal-due i {
+            margin-right: 6px;
+            color: var(--primary);
+        }
+
+        .modal-content .modal-description {
+            background: #F5F7FA;
+            padding: 14px 16px;
+            border-radius: 8px;
+            font-size: 14px;
+            color: var(--text-dark);
+            line-height: 1.7;
+            margin-bottom: 16px;
+        }
+
+        .modal-content .modal-section-title {
+            font-size: 15px;
+            font-weight: 600;
+            color: var(--text-dark);
+            margin-bottom: 8px;
+        }
+
+        .modal-content .file-upload-area {
+            border: 2px dashed var(--border);
+            border-radius: 10px;
+            padding: 24px;
+            text-align: center;
+            cursor: pointer;
+            transition: 0.3s;
+            margin-bottom: 14px;
+        }
+
+        .modal-content .file-upload-area:hover {
+            border-color: var(--primary);
+            background: var(--light-bg);
+        }
+
+        .modal-content .file-upload-area i {
+            font-size: 32px;
+            color: var(--primary);
+            display: block;
+            margin-bottom: 6px;
+        }
+
+        .modal-content .file-upload-area p {
+            font-size: 13px;
+            color: var(--text-gray);
+        }
+
+        .modal-content .file-upload-area .supported-types {
+            font-size: 11px;
+            color: #aaa;
+            display: block;
+            margin-top: 2px;
+        }
+
+        .modal-content .file-upload-area .file-name {
+            font-weight: 500;
+            color: var(--primary);
+        }
+
+        .modal-content .btn-submit-pdf {
+            width: 100%;
+            background: var(--primary);
+            color: var(--white);
+            border: none;
+            padding: 12px;
+            border-radius: 999px;
+            font-weight: 600;
+            font-size: 15px;
+            cursor: pointer;
+            transition: 0.3s;
+            font-family: 'Poppins', sans-serif;
+            margin-bottom: 10px;
+        }
+
+        .modal-content .btn-submit-pdf:hover {
+            background: var(--secondary);
+            transform: translateY(-2px);
+        }
+
+        .modal-content .btn-submit-pdf:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .modal-content .submission-info {
+            background: #EAF1FF;
+            border-radius: 8px;
+            padding: 12px 16px;
+            font-size: 13px;
+            color: var(--text-dark);
+            margin: 10px 0;
+            display: none;
+        }
+
+        .modal-content .submission-info.show {
+            display: block;
+        }
+
+        .modal-content .submission-info i {
+            margin-right: 6px;
+        }
+
+        .modal-content .submission-info .status-completed {
+            color: #16a34a;
+        }
+
+        .modal-content .submission-info .status-rejected {
+            color: #dc2626;
+        }
+
+        .modal-content .submission-info .status-pending {
+            color: #d97706;
+        }
+
+        .modal-content .rejection-reason {
+            background: #FEE2E2;
+            border-radius: 8px;
+            padding: 10px 14px;
+            font-size: 13px;
+            color: #dc2626;
+            margin: 8px 0 12px;
+            display: none;
+        }
+
+        .modal-content .rejection-reason.show {
+            display: block;
+        }
+
+        @media (max-width: 768px) {
+            .page-wrapper {
+                padding: 20px;
+            }
+
+            .assign-stats-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+
+            .assignment-row {
+                flex-wrap: wrap;
+                gap: 8px;
+            }
+
+            .assignment-row .status-badge {
+                font-size: 11px;
+                padding: 2px 12px;
+            }
+
+            .modal-content {
+                padding: 24px 20px;
+            }
+
+            .modal-content h2 {
+                font-size: 19px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .assign-stats-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .modal-content {
+                padding: 18px 16px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="toast" id="toast">
+        <i class="fas fa-check-circle" id="toastIcon"></i>
+        <span id="toastMessage">Success!</span>
+    </div>
+
+    <!-- ============================================================ -->
+    <!-- ===== HEADER - SAME AS DASHBOARD ===== -->
+    <!-- ============================================================ -->
+    <header class="header">
+        <a href="index.html" class="logo">
+            <img src="images/logo.png" alt="QSkill Logo" />
+            <span class="logo-text">
+                <span class="qskill">Qskill</span>
+                <span class="careersolutions">careersolutions</span>
+            </span>
+        </a>
+
+        <ul class="header-menu">
+            <li><a href="dashboard.html">Dashboard</a></li>
+            <li><a href="all-courses.html">Courses</a></li>
+            <li><a href="my-courses.html">My Courses</a></li>
+            <li><a href="student-assignments.html" class="active">Assignments</a></li>
+            <li><a href="#" onclick="logout()" style="color: #EF4444;">Logout</a></li>
+        </ul>
+
+        <div class="user-profile">
+            <span class="name" id="studentName">Student</span>
+            <span class="role-badge">Student</span>
+            <div class="avatar" id="studentAvatar">S</div>
+        </div>
+    </header>
+
+    <!-- ============================================================ -->
+    <!-- ===== MAIN CONTENT ===== -->
+    <!-- ============================================================ -->
+    <section class="page-wrapper">
+        <div class="page-header">
+            <h1>📋 My <span>Assignments</span></h1>
+            <a href="dashboard.html" class="back-btn">
+                <i class="fas fa-arrow-left"></i> Back to Dashboard
+            </a>
+        </div>
+
+        <div class="assign-stats-grid" id="statsGrid">
+            <div class="assign-stat-card">
+                <div class="number" id="statTotal">0</div>
+                <div class="label">Total Assignments</div>
+            </div>
+            <div class="assign-stat-card">
+                <div class="number completed" id="statCompleted">0</div>
+                <div class="label">✅ Approved</div>
+            </div>
+            <div class="assign-stat-card">
+                <div class="number pending" id="statPending">0</div>
+                <div class="label">⏳ Pending Review</div>
+            </div>
+            <div class="assign-stat-card">
+                <div class="number rejected" id="statRejected">0</div>
+                <div class="label">❌ Rejected</div>
+            </div>
+        </div>
+
+        <div class="assignment-list-card">
+            <div class="card-title">
+                <i class="fas fa-list"></i> All Assignments
+            </div>
+
+            <div class="filter-tabs">
+                <button class="filter-tab active" data-filter="all" onclick="filterAssignments('all')">All</button>
+                <button class="filter-tab" data-filter="submitted" onclick="filterAssignments('submitted')">⏳ Pending
+                    Review</button>
+                <button class="filter-tab" data-filter="completed" onclick="filterAssignments('completed')">✅
+                    Approved</button>
+                <button class="filter-tab" data-filter="rejected" onclick="filterAssignments('rejected')">❌
+                    Rejected</button>
+                <button class="filter-tab" data-filter="pending" onclick="filterAssignments('pending')">📋 Not
+                    Submitted</button>
+            </div>
+
+            <div id="assignmentsContainer">
+                <p style="color: var(--text-gray); padding: 20px 0;">Loading assignments...</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== MODAL ===== -->
+    <div class="modal-overlay" id="assignmentModal">
+        <div class="modal-content">
+            <button class="modal-close" onclick="closeAssignmentModal()">
+                <i class="fas fa-times"></i>
+            </button>
+
+            <h2 id="modalTitle">Assignment Title</h2>
+            <div class="modal-course" id="modalCourse">📘 Course Name</div>
+            <span class="modal-status" id="modalStatus">Pending</span>
+            <div class="modal-due" id="modalDue"><i class="fas fa-calendar-alt"></i> Due: Tomorrow</div>
+
+            <div class="modal-section-title">📝 Description</div>
+            <div class="modal-description" id="modalDescription">
+                Assignment description goes here.
+            </div>
+
+            <div class="submission-info" id="submissionInfo">
+                <i class="fas fa-file-pdf"></i> <span id="submissionStatusText">Submitted</span>
+                <br /><span id="submissionFileName" style="font-size:12px; color:var(--text-gray);"></span>
+            </div>
+
+            <div class="rejection-reason" id="rejectionReason">
+                <i class="fas fa-exclamation-circle"></i> <span id="rejectionReasonText">Reason: Please resubmit with
+                    corrections.</span>
+            </div>
+
+            <div class="modal-section-title">📤 Submit Your Work</div>
+
+            <div class="file-upload-area" onclick="document.getElementById('pdfUpload').click()" id="fileUploadArea">
+                <i class="fas fa-file-upload" id="uploadIcon"></i>
+                <p>Click to upload your assignment</p>
+                <span class="supported-types">Supported: PDF, Word (.docx, .doc), PowerPoint (.pptx, .ppt)</span>
+                <span style="font-size:11px; color:#aaa; display:block;">Maximum file size: 10MB</span>
+                <input type="file" id="pdfUpload" accept=".pdf,.docx,.doc,.pptx,.ppt" style="display:none;"
+                    onchange="handleFileSelect(event)" />
+                <div id="selectedFileName" style="margin-top:6px; font-weight:500; color:var(--primary);"></div>
+            </div>
+
+            <button class="btn-submit-pdf" id="submitPdfBtn" onclick="submitAssignment()" disabled>
+                <i class="fas fa-upload"></i> Submit File
+            </button>
+
+            <p style="font-size:12px; color:var(--text-gray); text-align:center; margin-top:12px;">
+                <i class="fas fa-info-circle"></i> Your submission will be reviewed by the instructor.
+            </p>
+        </div>
+    </div>
+
+    <!-- ============================================================ -->
+    <!-- ===== FOOTER ===== -->
+    <!-- ============================================================ -->
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="copyright">© 2026 QSkill Career Solutions. All Rights Reserved.</div>
+            <div class="footer-links">
+                <a href="#">Privacy Policy</a>
+                <a href="#">Terms of Service</a>
+                <a href="#">Contact</a>
+                <a href="index.html">Home</a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- ============================================================ -->
+    <!-- ===== SCRIPTS ===== -->
+    <!-- ============================================================ -->
+    <script>
+        // ============================================================ */
+        // ===== SESSION CHECK ===== */
+        // ============================================================ */
+        const studentLoggedIn = localStorage.getItem('qskillStudentLoggedIn');
+        if (!studentLoggedIn) {
+            window.location.href = 'login.html';
+        }
+
+        // ============================================================ */
+        // ===== LOGOUT ===== */
+        // ============================================================ */
+        function logout() {
+            if (confirm('Are you sure you want to logout?')) {
+                localStorage.removeItem('qskillStudentLoggedIn');
+                localStorage.removeItem('qskillStudentId');
+                localStorage.removeItem('qskillUser');
+                window.location.href = 'login.html';
+            }
+        }
+
+        // ===== UPDATE STUDENT NAME =====
+        function updateStudentName() {
+            const userData = JSON.parse(localStorage.getItem('qskillUser') || '{}');
+            const name = userData.name || 'Student';
+            const nameEl = document.getElementById('studentName');
+            const avatarEl = document.getElementById('studentAvatar');
+            if (nameEl) nameEl.textContent = name;
+            if (avatarEl) avatarEl.textContent = name.charAt(0).toUpperCase();
+        }
+
+        // ============================================================ */
+        // ===== DATA ===== */
+        // ============================================================ */
+        const assignmentData = {
+            1: {
+                id: 1,
+                title: 'Module 4: WebDriver',
+                course: 'automation',
+                courseName: 'Automation Testing (Selenium)',
+                due: '2026-08-06',
+                dueDisplay: 'Tomorrow, 11:59 PM',
+                description: 'Complete the WebDriver tasks for the Selenium project. Write automated tests for the login, registration, and product search functionality. Ensure the tests are stable and follow the Page Object Model pattern.'
+            },
+            2: {
+                id: 2,
+                title: 'API Testing Collection',
+                course: 'api',
+                courseName: 'Postman API Testing',
+                due: '2026-08-08',
+                dueDisplay: '2 days left',
+                description: 'Create a Postman collection for the user authentication API. Include requests for registration, login, and password reset. Add test scripts to validate response codes and response bodies.'
+            },
+            3: {
+                id: 3,
+                title: 'Test Cases for Login',
+                course: 'manual',
+                courseName: 'Manual Testing',
+                due: '2026-08-11',
+                dueDisplay: '5 days left',
+                description: 'Write detailed test cases for the login functionality. Cover positive and negative scenarios. Include test case ID, description, steps, expected result, and actual result fields.'
+            },
+            4: {
+                id: 4,
+                title: 'Jenkins Pipeline Setup',
+                course: 'automation',
+                courseName: 'Automation Testing (Selenium)',
+                due: '2026-08-03',
+                dueDisplay: '1 week left',
+                description: 'Set up a Jenkins pipeline for the project. Configure the pipeline to run automated tests on every push. Set up email notifications for build failures.'
+            }
+        };
+
+        const enrolledCourses = JSON.parse(localStorage.getItem('enrolledCourses')) || ['automation', 'manual', 'api'];
+
+        // ============================================================ */
+        // ===== GET STUDENT ID ===== */
+        // ============================================================ */
+        function getStudentId() {
+            return localStorage.getItem('qskillStudentId') || 'QSK24012345';
+        }
+
+        // ============================================================ */
+        // ===== GET STUDENT ASSIGNMENT STATUS ===== */
+        // ============================================================ */
+        function getStudentAssignments() {
+            const studentId = getStudentId();
+            const key = 'qskillStudentAssignments_' + studentId;
+            let progress = JSON.parse(localStorage.getItem(key)) || {};
+
+            if (Object.keys(progress).length === 0) {
+                progress = {
+                    1: 'pending',
+                    2: 'pending',
+                    3: 'pending',
+                    4: 'pending'
+                };
+                localStorage.setItem(key, JSON.stringify(progress));
+            }
+            return progress;
+        }
+
+        function updateStudentAssignment(assignmentId, status) {
+            const studentId = getStudentId();
+            const key = 'qskillStudentAssignments_' + studentId;
+            let progress = JSON.parse(localStorage.getItem(key)) || {};
+            progress[assignmentId] = status;
+            localStorage.setItem(key, JSON.stringify(progress));
+        }
+
+        // ============================================================ */
+        // ===== SUBMISSION DATA ===== */
+        // ============================================================ */
+        function getSubmission(assignmentId) {
+            const studentId = getStudentId();
+            const key = 'qskillSubmissions_' + studentId;
+            let submissions = JSON.parse(localStorage.getItem(key)) || {};
+            return submissions[assignmentId] || null;
+        }
+
+        function saveSubmission(assignmentId, fileName, status = 'submitted', rejectionReason = '') {
+            const studentId = getStudentId();
+            const key = 'qskillSubmissions_' + studentId;
+            let submissions = JSON.parse(localStorage.getItem(key)) || {};
+            submissions[assignmentId] = {
+                fileName: fileName,
+                submittedAt: new Date().toISOString(),
+                status: status,
+                rejectionReason: rejectionReason,
+                fileType: getFileType(fileName)
+            };
+            localStorage.setItem(key, JSON.stringify(submissions));
+            updateStudentAssignment(assignmentId, status);
+        }
+
+        function getFileType(fileName) {
+            const ext = fileName.split('.').pop().toLowerCase();
+            const types = {
+                'pdf': 'PDF',
+                'docx': 'Word',
+                'doc': 'Word',
+                'pptx': 'PowerPoint',
+                'ppt': 'PowerPoint'
+            };
+            return types[ext] || 'File';
+        }
+
+        function getFileIcon(fileName) {
+            const ext = fileName.split('.').pop().toLowerCase();
+            if (ext === 'pdf') return 'fa-file-pdf';
+            if (ext === 'docx' || ext === 'doc') return 'fa-file-word';
+            if (ext === 'pptx' || ext === 'ppt') return 'fa-file-powerpoint';
+            return 'fa-file';
+        }
+
+        function getFileColor(fileName) {
+            const ext = fileName.split('.').pop().toLowerCase();
+            if (ext === 'pdf') return '#dc2626';
+            if (ext === 'docx' || ext === 'doc') return '#2563EB';
+            if (ext === 'pptx' || ext === 'ppt') return '#d97706';
+            return '#6B7280';
+        }
+
+        // ============================================================ */
+        // ===== RENDER ASSIGNMENTS ===== */
+        // ============================================================ */
+        let currentFilter = 'all';
+        let selectedAssignmentId = null;
+        let selectedFile = null;
+
+        function renderAssignments(filter = 'all') {
+            const container = document.getElementById('assignmentsContainer');
+            const progress = getStudentAssignments();
+
+            const relevantAssignments = Object.keys(assignmentData)
+                .filter(id => enrolledCourses.includes(assignmentData[id].course))
+                .map(id => ({id: parseInt(id), ...assignmentData[id]}));
+
+            let filtered = relevantAssignments;
+            if (filter !== 'all') {
+                filtered = relevantAssignments.filter(a => progress[a.id] === filter);
+            }
+
+            filtered.sort((a, b) => new Date(a.due) - new Date(b.due));
+
+            const total = relevantAssignments.length;
+            const completed = relevantAssignments.filter(a => progress[a.id] === 'completed').length;
+            const pending = relevantAssignments.filter(a => progress[a.id] === 'pending').length;
+            const rejected = relevantAssignments.filter(a => progress[a.id] === 'rejected').length;
+            const submitted = relevantAssignments.filter(a => progress[a.id] === 'submitted').length;
+
+            document.getElementById('statTotal').textContent = total;
+            document.getElementById('statCompleted').textContent = completed;
+            document.getElementById('statPending').textContent = submitted;
+            document.getElementById('statRejected').textContent = rejected;
+
+            if (filtered.length === 0) {
+                container.innerHTML = `
+                    <div class="empty-state">
+                        <i class="fas fa-check-circle"></i>
+                        <h3 style="margin:8px 0; color:var(--text-dark);">All caught up!</h3>
+                        <p>No assignments match the selected filter.</p>
+                    </div>
+                `;
+                return;
+            }
+
+            container.innerHTML = filtered.map(assign => {
+                const status = progress[assign.id] || 'pending';
+                let statusClass = 'pending';
+                let statusLabel = '📋 Not Submitted';
+                if (status === 'completed') {statusClass = 'completed'; statusLabel = '✅ Approved';}
+                else if (status === 'submitted') {statusClass = 'submitted'; statusLabel = '⏳ Pending Review';}
+                else if (status === 'rejected') {statusClass = 'rejected'; statusLabel = '❌ Rejected';}
+
+                return `
+                    <div class="assignment-row">
+                        <div class="info">
+                            <div class="title">${assign.title}</div>
+                            <div class="meta">
+                                <i class="fas fa-book"></i> ${assign.courseName} &bull;
+                                <i class="fas fa-calendar-alt"></i> ${assign.dueDisplay}
+                            </div>
+                        </div>
+                        <span class="status-badge ${statusClass}">${statusLabel}</span>
+                        <button class="view-btn" onclick="openAssignmentModal(${assign.id})">View Details</button>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        // ============================================================ */
+        // ===== FILTER ===== */
+        // ============================================================ */
+        function filterAssignments(filter) {
+            currentFilter = filter;
+            document.querySelectorAll('.filter-tab').forEach(tab => {
+                tab.classList.toggle('active', tab.dataset.filter === filter);
+            });
+            renderAssignments(filter);
+        }
+
+        // ============================================================ */
+        // ===== MODAL FUNCTIONS ===== */
+        // ============================================================ */
+        function openAssignmentModal(id) {
+            selectedAssignmentId = id;
+            selectedFile = null;
+
+            const assign = assignmentData[id];
+            if (!assign) return;
+
+            const progress = getStudentAssignments();
+            const status = progress[id] || 'pending';
+            const submission = getSubmission(id);
+
+            document.getElementById('modalTitle').textContent = assign.title;
+            document.getElementById('modalCourse').textContent = '📘 ' + assign.courseName;
+            document.getElementById('modalDue').innerHTML = '<i class="fas fa-calendar-alt"></i> Due: ' + assign.dueDisplay;
+            document.getElementById('modalDescription').textContent = assign.description;
+
+            const statusEl = document.getElementById('modalStatus');
+            let statusClass = 'pending';
+            let statusLabel = '📋 Not Submitted';
+            if (status === 'completed') {statusClass = 'completed'; statusLabel = '✅ Approved';}
+            else if (status === 'submitted') {statusClass = 'submitted'; statusLabel = '⏳ Pending Review';}
+            else if (status === 'rejected') {statusClass = 'rejected'; statusLabel = '❌ Rejected';}
+            statusEl.textContent = statusLabel;
+            statusEl.className = 'modal-status ' + statusClass;
+
+            const submissionInfo = document.getElementById('submissionInfo');
+            const fileNameEl = document.getElementById('submissionFileName');
+            const statusTextEl = document.getElementById('submissionStatusText');
+            const rejectionReasonEl = document.getElementById('rejectionReason');
+            const rejectionTextEl = document.getElementById('rejectionReasonText');
+
+            rejectionReasonEl.classList.remove('show');
+
+            if (submission) {
+                submissionInfo.classList.add('show');
+                const icon = getFileIcon(submission.fileName);
+                const color = getFileColor(submission.fileName);
+                fileNameEl.innerHTML = `<i class="fas ${icon}" style="color:${color};"></i> ${submission.fileName} (Submitted: ${new Date(submission.submittedAt).toLocaleDateString()})`;
+                if (submission.status === 'completed') {
+                    statusTextEl.textContent = '✅ Approved by instructor';
+                    statusTextEl.className = 'status-completed';
+                } else if (submission.status === 'rejected') {
+                    statusTextEl.textContent = '❌ Rejected by instructor';
+                    statusTextEl.className = 'status-rejected';
+                    if (submission.rejectionReason) {
+                        rejectionReasonEl.classList.add('show');
+                        rejectionTextEl.textContent = 'Reason: ' + submission.rejectionReason;
+                    }
+                } else {
+                    statusTextEl.textContent = '⏳ Pending Review by instructor';
+                    statusTextEl.className = 'status-pending';
+                }
+                document.getElementById('fileUploadArea').style.opacity = '0.5';
+                document.getElementById('fileUploadArea').style.cursor = 'not-allowed';
+                document.getElementById('pdfUpload').disabled = true;
+                document.getElementById('submitPdfBtn').disabled = true;
+                document.getElementById('selectedFileName').textContent = '';
+            } else {
+                submissionInfo.classList.remove('show');
+                document.getElementById('fileUploadArea').style.opacity = '1';
+                document.getElementById('fileUploadArea').style.cursor = 'pointer';
+                document.getElementById('pdfUpload').disabled = false;
+                document.getElementById('submitPdfBtn').disabled = true;
+                document.getElementById('selectedFileName').textContent = '';
+            }
+
+            document.getElementById('pdfUpload').value = '';
+
+            document.getElementById('assignmentModal').classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeAssignmentModal() {
+            document.getElementById('assignmentModal').classList.remove('active');
+            document.body.style.overflow = '';
+            selectedAssignmentId = null;
+            selectedFile = null;
+            document.getElementById('selectedFileName').textContent = '';
+            document.getElementById('submitPdfBtn').disabled = true;
+            document.getElementById('pdfUpload').value = '';
+            document.getElementById('fileUploadArea').style.opacity = '1';
+            document.getElementById('fileUploadArea').style.cursor = 'pointer';
+            document.getElementById('pdfUpload').disabled = false;
+        }
+
+        document.getElementById('assignmentModal').addEventListener('click', function (e) {
+            if (e.target === this) {
+                closeAssignmentModal();
+            }
+        });
+
+        // ============================================================ */
+        // ===== FILE UPLOAD HANDLER ===== */
+        // ============================================================ */
+        function handleFileSelect(event) {
+            const file = event.target.files[0];
+            if (file) {
+                const validTypes = ['application/pdf', 'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+                    'application/msword', 'application/vnd.openxmlformats-officedocument.presentationml.presentation',
+                    'application/vnd.ms-powerpoint'];
+                if (!validTypes.includes(file.type)) {
+                    showToast('⚠️ Please upload a PDF, Word (.docx, .doc), or PowerPoint (.pptx, .ppt) file.', 'error');
+                    event.target.value = '';
+                    document.getElementById('selectedFileName').textContent = '';
+                    document.getElementById('submitPdfBtn').disabled = true;
+                    return;
+                }
+                if (file.size > 10 * 1024 * 1024) {
+                    showToast('⚠️ File size exceeds 10MB limit.', 'error');
+                    event.target.value = '';
+                    document.getElementById('selectedFileName').textContent = '';
+                    document.getElementById('submitPdfBtn').disabled = true;
+                    return;
+                }
+                selectedFile = file;
+                const icon = getFileIcon(file.name);
+                const color = getFileColor(file.name);
+                document.getElementById('selectedFileName').innerHTML = `<i class="fas ${icon}" style="color:${color};"></i> ${file.name} (${(file.size / 1024).toFixed(1)} KB)`;
+                document.getElementById('submitPdfBtn').disabled = false;
+                document.getElementById('uploadIcon').className = `fas ${icon}`;
+                document.getElementById('uploadIcon').style.color = color;
+                showToast('✅ File selected successfully!', 'success');
+            } else {
+                document.getElementById('selectedFileName').textContent = '';
+                document.getElementById('submitPdfBtn').disabled = true;
+                document.getElementById('uploadIcon').className = 'fas fa-file-upload';
+                document.getElementById('uploadIcon').style.color = '';
+            }
+        }
+
+        // ============================================================ */
+        // ===== SUBMIT ASSIGNMENT ===== */
+        // ============================================================ */
+        function submitAssignment() {
+            if (!selectedAssignmentId) return;
+            if (!selectedFile) {
+                showToast('⚠️ Please select a file first.', 'error');
+                return;
+            }
+
+            const btn = document.getElementById('submitPdfBtn');
+            btn.textContent = 'Uploading...';
+            btn.disabled = true;
+
+            setTimeout(() => {
+                saveSubmission(selectedAssignmentId, selectedFile.name, 'submitted');
+
+                const submissionInfo = document.getElementById('submissionInfo');
+                const fileNameEl = document.getElementById('submissionFileName');
+                const statusTextEl = document.getElementById('submissionStatusText');
+                submissionInfo.classList.add('show');
+                const icon = getFileIcon(selectedFile.name);
+                const color = getFileColor(selectedFile.name);
+                fileNameEl.innerHTML = `<i class="fas ${icon}" style="color:${color};"></i> ${selectedFile.name} (Submitted: ${new Date().toLocaleDateString()})`;
+                statusTextEl.textContent = '⏳ Pending Review by instructor';
+                statusTextEl.className = 'status-pending';
+
+                const statusEl = document.getElementById('modalStatus');
+                statusEl.textContent = '⏳ Pending Review';
+                statusEl.className = 'modal-status submitted';
+
+                document.getElementById('selectedFileName').textContent = '';
+                document.getElementById('submitPdfBtn').disabled = true;
+                document.getElementById('fileUploadArea').style.opacity = '0.5';
+                document.getElementById('fileUploadArea').style.cursor = 'not-allowed';
+                document.getElementById('pdfUpload').disabled = true;
+
+                btn.textContent = '✅ Submitted!';
+                btn.style.background = '#16a34a';
+
+                showToast('✅ Assignment submitted successfully! Waiting for instructor review.', 'success');
+
+                renderAssignments(currentFilter);
+
+                setTimeout(() => {
+                    btn.textContent = 'Submit File';
+                    btn.style.background = '';
+                }, 2000);
+            }, 1500);
+        }
+
+        // ============================================================ */
+        // ===== TOAST ===== */
+        // ============================================================ */
+        function showToast(message, type = 'success') {
+            const toast = document.getElementById('toast');
+            const toastIcon = document.getElementById('toastIcon');
+            const toastMessage = document.getElementById('toastMessage');
+            if (!toast) return;
+            toastIcon.className = type === 'success' ? 'fas fa-check-circle' :
+                type === 'error' ? 'fas fa-exclamation-circle' :
+                    'fas fa-info-circle';
+            toastMessage.textContent = message;
+            toast.className = 'toast ' + type;
+            setTimeout(() => toast.classList.add('show'), 10);
+            setTimeout(() => toast.classList.remove('show'), 4000);
+        }
+
+        // ============================================================ */
+        // ===== INIT ===== */
+        // ============================================================ */
+        document.addEventListener('DOMContentLoaded', function () {
+            updateStudentName();
+            renderAssignments('all');
+        });
+    </script>
+
+</body>
+
+</html>
