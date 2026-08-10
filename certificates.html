@@ -1,0 +1,630 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>My Certificates - QSkill</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+    <link rel="stylesheet" href="style.css" />
+
+    <style>
+        .page-wrapper {
+            padding: 30px 80px 60px;
+            background: #FAFBFC;
+            min-height: 100vh;
+        }
+
+        .page-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 16px;
+            margin-bottom: 30px;
+        }
+
+        .page-header h1 {
+            font-size: 28px;
+            font-weight: 700;
+            color: var(--text-dark);
+        }
+        .page-header h1 span { color: var(--primary); }
+
+        .back-btn {
+            background: var(--white);
+            border: 1px solid var(--border);
+            padding: 8px 20px;
+            border-radius: 999px;
+            font-weight: 500;
+            color: var(--text-dark);
+            text-decoration: none;
+            transition: 0.3s;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .back-btn:hover {
+            border-color: var(--primary);
+            color: var(--primary);
+            background: var(--light-bg);
+        }
+
+        .cert-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 30px;
+        }
+
+        .cert-card {
+            background: var(--white);
+            border-radius: 16px;
+            padding: 24px;
+            border: 1px solid var(--border);
+            transition: 0.3s;
+            text-align: center;
+        }
+        .cert-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 30px rgba(0,0,0,0.06);
+            border-color: var(--primary);
+        }
+
+        .cert-card .cert-icon {
+            font-size: 48px;
+            color: var(--primary);
+            margin-bottom: 12px;
+        }
+
+        .cert-card h3 {
+            font-size: 18px;
+            font-weight: 600;
+            color: var(--text-dark);
+            margin-bottom: 4px;
+        }
+
+        .cert-card .cert-meta {
+            font-size: 13px;
+            color: var(--text-gray);
+            margin-bottom: 16px;
+        }
+
+        .cert-card .btn-view-cert {
+            background: var(--primary);
+            color: var(--white);
+            border: none;
+            padding: 8px 24px;
+            border-radius: 999px;
+            font-weight: 500;
+            font-size: 14px;
+            cursor: pointer;
+            transition: 0.3s;
+            font-family: 'Poppins', sans-serif;
+            text-decoration: none;
+            display: inline-block;
+        }
+        .cert-card .btn-view-cert:hover {
+            background: var(--secondary);
+            transform: translateY(-2px);
+        }
+
+        .cert-modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            backdrop-filter: blur(4px);
+            z-index: 9999;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+        .cert-modal-overlay.active {
+            display: flex;
+        }
+
+        .cert-modal-content {
+            background: var(--white);
+            border-radius: 20px;
+            max-width: 800px;
+            width: 100%;
+            padding: 40px;
+            position: relative;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.2);
+            animation: modalSlideIn 0.3s ease;
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+
+        @keyframes modalSlideIn {
+            from { opacity: 0; transform: translateY(30px) scale(0.95); }
+            to { opacity: 1; transform: translateY(0) scale(1); }
+        }
+
+        .cert-modal-close {
+            position: absolute;
+            top: 14px;
+            right: 18px;
+            background: var(--light-bg);
+            border: none;
+            width: 34px;
+            height: 34px;
+            border-radius: 50%;
+            font-size: 18px;
+            cursor: pointer;
+            color: var(--text-gray);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: 0.3s;
+        }
+        .cert-modal-close:hover {
+            background: var(--border);
+            color: var(--text-dark);
+        }
+
+        .certificate {
+            background: #FFFFFF;
+            border: 8px double var(--primary);
+            padding: 40px 30px;
+            text-align: center;
+            margin: 10px 0 20px;
+            position: relative;
+        }
+
+        .certificate .cert-badge {
+            font-size: 60px;
+            color: var(--primary);
+        }
+
+        .certificate .cert-title {
+            font-size: 28px;
+            font-weight: 700;
+            color: var(--primary);
+            margin: 10px 0 4px;
+            letter-spacing: 2px;
+        }
+
+        .certificate .cert-sub {
+            font-size: 14px;
+            color: var(--text-gray);
+            margin-bottom: 16px;
+            letter-spacing: 1px;
+        }
+
+        .certificate .cert-student {
+            font-size: 32px;
+            font-weight: 700;
+            color: var(--text-dark);
+            margin: 10px 0;
+        }
+
+        .certificate .cert-course {
+            font-size: 24px;
+            font-weight: 600;
+            color: var(--primary);
+            margin: 8px 0;
+        }
+
+        .certificate .cert-desc {
+            font-size: 14px;
+            color: var(--text-gray);
+            max-width: 500px;
+            margin: 8px auto;
+            line-height: 1.6;
+        }
+
+        .certificate .cert-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 20px;
+            padding-top: 16px;
+            border-top: 1px solid var(--border);
+            font-size: 12px;
+            color: var(--text-gray);
+        }
+        .certificate .cert-footer .sign {
+            font-weight: 600;
+            color: var(--text-dark);
+        }
+
+        .cert-modal-content .btn-print {
+            background: var(--primary);
+            color: var(--white);
+            border: none;
+            padding: 10px 28px;
+            border-radius: 999px;
+            font-weight: 600;
+            font-size: 14px;
+            cursor: pointer;
+            transition: 0.3s;
+            font-family: 'Poppins', sans-serif;
+            width: 100%;
+        }
+        .cert-modal-content .btn-print:hover {
+            background: var(--secondary);
+            transform: translateY(-2px);
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 60px 20px;
+        }
+        .empty-state i {
+            font-size: 64px;
+            color: var(--border);
+            margin-bottom: 16px;
+        }
+        .empty-state h3 {
+            font-size: 24px;
+            font-weight: 600;
+            color: var(--text-dark);
+            margin-bottom: 8px;
+        }
+        .empty-state p {
+            color: var(--text-gray);
+            font-size: 16px;
+            max-width: 400px;
+            margin: 0 auto 20px;
+        }
+        .empty-state .btn-explore {
+            background: var(--primary);
+            color: var(--white);
+            border: none;
+            padding: 12px 32px;
+            border-radius: 999px;
+            font-weight: 600;
+            font-size: 16px;
+            cursor: pointer;
+            transition: 0.3s;
+            font-family: 'Poppins', sans-serif;
+            text-decoration: none;
+            display: inline-block;
+        }
+        .empty-state .btn-explore:hover {
+            background: var(--secondary);
+            transform: translateY(-2px);
+        }
+
+        @media (max-width: 768px) {
+            .page-wrapper { padding: 20px; }
+            .cert-modal-content { padding: 24px 20px; }
+            .certificate { padding: 24px 16px; }
+            .certificate .cert-title { font-size: 22px; }
+            .certificate .cert-student { font-size: 24px; }
+            .certificate .cert-course { font-size: 20px; }
+            .certificate .cert-footer { flex-direction: column; gap: 8px; text-align: center; }
+        }
+
+        @media print {
+            .cert-modal-overlay { position: relative; background: white; backdrop-filter: none; padding: 0; }
+            .cert-modal-content { box-shadow: none; border-radius: 0; padding: 20px; max-height: none; }
+            .cert-modal-close, .btn-print, .back-btn, .page-header { display: none !important; }
+            .certificate { border: 8px double var(--primary); }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="toast" id="toast">
+        <i class="fas fa-check-circle" id="toastIcon"></i>
+        <span id="toastMessage">Success!</span>
+    </div>
+
+    <!-- ============================================================ -->
+    <!-- ===== HEADER ===== -->
+    <!-- ============================================================ -->
+    <header class="header">
+        <a href="index.html" class="logo">
+            <span class="qskill">Q</span><span class="careersolutions">Solutions</span>
+        </a>
+
+        <ul class="header-menu">
+            <li><a href="dashboard.html">Dashboard</a></li>
+            <li><a href="all-courses.html">Courses</a></li>
+            <li><a href="my-courses.html">My Courses</a></li>
+            <li><a href="student-assignments.html">Assignments</a></li>
+            <li><a href="#" onclick="logout()" style="color: #EF4444;">Logout</a></li>
+        </ul>
+
+        <div class="user-profile">
+            <span class="name" id="studentName">Student</span>
+            <span class="role-badge">Student</span>
+            <div class="avatar" id="studentAvatar">S</div>
+        </div>
+    </header>
+
+    <!-- ============================================================ -->
+    <!-- ===== MAIN CONTENT ===== -->
+    <!-- ============================================================ -->
+    <section class="page-wrapper">
+        <div class="page-header">
+            <h1>🎓 My <span>Certificates</span></h1>
+            <a href="dashboard.html" class="back-btn">
+                <i class="fas fa-arrow-left"></i> Back to Dashboard
+            </a>
+        </div>
+
+        <div id="certContainer">
+            <!-- Rendered by JavaScript -->
+            <div style="text-align:center; padding:40px;">
+                <i class="fas fa-spinner fa-spin" style="font-size:32px; color:var(--primary);"></i>
+                <p style="margin-top:12px; color:var(--text-gray);">Loading certificates...</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================================================ -->
+    <!-- ===== CERTIFICATE PREVIEW MODAL ===== -->
+    <!-- ============================================================ -->
+    <div class="cert-modal-overlay" id="certModal">
+        <div class="cert-modal-content">
+            <button class="cert-modal-close" onclick="closeCertModal()"><i class="fas fa-times"></i></button>
+            <div id="certificatePreview">
+                <!-- Certificate will be rendered here -->
+            </div>
+            <button class="btn-print" onclick="printCertificate()">
+                <i class="fas fa-print"></i> Print / Download as PDF
+            </button>
+        </div>
+    </div>
+
+    <!-- ============================================================ -->
+    <!-- ===== FOOTER ===== -->
+    <!-- ============================================================ -->
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="copyright">© 2026 QSkill Career Solutions. All Rights Reserved.</div>
+            <div class="footer-links">
+                <a href="#">Privacy Policy</a>
+                <a href="#">Terms of Service</a>
+                <a href="#">Contact</a>
+                <a href="index.html">Home</a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- ============================================================ -->
+    <!-- ===== SCRIPTS ===== -->
+    <!-- ============================================================ -->
+    <script>
+        // ===== SESSION CHECK =====
+        const studentLoggedIn = localStorage.getItem('qskillStudentLoggedIn');
+        if (!studentLoggedIn) {
+            window.location.href = 'login.html';
+        }
+
+        // ===== LOGOUT =====
+        function logout() {
+            if (confirm('Are you sure you want to logout?')) {
+                localStorage.removeItem('qskillStudentLoggedIn');
+                localStorage.removeItem('qskillStudentId');
+                localStorage.removeItem('qskillUser');
+                window.location.href = 'login.html';
+            }
+        }
+
+        // ===== UPDATE STUDENT NAME =====
+        function updateStudentName() {
+            const userData = JSON.parse(localStorage.getItem('qskillUser') || '{}');
+            const name = userData.name || 'Student';
+            document.getElementById('studentName').textContent = name;
+            document.getElementById('studentAvatar').textContent = name.charAt(0).toUpperCase();
+        }
+
+        // ============================================================ */
+        // ===== DATA ===== */
+        // ============================================================ */
+        const courseInfoMap = {
+            'manual': { title: 'Manual Testing', icon: 'fa-file-alt' },
+            'automation': { title: 'Automation Testing (Selenium)', icon: 'fa-code' },
+            'api': { title: 'Postman API Testing', icon: 'fa-plug' },
+            'playwright': { title: 'Playwright Automation', icon: 'fa-cogs' },
+            'cypress': { title: 'Cypress Automation', icon: 'fa-sync-alt' },
+            'restassured': { title: 'REST Assured API Testing', icon: 'fa-wifi' }
+        };
+
+        // ===== STATIC PROGRESS DATA (for courses with no module progress saved) =====
+        // This is the same data used in dashboard.html
+        const staticCourseProgress = {
+            'manual': { progress: 100, status: 'completed' },
+            'automation': { progress: 70, status: 'in-progress' },
+            'api': { progress: 45, status: 'in-progress' },
+            'playwright': { progress: 0, status: 'not-started' },
+            'cypress': { progress: 0, status: 'not-started' },
+            'restassured': { progress: 0, status: 'not-started' }
+        };
+
+        let enrolledCourses = JSON.parse(localStorage.getItem('enrolledCourses')) || ['automation', 'manual', 'api'];
+        if (enrolledCourses.length === 0) {
+            enrolledCourses = ['automation', 'manual', 'api'];
+            localStorage.setItem('enrolledCourses', JSON.stringify(enrolledCourses));
+        }
+
+        function getStudentId() {
+            return localStorage.getItem('qskillStudentId') || 'QSK24012345';
+        }
+
+        function getModuleProgress(courseId) {
+            const studentId = getStudentId();
+            const key = 'qskillModuleProgress_' + studentId + '_' + courseId;
+            return JSON.parse(localStorage.getItem(key)) || {};
+        }
+
+        function getCourseModules(id) {
+            const map = {
+                'manual': ['Module 1: Software Testing Fundamentals', 'Module 2: SDLC Models', 'Module 3: Testing Types', 'Module 4: Defect Management', 'Module 5: Test Documentation', 'Module 6: Real-time Project'],
+                'automation': ['Module 1: Core Java Basics', 'Module 2: Selenium WebDriver', 'Module 3: TestNG Framework', 'Module 4: Page Object Model', 'Module 5: CI/CD Integration'],
+                'api': ['Module 1: API Fundamentals', 'Module 2: Postman Basics', 'Module 3: Automation Testing', 'Module 4: Reporting & CI/CD'],
+                'playwright': ['Module 1: Playwright Introduction', 'Module 2: Locators & Actions', 'Module 3: Advanced Features', 'Module 4: CI/CD Integration'],
+                'cypress': ['Module 1: Cypress Introduction', 'Module 2: Testing with Cypress', 'Module 3: Advanced Features', 'Module 4: CI/CD & Projects'],
+                'restassured': ['Module 1: REST Assured Introduction', 'Module 2: Advanced Testing', 'Module 3: Test Framework Integration', 'Module 4: CI/CD & Projects']
+            };
+            return map[id] || [];
+        }
+
+        // ============================================================ */
+        // ===== GET COMPLETED COURSES (checks both localStorage and static data) ===== */
+        // ============================================================ */
+        function getCompletedCourses() {
+            const completed = [];
+
+            enrolledCourses.forEach(id => {
+                const course = courseInfoMap[id];
+                if (!course) return;
+
+                // Check 1: Module progress from localStorage
+                const progress = getModuleProgress(id);
+                const modules = getCourseModules(id);
+                const total = modules.length;
+                let done = 0;
+                modules.forEach((mod, idx) => {
+                    if (progress[idx] === 'completed') done++;
+                });
+                const isCompletedFromModules = (total > 0 && done === total);
+
+                // Check 2: Static progress data (if module progress not saved)
+                const staticData = staticCourseProgress[id];
+                const isCompletedFromStatic = (staticData && staticData.status === 'completed');
+
+                // Check 3: If progress is 100% from static data
+                const isCompletedFromStaticProgress = (staticData && staticData.progress === 100);
+
+                // Check 4: Also check if the course is in a custom completed list in localStorage
+                const completedList = JSON.parse(localStorage.getItem('qskillCompletedCourses')) || [];
+                const isInCompletedList = completedList.includes(id);
+
+                // If any condition is true, the course is completed
+                if (isCompletedFromModules || isCompletedFromStatic || isCompletedFromStaticProgress || isInCompletedList) {
+                    completed.push({
+                        id: id,
+                        title: course.title,
+                        icon: course.icon,
+                        completedDate: new Date().toLocaleDateString('en-US', {
+                            year: 'numeric', month: 'long', day: 'numeric'
+                        })
+                    });
+                }
+            });
+
+            return completed;
+        }
+
+        // ============================================================ */
+        // ===== RENDER CERTIFICATES ===== */
+        // ============================================================ */
+        function renderCertificates() {
+            const container = document.getElementById('certContainer');
+            const completed = getCompletedCourses();
+            const userData = JSON.parse(localStorage.getItem('qskillUser') || '{}');
+            const studentName = userData.name || 'Student';
+
+            if (completed.length === 0) {
+                container.innerHTML = `
+                    <div class="empty-state">
+                        <i class="fas fa-certificate"></i>
+                        <h3>No Certificates Yet</h3>
+                        <p>Complete your courses to earn certificates. Keep learning and achieve your goals!</p>
+                        <a href="my-courses.html" class="btn-explore">Go to My Courses</a>
+                    </div>
+                `;
+                return;
+            }
+
+            container.innerHTML = `
+                <div class="cert-grid">
+                    ${completed.map(cert => `
+                        <div class="cert-card">
+                            <div class="cert-icon"><i class="fas ${cert.icon}"></i></div>
+                            <h3>${cert.title}</h3>
+                            <div class="cert-meta">✅ Completed on ${cert.completedDate}</div>
+                            <button class="btn-view-cert" onclick="openCertModal('${cert.id}')">
+                                <i class="fas fa-eye"></i> View Certificate
+                            </button>
+                        </div>
+                    `).join('')}
+                </div>
+            `;
+        }
+
+        // ============================================================ */
+        // ===== CERTIFICATE MODAL ===== */
+        // ============================================================ */
+        let currentCertId = null;
+
+        function openCertModal(courseId) {
+            currentCertId = courseId;
+            const course = courseInfoMap[courseId];
+            const userData = JSON.parse(localStorage.getItem('qskillUser') || '{}');
+            const studentName = userData.name || 'Student';
+            const completedDate = new Date().toLocaleDateString('en-US', {
+                year: 'numeric', month: 'long', day: 'numeric'
+            });
+
+            const certHTML = `
+                <div class="certificate" id="certificateContent">
+                    <div class="cert-badge">🎓</div>
+                    <div class="cert-title">CERTIFICATE OF COMPLETION</div>
+                    <div class="cert-sub">This certifies that</div>
+                    <div class="cert-student">${studentName}</div>
+                    <div class="cert-sub">has successfully completed</div>
+                    <div class="cert-course">${course.title}</div>
+                    <div class="cert-desc">
+                        This certificate acknowledges the dedication and skills acquired through QSkill Career Solutions'
+                        comprehensive training program in Software Testing.
+                    </div>
+                    <div class="cert-footer">
+                        <span>Date: ${completedDate}</span>
+                        <span class="sign">QSkill Career Solutions</span>
+                        <span>Certificate ID: ${courseId.toUpperCase()}-${getStudentId()}</span>
+                    </div>
+                </div>
+            `;
+
+            document.getElementById('certificatePreview').innerHTML = certHTML;
+            document.getElementById('certModal').classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeCertModal() {
+            document.getElementById('certModal').classList.remove('active');
+            document.body.style.overflow = '';
+        }
+
+        function printCertificate() {
+            window.print();
+        }
+
+        // Close modal on overlay click
+        document.getElementById('certModal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeCertModal();
+            }
+        });
+
+        // ============================================================ */
+        // ===== FORCE COMPLETE COURSE (for testing) ===== */
+        // ============================================================ */
+        // If you want to manually mark a course as completed, uncomment and run this in console:
+        // let completed = JSON.parse(localStorage.getItem('qskillCompletedCourses')) || [];
+        // if (!completed.includes('manual')) { completed.push('manual'); localStorage.setItem('qskillCompletedCourses', JSON.stringify(completed)); }
+        // Then refresh the page.
+
+        // ============================================================ */
+        // ===== INIT ===== */
+        // ============================================================ */
+        document.addEventListener('DOMContentLoaded', function() {
+            updateStudentName();
+            renderCertificates();
+        });
+    </script>
+
+</body>
+</html>

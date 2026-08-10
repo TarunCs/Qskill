@@ -1,0 +1,502 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Join Class - QSkill</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+
+    <link rel="stylesheet" href="style.css" />
+
+    <style>
+        .page-wrapper {
+            padding: 30px 80px 60px;
+            background: #FAFBFC;
+            min-height: 100vh;
+        }
+
+        .page-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 16px;
+            margin-bottom: 30px;
+        }
+
+        .page-header h1 {
+            font-size: 28px;
+            font-weight: 700;
+            color: var(--text-dark);
+        }
+        .page-header h1 span { color: var(--primary); }
+
+        .back-btn {
+            background: var(--white);
+            border: 1px solid var(--border);
+            padding: 8px 20px;
+            border-radius: 999px;
+            font-weight: 500;
+            color: var(--text-dark);
+            text-decoration: none;
+            transition: 0.3s;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .back-btn:hover {
+            border-color: var(--primary);
+            color: var(--primary);
+            background: var(--light-bg);
+        }
+
+        .class-container {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 30px;
+        }
+
+        /* === VIDEO PLAYER === */
+        .video-wrapper {
+            background: #0B1E3C;
+            border-radius: 16px;
+            overflow: hidden;
+            position: relative;
+            aspect-ratio: 16/9;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+        }
+
+        .video-wrapper .placeholder {
+            text-align: center;
+            color: rgba(255,255,255,0.7);
+        }
+
+        .video-wrapper .placeholder i {
+            font-size: 64px;
+            display: block;
+            margin-bottom: 12px;
+            color: var(--primary);
+            background: rgba(255,255,255,0.1);
+            padding: 20px;
+            border-radius: 50%;
+        }
+
+        .video-wrapper .placeholder h3 {
+            font-size: 22px;
+            font-weight: 600;
+            color: var(--white);
+        }
+
+        .video-wrapper .placeholder p {
+            font-size: 14px;
+            opacity: 0.7;
+        }
+
+        .video-wrapper .join-now-overlay {
+            position: absolute;
+            bottom: 30px;
+            right: 30px;
+            background: var(--primary);
+            color: var(--white);
+            padding: 12px 28px;
+            border-radius: 999px;
+            border: none;
+            font-weight: 600;
+            font-size: 16px;
+            cursor: pointer;
+            transition: 0.3s;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            font-family: 'Poppins', sans-serif;
+            box-shadow: 0 4px 16px rgba(31,60,136,0.3);
+        }
+
+        .video-wrapper .join-now-overlay:hover {
+            background: var(--secondary);
+            transform: scale(1.05);
+        }
+
+        .class-info {
+            background: var(--white);
+            border-radius: 16px;
+            padding: 24px;
+            border: 1px solid var(--border);
+        }
+
+        .class-info .info-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 10px 0;
+            border-bottom: 1px solid #F1F5F9;
+        }
+
+        .class-info .info-item:last-child {
+            border-bottom: none;
+        }
+
+        .class-info .info-item i {
+            width: 20px;
+            color: var(--primary);
+            font-size: 16px;
+        }
+
+        .class-info .info-item .label {
+            font-size: 14px;
+            color: var(--text-gray);
+            min-width: 80px;
+        }
+
+        .class-info .info-item .value {
+            font-size: 14px;
+            font-weight: 500;
+            color: var(--text-dark);
+        }
+
+        .class-info .btn-join-full {
+            width: 100%;
+            background: var(--primary);
+            color: var(--white);
+            border: none;
+            padding: 14px;
+            border-radius: 999px;
+            font-weight: 600;
+            font-size: 16px;
+            cursor: pointer;
+            transition: 0.3s;
+            font-family: 'Poppins', sans-serif;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            margin-top: 16px;
+            box-shadow: 0 4px 16px rgba(31,60,136,0.2);
+        }
+
+        .class-info .btn-join-full:hover {
+            background: var(--secondary);
+            transform: translateY(-2px);
+        }
+
+        /* === SIDEBAR - CLASS FILES === */
+        .class-files {
+            background: var(--white);
+            border-radius: 16px;
+            padding: 24px;
+            border: 1px solid var(--border);
+        }
+
+        .class-files h3 {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 16px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .class-files h3 i {
+            color: var(--primary);
+        }
+
+        .file-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 10px 0;
+            border-bottom: 1px solid #F1F5F9;
+        }
+
+        .file-item:last-child {
+            border-bottom: none;
+        }
+
+        .file-item i {
+            font-size: 16px;
+            color: var(--primary);
+        }
+
+        .file-item .file-name {
+            flex: 1;
+            font-size: 14px;
+            color: var(--text-dark);
+        }
+
+        .file-item .file-size {
+            font-size: 12px;
+            color: var(--text-gray);
+        }
+
+        .file-item .download-link {
+            color: var(--primary);
+            font-size: 14px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .file-item .download-link:hover {
+            color: var(--secondary);
+        }
+
+        /* ============================================================ */
+        /* ===== RESPONSIVE ===== */
+        /* ============================================================ */
+        @media (max-width: 992px) {
+            .class-container {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .page-wrapper { padding: 20px; }
+            .video-wrapper .join-now-overlay {
+                bottom: 16px;
+                right: 16px;
+                padding: 10px 20px;
+                font-size: 14px;
+            }
+            .video-wrapper .placeholder i {
+                font-size: 40px;
+                padding: 14px;
+            }
+            .video-wrapper .placeholder h3 {
+                font-size: 18px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .class-info .info-item {
+                flex-wrap: wrap;
+            }
+            .class-info .info-item .label {
+                min-width: 60px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="toast" id="toast">
+        <i class="fas fa-check-circle" id="toastIcon"></i>
+        <span id="toastMessage">Success!</span>
+    </div>
+
+    <!-- ============================================================ -->
+    <!-- ===== HEADER (SAME AS DASHBOARD) ===== -->
+    <!-- ============================================================ -->
+    <header class="header">
+        <a href="index.html" class="logo">
+            <img src="images/logo.png" alt="QSkill Logo" />
+            <span class="logo-text">
+                <span class="qskill">Qskill</span>
+                <span class="careersolutions">careersolutions</span>
+            </span>
+        </a>
+
+        <ul class="header-menu">
+            <li><a href="dashboard.html">Dashboard</a></li>
+            <li><a href="all-courses.html">Courses</a></li>
+            <li><a href="my-courses.html">My Courses</a></li>
+            <li><a href="student-assignments.html">Assignments</a></li>
+            <li><a href="#" onclick="logout()" style="color: #EF4444;">Logout</a></li>
+        </ul>
+
+        <div class="user-profile">
+            <span class="name" id="studentName">Student</span>
+            <span class="role-badge">Student</span>
+            <div class="avatar" id="studentAvatar">S</div>
+        </div>
+    </header>
+
+    <!-- ============================================================ -->
+    <!-- ===== MAIN CONTENT ===== -->
+    <!-- ============================================================ -->
+    <section class="page-wrapper">
+        <div class="page-header">
+            <h1>🎥 Live <span>Class</span></h1>
+            <a href="dashboard.html" class="back-btn">
+                <i class="fas fa-arrow-left"></i> Back to Dashboard
+            </a>
+        </div>
+
+        <div class="class-container">
+            <!-- LEFT: Video Player -->
+            <div>
+                <div class="video-wrapper">
+                    <div class="placeholder">
+                        <i class="fas fa-video"></i>
+                        <h3>Waiting for session to start...</h3>
+                        <p>Your live class will begin at the scheduled time.</p>
+                    </div>
+                    <button class="join-now-overlay" onclick="joinClass()">
+                        <i class="fas fa-sign-in-alt"></i> Join Now
+                    </button>
+                </div>
+
+                <!-- Class Info Card -->
+                <div class="class-info">
+                    <h2 style="font-size: 20px; font-weight: 700; margin-bottom: 12px; color: var(--text-dark);">
+                        🔴 Live: Automation Testing (Selenium)
+                    </h2>
+                    <div class="info-item">
+                        <i class="fas fa-calendar-alt"></i>
+                        <span class="label">Date</span>
+                        <span class="value">Saturday, August 9, 2026</span>
+                    </div>
+                    <div class="info-item">
+                        <i class="fas fa-clock"></i>
+                        <span class="label">Time</span>
+                        <span class="value">5:00 PM – 7:00 PM IST</span>
+                    </div>
+                    <div class="info-item">
+                        <i class="fas fa-user-tie"></i>
+                        <span class="label">Instructor</span>
+                        <span class="value">Rahul Sharma</span>
+                    </div>
+                    <div class="info-item">
+                        <i class="fas fa-tag"></i>
+                        <span class="label">Topic</span>
+                        <span class="value">Module 4: Selenium WebDriver – Advanced Waits</span>
+                    </div>
+                    <div class="info-item">
+                        <i class="fas fa-users"></i>
+                        <span class="label">Attendees</span>
+                        <span class="value">15/30 students</span>
+                    </div>
+
+                    <button class="btn-join-full" onclick="joinClass()">
+                        <i class="fas fa-sign-in-alt"></i> Join Class Now
+                    </button>
+                </div>
+            </div>
+
+            <!-- RIGHT: Class Files & Notes -->
+            <div>
+                <div class="class-files">
+                    <h3><i class="fas fa-paperclip"></i> Class Materials</h3>
+                    <div class="file-item">
+                        <i class="fas fa-file-pdf"></i>
+                        <span class="file-name">Selenium_Advanced_Waits.pdf</span>
+                        <span class="file-size">2.4 MB</span>
+                        <a class="download-link" onclick="showToast('📥 Downloading...', 'info')"><i class="fas fa-download"></i></a>
+                    </div>
+                    <div class="file-item">
+                        <i class="fas fa-file-code"></i>
+                        <span class="file-name">waits_demo.java</span>
+                        <span class="file-size">1.2 KB</span>
+                        <a class="download-link" onclick="showToast('📥 Downloading...', 'info')"><i class="fas fa-download"></i></a>
+                    </div>
+                    <div class="file-item">
+                        <i class="fas fa-file-alt"></i>
+                        <span class="file-name">Session_Notes.docx</span>
+                        <span class="file-size">68 KB</span>
+                        <a class="download-link" onclick="showToast('📥 Downloading...', 'info')"><i class="fas fa-download"></i></a>
+                    </div>
+                    <div class="file-item">
+                        <i class="fas fa-link"></i>
+                        <span class="file-name">GitHub Repo Link</span>
+                        <span class="file-size">—</span>
+                        <a class="download-link" onclick="window.open('https://github.com','_blank')"><i class="fas fa-external-link-alt"></i></a>
+                    </div>
+                </div>
+
+                <!-- Quick Notes -->
+                <div class="class-files" style="margin-top: 20px;">
+                    <h3><i class="fas fa-sticky-note"></i> Quick Notes</h3>
+                    <p style="font-size: 14px; color: var(--text-gray); line-height: 1.7;">
+                        <i class="fas fa-check-circle" style="color: var(--success);"></i> Remember to use <strong>Explicit Waits</strong> instead of Thread.sleep()<br>
+                        <i class="fas fa-check-circle" style="color: var(--success);"></i> Practice with the <strong>WebDriverWait</strong> class<br>
+                        <i class="fas fa-check-circle" style="color: var(--success);"></i> Check the <strong>ExpectedConditions</strong> documentation
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================================================ -->
+    <!-- ===== FOOTER ===== -->
+    <!-- ============================================================ -->
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="copyright">© 2026 QSkill Career Solutions. All Rights Reserved.</div>
+            <div class="footer-links">
+                <a href="#">Privacy Policy</a>
+                <a href="#">Terms of Service</a>
+                <a href="#">Contact</a>
+                <a href="index.html">Home</a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- ============================================================ -->
+    <!-- ===== SCRIPTS ===== -->
+    <!-- ============================================================ -->
+    <script>
+        // ===== SESSION CHECK =====
+        const studentLoggedIn = localStorage.getItem('qskillStudentLoggedIn');
+        if (!studentLoggedIn) {
+            window.location.href = 'login.html';
+        }
+
+        // ===== LOGOUT =====
+        function logout() {
+            if (confirm('Are you sure you want to logout?')) {
+                localStorage.removeItem('qskillStudentLoggedIn');
+                localStorage.removeItem('qskillStudentId');
+                localStorage.removeItem('qskillUser');
+                window.location.href = 'login.html';
+            }
+        }
+
+        // ===== UPDATE STUDENT NAME =====
+        function updateStudentName() {
+            const userData = JSON.parse(localStorage.getItem('qskillUser') || '{}');
+            const name = userData.name || 'Student';
+            document.getElementById('studentName').textContent = name;
+            document.getElementById('studentAvatar').textContent = name.charAt(0).toUpperCase();
+        }
+
+        // ===== JOIN CLASS =====
+        function joinClass() {
+            // Simulate joining the class - could redirect to Zoom/Meet link
+            showToast('🔗 Connecting to live session...', 'info');
+            setTimeout(() => {
+                showToast('✅ You are now connected to the live class!', 'success');
+                // Optional: open a real meeting link
+                // window.open('https://zoom.us/j/123456789', '_blank');
+            }, 1500);
+        }
+
+        // ===== TOAST =====
+        function showToast(message, type = 'success') {
+            const toast = document.getElementById('toast');
+            const toastIcon = document.getElementById('toastIcon');
+            const toastMessage = document.getElementById('toastMessage');
+            if (!toast) return;
+            toastIcon.className = type === 'success' ? 'fas fa-check-circle' :
+                                 type === 'error' ? 'fas fa-exclamation-circle' :
+                                 'fas fa-info-circle';
+            toastMessage.textContent = message;
+            toast.className = 'toast ' + type;
+            setTimeout(() => toast.classList.add('show'), 10);
+            setTimeout(() => toast.classList.remove('show'), 4000);
+        }
+
+        // ============================================================ */
+        // ===== INIT ===== */
+        // ============================================================ */
+        document.addEventListener('DOMContentLoaded', function() {
+            updateStudentName();
+        });
+    </script>
+
+</body>
+</html>

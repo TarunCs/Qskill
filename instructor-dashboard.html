@@ -4,18 +4,15 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Instructor Dashboard - QSkill Career Solutions</title>
-    
+
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
-    
+
     <link rel="stylesheet" href="style.css" />
-    
+
     <style>
-        /* ============================================================ */
-        /* ===== INSTRUCTOR DASHBOARD STYLES ===== */
-        /* ============================================================ */
         .dashboard-wrapper {
             padding: 30px 80px 60px;
             background: #FAFBFC;
@@ -79,7 +76,6 @@
             transform: translateY(-2px);
         }
 
-        /* ===== STATS ===== */
         .stats-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
@@ -119,7 +115,6 @@
             margin-top: 2px;
         }
 
-        /* ===== DASHBOARD GRID ===== */
         .dashboard-grid {
             display: grid;
             grid-template-columns: 2fr 1fr;
@@ -147,7 +142,6 @@
             color: var(--orange);
         }
 
-        /* ===== COURSE LIST ===== */
         .course-item {
             display: flex;
             align-items: center;
@@ -200,7 +194,6 @@
             border-radius: 999px;
         }
 
-        /* ===== STUDENT LIST ===== */
         .student-item {
             display: flex;
             align-items: center;
@@ -252,7 +245,53 @@
             color: var(--primary);
         }
 
-        /* ===== CLICKABLE ASSIGNMENT LINK ===== */
+        .student-item .student-actions {
+            display: flex;
+            gap: 6px;
+            flex-shrink: 0;
+        }
+
+        .student-item .student-actions button {
+            border: none;
+            background: transparent;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 13px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: 0.3s;
+            color: var(--text-gray);
+        }
+
+        .student-item .student-actions .btn-delete-student:hover {
+            background: #FEE2E2;
+            color: #dc2626;
+        }
+
+        .student-item .student-actions .btn-block-student:hover {
+            background: #FEF3C7;
+            color: #d97706;
+        }
+
+        .student-item .student-actions .btn-unblock-student:hover {
+            background: #DCFCE7;
+            color: #16a34a;
+        }
+
+        .student-item.blocked {
+            opacity: 0.6;
+        }
+
+        .student-item.blocked .student-info h4::after {
+            content: ' (Blocked)';
+            color: #dc2626;
+            font-size: 11px;
+            font-weight: 600;
+        }
+
         .assignment-link {
             text-decoration: none;
             color: inherit;
@@ -267,7 +306,22 @@
             border-radius: 8px;
         }
 
-        /* ===== QUICK ACTIONS ===== */
+        .empty-state {
+            text-align: center;
+            padding: 30px 10px;
+            color: var(--text-gray);
+        }
+
+        .empty-state i {
+            font-size: 40px;
+            color: var(--border);
+            margin-bottom: 10px;
+        }
+
+        .empty-state p {
+            font-size: 14px;
+        }
+
         .quick-actions {
             display: grid;
             grid-template-columns: 1fr 1fr;
@@ -283,11 +337,14 @@
             transition: 0.3s;
             border: none;
             font-family: 'Poppins', sans-serif;
+            width: 100%;
         }
 
         .quick-action:hover {
             transform: translateY(-3px);
             box-shadow: 0 4px 12px rgba(31, 60, 136, 0.12);
+            background: var(--white);
+            border: 1px solid var(--primary);
         }
 
         .quick-action i {
@@ -303,43 +360,349 @@
             color: var(--text-dark);
         }
 
-        /* ============================================================ */
-        /* ===== RESPONSIVE ===== */
-        /* ============================================================ */
+        /* CLASS MODAL */
+        .class-modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(4px);
+            z-index: 9999;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+        .class-modal-overlay.active {
+            display: flex;
+        }
+        .class-modal-content {
+            background: var(--white);
+            border-radius: 20px;
+            max-width: 550px;
+            width: 100%;
+            padding: 30px 32px;
+            position: relative;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.2);
+            animation: modalSlideIn 0.3s ease;
+        }
+        @keyframes modalSlideIn {
+            from {
+                opacity: 0;
+                transform: translateY(30px) scale(0.95);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+        .class-modal-content .modal-close {
+            position: absolute;
+            top: 14px;
+            right: 18px;
+            background: var(--light-bg);
+            border: none;
+            width: 34px;
+            height: 34px;
+            border-radius: 50%;
+            font-size: 18px;
+            cursor: pointer;
+            color: var(--text-gray);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: 0.3s;
+        }
+        .class-modal-content .modal-close:hover {
+            background: var(--border);
+            color: var(--text-dark);
+        }
+        .class-modal-content h2 {
+            font-size: 22px;
+            font-weight: 700;
+            color: var(--text-dark);
+            margin-bottom: 4px;
+        }
+        .class-modal-content .modal-sub {
+            font-size: 14px;
+            color: var(--text-gray);
+            margin-bottom: 16px;
+        }
+        .class-modal-content .form-group {
+            margin-bottom: 16px;
+        }
+        .class-modal-content .form-group label {
+            font-size: 13px;
+            font-weight: 600;
+            display: block;
+            margin-bottom: 4px;
+            color: var(--text-dark);
+        }
+        .class-modal-content .form-group input,
+        .class-modal-content .form-group select,
+        .class-modal-content .form-group textarea {
+            width: 100%;
+            padding: 10px 14px;
+            border: 1.5px solid var(--border);
+            border-radius: 10px;
+            font-size: 14px;
+            font-family: 'Poppins', sans-serif;
+            transition: 0.3s;
+            background: #FAFBFC;
+            color: var(--text-dark);
+        }
+        .class-modal-content .form-group input:focus,
+        .class-modal-content .form-group select:focus,
+        .class-modal-content .form-group textarea:focus {
+            border-color: var(--primary);
+            outline: none;
+            box-shadow: 0 0 0 4px rgba(31, 60, 136, 0.08);
+            background: var(--white);
+        }
+        .class-modal-content .form-group textarea {
+            height: 70px;
+            resize: vertical;
+        }
+        .class-modal-content .btn-start-class {
+            width: 100%;
+            background: var(--primary);
+            color: var(--white);
+            border: none;
+            padding: 12px;
+            border-radius: 999px;
+            font-weight: 600;
+            font-size: 16px;
+            cursor: pointer;
+            transition: 0.3s;
+            font-family: 'Poppins', sans-serif;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+        .class-modal-content .btn-start-class:hover {
+            background: var(--secondary);
+            transform: translateY(-2px);
+        }
+        .class-modal-content .btn-start-class:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .class-modal-content .email-status {
+            margin-top: 12px;
+            padding: 10px 14px;
+            border-radius: 8px;
+            font-size: 13px;
+            display: none;
+        }
+        .class-modal-content .email-status.show {
+            display: block;
+        }
+        .class-modal-content .email-status.success {
+            background: #DCFCE7;
+            color: #16a34a;
+        }
+        .class-modal-content .email-status.error {
+            background: #FEE2E2;
+            color: #dc2626;
+        }
+
+        /* CONFIRM MODAL */
+        .confirm-modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(4px);
+            z-index: 10000;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+        .confirm-modal-overlay.active {
+            display: flex;
+        }
+        .confirm-modal-content {
+            background: var(--white);
+            border-radius: 16px;
+            max-width: 400px;
+            width: 100%;
+            padding: 28px 30px;
+            text-align: center;
+            animation: modalSlideIn 0.3s ease;
+        }
+        .confirm-modal-content .confirm-icon {
+            font-size: 48px;
+            color: #dc2626;
+            margin-bottom: 8px;
+        }
+        .confirm-modal-content h3 {
+            font-size: 20px;
+            font-weight: 700;
+            color: var(--text-dark);
+            margin-bottom: 4px;
+        }
+        .confirm-modal-content p {
+            font-size: 14px;
+            color: var(--text-gray);
+            margin-bottom: 20px;
+        }
+        .confirm-modal-content .confirm-actions {
+            display: flex;
+            gap: 12px;
+            justify-content: center;
+        }
+        .confirm-modal-content .confirm-actions button {
+            padding: 10px 28px;
+            border-radius: 999px;
+            font-weight: 600;
+            font-size: 14px;
+            border: none;
+            cursor: pointer;
+            transition: 0.3s;
+            font-family: 'Poppins', sans-serif;
+        }
+        .confirm-modal-content .confirm-actions .btn-cancel {
+            background: var(--light-bg);
+            color: var(--text-dark);
+        }
+        .confirm-modal-content .confirm-actions .btn-cancel:hover {
+            background: var(--border);
+        }
+        .confirm-modal-content .confirm-actions .btn-danger {
+            background: #dc2626;
+            color: var(--white);
+        }
+        .confirm-modal-content .confirm-actions .btn-danger:hover {
+            background: #b91c1c;
+            transform: translateY(-2px);
+        }
+        .confirm-modal-content .confirm-actions .btn-warning {
+            background: #d97706;
+            color: var(--white);
+        }
+        .confirm-modal-content .confirm-actions .btn-warning:hover {
+            background: #b45309;
+            transform: translateY(-2px);
+        }
+
         @media (max-width: 992px) {
-            .dashboard-wrapper { padding: 20px 40px 40px; }
-            .dashboard-grid { grid-template-columns: 1fr; }
+            .dashboard-wrapper {
+                padding: 20px 40px 40px;
+            }
+            .dashboard-grid {
+                grid-template-columns: 1fr;
+            }
         }
 
         @media (max-width: 768px) {
-            .dashboard-wrapper { padding: 16px 20px 30px; }
-            .dashboard-header { flex-direction: column; align-items: flex-start; padding: 20px; }
-            .stats-grid { grid-template-columns: 1fr 1fr; }
-            .quick-actions { grid-template-columns: 1fr 1fr; }
+            .dashboard-wrapper {
+                padding: 16px 20px 30px;
+            }
+            .dashboard-header {
+                flex-direction: column;
+                align-items: flex-start;
+                padding: 20px;
+            }
+            .stats-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+            .quick-actions {
+                grid-template-columns: 1fr 1fr;
+            }
         }
 
         @media (max-width: 480px) {
-            .stats-grid { grid-template-columns: 1fr; }
-            .dashboard-header .welcome h1 { font-size: 20px; }
-            .dashboard-header .header-actions { width: 100%; }
-            .dashboard-header .header-actions .logout-btn { width: 100%; justify-content: center; }
-            .quick-actions { grid-template-columns: 1fr; }
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+            .dashboard-header .welcome h1 {
+                font-size: 20px;
+            }
+            .dashboard-header .header-actions {
+                width: 100%;
+            }
+            .dashboard-header .header-actions .logout-btn {
+                width: 100%;
+                justify-content: center;
+            }
+            .quick-actions {
+                grid-template-columns: 1fr;
+            }
+            .class-modal-content {
+                padding: 20px;
+            }
         }
     </style>
 </head>
 <body>
 
-    <!-- ===== TOAST ===== -->
+    <!-- TOAST -->
     <div class="toast" id="toast">
         <i class="fas fa-check-circle" id="toastIcon"></i>
         <span id="toastMessage">Success!</span>
     </div>
 
-    <!-- ============================================================ -->
-    <!-- ===== NAVBAR ===== -->
-    <!-- ============================================================ -->
+    <!-- CONFIRM MODAL -->
+    <div class="confirm-modal-overlay" id="confirmModal">
+        <div class="confirm-modal-content">
+            <div class="confirm-icon" id="confirmIcon"><i class="fas fa-exclamation-triangle"></i></div>
+            <h3 id="confirmTitle">Are you sure?</h3>
+            <p id="confirmMessage">This action cannot be undone.</p>
+            <div class="confirm-actions">
+                <button class="btn-cancel" onclick="closeConfirmModal()">Cancel</button>
+                <button class="btn-danger" id="confirmBtn" onclick="executeConfirm()">Confirm</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- START CLASS MODAL -->
+    <div class="class-modal-overlay" id="startClassModal">
+        <div class="class-modal-content">
+            <button class="modal-close" onclick="closeStartClassModal()"><i class="fas fa-times"></i></button>
+            <h2>🎥 Start a Live Class</h2>
+            <p class="modal-sub">Set the meeting link and (optionally) the recording link for students.</p>
+            <form id="startClassForm" onsubmit="handleStartClass(event)">
+                <div class="form-group">
+                    <label>Class Title <span style="color:var(--error);">*</span></label>
+                    <input type="text" id="classTitle" placeholder="e.g. Selenium WebDriver - Session 4" required />
+                </div>
+                <div class="form-group">
+                    <label>Meeting Link (Zoom/Google Meet) <span style="color:var(--error);">*</span></label>
+                    <input type="url" id="classLink" placeholder="https://zoom.us/j/123456789" required />
+                </div>
+                <div class="form-group">
+                    <label>Recording Link (optional)</label>
+                    <input type="url" id="recordingLink" placeholder="https://drive.google.com/... or YouTube link" />
+                </div>
+                <div class="form-group">
+                    <label>Class Date &amp; Time</label>
+                    <input type="datetime-local" id="classDateTime" />
+                </div>
+                <div class="form-group">
+                    <label>Additional Notes</label>
+                    <textarea id="classNotes" placeholder="Any additional information for students..."></textarea>
+                </div>
+                <button type="submit" class="btn-start-class" id="startClassBtn">
+                    <i class="fas fa-broadcast"></i> Start Class &amp; Notify Students
+                </button>
+                <div class="email-status" id="emailStatus">
+                    <i class="fas fa-check-circle"></i> <span id="emailStatusText">Not sent yet.</span>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- NAVBAR -->
     <nav class="navbar">
-        <a href="instructor-dashboard.html" class="logo">
+        <a href="index.html" class="logo">
             <img src="images/logo.png" alt="QSkill Logo" />
             <span class="logo-text">
                 <span class="qskill">Qskill</span>
@@ -353,11 +716,9 @@
         </ul>
     </nav>
 
-    <!-- ============================================================ -->
-    <!-- ===== INSTRUCTOR DASHBOARD ===== -->
-    <!-- ============================================================ -->
+    <!-- INSTRUCTOR DASHBOARD -->
     <section class="dashboard-wrapper" id="dashboardWrapper">
-        
+
         <!-- Header -->
         <div class="dashboard-header">
             <div class="welcome">
@@ -375,17 +736,17 @@
         <div class="stats-grid" id="statsGrid">
             <div class="stat-card">
                 <i class="fas fa-book stat-icon"></i>
-                <div class="number" id="totalCourses">4</div>
+                <div class="number" id="totalCourses">0</div>
                 <div class="label">Active Courses</div>
             </div>
             <div class="stat-card">
                 <i class="fas fa-users stat-icon"></i>
-                <div class="number" id="totalStudents">78</div>
+                <div class="number" id="totalStudents">0</div>
                 <div class="label">Total Students</div>
             </div>
             <div class="stat-card">
                 <i class="fas fa-tasks stat-icon"></i>
-                <div class="number" id="pendingAssignments">12</div>
+                <div class="number" id="pendingAssignments">0</div>
                 <div class="label">Pending Assignments</div>
             </div>
             <div class="stat-card">
@@ -400,85 +761,19 @@
 
             <!-- Left Column -->
             <div>
-                <!-- My Courses -->
+                <!-- My Courses (filtered by instructor) -->
                 <div class="dash-card" style="margin-bottom: 24px;">
                     <div class="card-title"><i class="fas fa-book-open"></i> My Courses</div>
-                    
-                    <div class="course-item">
-                        <div class="course-icon"><i class="fas fa-code"></i></div>
-                        <div class="course-info">
-                            <h4>Automation Testing (Selenium)</h4>
-                            <p><i class="fas fa-calendar-alt"></i> Mon, Wed, Fri - 5:00 PM</p>
-                        </div>
-                        <span class="student-count">32</span>
-                    </div>
-                    
-                    <div class="course-item">
-                        <div class="course-icon"><i class="fas fa-file-alt"></i></div>
-                        <div class="course-info">
-                            <h4>Manual Testing</h4>
-                            <p><i class="fas fa-calendar-alt"></i> Tue, Thu - 6:00 PM</p>
-                        </div>
-                        <span class="student-count">18</span>
-                    </div>
-                    
-                    <div class="course-item">
-                        <div class="course-icon"><i class="fas fa-plug"></i></div>
-                        <div class="course-info">
-                            <h4>Postman API Testing</h4>
-                            <p><i class="fas fa-calendar-alt"></i> Sat - 10:00 AM</p>
-                        </div>
-                        <span class="student-count">15</span>
-                    </div>
-                    
-                    <div class="course-item">
-                        <div class="course-icon"><i class="fas fa-cogs"></i></div>
-                        <div class="course-info">
-                            <h4>Playwright Automation</h4>
-                            <p><i class="fas fa-calendar-alt"></i> Sun - 11:00 AM</p>
-                        </div>
-                        <span class="student-count">13</span>
+                    <div id="myCoursesList">
+                        <!-- dynamically rendered -->
                     </div>
                 </div>
 
-                <!-- Recent Students -->
+                <!-- Students (with delete/block) -->
                 <div class="dash-card">
-                    <div class="card-title"><i class="fas fa-user-graduate"></i> Recent Students</div>
-                    
-                    <div class="student-item">
-                        <div class="avatar">T</div>
-                        <div class="student-info">
-                            <h4>Tejaswini Reddy</h4>
-                            <p>Automation Testing</p>
-                        </div>
-                        <span class="student-badge">85%</span>
-                    </div>
-                    
-                    <div class="student-item">
-                        <div class="avatar">A</div>
-                        <div class="student-info">
-                            <h4>Arjun Kumar</h4>
-                            <p>Manual Testing</p>
-                        </div>
-                        <span class="student-badge">92%</span>
-                    </div>
-                    
-                    <div class="student-item">
-                        <div class="avatar">P</div>
-                        <div class="student-info">
-                            <h4>Priya Sharma</h4>
-                            <p>API Testing</p>
-                        </div>
-                        <span class="student-badge">67%</span>
-                    </div>
-                    
-                    <div class="student-item">
-                        <div class="avatar">R</div>
-                        <div class="student-info">
-                            <h4>Rahul Gupta</h4>
-                            <p>Playwright Automation</p>
-                        </div>
-                        <span class="student-badge">45%</span>
+                    <div class="card-title"><i class="fas fa-user-graduate"></i> My Students</div>
+                    <div id="myStudentsList">
+                        <!-- dynamically rendered -->
                     </div>
                 </div>
             </div>
@@ -497,21 +792,20 @@
                             <i class="fas fa-file-alt"></i>
                             <span class="label">Create Assignment</span>
                         </button>
-                        <button class="quick-action" onclick="window.location.href='schedule-class.html'">
-                            <i class="fas fa-calendar-plus"></i>
-                            <span class="label">Schedule Class</span>
-                        </button>
                         <button class="quick-action" onclick="window.location.href='upload-videos.html'">
                             <i class="fas fa-video"></i>
                             <span class="label">Upload Videos</span>
                         </button>
+                        <button class="quick-action" onclick="openStartClassModal()">
+                            <i class="fas fa-chalkboard-teacher"></i>
+                            <span class="label">Start Class</span>
+                        </button>
                     </div>
                 </div>
 
-                <!-- ===== PENDING ASSIGNMENTS (CLICKABLE - LINKED TO REVIEW PAGE) ===== -->
+                <!-- Pending Assignments -->
                 <div class="dash-card" style="margin-bottom: 24px;">
                     <div class="card-title"><i class="fas fa-tasks"></i> Pending Assignments</div>
-                    
                     <a href="instructor-assignment-review.html?id=1" class="assignment-link">
                         <div class="student-item" style="border-bottom: 1px solid #F1F5F9;">
                             <div class="student-info">
@@ -521,7 +815,6 @@
                             <span style="background:#FEF3C7; color:#d97706; padding:3px 12px; border-radius:20px; font-size:12px; font-weight:500;">Pending</span>
                         </div>
                     </a>
-
                     <a href="instructor-assignment-review.html?id=2" class="assignment-link">
                         <div class="student-item" style="border-bottom: 1px solid #F1F5F9;">
                             <div class="student-info">
@@ -531,7 +824,6 @@
                             <span style="background:#FEF3C7; color:#d97706; padding:3px 12px; border-radius:20px; font-size:12px; font-weight:500;">Pending</span>
                         </div>
                     </a>
-
                     <a href="instructor-assignment-review.html?id=3" class="assignment-link">
                         <div class="student-item" style="border-bottom: 1px solid #F1F5F9;">
                             <div class="student-info">
@@ -541,7 +833,6 @@
                             <span style="background:#DBEAFE; color:#2563EB; padding:3px 12px; border-radius:20px; font-size:12px; font-weight:500;">Submitted</span>
                         </div>
                     </a>
-
                     <a href="instructor-assignment-review.html?id=4" class="assignment-link">
                         <div class="student-item">
                             <div class="student-info">
@@ -586,9 +877,7 @@
         </div>
     </section>
 
-    <!-- ============================================================ -->
-    <!-- ===== FOOTER ===== -->
-    <!-- ============================================================ -->
+    <!-- FOOTER -->
     <footer class="footer">
         <div class="footer-top">
             <div class="footer-logo">
@@ -624,33 +913,29 @@
         <div class="footer-bottom">© 2026 QSkill Career Solutions. All Rights Reserved.</div>
     </footer>
 
-    <!-- ============================================================ -->
-    <!-- ===== SCRIPTS ===== -->
-    <!-- ============================================================ -->
     <script>
-        // ============================================================ */
-        // ===== SESSION CHECK ===== */
-        // ============================================================ */
+        // ============================================================
+        // SESSION CHECK
+        // ============================================================
         function checkSession() {
             const instructorLoggedIn = localStorage.getItem('qskillInstructorLoggedIn');
             const adminLoggedIn = localStorage.getItem('qskillAdminLoggedIn');
             const userData = JSON.parse(localStorage.getItem('qskillUser') || '{}');
-            
+
             if (instructorLoggedIn !== 'true' && adminLoggedIn !== 'true') {
                 window.location.href = 'login.html';
-                return false;
+                return null;
             }
-            
+
             if (userData.name) {
                 document.getElementById('instructorName').textContent = userData.name;
             }
-            
-            return true;
+            return userData;
         }
 
-        // ============================================================ */
-        // ===== LOGOUT ===== */
-        // ============================================================ */
+        // ============================================================
+        // LOGOUT
+        // ============================================================
         function logout() {
             if (confirm('Are you sure you want to logout?')) {
                 localStorage.removeItem('qskillInstructorLoggedIn');
@@ -663,32 +948,511 @@
             }
         }
 
-        // ============================================================ */
-        // ===== TOAST ===== */
-        // ============================================================ */
+        // ============================================================
+        // TOAST
+        // ============================================================
         function showToast(message, type = 'success') {
             const toast = document.getElementById('toast');
             const toastIcon = document.getElementById('toastIcon');
             const toastMessage = document.getElementById('toastMessage');
             if (!toast) return;
             toastIcon.className = type === 'success' ? 'fas fa-check-circle' :
-                                 type === 'error' ? 'fas fa-exclamation-circle' :
-                                 'fas fa-info-circle';
+                type === 'error' ? 'fas fa-exclamation-circle' :
+                'fas fa-info-circle';
             toastMessage.textContent = message;
             toast.className = 'toast ' + type;
             setTimeout(() => toast.classList.add('show'), 10);
             setTimeout(() => toast.classList.remove('show'), 4000);
         }
 
-        // ============================================================ */
-        // ===== INIT ===== */
-        // ============================================================ */
-        document.addEventListener('DOMContentLoaded', function() {
-            checkSession();
+        // ============================================================
+        // CONFIRM MODAL
+        // ============================================================
+        let confirmCallback = null;
+
+        function openConfirmModal(title, message, btnText, btnClass, callback) {
+            document.getElementById('confirmTitle').textContent = title;
+            document.getElementById('confirmMessage').textContent = message;
+            const btn = document.getElementById('confirmBtn');
+            btn.textContent = btnText || 'Confirm';
+            btn.className = btnClass || 'btn-danger';
+            document.getElementById('confirmModal').classList.add('active');
+            confirmCallback = callback;
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeConfirmModal() {
+            document.getElementById('confirmModal').classList.remove('active');
+            document.body.style.overflow = '';
+            confirmCallback = null;
+        }
+
+        function executeConfirm() {
+            if (typeof confirmCallback === 'function') {
+                confirmCallback();
+            }
+            closeConfirmModal();
+        }
+
+        document.getElementById('confirmModal').addEventListener('click', function(e) {
+            if (e.target === this) closeConfirmModal();
         });
 
-        console.log('📚 QSkill Instructor Dashboard Loaded');
-        console.log('🔗 Pending assignments linked to instructor-assignment-review.html');
+        // ============================================================
+        // COURSE DATA (with instructor association)
+        // ============================================================
+        function getDefaultCourses() {
+            return [{
+                id: 'course_1',
+                title: 'Automation Testing (Selenium)',
+                icon: 'fa-code',
+                schedule: 'Mon, Wed, Fri - 5:00 PM',
+                instructorEmail: 'instructor@qskill.com',
+                studentIds: ['student_1', 'student_2', 'student_3']
+            }, {
+                id: 'course_2',
+                title: 'Manual Testing',
+                icon: 'fa-file-alt',
+                schedule: 'Tue, Thu - 6:00 PM',
+                instructorEmail: 'instructor@qskill.com',
+                studentIds: ['student_4', 'student_5']
+            }, {
+                id: 'course_3',
+                title: 'Postman API Testing',
+                icon: 'fa-plug',
+                schedule: 'Sat - 10:00 AM',
+                instructorEmail: 'instructor@qskill.com',
+                studentIds: ['student_6']
+            }, {
+                id: 'course_4',
+                title: 'Playwright Automation',
+                icon: 'fa-cogs',
+                schedule: 'Sun - 11:00 AM',
+                instructorEmail: 'instructor@qskill.com',
+                studentIds: ['student_2', 'student_7']
+            }, {
+                id: 'course_5',
+                title: 'DevOps Fundamentals',
+                icon: 'fa-cloud',
+                schedule: 'Mon, Wed - 7:00 PM',
+                instructorEmail: 'another@instructor.com',
+                studentIds: ['student_8', 'student_9']
+            }];
+        }
+
+        function getCourses() {
+            let courses = JSON.parse(localStorage.getItem('qskillCourses'));
+            if (!courses || !Array.isArray(courses) || courses.length === 0) {
+                courses = getDefaultCourses();
+                localStorage.setItem('qskillCourses', JSON.stringify(courses));
+            }
+            return courses;
+        }
+
+        function saveCourses(courses) {
+            localStorage.setItem('qskillCourses', JSON.stringify(courses));
+        }
+
+        function getCoursesForInstructor(email) {
+            const all = getCourses();
+            return all.filter(c => c.instructorEmail === email);
+        }
+
+        // ============================================================
+        // STUDENT DATA
+        // ============================================================
+        function getDefaultStudents() {
+            return {
+                'student_1': { id: 'student_1', name: 'Tejaswini Reddy', email: 'tejaswini@example.com', blocked: false,
+                    courseIds: ['course_1'] },
+                'student_2': { id: 'student_2', name: 'Arjun Kumar', email: 'arjun@example.com', blocked: false,
+                    courseIds: ['course_1', 'course_4'] },
+                'student_3': { id: 'student_3', name: 'Priya Sharma', email: 'priya@example.com', blocked: false,
+                    courseIds: ['course_1'] },
+                'student_4': { id: 'student_4', name: 'Rahul Gupta', email: 'rahul@example.com', blocked: false,
+                    courseIds: ['course_2'] },
+                'student_5': { id: 'student_5', name: 'Sneha Patel', email: 'sneha@example.com', blocked: false,
+                    courseIds: ['course_2'] },
+                'student_6': { id: 'student_6', name: 'Vikram Singh', email: 'vikram@example.com', blocked: false,
+                    courseIds: ['course_3'] },
+                'student_7': { id: 'student_7', name: 'Ananya Reddy', email: 'ananya@example.com', blocked: false,
+                    courseIds: ['course_4'] },
+                'student_8': { id: 'student_8', name: 'Deepak Kumar', email: 'deepak@example.com', blocked: false,
+                    courseIds: ['course_5'] },
+                'student_9': { id: 'student_9', name: 'Kavya Nair', email: 'kavya@example.com', blocked: false,
+                    courseIds: ['course_5'] }
+            };
+        }
+
+        function getAllStudents() {
+            let students = JSON.parse(localStorage.getItem('qskillStudents'));
+            if (!students || typeof students !== 'object') {
+                students = getDefaultStudents();
+                localStorage.setItem('qskillStudents', JSON.stringify(students));
+            }
+            return students;
+        }
+
+        function saveStudents(students) {
+            localStorage.setItem('qskillStudents', JSON.stringify(students));
+        }
+
+        function getStudentsForInstructor(instructorEmail) {
+            const all = getAllStudents();
+            const courses = getCoursesForInstructor(instructorEmail);
+            const courseIds = courses.map(c => c.id);
+            const result = [];
+            for (const id in all) {
+                const s = all[id];
+                const hasCourse = s.courseIds && s.courseIds.some(cid => courseIds.includes(cid));
+                if (hasCourse) {
+                    result.push({ id, ...s });
+                }
+            }
+            return result;
+        }
+
+        // ============================================================
+        // DELETE STUDENT
+        // ============================================================
+        function deleteStudent(studentId, studentName) {
+            openConfirmModal(
+                'Delete Student',
+                `Are you sure you want to remove "${studentName}" from all your courses? This cannot be undone.`,
+                'Delete',
+                'btn-danger',
+                function() {
+                    const courses = getCourses();
+                    const updatedCourses = courses.map(c => {
+                        if (c.studentIds && c.studentIds.includes(studentId)) {
+                            c.studentIds = c.studentIds.filter(id => id !== studentId);
+                        }
+                        return c;
+                    });
+                    saveCourses(updatedCourses);
+
+                    const students = getAllStudents();
+                    if (students[studentId]) {
+                        delete students[studentId];
+                        saveStudents(students);
+                    }
+
+                    showToast(`🗑️ ${studentName} has been removed.`, 'success');
+                    renderDashboard();
+                }
+            );
+        }
+
+        // ============================================================
+        // BLOCK / UNBLOCK STUDENT
+        // ============================================================
+        function toggleBlockStudent(studentId, studentName, currentlyBlocked) {
+            const action = currentlyBlocked ? 'unblock' : 'block';
+            const title = currentlyBlocked ? 'Unblock Student' : 'Block Student';
+            const message = currentlyBlocked ?
+                `Are you sure you want to unblock "${studentName}"? They will be able to access your courses again.` :
+                `Are you sure you want to block "${studentName}"? They will lose access to your courses.`;
+            const btnText = currentlyBlocked ? 'Unblock' : 'Block';
+            const btnClass = currentlyBlocked ? 'btn-warning' : 'btn-danger';
+
+            openConfirmModal(
+                title,
+                message,
+                btnText,
+                btnClass,
+                function() {
+                    const students = getAllStudents();
+                    if (students[studentId]) {
+                        students[studentId].blocked = !currentlyBlocked;
+                        saveStudents(students);
+                        showToast(
+                            currentlyBlocked ?
+                            `✅ ${studentName} has been unblocked.` :
+                            `🔒 ${studentName} has been blocked.`,
+                            'success'
+                        );
+                        renderDashboard();
+                    }
+                }
+            );
+        }
+
+        // ============================================================
+        // RENDER DASHBOARD
+        // ============================================================
+        function renderDashboard() {
+            const user = checkSession();
+            if (!user) return;
+
+            const instructorEmail = user.email || 'instructor@qskill.com';
+
+            // ---- Courses ----
+            const myCourses = getCoursesForInstructor(instructorEmail);
+            const courseContainer = document.getElementById('myCoursesList');
+
+            if (myCourses.length === 0) {
+                courseContainer.innerHTML = `
+                            <div class="empty-state">
+                                <i class="fas fa-book-open"></i>
+                                <p>You haven't created any courses yet.<br>Click <strong>New Course</strong> to get started.</p>
+                            </div>
+                        `;
+            } else {
+                let html = '';
+                myCourses.forEach(c => {
+                    const studentCount = (c.studentIds && c.studentIds.length) || 0;
+                    const icon = c.icon || 'fa-book';
+                    html += `
+                                <div class="course-item">
+                                    <div class="course-icon"><i class="fas ${icon}"></i></div>
+                                    <div class="course-info">
+                                        <h4>${c.title}</h4>
+                                        <p><i class="fas fa-calendar-alt"></i> ${c.schedule || 'TBD'}</p>
+                                    </div>
+                                    <span class="student-count">${studentCount}</span>
+                                </div>
+                            `;
+                });
+                courseContainer.innerHTML = html;
+            }
+
+            // ---- Students ----
+            const myStudents = getStudentsForInstructor(instructorEmail);
+            const studentContainer = document.getElementById('myStudentsList');
+
+            if (myStudents.length === 0) {
+                studentContainer.innerHTML = `
+                            <div class="empty-state">
+                                <i class="fas fa-user-graduate"></i>
+                                <p>No students enrolled in your courses yet.</p>
+                            </div>
+                        `;
+            } else {
+                let html = '';
+                myStudents.forEach(s => {
+                    const isBlocked = s.blocked === true;
+                    const initials = s.name.split(' ').map(w => w[0]).join('').toUpperCase().slice(0, 2);
+                    const statusBadge = isBlocked ?
+                        `<span style="background:#FEE2E2; color:#dc2626; padding:2px 12px; border-radius:20px; font-size:11px; font-weight:500;">Blocked</span>` :
+                        `<span class="student-badge">${s.courseIds && s.courseIds.length || 0} course(s)</span>`;
+
+                    html += `
+                                <div class="student-item ${isBlocked ? 'blocked' : ''}">
+                                    <div class="avatar">${initials}</div>
+                                    <div class="student-info">
+                                        <h4>${s.name}</h4>
+                                        <p>${s.email}</p>
+                                    </div>
+                                    ${statusBadge}
+                                    <div class="student-actions">
+                                        <button class="btn-block-student" title="${isBlocked ? 'Unblock' : 'Block'}" onclick="toggleBlockStudent('${s.id}','${s.name}',${isBlocked})">
+                                            <i class="fas ${isBlocked ? 'fa-unlock' : 'fa-ban'}"></i>
+                                        </button>
+                                        <button class="btn-delete-student" title="Delete" onclick="deleteStudent('${s.id}','${s.name}')">
+                                            <i class="fas fa-trash-alt"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            `;
+                });
+                studentContainer.innerHTML = html;
+            }
+
+            // ---- Stats ----
+            const totalCourses = myCourses.length;
+            const totalStudents = myStudents.length;
+            let pendingAssignments = 12;
+            try {
+                const assignments = JSON.parse(localStorage.getItem('qskillAssignments') || '[]');
+                pendingAssignments = assignments.filter(a => a.status === 'pending').length || 12;
+            } catch (e) { /* ignore */ }
+
+            document.getElementById('totalCourses').textContent = totalCourses;
+            document.getElementById('totalStudents').textContent = totalStudents;
+            document.getElementById('pendingAssignments').textContent = pendingAssignments;
+        }
+
+        // ============================================================
+        // CLASS SESSIONS MANAGEMENT
+        // ============================================================
+        function getClassSessions() {
+            return JSON.parse(localStorage.getItem('qskillClassSessions')) || [];
+        }
+
+        function saveClassSessions(sessions) {
+            localStorage.setItem('qskillClassSessions', JSON.stringify(sessions));
+        }
+
+        function addClassSession(session) {
+            const sessions = getClassSessions();
+            sessions.push(session);
+            saveClassSessions(sessions);
+        }
+
+        // ============================================================
+        // START CLASS MODAL
+        // ============================================================
+        function openStartClassModal() {
+            document.getElementById('startClassModal').classList.add('active');
+            document.body.style.overflow = 'hidden';
+            document.getElementById('startClassForm').reset();
+            document.getElementById('emailStatus').classList.remove('show');
+            document.getElementById('startClassBtn').disabled = false;
+            document.getElementById('startClassBtn').innerHTML = '<i class="fas fa-broadcast"></i> Start Class &amp; Notify Students';
+        }
+
+        function closeStartClassModal() {
+            document.getElementById('startClassModal').classList.remove('active');
+            document.body.style.overflow = '';
+        }
+
+        document.getElementById('startClassModal').addEventListener('click', function(e) {
+            if (e.target === this) closeStartClassModal();
+        });
+
+        // ============================================================
+        // EMAILJS CONFIG (optional)
+        // ============================================================
+        const EMAILJS_CONFIG = {
+            PUBLIC_KEY: 'YOUR_EMAILJS_PUBLIC_KEY',
+            SERVICE_ID: 'YOUR_EMAILJS_SERVICE_ID',
+            CLASS_TEMPLATE_ID: 'YOUR_CLASS_TEMPLATE_ID'
+        };
+
+        // ============================================================
+        // SEND CLASS NOTIFICATION
+        // ============================================================
+        async function sendClassNotification(students, classTitle, classLink, classNotes, recordingLink, classDateTime) {
+            let canSend = false;
+            try {
+                if (typeof emailjs !== 'undefined' &&
+                    EMAILJS_CONFIG.PUBLIC_KEY &&
+                    EMAILJS_CONFIG.PUBLIC_KEY !== 'YOUR_EMAILJS_PUBLIC_KEY') {
+                    emailjs.init(EMAILJS_CONFIG.PUBLIC_KEY);
+                    canSend = true;
+                }
+            } catch (e) {
+                console.warn('EmailJS not configured, using demo mode.', e);
+            }
+
+            const statusEl = document.getElementById('emailStatus');
+            const statusText = document.getElementById('emailStatusText');
+
+            if (students.length === 0) {
+                statusEl.className = 'email-status show error';
+                statusText.innerHTML = '⚠️ No students found to notify.';
+                return false;
+            }
+
+            let successCount = 0;
+            let failCount = 0;
+            const dateTimeStr = classDateTime ? new Date(classDateTime).toLocaleString() : 'TBD';
+
+            for (const student of students) {
+                try {
+                    if (canSend) {
+                        const params = {
+                            to_email: student.email,
+                            student_name: student.name || 'Student',
+                            class_title: classTitle,
+                            class_link: classLink,
+                            class_notes: classNotes || 'Join the live session using the link above.',
+                            recording_link: recordingLink || 'Not available yet.',
+                            class_datetime: dateTimeStr,
+                            instructor_name: JSON.parse(localStorage.getItem('qskillUser') || '{}').name || 'Instructor',
+                            current_year: new Date().getFullYear()
+                        };
+                        await emailjs.send(
+                            EMAILJS_CONFIG.SERVICE_ID,
+                            EMAILJS_CONFIG.CLASS_TEMPLATE_ID,
+                            params
+                        );
+                        successCount++;
+                    } else {
+                        console.log(`📧 [DEMO] Class notification sent to ${student.email}`);
+                        successCount++;
+                    }
+                } catch (error) {
+                    console.error(`❌ Failed to send to ${student.email}:`, error);
+                    failCount++;
+                }
+            }
+
+            statusEl.className = 'email-status show success';
+            statusText.innerHTML =
+                `✅ Notified ${successCount} student(s)${failCount > 0 ? ` (${failCount} failed)` : ''} about the live class.`;
+
+            if (failCount > 0 && successCount === 0) {
+                statusEl.className = 'email-status show error';
+                statusText.innerHTML = '❌ Failed to send notifications. Please check your EmailJS configuration.';
+                return false;
+            }
+            return true;
+        }
+
+        // ============================================================
+        // HANDLE START CLASS
+        // ============================================================
+        async function handleStartClass(e) {
+            e.preventDefault();
+
+            const title = document.getElementById('classTitle').value.trim();
+            const link = document.getElementById('classLink').value.trim();
+            const recording = document.getElementById('recordingLink').value.trim();
+            const dateTime = document.getElementById('classDateTime').value;
+            const notes = document.getElementById('classNotes').value.trim();
+            const btn = document.getElementById('startClassBtn');
+            const statusEl = document.getElementById('emailStatus');
+            const statusText = document.getElementById('emailStatusText');
+
+            if (!title || !link) {
+                statusEl.className = 'email-status show error';
+                statusText.innerHTML = '⚠️ Please fill in all required fields.';
+                return;
+            }
+
+            btn.disabled = true;
+            btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Sending notifications...';
+
+            const user = JSON.parse(localStorage.getItem('qskillUser') || '{}');
+            const instructorEmail = user.email || 'instructor@qskill.com';
+            const myStudents = getStudentsForInstructor(instructorEmail);
+
+            const session = {
+                id: Date.now(),
+                title: title,
+                meetingLink: link,
+                recordingLink: recording || '',
+                dateTime: dateTime || new Date().toISOString(),
+                notes: notes,
+                status: 'upcoming',
+                createdAt: new Date().toISOString(),
+                instructorEmail: instructorEmail
+            };
+            addClassSession(session);
+
+            const result = await sendClassNotification(myStudents, title, link, notes, recording, dateTime);
+
+            btn.disabled = false;
+            btn.innerHTML = '<i class="fas fa-broadcast"></i> Start Class &amp; Notify Students';
+
+            if (result) {
+                setTimeout(closeStartClassModal, 3000);
+                showToast('✅ Class started and notifications sent!', 'success');
+            }
+        }
+
+        // ============================================================
+        // INIT
+        // ============================================================
+        document.addEventListener('DOMContentLoaded', function() {
+            getCourses();
+            getAllStudents();
+            renderDashboard();
+            console.log('📚 Instructor Dashboard Loaded');
+            console.log('✅ Only courses taught by the logged-in instructor are shown.');
+            console.log('✅ Students can be deleted or blocked.');
+        });
     </script>
 
 </body>

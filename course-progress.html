@@ -267,12 +267,17 @@
     </div>
 
     <!-- ============================================================ -->
-    <!-- ===== HEADER ===== -->
+    <!-- ===== HEADER - SAME AS DASHBOARD ===== -->
     <!-- ============================================================ -->
     <header class="header">
         <a href="index.html" class="logo">
-            <span class="qskill">Q</span><span class="careersolutions">Solutions</span>
+            <img src="images/logo.png" alt="QSkill Logo" />
+            <span class="logo-text">
+                <span class="qskill">Qskill</span>
+                <span class="careersolutions">careersolutions</span>
+            </span>
         </a>
+
         <ul class="header-menu">
             <li><a href="dashboard.html">Dashboard</a></li>
             <li><a href="all-courses.html">Courses</a></li>
@@ -280,6 +285,7 @@
             <li><a href="student-assignments.html">Assignments</a></li>
             <li><a href="#" onclick="logout()" style="color: #EF4444;">Logout</a></li>
         </ul>
+
         <div class="user-profile">
             <span class="name" id="studentName">Student</span>
             <span class="role-badge">Student</span>
@@ -344,6 +350,16 @@
                 localStorage.removeItem('qskillUser');
                 window.location.href = 'login.html';
             }
+        }
+
+        // ===== UPDATE STUDENT NAME =====
+        function updateStudentName() {
+            const userData = JSON.parse(localStorage.getItem('qskillUser') || '{}');
+            const name = userData.name || 'Student';
+            const nameEl = document.getElementById('studentName');
+            const avatarEl = document.getElementById('studentAvatar');
+            if (nameEl) nameEl.textContent = name;
+            if (avatarEl) avatarEl.textContent = name.charAt(0).toUpperCase();
         }
 
         // ============================================================ */
@@ -421,7 +437,6 @@
             }
         };
 
-        // Assignment data (same as before)
         const assignmentData = {
             1: {
                 id: 1,
@@ -478,14 +493,6 @@
             return progress;
         }
 
-        function updateModuleProgress(courseId, moduleIndex, status) {
-            const studentId = getStudentId();
-            const key = 'qskillModuleProgress_' + studentId + '_' + courseId;
-            let progress = JSON.parse(localStorage.getItem(key)) || {};
-            progress[moduleIndex] = status;
-            localStorage.setItem(key, JSON.stringify(progress));
-        }
-
         // ============================================================ */
         // ===== GET STUDENT ASSIGNMENT PROGRESS ===== */
         // ============================================================ */
@@ -521,7 +528,6 @@
             const moduleProgress = getModuleProgress(courseId);
             const assignmentProgress = getStudentAssignments();
 
-            // Calculate overall progress
             const totalModules = course.modules.length;
             let completedModules = 0;
             let inProgressModules = 0;
@@ -532,12 +538,9 @@
             });
             const progressPercent = totalModules > 0 ? Math.round((completedModules / totalModules) * 100) : 0;
 
-            // Get assignments for this course
             const courseAssignments = Object.values(assignmentData).filter(a => a.course === courseId);
 
-            // Build HTML
             let html = `
-                <!-- Course Info -->
                 <div class="course-info-card">
                     <div class="info">
                         <h2>${course.title}</h2>
@@ -552,7 +555,6 @@
                     </div>
                 </div>
 
-                <!-- Modules -->
                 <div class="section-card">
                     <div class="section-title">
                         <i class="fas fa-list-ul"></i> Course Modules
@@ -583,7 +585,6 @@
                     }).join('')}
                 </div>
 
-                <!-- Assignments -->
                 <div class="section-card">
                     <div class="section-title">
                         <i class="fas fa-tasks"></i> Assignments
@@ -613,7 +614,6 @@
                     }).join('')}
                 </div>
 
-                <!-- Resume Button -->
                 <div style="text-align:center; margin-top:10px;">
                     <a href="courses-detail.html?course=${courseId}" class="resume-btn">
                         <i class="fas fa-play"></i> Resume Learning
@@ -622,18 +622,13 @@
             `;
 
             document.getElementById('courseContent').innerHTML = html;
-
-            // Update student name
-            const userData = JSON.parse(localStorage.getItem('qskillUser') || '{}');
-            const name = userData.name || 'Student';
-            document.getElementById('studentName').textContent = name;
-            document.getElementById('studentAvatar').textContent = name.charAt(0).toUpperCase();
         }
 
         // ============================================================ */
         // ===== INIT ===== */
         // ============================================================ */
         document.addEventListener('DOMContentLoaded', function() {
+            updateStudentName();
             renderCourseProgress();
         });
     </script>

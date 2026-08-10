@@ -187,6 +187,16 @@
             font-size: 12px;
             color: var(--text-gray);
         }
+
+        .page-header .stats .stat-item .number.pending-count {
+            color: var(--warning);
+        }
+        .page-header .stats .stat-item .number.contacted-count {
+            color: var(--primary);
+        }
+        .page-header .stats .stat-item .number.completed-count {
+            color: var(--success);
+        }
  
         /* ============================================================ */
         /* ===== TABS ===== */
@@ -230,6 +240,19 @@
  
         .admin-tab i {
             font-size: 14px;
+        }
+
+        .admin-tab .tab-badge {
+            background: var(--error);
+            color: var(--white);
+            font-size: 10px;
+            padding: 1px 8px;
+            border-radius: 999px;
+            font-weight: 600;
+        }
+
+        .admin-tab.active .tab-badge {
+            background: rgba(255,255,255,0.3);
         }
  
         /* ============================================================ */
@@ -304,6 +327,26 @@
             background: var(--secondary);
             transform: translateY(-2px);
         }
+
+        .table-controls .refresh-btn {
+            background: var(--light-bg);
+            color: var(--text-dark);
+            border: 1px solid var(--border);
+            padding: 8px 16px;
+            border-radius: 6px;
+            font-weight: 500;
+            font-size: 13px;
+            cursor: pointer;
+            transition: 0.3s;
+            font-family: 'Poppins', sans-serif;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .table-controls .refresh-btn:hover {
+            background: var(--border);
+        }
  
         /* ===== TABLE ===== */
         .table-wrapper {
@@ -366,6 +409,16 @@
             background: #DBEAFE;
             color: #2563EB;
         }
+
+        .table-wrapper .status-badge.contacted {
+            background: #E0E7FF;
+            color: #4F46E5;
+        }
+
+        .table-wrapper .status-badge.cancelled {
+            background: #FEE2E2;
+            color: #DC2626;
+        }
  
         .action-btns {
             display: flex;
@@ -421,6 +474,16 @@
  
         .action-btns .delete-btn:hover {
             background: #dc2626;
+            color: var(--white);
+        }
+
+        .action-btns .status-btn {
+            background: var(--light-bg);
+            color: var(--text-dark);
+        }
+
+        .action-btns .status-btn:hover {
+            background: var(--primary);
             color: var(--white);
         }
  
@@ -588,7 +651,30 @@
             background: var(--secondary);
             transform: translateY(-2px);
         }
- 
+
+        /* ===== DEMO BOOKING DETAILS ===== */
+        .demo-detail-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 4px 0;
+            font-size: 13px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .demo-detail-row:last-child {
+            border-bottom: none;
+        }
+
+        .demo-detail-row .demo-label {
+            color: var(--text-gray);
+            font-weight: 500;
+        }
+
+        .demo-detail-row .demo-value {
+            color: var(--text-dark);
+            font-weight: 600;
+        }
+
         /* ============================================================ */
         /* ===== RESPONSIVE ===== */
         /* ============================================================ */
@@ -668,28 +754,18 @@
     <!-- ===== SESSION CHECK ===== -->
     <!-- ============================================================ -->
     <script>
-        // Check if admin is logged in
         const isAdmin = localStorage.getItem('qskillAdminLoggedIn');
-        const userRole = localStorage.getItem('userRole');
-        
-        if (!isAdmin && userRole !== 'admin') {
+        if (!isAdmin) {
             window.location.href = 'login.html';
         }
         
-        // Function to logout
         function logout() {
             if (confirm('Are you sure you want to logout?')) {
                 localStorage.removeItem('qskillAdminLoggedIn');
-                localStorage.removeItem('userRole');
-                localStorage.removeItem('instructorLoggedIn');
-                localStorage.removeItem('instructorEmail');
-                localStorage.removeItem('studentLoggedIn');
-                localStorage.removeItem('studentId');
+                localStorage.removeItem('qskillUser');
                 window.location.href = 'login.html';
             }
         }
-        
-        console.log('👑 Admin Dashboard - Logged in as admin');
     </script>
  
     <!-- ===== TOAST ===== -->
@@ -699,11 +775,11 @@
     </div>
  
     <!-- ============================================================ -->
-    <!-- ===== NAVBAR - FULLY LINKED ===== -->
+    <!-- ===== NAVBAR ===== -->
     <!-- ============================================================ -->
     <nav class="navbar">
         <a href="index.html" class="logo">
-            <img src="photo1.jpeg" alt="QSkill Logo" />
+            <img src="images/logo.png" alt="QSkill Logo" />
             <span class="logo-text">
                 <span class="qskill">Qskill</span>
                 <span class="careersolutions">careersolutions</span>
@@ -711,7 +787,6 @@
         </a>
         <div class="nav-right">
             <span class="admin-badge"><i class="fas fa-user-shield"></i> Admin</span>
-            <!-- 🔗 LINKED: Logout -->
             <button class="logout-btn" onclick="logout()"><i class="fas fa-sign-out-alt"></i> Logout</button>
         </div>
     </nav>
@@ -725,24 +800,24 @@
         <div class="page-header">
             <div>
                 <h1>Admin <span>Dashboard</span></h1>
-                <p style="color: var(--text-gray); font-size: 14px;">Manage students, instructors, and courses</p>
+                <p style="color: var(--text-gray); font-size: 14px;">Manage students, instructors, courses, and demo bookings</p>
             </div>
             <div class="stats" id="statsContainer">
                 <div class="stat-item">
-                    <div class="number" id="totalStudents">2</div>
+                    <div class="number" id="totalStudents">0</div>
                     <div class="label">Students</div>
                 </div>
                 <div class="stat-item">
-                    <div class="number" id="totalInstructors">2</div>
+                    <div class="number" id="totalInstructors">0</div>
                     <div class="label">Instructors</div>
                 </div>
                 <div class="stat-item">
-                    <div class="number" id="totalCourses">3</div>
+                    <div class="number" id="totalCourses">0</div>
                     <div class="label">Courses</div>
                 </div>
                 <div class="stat-item">
-                    <div class="number" id="totalEnrollments">3</div>
-                    <div class="label">Enrollments</div>
+                    <div class="number" id="totalDemos">0</div>
+                    <div class="label">Demo Bookings</div>
                 </div>
             </div>
         </div>
@@ -760,6 +835,10 @@
             </button>
             <button class="admin-tab" data-tab="enrollments">
                 <i class="fas fa-link"></i> Enrollments
+            </button>
+            <button class="admin-tab" data-tab="demos">
+                <i class="fas fa-calendar-alt"></i> Demo Bookings
+                <span class="tab-badge" id="demoBadge">0</span>
             </button>
         </div>
  
@@ -866,6 +945,44 @@
                         </tr>
                     </thead>
                     <tbody id="enrollmentsTableBody"></tbody>
+                </table>
+            </div>
+        </div>
+ 
+        <!-- ===== DEMO BOOKINGS TAB ===== -->
+        <div class="tab-content" id="tab-demos">
+            <div class="table-controls">
+                <div class="search-box">
+                    <i class="fas fa-search"></i>
+                    <input type="text" id="demoSearch" placeholder="Search by name, email, ID..." oninput="renderDemos()" />
+                </div>
+                <div style="display:flex;gap:10px;flex-wrap:wrap;">
+                    <select id="demoStatusFilter" onchange="renderDemos()" style="padding:8px 14px;border:1px solid var(--border);border-radius:6px;font-family:'Poppins',sans-serif;font-size:13px;background:var(--white);">
+                        <option value="all">All Status</option>
+                        <option value="pending">Pending</option>
+                        <option value="contacted">Contacted</option>
+                        <option value="completed">Completed</option>
+                        <option value="cancelled">Cancelled</option>
+                    </select>
+                    <button class="refresh-btn" onclick="renderDemos(); updateStats();">
+                        <i class="fas fa-sync-alt"></i> Refresh
+                    </button>
+                </div>
+            </div>
+            <div class="table-wrapper">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Student</th>
+                            <th>Contact</th>
+                            <th>Date &amp; Time</th>
+                            <th>Message</th>
+                            <th>Status</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="demosTableBody"></tbody>
                 </table>
             </div>
         </div>
@@ -978,6 +1095,26 @@
             </form>
         </div>
     </div>
+
+    <!-- View Demo Modal -->
+    <div class="modal-overlay" id="viewDemoModal">
+        <div class="modal-content">
+            <button class="modal-close" onclick="closeModal('viewDemoModal')"><i class="fas fa-times"></i></button>
+            <h2>📋 Demo Booking Details</h2>
+            <p class="modal-sub" id="viewDemoId">Booking ID: DEMO-001</p>
+            <div id="viewDemoContent">
+                <div class="demo-detail-row"><span class="demo-label">Student Name</span><span class="demo-value" id="viewDemoName">-</span></div>
+                <div class="demo-detail-row"><span class="demo-label">Email</span><span class="demo-value" id="viewDemoEmail">-</span></div>
+                <div class="demo-detail-row"><span class="demo-label">Phone</span><span class="demo-value" id="viewDemoPhone">-</span></div>
+                <div class="demo-detail-row"><span class="demo-label">Date</span><span class="demo-value" id="viewDemoDate">-</span></div>
+                <div class="demo-detail-row"><span class="demo-label">Time</span><span class="demo-value" id="viewDemoTime">-</span></div>
+                <div class="demo-detail-row"><span class="demo-label">Message</span><span class="demo-value" id="viewDemoMessage" style="font-weight:400;">-</span></div>
+                <div class="demo-detail-row"><span class="demo-label">Status</span><span class="demo-value" id="viewDemoStatus">-</span></div>
+                <div class="demo-detail-row"><span class="demo-label">Booked On</span><span class="demo-value" id="viewDemoBookedAt">-</span></div>
+            </div>
+            <button class="modal-btn" onclick="closeModal('viewDemoModal')" style="background:var(--text-gray);">Close</button>
+        </div>
+    </div>
  
     <!-- ============================================================ -->
     <!-- ===== SCRIPTS ===== -->
@@ -1012,57 +1149,117 @@
         }
  
         // ============================================================ */
+        // ===== SHARED DATA ACCESS ===== */
+        // ============================================================ */
+        
+        // Students - shared with login page and student dashboard
+        function getStudentDatabase() {
+            return JSON.parse(localStorage.getItem('qskillStudents')) || {};
+        }
+        
+        function saveStudentDatabase(data) {
+            localStorage.setItem('qskillStudents', JSON.stringify(data));
+        }
+        
+        // Courses - shared with all pages
+        function getCourseCatalog() {
+            return JSON.parse(localStorage.getItem('qskillCourses')) || {};
+        }
+        
+        function saveCourseCatalog(data) {
+            localStorage.setItem('qskillCourses', JSON.stringify(data));
+        }
+        
+        // Instructors - shared with instructor pages
+        function getInstructorDatabase() {
+            return JSON.parse(localStorage.getItem('qskillInstructors')) || {};
+        }
+        
+        function saveInstructorDatabase(data) {
+            localStorage.setItem('qskillInstructors', JSON.stringify(data));
+        }
+        
+        // Enrollments - shared with student dashboard
+        function getEnrollments() {
+            return JSON.parse(localStorage.getItem('qskillEnrollments')) || [];
+        }
+        
+        function saveEnrollments(data) {
+            localStorage.setItem('qskillEnrollments', JSON.stringify(data));
+        }
+        
+        // Demo bookings
+        function getDemoBookings() {
+            try {
+                return JSON.parse(localStorage.getItem('demoBookings') || '[]');
+            } catch (e) {
+                return [];
+            }
+        }
+        
+        function saveDemoBookings(bookings) {
+            localStorage.setItem('demoBookings', JSON.stringify(bookings));
+        }
+
+        // ============================================================ */
         // ===== DATA ===== */
         // ============================================================ */
-        let adminData = JSON.parse(localStorage.getItem('qskillAdminData')) || {
-            students: {},
-            instructors: {},
-            courses: [],
-            enrollments: []
-        };
- 
-        // Default data
-        if (Object.keys(adminData.students).length === 0) {
-            adminData.students = {
-                'QSK24012345': { email: 'demo@qskill.com', password: 'demo123', name: 'Demo Student', status: 'active', registeredAt: new Date().toISOString() },
-                'QSK24067890': { email: 'john@example.com', password: 'john123', name: 'John Doe', status: 'active', registeredAt: new Date().toISOString() }
-            };
+        
+        // Initialize with default data if empty
+        function initData() {
+            let students = getStudentDatabase();
+            if (Object.keys(students).length === 0) {
+                students = {
+                    'QSK24012345': { email: 'student@qskill.com', password: 'a1b2c3d4e5f67890', name: 'Demo Student', registeredAt: new Date().toISOString() },
+                    'QSK24067890': { email: 'demo@qskill.com', password: 'f9e8d7c6b5a43210', name: 'Demo User', registeredAt: new Date().toISOString() }
+                };
+                saveStudentDatabase(students);
+            }
+            
+            let instructors = getInstructorDatabase();
+            if (Object.keys(instructors).length === 0) {
+                instructors = {
+                    'instructor@qskill.com': { password: 'instructor123', name: 'Demo Instructor', role: 'instructor', joinedAt: new Date().toISOString() },
+                    'admin@qskill.com': { password: 'admin123', name: 'Super Admin', role: 'admin', joinedAt: new Date().toISOString() }
+                };
+                saveInstructorDatabase(instructors);
+            }
+            
+            let courses = getCourseCatalog();
+            if (Object.keys(courses).length === 0) {
+                courses = {
+                    'manual': { id: 'manual', title: 'Manual Testing', duration: '6 Weeks', level: 'Beginner', status: 'active' },
+                    'automation': { id: 'automation', title: 'Automation Testing (Selenium)', duration: '12 Weeks', level: 'Beginner to Advanced', status: 'active' },
+                    'api': { id: 'api', title: 'Postman API Testing', duration: '4 Weeks', level: 'Beginner to Intermediate', status: 'active' },
+                    'playwright': { id: 'playwright', title: 'Playwright Automation', duration: '8 Weeks', level: 'Intermediate', status: 'active' },
+                    'cypress': { id: 'cypress', title: 'Cypress Automation', duration: '8 Weeks', level: 'Intermediate', status: 'active' },
+                    'restassured': { id: 'restassured', title: 'REST Assured API Testing', duration: '6 Weeks', level: 'Intermediate to Advanced', status: 'active' }
+                };
+                saveCourseCatalog(courses);
+            }
+            
+            let enrollments = getEnrollments();
+            if (enrollments.length === 0) {
+                enrollments = [
+                    { id: 1, studentId: 'QSK24012345', courseId: 'manual', instructorEmail: 'instructor@qskill.com', status: 'active' },
+                    { id: 2, studentId: 'QSK24012345', courseId: 'automation', instructorEmail: 'instructor@qskill.com', status: 'active' },
+                    { id: 3, studentId: 'QSK24067890', courseId: 'api', instructorEmail: 'instructor@qskill.com', status: 'active' }
+                ];
+                saveEnrollments(enrollments);
+            }
+            
+            // Also ensure enrolledCourses is set for student dashboard
+            let enrolledCourses = JSON.parse(localStorage.getItem('enrolledCourses')) || [];
+            if (enrolledCourses.length === 0) {
+                enrolledCourses = ['automation', 'manual', 'api'];
+                localStorage.setItem('enrolledCourses', JSON.stringify(enrolledCourses));
+            }
         }
- 
-        if (Object.keys(adminData.instructors).length === 0) {
-            adminData.instructors = {
-                'instructor@qskill.com': { password: 'instructor123', name: 'Demo Instructor', status: 'active', joinedAt: new Date().toISOString() },
-                'sarah@qskill.com': { password: 'sarah123', name: 'Sarah Johnson', status: 'active', joinedAt: new Date().toISOString() }
-            };
-        }
- 
-        if (adminData.courses.length === 0) {
-            adminData.courses = [
-                { id: 1, name: 'Manual Testing', duration: '6 Weeks', level: 'Beginner', status: 'active' },
-                { id: 2, name: 'Automation Testing (Selenium)', duration: '12 Weeks', level: 'Beginner to Advanced', status: 'active' },
-                { id: 3, name: 'Postman API Testing', duration: '4 Weeks', level: 'Beginner to Intermediate', status: 'active' },
-                { id: 4, name: 'Playwright Automation', duration: '8 Weeks', level: 'Intermediate', status: 'active' },
-                { id: 5, name: 'Combo Courses', duration: '20 Weeks', level: 'Beginner to Advanced', status: 'active' },
-                { id: 6, name: 'Cypress Automation', duration: '8 Weeks', level: 'Intermediate', status: 'active' },
-                { id: 7, name: 'REST Assured API Testing', duration: '6 Weeks', level: 'Intermediate to Advanced', status: 'active' }
-            ];
-        }
- 
-        if (adminData.enrollments.length === 0) {
-            adminData.enrollments = [
-                { id: 1, studentId: 'QSK24012345', courseId: 1, instructorEmail: 'instructor@qskill.com', status: 'active' },
-                { id: 2, studentId: 'QSK24012345', courseId: 2, instructorEmail: 'instructor@qskill.com', status: 'active' },
-                { id: 3, studentId: 'QSK24067890', courseId: 3, instructorEmail: 'sarah@qskill.com', status: 'active' }
-            ];
-        }
- 
-        let courseIdCounter = adminData.courses.length + 1;
-        let enrollmentIdCounter = adminData.enrollments.length + 1;
- 
-        function saveData() {
-            localStorage.setItem('qskillAdminData', JSON.stringify(adminData));
-        }
- 
+        
+        initData();
+        
+        let enrollmentIdCounter = getEnrollments().length + 1;
+
         // ============================================================ */
         // ===== TABS ===== */
         // ============================================================ */
@@ -1083,6 +1280,7 @@
                 case 'instructors': renderInstructors(); break;
                 case 'courses': renderCourses(); break;
                 case 'enrollments': renderEnrollments(); break;
+                case 'demos': renderDemos(); break;
             }
             updateStats();
         }
@@ -1094,8 +1292,9 @@
         function renderStudents() {
             const search = document.getElementById('studentSearch').value.toLowerCase();
             const tbody = document.getElementById('studentsTableBody');
-            const students = Object.entries(adminData.students);
-            const filtered = students.filter(([id, s]) => 
+            const students = getStudentDatabase();
+            const entries = Object.entries(students);
+            const filtered = entries.filter(([id, s]) => 
                 id.toLowerCase().includes(search) || 
                 s.email.toLowerCase().includes(search) || 
                 (s.name && s.name.toLowerCase().includes(search))
@@ -1106,35 +1305,38 @@
                 return;
             }
             
-            tbody.innerHTML = filtered.map(([id, s]) => `
-                <tr>
-                    <td><strong>${id}</strong></td>
-                    <td>${s.email}</td>
-                    <td>${s.name || '-'}</td>
-                    <td>
-                        <span class="status-badge ${s.status === 'active' ? 'active' : 'inactive'}">
-                            ${s.status || 'active'}
-                        </span>
-                    </td>
-                    <td>
-                        <div class="action-btns">
-                            <button class="view-btn" onclick="viewStudent('${id}')"><i class="fas fa-eye"></i></button>
-                            ${s.status === 'active' ? 
-                                `<button class="block-btn" onclick="blockStudent('${id}')"><i class="fas fa-ban"></i></button>` :
-                                `<button class="unblock-btn" onclick="unblockStudent('${id}')"><i class="fas fa-check"></i></button>`
-                            }
-                            <button class="delete-btn" onclick="deleteStudent('${id}')"><i class="fas fa-trash"></i></button>
-                        </div>
-                    </td>
-                </tr>
-            `).join('');
+            tbody.innerHTML = filtered.map(([id, s]) => {
+                const status = s.status || 'active';
+                const statusClass = status === 'active' ? 'active' : 'inactive';
+                return `
+                    <tr>
+                        <td><strong>${id}</strong></td>
+                        <td>${s.email}</td>
+                        <td>${s.name || '-'}</td>
+                        <td>
+                            <span class="status-badge ${statusClass}">${status}</span>
+                        </td>
+                        <td>
+                            <div class="action-btns">
+                                <button class="view-btn" onclick="viewStudent('${id}')"><i class="fas fa-eye"></i></button>
+                                ${status === 'active' ? 
+                                    `<button class="block-btn" onclick="blockStudent('${id}')"><i class="fas fa-ban"></i></button>` :
+                                    `<button class="unblock-btn" onclick="unblockStudent('${id}')"><i class="fas fa-check"></i></button>`
+                                }
+                                <button class="delete-btn" onclick="deleteStudent('${id}')"><i class="fas fa-trash"></i></button>
+                            </div>
+                        </td>
+                    </tr>
+                `;
+            }).join('');
         }
  
         function renderInstructors() {
             const search = document.getElementById('instructorSearch').value.toLowerCase();
             const tbody = document.getElementById('instructorsTableBody');
-            const instructors = Object.entries(adminData.instructors);
-            const filtered = instructors.filter(([email, i]) => 
+            const instructors = getInstructorDatabase();
+            const entries = Object.entries(instructors);
+            const filtered = entries.filter(([email, i]) => 
                 email.toLowerCase().includes(search) || 
                 (i.name && i.name.toLowerCase().includes(search))
             );
@@ -1144,34 +1346,38 @@
                 return;
             }
             
-            tbody.innerHTML = filtered.map(([email, i]) => `
-                <tr>
-                    <td>${email}</td>
-                    <td>${i.name || '-'}</td>
-                    <td>
-                        <span class="status-badge ${i.status === 'active' ? 'active' : 'inactive'}">
-                            ${i.status || 'active'}
-                        </span>
-                    </td>
-                    <td>
-                        <div class="action-btns">
-                            <button class="view-btn" onclick="viewInstructor('${email}')"><i class="fas fa-eye"></i></button>
-                            ${i.status === 'active' ? 
-                                `<button class="block-btn" onclick="blockInstructor('${email}')"><i class="fas fa-ban"></i></button>` :
-                                `<button class="unblock-btn" onclick="unblockInstructor('${email}')"><i class="fas fa-check"></i></button>`
-                            }
-                            <button class="delete-btn" onclick="deleteInstructor('${email}')"><i class="fas fa-trash"></i></button>
-                        </div>
-                    </td>
-                </tr>
-            `).join('');
+            tbody.innerHTML = filtered.map(([email, i]) => {
+                const status = i.status || 'active';
+                const statusClass = status === 'active' ? 'active' : 'inactive';
+                return `
+                    <tr>
+                        <td>${email}</td>
+                        <td>${i.name || '-'}</td>
+                        <td>
+                            <span class="status-badge ${statusClass}">${status}</span>
+                        </td>
+                        <td>
+                            <div class="action-btns">
+                                <button class="view-btn" onclick="viewInstructor('${email}')"><i class="fas fa-eye"></i></button>
+                                ${status === 'active' ? 
+                                    `<button class="block-btn" onclick="blockInstructor('${email}')"><i class="fas fa-ban"></i></button>` :
+                                    `<button class="unblock-btn" onclick="unblockInstructor('${email}')"><i class="fas fa-check"></i></button>`
+                                }
+                                <button class="delete-btn" onclick="deleteInstructor('${email}')"><i class="fas fa-trash"></i></button>
+                            </div>
+                        </td>
+                    </tr>
+                `;
+            }).join('');
         }
  
         function renderCourses() {
             const search = document.getElementById('courseSearch').value.toLowerCase();
             const tbody = document.getElementById('coursesTableBody');
-            const filtered = adminData.courses.filter(c => 
-                c.name.toLowerCase().includes(search) || 
+            const courses = getCourseCatalog();
+            const entries = Object.entries(courses);
+            const filtered = entries.filter(([id, c]) => 
+                c.title.toLowerCase().includes(search) || 
                 c.level.toLowerCase().includes(search)
             );
             
@@ -1180,39 +1386,46 @@
                 return;
             }
             
-            tbody.innerHTML = filtered.map(c => `
-                <tr>
-                    <td><strong>${c.name}</strong></td>
-                    <td>${c.duration || '-'}</td>
-                    <td>${c.level || '-'}</td>
-                    <td>
-                        <span class="status-badge ${c.status === 'active' ? 'active' : 'inactive'}">
-                            ${c.status || 'active'}
-                        </span>
-                    </td>
-                    <td>
-                        <div class="action-btns">
-                            ${c.status === 'active' ? 
-                                `<button class="block-btn" onclick="blockCourse(${c.id})"><i class="fas fa-ban"></i></button>` :
-                                `<button class="unblock-btn" onclick="unblockCourse(${c.id})"><i class="fas fa-check"></i></button>`
-                            }
-                            <button class="delete-btn" onclick="deleteCourse(${c.id})"><i class="fas fa-trash"></i></button>
-                        </div>
-                    </td>
-                </tr>
-            `).join('');
+            tbody.innerHTML = filtered.map(([id, c]) => {
+                const status = c.status || 'active';
+                const statusClass = status === 'active' ? 'active' : 'inactive';
+                return `
+                    <tr>
+                        <td><strong>${c.title}</strong></td>
+                        <td>${c.duration || '-'}</td>
+                        <td>${c.level || '-'}</td>
+                        <td>
+                            <span class="status-badge ${statusClass}">${status}</span>
+                        </td>
+                        <td>
+                            <div class="action-btns">
+                                ${status === 'active' ? 
+                                    `<button class="block-btn" onclick="blockCourse('${id}')"><i class="fas fa-ban"></i></button>` :
+                                    `<button class="unblock-btn" onclick="unblockCourse('${id}')"><i class="fas fa-check"></i></button>`
+                                }
+                                <button class="delete-btn" onclick="deleteCourse('${id}')"><i class="fas fa-trash"></i></button>
+                            </div>
+                        </td>
+                    </tr>
+                `;
+            }).join('');
         }
  
         function renderEnrollments() {
             const search = document.getElementById('enrollmentSearch').value.toLowerCase();
             const tbody = document.getElementById('enrollmentsTableBody');
-            const filtered = adminData.enrollments.filter(e => {
-                const student = adminData.students[e.studentId];
-                const course = adminData.courses.find(c => c.id === e.courseId);
-                const instructor = adminData.instructors[e.instructorEmail];
-                return (student && (student.name || student.email).toLowerCase().includes(search)) ||
-                       (course && course.name.toLowerCase().includes(search)) ||
-                       (instructor && (instructor.name || instructor.email).toLowerCase().includes(search));
+            const enrollments = getEnrollments();
+            const students = getStudentDatabase();
+            const courses = getCourseCatalog();
+            const instructors = getInstructorDatabase();
+            
+            const filtered = enrollments.filter(e => {
+                const student = students[e.studentId];
+                const course = courses[e.courseId];
+                const instructor = instructors[e.instructorEmail];
+                return (student && (student.name || student.email || '').toLowerCase().includes(search)) ||
+                       (course && course.title.toLowerCase().includes(search)) ||
+                       (instructor && (instructor.name || instructor.email || '').toLowerCase().includes(search));
             });
             
             if (!filtered.length) {
@@ -1221,22 +1434,22 @@
             }
             
             tbody.innerHTML = filtered.map(e => {
-                const student = adminData.students[e.studentId];
-                const course = adminData.courses.find(c => c.id === e.courseId);
-                const instructor = adminData.instructors[e.instructorEmail];
+                const student = students[e.studentId];
+                const course = courses[e.courseId];
+                const instructor = instructors[e.instructorEmail];
+                const status = e.status || 'active';
+                const statusClass = status === 'active' ? 'active' : 'inactive';
                 return `
                     <tr>
                         <td>${student ? (student.name || student.email) : e.studentId}</td>
-                        <td>${course ? course.name : 'Not found'}</td>
+                        <td>${course ? course.title : 'Not found'}</td>
                         <td>${instructor ? (instructor.name || instructor.email) : 'Not found'}</td>
                         <td>
-                            <span class="status-badge ${e.status === 'active' ? 'active' : 'inactive'}">
-                                ${e.status || 'active'}
-                            </span>
+                            <span class="status-badge ${statusClass}">${status}</span>
                         </td>
                         <td>
                             <div class="action-btns">
-                                ${e.status === 'active' ? 
+                                ${status === 'active' ? 
                                     `<button class="block-btn" onclick="blockEnrollment(${e.id})"><i class="fas fa-ban"></i></button>` :
                                     `<button class="unblock-btn" onclick="unblockEnrollment(${e.id})"><i class="fas fa-check"></i></button>`
                                 }
@@ -1247,22 +1460,164 @@
                 `;
             }).join('');
         }
+
+        // ============================================================ */
+        // ===== RENDER DEMO BOOKINGS ===== */
+        // ============================================================ */
+        function renderDemos() {
+            const search = document.getElementById('demoSearch').value.toLowerCase().trim();
+            const statusFilter = document.getElementById('demoStatusFilter').value;
+            const tbody = document.getElementById('demosTableBody');
+            let bookings = getDemoBookings();
+
+            if (statusFilter !== 'all') {
+                bookings = bookings.filter(b => (b.status || 'pending') === statusFilter);
+            }
+
+            if (search) {
+                bookings = bookings.filter(b =>
+                    (b.name || '').toLowerCase().includes(search) ||
+                    (b.email || '').toLowerCase().includes(search) ||
+                    (b.phone || '').includes(search) ||
+                    (b.booking_id || '').toLowerCase().includes(search)
+                );
+            }
+
+            const allBookings = getDemoBookings();
+            const pendingCount = allBookings.filter(b => (b.status || 'pending') === 'pending').length;
+            document.getElementById('demoBadge').textContent = pendingCount;
+
+            if (!bookings.length) {
+                tbody.innerHTML = `<tr><td colspan="7" style="text-align:center;color:var(--text-gray);padding:30px;">No demo bookings found</td></tr>`;
+                return;
+            }
+
+            tbody.innerHTML = bookings.map((booking, index) => {
+                const status = booking.status || 'pending';
+                const dateDisplay = booking.date || booking.preferred_date || 'N/A';
+                const timeDisplay = booking.time || booking.preferred_time || 'N/A';
+                const messageDisplay = booking.message || 'No message';
+
+                return `
+                    <tr>
+                        <td>${index + 1}</td>
+                        <td>
+                            <strong>${booking.name || 'Unknown'}</strong>
+                            <br />
+                            <span style="font-size:11px;color:var(--text-gray);">${booking.booking_id || ''}</span>
+                        </td>
+                        <td>
+                            ${booking.email || 'N/A'}<br />
+                            ${booking.phone || 'N/A'}
+                        </td>
+                        <td>
+                            <strong>${dateDisplay}</strong><br />
+                            <span style="font-size:11px;color:var(--text-gray);">${timeDisplay}</span>
+                        </td>
+                        <td style="max-width:150px;word-break:break-word;font-size:12px;color:var(--text-gray);">
+                            ${messageDisplay}
+                        </td>
+                        <td>
+                            <span class="status-badge ${status}">${status.charAt(0).toUpperCase() + status.slice(1)}</span>
+                        </td>
+                        <td>
+                            <div class="action-btns">
+                                <button class="view-btn" onclick="viewDemo('${booking.booking_id}')"><i class="fas fa-eye"></i></button>
+                                <select class="status-btn" onchange="updateDemoStatus('${booking.booking_id}', this.value)" style="padding:2px 6px;border:1px solid var(--border);border-radius:4px;font-size:11px;font-family:'Poppins',sans-serif;background:var(--white);">
+                                    <option value="pending" ${status === 'pending' ? 'selected' : ''}>Pending</option>
+                                    <option value="contacted" ${status === 'contacted' ? 'selected' : ''}>Contacted</option>
+                                    <option value="completed" ${status === 'completed' ? 'selected' : ''}>Completed</option>
+                                    <option value="cancelled" ${status === 'cancelled' ? 'selected' : ''}>Cancelled</option>
+                                </select>
+                                <button class="delete-btn" onclick="deleteDemo('${booking.booking_id}')"><i class="fas fa-trash"></i></button>
+                            </div>
+                        </td>
+                    </tr>
+                `;
+            }).join('');
+        }
+
+        // ============================================================ */
+        // ===== DEMO ACTIONS ===== */
+        // ============================================================ */
+        function updateDemoStatus(bookingId, newStatus) {
+            const bookings = getDemoBookings();
+            const index = bookings.findIndex(b => b.booking_id === bookingId);
+            if (index !== -1) {
+                bookings[index].status = newStatus;
+                saveDemoBookings(bookings);
+                renderDemos();
+                updateStats();
+                showToast(`✅ Demo status updated to ${newStatus}`, 'success');
+            }
+        }
+
+        function viewDemo(bookingId) {
+            const bookings = getDemoBookings();
+            const booking = bookings.find(b => b.booking_id === bookingId);
+            if (!booking) {
+                showToast('Booking not found', 'error');
+                return;
+            }
+
+            document.getElementById('viewDemoId').textContent = `Booking ID: ${booking.booking_id}`;
+            document.getElementById('viewDemoName').textContent = booking.name || 'Unknown';
+            document.getElementById('viewDemoEmail').textContent = booking.email || 'N/A';
+            document.getElementById('viewDemoPhone').textContent = booking.phone || 'N/A';
+            document.getElementById('viewDemoDate').textContent = booking.date || booking.preferred_date || 'N/A';
+            document.getElementById('viewDemoTime').textContent = booking.time || booking.preferred_time || 'N/A';
+            document.getElementById('viewDemoMessage').textContent = booking.message || 'No message';
+            document.getElementById('viewDemoStatus').textContent = (booking.status || 'pending').charAt(0).toUpperCase() + (booking.status || 'pending').slice(1);
+            document.getElementById('viewDemoBookedAt').textContent = booking.booked_at ? new Date(booking.booked_at).toLocaleString() : 'N/A';
+
+            const statusEl = document.getElementById('viewDemoStatus');
+            const status = booking.status || 'pending';
+            const colors = {
+                'pending': '#d97706',
+                'contacted': '#4F46E5',
+                'completed': '#16a34a',
+                'cancelled': '#dc2626'
+            };
+            statusEl.style.color = colors[status] || '#6B7280';
+            statusEl.style.fontWeight = '700';
+
+            document.getElementById('viewDemoModal').classList.add('active');
+        }
+
+        function deleteDemo(bookingId) {
+            if (!confirm('Are you sure you want to delete this demo booking?')) return;
+            let bookings = getDemoBookings();
+            bookings = bookings.filter(b => b.booking_id !== bookingId);
+            saveDemoBookings(bookings);
+            renderDemos();
+            updateStats();
+            showToast('🗑️ Demo booking deleted successfully', 'info');
+        }
  
         // ============================================================ */
         // ===== UPDATE STATS ===== */
         // ============================================================ */
         function updateStats() {
-            document.getElementById('totalStudents').textContent = Object.values(adminData.students).filter(s => s.status !== 'inactive').length;
-            document.getElementById('totalInstructors').textContent = Object.values(adminData.instructors).filter(i => i.status !== 'inactive').length;
-            document.getElementById('totalCourses').textContent = adminData.courses.filter(c => c.status !== 'inactive').length;
-            document.getElementById('totalEnrollments').textContent = adminData.enrollments.filter(e => e.status !== 'inactive').length;
+            const students = Object.values(getStudentDatabase()).filter(s => s.status !== 'inactive').length;
+            const instructors = Object.values(getInstructorDatabase()).filter(i => i.status !== 'inactive').length;
+            const courses = Object.values(getCourseCatalog()).filter(c => c.status !== 'inactive').length;
+            const demos = getDemoBookings().length;
+
+            document.getElementById('totalStudents').textContent = students;
+            document.getElementById('totalInstructors').textContent = instructors;
+            document.getElementById('totalCourses').textContent = courses;
+            document.getElementById('totalDemos').textContent = demos;
+
+            const pendingDemos = getDemoBookings().filter(b => (b.status || 'pending') === 'pending').length;
+            document.getElementById('demoBadge').textContent = pendingDemos;
         }
  
         // ============================================================ */
-        // ===== STUDENT ACTIONS ===== */
+        // ===== STUDENT ACTIONS (SYNC WITH qskillStudents) ===== */
         // ============================================================ */
         function viewStudent(id) {
-            const student = adminData.students[id];
+            const students = getStudentDatabase();
+            const student = students[id];
             if (student) {
                 showToast(`👤 Student: ${id} - ${student.email}`, 'info');
             }
@@ -1270,35 +1625,51 @@
  
         function blockStudent(id) {
             if (confirm('Are you sure you want to block this student?')) {
-                adminData.students[id].status = 'inactive';
-                saveData();
-                renderStudents();
-                showToast('Student blocked successfully', 'success');
+                const students = getStudentDatabase();
+                if (students[id]) {
+                    students[id].status = 'inactive';
+                    saveStudentDatabase(students);
+                    renderStudents();
+                    updateStats();
+                    showToast('Student blocked successfully', 'success');
+                }
             }
         }
  
         function unblockStudent(id) {
-            adminData.students[id].status = 'active';
-            saveData();
-            renderStudents();
-            showToast('Student unblocked successfully', 'success');
+            const students = getStudentDatabase();
+            if (students[id]) {
+                students[id].status = 'active';
+                saveStudentDatabase(students);
+                renderStudents();
+                updateStats();
+                showToast('Student unblocked successfully', 'success');
+            }
         }
  
         function deleteStudent(id) {
             if (confirm('Are you sure you want to delete this student? This action cannot be undone.')) {
-                delete adminData.students[id];
-                adminData.enrollments = adminData.enrollments.filter(e => e.studentId !== id);
-                saveData();
+                const students = getStudentDatabase();
+                delete students[id];
+                saveStudentDatabase(students);
+                
+                // Also remove from enrollments
+                let enrollments = getEnrollments();
+                enrollments = enrollments.filter(e => e.studentId !== id);
+                saveEnrollments(enrollments);
+                
                 renderStudents();
+                updateStats();
                 showToast('Student deleted successfully', 'success');
             }
         }
  
         // ============================================================ */
-        // ===== INSTRUCTOR ACTIONS ===== */
+        // ===== INSTRUCTOR ACTIONS (SYNC WITH qskillInstructors) ===== */
         // ============================================================ */
         function viewInstructor(email) {
-            const instructor = adminData.instructors[email];
+            const instructors = getInstructorDatabase();
+            const instructor = instructors[email];
             if (instructor) {
                 showToast(`👨‍🏫 Instructor: ${email} - ${instructor.name || 'No name'}`, 'info');
             }
@@ -1306,59 +1677,88 @@
  
         function blockInstructor(email) {
             if (confirm('Are you sure you want to block this instructor?')) {
-                adminData.instructors[email].status = 'inactive';
-                saveData();
-                renderInstructors();
-                showToast('Instructor blocked successfully', 'success');
+                const instructors = getInstructorDatabase();
+                if (instructors[email]) {
+                    instructors[email].status = 'inactive';
+                    saveInstructorDatabase(instructors);
+                    renderInstructors();
+                    updateStats();
+                    showToast('Instructor blocked successfully', 'success');
+                }
             }
         }
  
         function unblockInstructor(email) {
-            adminData.instructors[email].status = 'active';
-            saveData();
-            renderInstructors();
-            showToast('Instructor unblocked successfully', 'success');
+            const instructors = getInstructorDatabase();
+            if (instructors[email]) {
+                instructors[email].status = 'active';
+                saveInstructorDatabase(instructors);
+                renderInstructors();
+                updateStats();
+                showToast('Instructor unblocked successfully', 'success');
+            }
         }
  
         function deleteInstructor(email) {
             if (confirm('Are you sure you want to delete this instructor? This action cannot be undone.')) {
-                delete adminData.instructors[email];
-                adminData.enrollments = adminData.enrollments.filter(e => e.instructorEmail !== email);
-                saveData();
+                const instructors = getInstructorDatabase();
+                delete instructors[email];
+                saveInstructorDatabase(instructors);
+                
+                let enrollments = getEnrollments();
+                enrollments = enrollments.filter(e => e.instructorEmail !== email);
+                saveEnrollments(enrollments);
+                
                 renderInstructors();
+                updateStats();
                 showToast('Instructor deleted successfully', 'success');
             }
         }
  
         // ============================================================ */
-        // ===== COURSE ACTIONS ===== */
+        // ===== COURSE ACTIONS (SYNC WITH qskillCourses) ===== */
         // ============================================================ */
         function blockCourse(id) {
-            const course = adminData.courses.find(c => c.id === id);
-            if (course) {
-                course.status = 'inactive';
-                saveData();
-                renderCourses();
-                showToast('Course deactivated successfully', 'success');
+            if (confirm('Are you sure you want to deactivate this course?')) {
+                const courses = getCourseCatalog();
+                if (courses[id]) {
+                    courses[id].status = 'inactive';
+                    saveCourseCatalog(courses);
+                    renderCourses();
+                    updateStats();
+                    showToast('Course deactivated successfully', 'success');
+                }
             }
         }
  
         function unblockCourse(id) {
-            const course = adminData.courses.find(c => c.id === id);
-            if (course) {
-                course.status = 'active';
-                saveData();
+            const courses = getCourseCatalog();
+            if (courses[id]) {
+                courses[id].status = 'active';
+                saveCourseCatalog(courses);
                 renderCourses();
+                updateStats();
                 showToast('Course activated successfully', 'success');
             }
         }
  
         function deleteCourse(id) {
             if (confirm('Are you sure you want to delete this course? This will also remove all enrollments.')) {
-                adminData.courses = adminData.courses.filter(c => c.id !== id);
-                adminData.enrollments = adminData.enrollments.filter(e => e.courseId !== id);
-                saveData();
+                const courses = getCourseCatalog();
+                delete courses[id];
+                saveCourseCatalog(courses);
+                
+                // Also update enrolledCourses for students
+                let enrolledCourses = JSON.parse(localStorage.getItem('enrolledCourses')) || [];
+                enrolledCourses = enrolledCourses.filter(c => c !== id);
+                localStorage.setItem('enrolledCourses', JSON.stringify(enrolledCourses));
+                
+                let enrollments = getEnrollments();
+                enrollments = enrollments.filter(e => e.courseId !== id);
+                saveEnrollments(enrollments);
+                
                 renderCourses();
+                updateStats();
                 showToast('Course deleted successfully', 'success');
             }
         }
@@ -1367,30 +1767,36 @@
         // ===== ENROLLMENT ACTIONS ===== */
         // ============================================================ */
         function blockEnrollment(id) {
-            const enrollment = adminData.enrollments.find(e => e.id === id);
+            let enrollments = getEnrollments();
+            const enrollment = enrollments.find(e => e.id === id);
             if (enrollment) {
                 enrollment.status = 'inactive';
-                saveData();
+                saveEnrollments(enrollments);
                 renderEnrollments();
+                updateStats();
                 showToast('Enrollment deactivated successfully', 'success');
             }
         }
  
         function unblockEnrollment(id) {
-            const enrollment = adminData.enrollments.find(e => e.id === id);
+            let enrollments = getEnrollments();
+            const enrollment = enrollments.find(e => e.id === id);
             if (enrollment) {
                 enrollment.status = 'active';
-                saveData();
+                saveEnrollments(enrollments);
                 renderEnrollments();
+                updateStats();
                 showToast('Enrollment activated successfully', 'success');
             }
         }
  
         function deleteEnrollment(id) {
             if (confirm('Are you sure you want to delete this enrollment?')) {
-                adminData.enrollments = adminData.enrollments.filter(e => e.id !== id);
-                saveData();
+                let enrollments = getEnrollments();
+                enrollments = enrollments.filter(e => e.id !== id);
+                saveEnrollments(enrollments);
                 renderEnrollments();
+                updateStats();
                 showToast('Enrollment deleted successfully', 'success');
             }
         }
@@ -1402,7 +1808,6 @@
             document.getElementById(modalId).classList.remove('active');
         }
  
-        // Close modal on overlay click
         document.querySelectorAll('.modal-overlay').forEach(modal => {
             modal.addEventListener('click', function(e) {
                 if (e.target === this) {
@@ -1411,6 +1816,9 @@
             });
         });
  
+        // ============================================================ */
+        // ===== ADD STUDENT (SYNC WITH qskillStudents) ===== */
+        // ============================================================ */
         function openAddStudent() {
             document.getElementById('addStudentForm').reset();
             document.getElementById('addStudentModal').classList.add('active');
@@ -1422,10 +1830,10 @@
             const password = document.getElementById('studentPassword').value.trim();
             const name = document.getElementById('studentName').value.trim();
             
-            // Check if student already exists
+            const students = getStudentDatabase();
             let exists = false;
-            for (let id in adminData.students) {
-                if (adminData.students[id].email === email) {
+            for (let id in students) {
+                if (students[id].email === email) {
                     exists = true;
                     break;
                 }
@@ -1440,7 +1848,7 @@
             const random = Math.floor(10000 + Math.random() * 90000).toString();
             const studentId = 'QSK' + year + random;
             
-            adminData.students[studentId] = {
+            students[studentId] = {
                 email: email,
                 password: password,
                 name: name || '',
@@ -1448,12 +1856,16 @@
                 registeredAt: new Date().toISOString()
             };
             
-            saveData();
+            saveStudentDatabase(students);
             closeModal('addStudentModal');
             renderStudents();
+            updateStats();
             showToast(`✅ Student added! ID: ${studentId}`, 'success');
         });
  
+        // ============================================================ */
+        // ===== ADD INSTRUCTOR (SYNC WITH qskillInstructors) ===== */
+        // ============================================================ */
         function openAddInstructor() {
             document.getElementById('addInstructorForm').reset();
             document.getElementById('addInstructorModal').classList.add('active');
@@ -1465,24 +1877,30 @@
             const password = document.getElementById('instructorPassword').value.trim();
             const name = document.getElementById('instructorName').value.trim();
             
-            if (adminData.instructors[email]) {
+            const instructors = getInstructorDatabase();
+            if (instructors[email]) {
                 showToast('Instructor with this email already exists', 'error');
                 return;
             }
             
-            adminData.instructors[email] = {
+            instructors[email] = {
                 password: password,
                 name: name || '',
                 status: 'active',
+                role: 'instructor',
                 joinedAt: new Date().toISOString()
             };
             
-            saveData();
+            saveInstructorDatabase(instructors);
             closeModal('addInstructorModal');
             renderInstructors();
+            updateStats();
             showToast('✅ Instructor added successfully!', 'success');
         });
  
+        // ============================================================ */
+        // ===== ADD COURSE (SYNC WITH qskillCourses) ===== */
+        // ============================================================ */
         function openAddCourse() {
             document.getElementById('addCourseForm').reset();
             document.getElementById('addCourseModal').classList.add('active');
@@ -1499,20 +1917,28 @@
                 return;
             }
             
-            adminData.courses.push({
-                id: courseIdCounter++,
-                name: name,
+            const courses = getCourseCatalog();
+            const id = name.toLowerCase().replace(/[^a-z0-9]/g, '');
+            const newId = id + (Object.keys(courses).filter(k => k.startsWith(id)).length);
+            
+            courses[newId] = {
+                id: newId,
+                title: name,
                 duration: duration || 'Not specified',
                 level: level,
                 status: 'active'
-            });
+            };
             
-            saveData();
+            saveCourseCatalog(courses);
             closeModal('addCourseModal');
             renderCourses();
+            updateStats();
             showToast('✅ Course added successfully!', 'success');
         });
  
+        // ============================================================ */
+        // ===== ADD ENROLLMENT ===== */
+        // ============================================================ */
         function openAddEnrollment() {
             const studentSelect = document.getElementById('enrollmentStudent');
             const courseSelect = document.getElementById('enrollmentCourse');
@@ -1522,7 +1948,11 @@
             courseSelect.innerHTML = '';
             instructorSelect.innerHTML = '';
             
-            Object.entries(adminData.students).forEach(([id, student]) => {
+            const students = getStudentDatabase();
+            const courses = getCourseCatalog();
+            const instructors = getInstructorDatabase();
+            
+            Object.entries(students).forEach(([id, student]) => {
                 if (student.status !== 'inactive') {
                     const option = document.createElement('option');
                     option.value = id;
@@ -1531,17 +1961,17 @@
                 }
             });
             
-            adminData.courses.forEach(course => {
+            Object.entries(courses).forEach(([id, course]) => {
                 if (course.status !== 'inactive') {
                     const option = document.createElement('option');
-                    option.value = course.id;
-                    option.textContent = course.name;
+                    option.value = id;
+                    option.textContent = course.title;
                     courseSelect.appendChild(option);
                 }
             });
             
-            Object.entries(adminData.instructors).forEach(([email, instructor]) => {
-                if (instructor.status !== 'inactive') {
+            Object.entries(instructors).forEach(([email, instructor]) => {
+                if (instructor.status !== 'inactive' && instructor.role !== 'admin') {
                     const option = document.createElement('option');
                     option.value = email;
                     option.textContent = instructor.name ? `${instructor.name} (${email})` : email;
@@ -1555,7 +1985,7 @@
         document.getElementById('addEnrollmentForm').addEventListener('submit', function(e) {
             e.preventDefault();
             const studentId = document.getElementById('enrollmentStudent').value;
-            const courseId = parseInt(document.getElementById('enrollmentCourse').value);
+            const courseId = document.getElementById('enrollmentCourse').value;
             const instructorEmail = document.getElementById('enrollmentInstructor').value;
             
             if (!studentId || !courseId || !instructorEmail) {
@@ -1563,7 +1993,8 @@
                 return;
             }
             
-            const exists = adminData.enrollments.some(e => 
+            let enrollments = getEnrollments();
+            const exists = enrollments.some(e => 
                 e.studentId === studentId && e.courseId === courseId && e.status === 'active'
             );
             
@@ -1572,7 +2003,7 @@
                 return;
             }
             
-            adminData.enrollments.push({
+            enrollments.push({
                 id: enrollmentIdCounter++,
                 studentId: studentId,
                 courseId: courseId,
@@ -1580,9 +2011,18 @@
                 status: 'active'
             });
             
-            saveData();
+            saveEnrollments(enrollments);
+            
+            // Also update enrolledCourses for student dashboard
+            let enrolledCourses = JSON.parse(localStorage.getItem('enrolledCourses')) || [];
+            if (!enrolledCourses.includes(courseId)) {
+                enrolledCourses.push(courseId);
+                localStorage.setItem('enrolledCourses', JSON.stringify(enrolledCourses));
+            }
+            
             closeModal('addEnrollmentModal');
             renderEnrollments();
+            updateStats();
             showToast('✅ Enrollment added successfully!', 'success');
         });
  
@@ -1591,18 +2031,22 @@
         // ============================================================ */
         renderTab('students');
         console.log('🔐 QSkill Admin Dashboard Loaded');
-        console.log('📊 Data:', adminData);
-        console.log('🔗 All pages are linked together!');
-        console.log('   - Home: index.html');
-        console.log('   - About: about.html');
-        console.log('   - Courses: courses.html');
-        console.log('   - Demo: demo.html');
-        console.log('   - Dashboard: dashboard.html');
-        console.log('   - Admin: admin.html');
-        console.log('   - Login: login.html');
-        console.log('👨‍💼 Admin Login: admin@qskill.com | admin123');
-        console.log('👨‍🏫 Instructor: instructor@qskill.com | instructor123');
-        console.log('👩‍🎓 Student: QSK24012345 | demo123');
+        console.log('📊 Data synced across all pages:');
+        console.log('   - Students: qskillStudents');
+        console.log('   - Instructors: qskillInstructors');
+        console.log('   - Courses: qskillCourses');
+        console.log('   - Enrollments: qskillEnrollments');
+        console.log('   - Demo Bookings: demoBookings');
+        console.log('   - Enrolled Courses: enrolledCourses');
+        console.log('📌 Changes made here will update ALL pages!');
+
+        // Auto-refresh every 30 seconds
+        setInterval(() => {
+            if (document.getElementById('tab-demos').classList.contains('active')) {
+                renderDemos();
+            }
+            updateStats();
+        }, 30000);
     </script>
  
 </body>

@@ -57,7 +57,6 @@
             transform: translateX(-4px);
         }
 
-        /* Stats */
         .stats-row {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
@@ -90,7 +89,6 @@
         .stat-card .number.green { color: #16a34a; }
         .stat-card .number.orange { color: #d97706; }
 
-        /* Search & Tabs */
         .search-box {
             position: relative;
             margin-bottom: 20px;
@@ -119,36 +117,6 @@
             color: var(--text-gray);
         }
 
-        .course-tabs {
-            display: flex;
-            gap: 8px;
-            flex-wrap: wrap;
-            margin-bottom: 20px;
-        }
-        .course-tab {
-            padding: 6px 18px;
-            border: 1px solid var(--border);
-            border-radius: 999px;
-            background: var(--white);
-            font-size: 13px;
-            font-weight: 500;
-            cursor: pointer;
-            transition: 0.3s;
-            color: var(--text-gray);
-            font-family: 'Poppins', sans-serif;
-        }
-        .course-tab:hover {
-            border-color: var(--primary);
-            color: var(--primary);
-            background: var(--light-bg);
-        }
-        .course-tab.active {
-            background: var(--primary);
-            color: var(--white);
-            border-color: var(--primary);
-        }
-
-        /* ===== REDESIGNED COURSE CARD ===== */
         .course-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(380px, 1fr));
@@ -202,9 +170,6 @@
             color: var(--text-dark);
             line-height: 1.4;
             margin: 0;
-            word-wrap: break-word;
-            white-space: normal;
-            overflow: visible;
         }
         .course-card .course-header .info .count {
             font-size: 13px;
@@ -218,14 +183,11 @@
             color: var(--primary);
         }
 
-        /* ===== STUDENT LIST – NO CUTOFF ===== */
-        .course-card .student-list {
+        .student-list {
             flex: 1;
-            overflow: visible;          /* ← No scrollbar, show all */
-            max-height: none;           /* ← Remove height limit */
+            overflow: visible;
             padding-right: 0;
         }
-
         .student-item {
             display: flex;
             align-items: center;
@@ -233,6 +195,7 @@
             padding: 8px 4px;
             border-bottom: 1px solid #F5F7FA;
             transition: 0.2s;
+            flex-wrap: nowrap;
         }
         .student-item:last-child {
             border-bottom: none;
@@ -243,7 +206,6 @@
             padding-left: 8px;
             padding-right: 8px;
         }
-
         .student-item .avatar {
             width: 34px;
             height: 34px;
@@ -275,25 +237,72 @@
             overflow: hidden;
             text-overflow: ellipsis;
         }
-        .student-item .progress-badge {
-            font-size: 12px;
-            font-weight: 600;
-            padding: 3px 12px;
-            border-radius: 999px;
-            white-space: nowrap;
+        .student-item .student-actions {
+            display: flex;
+            gap: 4px;
             flex-shrink: 0;
+            margin-left: auto;
         }
-        .student-item .progress-badge.high {
-            background: #DCFCE7;
-            color: #16a34a;
+        .student-item .student-actions button {
+            border: none;
+            background: transparent;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 13px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: 0.3s;
+            color: var(--text-gray);
         }
-        .student-item .progress-badge.medium {
+        .student-item .student-actions .btn-delete-student:hover {
+            background: #FEE2E2;
+            color: #dc2626;
+        }
+        .student-item .student-actions .btn-block-student:hover {
             background: #FEF3C7;
             color: #d97706;
         }
-        .student-item .progress-badge.low {
-            background: #FEE2E2;
+        .student-item .student-actions .btn-unblock-student:hover {
+            background: #DCFCE7;
+            color: #16a34a;
+        }
+        .student-item.blocked {
+            opacity: 0.6;
+        }
+        .student-item.blocked .info .name::after {
+            content: ' (Blocked)';
             color: #dc2626;
+            font-size: 11px;
+            font-weight: 600;
+        }
+
+        .view-all-btn {
+            margin-top: 10px;
+            background: transparent;
+            border: none;
+            color: var(--primary);
+            font-weight: 500;
+            font-size: 13px;
+            cursor: pointer;
+            font-family: 'Poppins', sans-serif;
+            padding: 4px 0;
+            transition: 0.3s;
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+        }
+        .view-all-btn:hover {
+            color: var(--secondary);
+        }
+
+        .student-list .extra-students {
+            display: none;
+        }
+        .student-list .extra-students.show {
+            display: flex;
         }
 
         .empty-message {
@@ -303,7 +312,92 @@
             font-size: 14px;
         }
 
-        /* Responsive */
+        /* Confirm modal (reused from dashboard) */
+        .confirm-modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(4px);
+            z-index: 10000;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+        .confirm-modal-overlay.active {
+            display: flex;
+        }
+        .confirm-modal-content {
+            background: var(--white);
+            border-radius: 16px;
+            max-width: 400px;
+            width: 100%;
+            padding: 28px 30px;
+            text-align: center;
+            animation: modalSlideIn 0.3s ease;
+        }
+        @keyframes modalSlideIn {
+            from { opacity: 0; transform: translateY(30px) scale(0.95); }
+            to { opacity: 1; transform: translateY(0) scale(1); }
+        }
+        .confirm-modal-content .confirm-icon {
+            font-size: 48px;
+            color: #dc2626;
+            margin-bottom: 8px;
+        }
+        .confirm-modal-content h3 {
+            font-size: 20px;
+            font-weight: 700;
+            color: var(--text-dark);
+            margin-bottom: 4px;
+        }
+        .confirm-modal-content p {
+            font-size: 14px;
+            color: var(--text-gray);
+            margin-bottom: 20px;
+        }
+        .confirm-modal-content .confirm-actions {
+            display: flex;
+            gap: 12px;
+            justify-content: center;
+        }
+        .confirm-modal-content .confirm-actions button {
+            padding: 10px 28px;
+            border-radius: 999px;
+            font-weight: 600;
+            font-size: 14px;
+            border: none;
+            cursor: pointer;
+            transition: 0.3s;
+            font-family: 'Poppins', sans-serif;
+        }
+        .confirm-modal-content .confirm-actions .btn-cancel {
+            background: var(--light-bg);
+            color: var(--text-dark);
+        }
+        .confirm-modal-content .confirm-actions .btn-cancel:hover {
+            background: var(--border);
+        }
+        .confirm-modal-content .confirm-actions .btn-danger {
+            background: #dc2626;
+            color: var(--white);
+        }
+        .confirm-modal-content .confirm-actions .btn-danger:hover {
+            background: #b91c1c;
+            transform: translateY(-2px);
+        }
+        .confirm-modal-content .confirm-actions .btn-warning {
+            background: #d97706;
+            color: var(--white);
+        }
+        .confirm-modal-content .confirm-actions .btn-warning:hover {
+            background: #b45309;
+            transform: translateY(-2px);
+        }
+
         @media (max-width: 768px) {
             .page-wrapper { padding: 20px; }
             .course-grid { grid-template-columns: 1fr; }
@@ -314,18 +408,32 @@
             .stats-row { grid-template-columns: 1fr; }
             .student-item { flex-wrap: wrap; gap: 6px; }
             .student-item .info { min-width: 100%; }
-            .student-item .progress-badge { align-self: flex-start; }
+            .student-item .student-actions { margin-left: 0; }
         }
     </style>
 </head>
 <body>
 
+    <!-- TOAST -->
     <div class="toast" id="toast">
         <i class="fas fa-check-circle" id="toastIcon"></i>
         <span id="toastMessage">Success!</span>
     </div>
 
-    <!-- ===== NAVBAR ===== -->
+    <!-- CONFIRM MODAL -->
+    <div class="confirm-modal-overlay" id="confirmModal">
+        <div class="confirm-modal-content">
+            <div class="confirm-icon" id="confirmIcon"><i class="fas fa-exclamation-triangle"></i></div>
+            <h3 id="confirmTitle">Are you sure?</h3>
+            <p id="confirmMessage">This action cannot be undone.</p>
+            <div class="confirm-actions">
+                <button class="btn-cancel" onclick="closeConfirmModal()">Cancel</button>
+                <button class="btn-danger" id="confirmBtn" onclick="executeConfirm()">Confirm</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- NAVBAR -->
     <nav class="navbar">
         <a href="instructor-dashboard.html" class="logo">
             <img src="images/logo.png" alt="QSkill Logo" />
@@ -341,7 +449,7 @@
         </ul>
     </nav>
 
-    <!-- ===== MAIN ===== -->
+    <!-- MAIN -->
     <section class="page-wrapper">
         <div class="page-header">
             <h1>📚 My <span>Courses</span></h1>
@@ -353,26 +461,20 @@
         <!-- Stats -->
         <div class="stats-row">
             <div class="stat-card">
-                <div class="number" id="totalCourses">6</div>
+                <div class="number" id="totalCourses">0</div>
                 <div class="label">Total Courses</div>
             </div>
             <div class="stat-card">
-                <div class="number green" id="totalStudents">25</div>
+                <div class="number green" id="totalStudents">0</div>
                 <div class="label">👨‍🎓 Total Students</div>
             </div>
             <div class="stat-card">
-                <div class="number orange" id="avgProgress">68%</div>
+                <div class="number orange" id="avgProgress">0%</div>
                 <div class="label">📊 Avg. Progress</div>
             </div>
         </div>
 
-        <!-- Tabs & Search -->
-        <div class="course-tabs">
-            <button class="course-tab active" data-filter="all" onclick="filterCourses('all')">All Courses</button>
-            <button class="course-tab" data-filter="active" onclick="filterCourses('active')">Active</button>
-            <button class="course-tab" data-filter="completed" onclick="filterCourses('completed')">Completed</button>
-        </div>
-
+        <!-- Search Box -->
         <div class="search-box">
             <i class="fas fa-search"></i>
             <input type="text" id="searchInput" placeholder="Search students by name, email, or ID..." oninput="filterStudents()" />
@@ -384,7 +486,7 @@
         </div>
     </section>
 
-    <!-- ===== FOOTER ===== -->
+    <!-- FOOTER -->
     <footer class="footer">
         <div class="footer-top">
             <div class="footer-logo">
@@ -420,124 +522,285 @@
         <div class="footer-bottom">© 2026 QSkill Career Solutions. All Rights Reserved.</div>
     </footer>
 
-    <!-- ============================================================ -->
-    <!-- ===== SCRIPTS ===== -->
-    <!-- ============================================================ -->
     <script>
-        // ===== SESSION CHECK =====
-        const instructorLoggedIn = localStorage.getItem('qskillInstructorLoggedIn');
-        const adminLoggedIn = localStorage.getItem('qskillAdminLoggedIn');
-        if (instructorLoggedIn !== 'true' && adminLoggedIn !== 'true') {
-            window.location.href = 'login.html';
+        // ============================================================
+        // SESSION CHECK
+        // ============================================================
+        function checkSession() {
+            const instructorLoggedIn = localStorage.getItem('qskillInstructorLoggedIn');
+            const adminLoggedIn = localStorage.getItem('qskillAdminLoggedIn');
+            const userData = JSON.parse(localStorage.getItem('qskillUser') || '{}');
+            if (instructorLoggedIn !== 'true' && adminLoggedIn !== 'true') {
+                window.location.href = 'login.html';
+                return null;
+            }
+            return userData;
         }
 
-        // ===== COURSE DATA =====
-        const courseColors = {
-            manual: '#2563EB',
-            automation: '#16a34a',
-            api: '#d97706',
-            playwright: '#7C3AED',
-            cypress: '#D81B60',
-            restassured: '#0D47A1'
-        };
-        const courseIcons = {
-            manual: 'fa-file-alt',
-            automation: 'fa-code',
-            api: 'fa-plug',
-            playwright: 'fa-cogs',
-            cypress: 'fa-sync-alt',
-            restassured: 'fa-wifi'
-        };
-        const courseNames = {
-            manual: 'Manual Testing',
-            automation: 'Automation Testing (Selenium)',
-            api: 'Postman API Testing',
-            playwright: 'Playwright Automation',
-            cypress: 'Cypress Automation',
-            restassured: 'REST Assured API Testing'
-        };
-
-        const studentData = [
-            { id: 'QSK2601001', name: 'Aarav Sharma', email: 'aarav.sharma@email.com', progress: 92, course: 'automation' },
-            { id: 'QSK2601002', name: 'Priya Patel', email: 'priya.patel@email.com', progress: 78, course: 'automation' },
-            { id: 'QSK2601003', name: 'Rahul Verma', email: 'rahul.verma@email.com', progress: 45, course: 'automation' },
-            { id: 'QSK2601004', name: 'Sneha Reddy', email: 'sneha.reddy@email.com', progress: 63, course: 'automation' },
-            { id: 'QSK2601005', name: 'Vikram Singh', email: 'vikram.singh@email.com', progress: 30, course: 'automation' },
-            { id: 'QSK2601006', name: 'Ananya Nair', email: 'ananya.nair@email.com', progress: 88, course: 'manual' },
-            { id: 'QSK2601007', name: 'Arjun Kumar', email: 'arjun.kumar@email.com', progress: 95, course: 'manual' },
-            { id: 'QSK2601008', name: 'Kavya Menon', email: 'kavya.menon@email.com', progress: 55, course: 'manual' },
-            { id: 'QSK2601009', name: 'Rohan Gupta', email: 'rohan.gupta@email.com', progress: 72, course: 'manual' },
-            { id: 'QSK2601010', name: 'Iyer Krishnan', email: 'krishnan.iyer@email.com', progress: 40, course: 'manual' },
-            { id: 'QSK2601011', name: 'Meera Pillai', email: 'meera.pillai@email.com', progress: 82, course: 'api' },
-            { id: 'QSK2601012', name: 'Suresh Babu', email: 'suresh.babu@email.com', progress: 60, course: 'api' },
-            { id: 'QSK2601013', name: 'Divya Rao', email: 'divya.rao@email.com', progress: 35, course: 'api' },
-            { id: 'QSK2601014', name: 'Tejaswini Reddy', email: 'tejaswini.reddy@email.com', progress: 91, course: 'playwright' },
-            { id: 'QSK2601015', name: 'Aditya Joshi', email: 'aditya.joshi@email.com', progress: 70, course: 'playwright' },
-            { id: 'QSK2601016', name: 'Nisha Desai', email: 'nisha.desai@email.com', progress: 50, course: 'playwright' },
-            { id: 'QSK2601017', name: 'Ravi Shankar', email: 'ravi.shankar@email.com', progress: 85, course: 'cypress' },
-            { id: 'QSK2601018', name: 'Lakshmi Nair', email: 'lakshmi.nair@email.com', progress: 65, course: 'cypress' },
-            { id: 'QSK2601019', name: 'Deepak Pandey', email: 'deepak.pandey@email.com', progress: 42, course: 'restassured' },
-            { id: 'QSK2601020', name: 'Sana Khan', email: 'sana.khan@email.com', progress: 77, course: 'restassured' },
-            { id: 'QSK2601021', name: 'Manoj Reddy', email: 'manoj.reddy@email.com', progress: 55, course: 'restassured' },
-            { id: 'QSK2601022', name: 'Pooja Sharma', email: 'pooja.sharma@email.com', progress: 90, course: 'automation' },
-            { id: 'QSK2601023', name: 'Ganesh Iyer', email: 'ganesh.iyer@email.com', progress: 48, course: 'manual' },
-            { id: 'QSK2601024', name: 'Seema Pillai', email: 'seema.pillai@email.com', progress: 73, course: 'api' },
-            { id: 'QSK2601025', name: 'Naveen Kumar', email: 'naveen.kumar@email.com', progress: 30, course: 'cypress' }
-        ];
-
-        // ===== STATS =====
-        function updateStats() {
-            const total = studentData.length;
-            document.getElementById('totalStudents').textContent = total;
-            const avg = Math.round(studentData.reduce((sum, s) => sum + s.progress, 0) / total);
-            document.getElementById('avgProgress').textContent = avg + '%';
+        // ============================================================
+        // TOAST
+        // ============================================================
+        function showToast(message, type = 'success') {
+            const toast = document.getElementById('toast');
+            const toastIcon = document.getElementById('toastIcon');
+            const toastMessage = document.getElementById('toastMessage');
+            if (!toast) return;
+            toastIcon.className = type === 'success' ? 'fas fa-check-circle' :
+                type === 'error' ? 'fas fa-exclamation-circle' :
+                'fas fa-info-circle';
+            toastMessage.textContent = message;
+            toast.className = 'toast ' + type;
+            setTimeout(() => toast.classList.add('show'), 10);
+            setTimeout(() => toast.classList.remove('show'), 4000);
         }
 
-        // ===== HELPERS =====
-        function getStudentsByCourse(courseId) {
-            return studentData.filter(s => s.course === courseId);
+        // ============================================================
+        // CONFIRM MODAL
+        // ============================================================
+        let confirmCallback = null;
+
+        function openConfirmModal(title, message, btnText, btnClass, callback) {
+            document.getElementById('confirmTitle').textContent = title;
+            document.getElementById('confirmMessage').textContent = message;
+            const btn = document.getElementById('confirmBtn');
+            btn.textContent = btnText || 'Confirm';
+            btn.className = btnClass || 'btn-danger';
+            document.getElementById('confirmModal').classList.add('active');
+            confirmCallback = callback;
+            document.body.style.overflow = 'hidden';
         }
 
-        function getProgressBadge(progress) {
-            if (progress >= 80) return 'high';
-            if (progress >= 50) return 'medium';
-            return 'low';
+        function closeConfirmModal() {
+            document.getElementById('confirmModal').classList.remove('active');
+            document.body.style.overflow = '';
+            confirmCallback = null;
         }
 
-        function getProgressLabel(progress) {
-            if (progress >= 80) return '✅ ' + progress + '%';
-            if (progress >= 50) return '📈 ' + progress + '%';
-            return '📉 ' + progress + '%';
+        function executeConfirm() {
+            if (typeof confirmCallback === 'function') {
+                confirmCallback();
+            }
+            closeConfirmModal();
         }
 
-        // ===== RENDER =====
-        let currentFilter = 'all';
+        document.getElementById('confirmModal').addEventListener('click', function(e) {
+            if (e.target === this) closeConfirmModal();
+        });
+
+        // ============================================================
+        // DATA HELPERS (same as dashboard)
+        // ============================================================
+        function getDefaultCourses() {
+            return [{
+                id: 'course_1',
+                title: 'Automation Testing (Selenium)',
+                icon: 'fa-code',
+                schedule: 'Mon, Wed, Fri - 5:00 PM',
+                instructorEmail: 'instructor@qskill.com',
+                studentIds: ['student_1', 'student_2', 'student_3']
+            }, {
+                id: 'course_2',
+                title: 'Manual Testing',
+                icon: 'fa-file-alt',
+                schedule: 'Tue, Thu - 6:00 PM',
+                instructorEmail: 'instructor@qskill.com',
+                studentIds: ['student_4', 'student_5']
+            }, {
+                id: 'course_3',
+                title: 'Postman API Testing',
+                icon: 'fa-plug',
+                schedule: 'Sat - 10:00 AM',
+                instructorEmail: 'instructor@qskill.com',
+                studentIds: ['student_6']
+            }, {
+                id: 'course_4',
+                title: 'Playwright Automation',
+                icon: 'fa-cogs',
+                schedule: 'Sun - 11:00 AM',
+                instructorEmail: 'instructor@qskill.com',
+                studentIds: ['student_2', 'student_7']
+            }, {
+                id: 'course_5',
+                title: 'DevOps Fundamentals',
+                icon: 'fa-cloud',
+                schedule: 'Mon, Wed - 7:00 PM',
+                instructorEmail: 'another@instructor.com',
+                studentIds: ['student_8', 'student_9']
+            }];
+        }
+
+        function getCourses() {
+            let courses = JSON.parse(localStorage.getItem('qskillCourses'));
+            if (!courses || !Array.isArray(courses) || courses.length === 0) {
+                courses = getDefaultCourses();
+                localStorage.setItem('qskillCourses', JSON.stringify(courses));
+            }
+            return courses;
+        }
+
+        function saveCourses(courses) {
+            localStorage.setItem('qskillCourses', JSON.stringify(courses));
+        }
+
+        function getCoursesForInstructor(email) {
+            const all = getCourses();
+            return all.filter(c => c.instructorEmail === email);
+        }
+
+        function getDefaultStudents() {
+            return {
+                'student_1': { id: 'student_1', name: 'Tejaswini Reddy', email: 'tejaswini@example.com', blocked: false,
+                    courseIds: ['course_1'] },
+                'student_2': { id: 'student_2', name: 'Arjun Kumar', email: 'arjun@example.com', blocked: false,
+                    courseIds: ['course_1', 'course_4'] },
+                'student_3': { id: 'student_3', name: 'Priya Sharma', email: 'priya@example.com', blocked: false,
+                    courseIds: ['course_1'] },
+                'student_4': { id: 'student_4', name: 'Rahul Gupta', email: 'rahul@example.com', blocked: false,
+                    courseIds: ['course_2'] },
+                'student_5': { id: 'student_5', name: 'Sneha Patel', email: 'sneha@example.com', blocked: false,
+                    courseIds: ['course_2'] },
+                'student_6': { id: 'student_6', name: 'Vikram Singh', email: 'vikram@example.com', blocked: false,
+                    courseIds: ['course_3'] },
+                'student_7': { id: 'student_7', name: 'Ananya Reddy', email: 'ananya@example.com', blocked: false,
+                    courseIds: ['course_4'] },
+                'student_8': { id: 'student_8', name: 'Deepak Kumar', email: 'deepak@example.com', blocked: false,
+                    courseIds: ['course_5'] },
+                'student_9': { id: 'student_9', name: 'Kavya Nair', email: 'kavya@example.com', blocked: false,
+                    courseIds: ['course_5'] }
+            };
+        }
+
+        function getAllStudents() {
+            let students = JSON.parse(localStorage.getItem('qskillStudents'));
+            if (!students || typeof students !== 'object') {
+                students = getDefaultStudents();
+                localStorage.setItem('qskillStudents', JSON.stringify(students));
+            }
+            return students;
+        }
+
+        function saveStudents(students) {
+            localStorage.setItem('qskillStudents', JSON.stringify(students));
+        }
+
+        function getStudentById(id) {
+            const all = getAllStudents();
+            return all[id] || null;
+        }
+
+        // ============================================================
+        // DELETE & BLOCK (same as dashboard)
+        // ============================================================
+        function deleteStudent(studentId, studentName) {
+            openConfirmModal(
+                'Delete Student',
+                `Are you sure you want to remove "${studentName}" from all your courses? This cannot be undone.`,
+                'Delete',
+                'btn-danger',
+                function() {
+                    // Remove student from all courses' studentIds
+                    const courses = getCourses();
+                    const updatedCourses = courses.map(c => {
+                        if (c.studentIds && c.studentIds.includes(studentId)) {
+                            c.studentIds = c.studentIds.filter(id => id !== studentId);
+                        }
+                        return c;
+                    });
+                    saveCourses(updatedCourses);
+
+                    // Remove student from system
+                    const students = getAllStudents();
+                    if (students[studentId]) {
+                        delete students[studentId];
+                        saveStudents(students);
+                    }
+                    showToast(`🗑️ ${studentName} has been removed.`, 'success');
+                    renderMyCourses();
+                }
+            );
+        }
+
+        function toggleBlockStudent(studentId, studentName, currentlyBlocked) {
+            const action = currentlyBlocked ? 'unblock' : 'block';
+            const title = currentlyBlocked ? 'Unblock Student' : 'Block Student';
+            const message = currentlyBlocked ?
+                `Are you sure you want to unblock "${studentName}"? They will be able to access your courses again.` :
+                `Are you sure you want to block "${studentName}"? They will lose access to your courses.`;
+            const btnText = currentlyBlocked ? 'Unblock' : 'Block';
+            const btnClass = currentlyBlocked ? 'btn-warning' : 'btn-danger';
+
+            openConfirmModal(
+                title,
+                message,
+                btnText,
+                btnClass,
+                function() {
+                    const students = getAllStudents();
+                    if (students[studentId]) {
+                        students[studentId].blocked = !currentlyBlocked;
+                        saveStudents(students);
+                        showToast(
+                            currentlyBlocked ?
+                            `✅ ${studentName} has been unblocked.` :
+                            `🔒 ${studentName} has been blocked.`,
+                            'success'
+                        );
+                        renderMyCourses();
+                    }
+                }
+            );
+        }
+
+        // ============================================================
+        // RENDER MY COURSES
+        // ============================================================
         let searchQuery = '';
 
-        function renderCourses(filter = 'all', query = '') {
-            const grid = document.getElementById('courseGrid');
-            const courseIds = Object.keys(courseNames);
-            let filteredCourseIds = courseIds;
+        function renderMyCourses() {
+            const user = checkSession();
+            if (!user) return;
+            const instructorEmail = user.email || 'instructor@qskill.com';
 
-            if (filter === 'active') {
-                filteredCourseIds = courseIds.filter(cid => getStudentsByCourse(cid).length > 0);
-            } else if (filter === 'completed') {
-                filteredCourseIds = courseIds.filter(cid => {
-                    const students = getStudentsByCourse(cid);
-                    return students.length > 0 && students.every(s => s.progress === 100);
-                });
+            const myCourses = getCoursesForInstructor(instructorEmail);
+            const allStudents = getAllStudents();
+
+            // Update stats
+            let totalStudents = 0;
+            let totalProgress = 0;
+            let progressCount = 0;
+
+            // Build course cards
+            const grid = document.getElementById('courseGrid');
+            if (myCourses.length === 0) {
+                grid.innerHTML = `
+                    <div style="grid-column:1/-1; text-align:center; padding:40px 0;">
+                        <i class="fas fa-book-open" style="font-size:48px; color:var(--border);"></i>
+                        <h3 style="margin:12px 0; color:var(--text-dark);">No courses found</h3>
+                        <p style="color:var(--text-gray);">You haven't created any courses yet.</p>
+                    </div>
+                `;
+                document.getElementById('totalCourses').textContent = 0;
+                document.getElementById('totalStudents').textContent = 0;
+                document.getElementById('avgProgress').textContent = '0%';
+                return;
             }
 
             let html = '';
-            filteredCourseIds.forEach(cid => {
-                const students = getStudentsByCourse(cid);
-                const color = courseColors[cid] || '#6B7280';
-                const icon = courseIcons[cid] || 'fa-book';
-                const name = courseNames[cid] || cid;
+            myCourses.forEach(course => {
+                // Get student objects for this course
+                let students = [];
+                if (course.studentIds) {
+                    course.studentIds.forEach(sid => {
+                        if (allStudents[sid]) {
+                            students.push({ id: sid, ...allStudents[sid] });
+                        }
+                    });
+                }
 
+                // Apply search filter
                 let filteredStudents = students;
-                if (query.trim()) {
-                    const q = query.toLowerCase().trim();
+                if (searchQuery.trim()) {
+                    const q = searchQuery.toLowerCase().trim();
                     filteredStudents = students.filter(s =>
                         s.name.toLowerCase().includes(q) ||
                         s.email.toLowerCase().includes(q) ||
@@ -545,69 +808,129 @@
                     );
                 }
 
-                const count = filteredStudents.length;
+                const total = filteredStudents.length;
+                totalStudents += total;
+                // Compute average progress (using a random progress for demo? we don't have progress in this model)
+                // We'll just count students for avg; we can assign a random progress for visual.
+                // For actual, we could store progress per student-course, but we'll simulate with a random number for demo.
+                // To keep it realistic, we'll generate a progress based on student id hash.
+                filteredStudents.forEach(s => {
+                    // deterministic pseudo-progress based on id
+                    let hash = 0;
+                    for (let i = 0; i < s.id.length; i++) {
+                        hash = (hash * 31 + s.id.charCodeAt(i)) % 100;
+                    }
+                    const progress = 30 + (hash % 70); // range 30-99
+                    totalProgress += progress;
+                    progressCount++;
+                });
+
+                const showCount = 5;
+                const hasMore = total > showCount;
+                const color = course.icon ? '#2563EB' : '#6B7280'; // simple color
 
                 html += `
                     <div class="course-card">
                         <div class="course-header">
                             <div class="icon" style="background: ${color};">
-                                <i class="fas ${icon}"></i>
+                                <i class="fas ${course.icon || 'fa-book'}"></i>
                             </div>
                             <div class="info">
-                                <h3>${name}</h3>
+                                <h3>${course.title}</h3>
                                 <div class="count">
-                                    <i class="fas fa-user-graduate"></i> ${count} student${count !== 1 ? 's' : ''}
+                                    <i class="fas fa-user-graduate"></i> ${total} student${total !== 1 ? 's' : ''}
                                 </div>
                             </div>
                         </div>
-                        <div class="student-list">
-                            ${count === 0 ? `<div class="empty-message">${query.trim() ? 'No matching students found.' : 'No students enrolled yet.'}</div>` :
-                            filteredStudents.map(s => `
-                                <div class="student-item">
-                                    <div class="avatar" style="background: ${color};">
-                                        ${s.name.charAt(0)}
+                        <div class="student-list" id="student-list-${course.id}">
+                            ${total === 0 ? `<div class="empty-message">${searchQuery.trim() ? 'No matching students found.' : 'No students enrolled yet.'}</div>` :
+                            filteredStudents.map((s, idx) => {
+                                const extraClass = idx >= showCount ? 'extra-students' : '';
+                                const isBlocked = s.blocked === true;
+                                const initials = s.name.split(' ').map(w => w[0]).join('').toUpperCase().slice(0, 2);
+                                // Generate progress for display (random but consistent)
+                                let hash = 0;
+                                for (let i = 0; i < s.id.length; i++) {
+                                    hash = (hash * 31 + s.id.charCodeAt(i)) % 100;
+                                }
+                                const progress = 30 + (hash % 70);
+                                const progressBadge = progress >= 80 ? 'high' : (progress >= 50 ? 'medium' : 'low');
+                                const progressLabel = progress >= 80 ? '✅ ' + progress + '%' : (progress >= 50 ? '📈 ' + progress + '%' : '📉 ' + progress + '%');
+
+                                return `
+                                    <div class="student-item ${extraClass} ${isBlocked ? 'blocked' : ''}" data-course="${course.id}">
+                                        <div class="avatar" style="background: ${color};">
+                                            ${initials}
+                                        </div>
+                                        <div class="info">
+                                            <div class="name">${s.name}</div>
+                                            <div class="email">${s.email}</div>
+                                        </div>
+                                        <span class="progress-badge ${progressBadge}">${progressLabel}</span>
+                                        <div class="student-actions">
+                                            <button class="btn-block-student" title="${isBlocked ? 'Unblock' : 'Block'}" onclick="toggleBlockStudent('${s.id}','${s.name}',${isBlocked})">
+                                                <i class="fas ${isBlocked ? 'fa-unlock' : 'fa-ban'}"></i>
+                                            </button>
+                                            <button class="btn-delete-student" title="Delete" onclick="deleteStudent('${s.id}','${s.name}')">
+                                                <i class="fas fa-trash-alt"></i>
+                                            </button>
+                                        </div>
                                     </div>
-                                    <div class="info">
-                                        <div class="name">${s.name}</div>
-                                        <div class="email">${s.email}</div>
-                                    </div>
-                                    <span class="progress-badge ${getProgressBadge(s.progress)}">${getProgressLabel(s.progress)}</span>
-                                </div>
-                            `).join('')}
+                                `;
+                            }).join('')}
+                            ${hasMore ? `
+                                <button class="view-all-btn" onclick="toggleStudents('${course.id}')">
+                                    <i class="fas fa-chevron-down"></i> <span id="toggle-label-${course.id}">View All</span>
+                                </button>
+                            ` : ''}
                         </div>
                     </div>
                 `;
             });
 
-            if (html === '') {
-                html = `
-                    <div style="grid-column:1/-1; text-align:center; padding:40px 0;">
-                        <i class="fas fa-book-open" style="font-size:48px; color:var(--border);"></i>
-                        <h3 style="margin:12px 0; color:var(--text-dark);">No courses found</h3>
-                        <p style="color:var(--text-gray);">Try changing your filter or search query.</p>
-                    </div>
-                `;
-            }
-
             grid.innerHTML = html;
+
+            // Update stats
+            document.getElementById('totalCourses').textContent = myCourses.length;
+            document.getElementById('totalStudents').textContent = totalStudents;
+            const avg = progressCount > 0 ? Math.round(totalProgress / progressCount) : 0;
+            document.getElementById('avgProgress').textContent = avg + '%';
         }
 
-        // ===== FILTERS =====
-        function filterCourses(filter) {
-            currentFilter = filter;
-            document.querySelectorAll('.course-tab').forEach(tab => {
-                tab.classList.toggle('active', tab.dataset.filter === filter);
-            });
-            renderCourses(filter, searchQuery);
+        // ============================================================
+        // TOGGLE STUDENTS (show/hide extra)
+        // ============================================================
+        function toggleStudents(courseId) {
+            const container = document.getElementById('student-list-' + courseId);
+            if (!container) return;
+            const extraItems = container.querySelectorAll('.extra-students');
+            const btn = container.querySelector('.view-all-btn');
+            const label = document.getElementById('toggle-label-' + courseId);
+            if (extraItems.length === 0) return;
+
+            const isHidden = extraItems[0].classList.contains('show') === false;
+            extraItems.forEach(el => el.classList.toggle('show', isHidden));
+            if (isHidden) {
+                label.textContent = 'Show Less';
+                btn.querySelector('i').className = 'fas fa-chevron-up';
+            } else {
+                label.textContent = 'View All';
+                btn.querySelector('i').className = 'fas fa-chevron-down';
+            }
         }
 
+        // ============================================================
+        // SEARCH FILTER
+        // ============================================================
         function filterStudents() {
             const input = document.getElementById('searchInput');
             searchQuery = input.value;
-            renderCourses(currentFilter, searchQuery);
+            renderMyCourses();
         }
 
-        // ===== LOGOUT & TOAST =====
+        // ============================================================
+        // LOGOUT
+        // ============================================================
         function logout() {
             if (confirm('Are you sure you want to logout?')) {
                 localStorage.removeItem('qskillInstructorLoggedIn');
@@ -620,26 +943,21 @@
             }
         }
 
-        function showToast(message, type = 'success') {
-            const toast = document.getElementById('toast');
-            const toastIcon = document.getElementById('toastIcon');
-            const toastMessage = document.getElementById('toastMessage');
-            if (!toast) return;
-            toastIcon.className = type === 'success' ? 'fas fa-check-circle' :
-                                 type === 'error' ? 'fas fa-exclamation-circle' :
-                                 'fas fa-info-circle';
-            toastMessage.textContent = message;
-            toast.className = 'toast ' + type;
-            setTimeout(() => toast.classList.add('show'), 10);
-            setTimeout(() => toast.classList.remove('show'), 4000);
-        }
-
-        // ===== INIT =====
+        // ============================================================
+        // INIT
+        // ============================================================
         document.addEventListener('DOMContentLoaded', function() {
-            updateStats();
-            renderCourses('all', '');
+            // Ensure default data exists
+            getCourses();
+            getAllStudents();
+            renderMyCourses();
+            // Make toggle function globally accessible
+            window.toggleStudents = toggleStudents;
+            window.deleteStudent = deleteStudent;
+            window.toggleBlockStudent = toggleBlockStudent;
+            window.filterStudents = filterStudents;
         });
     </script>
 
 </body>
-</html> 
+</html>

@@ -1355,12 +1355,29 @@
             }
 
             function handleInstructorLogin() {
-                if (!emailInput || !passwordInput) return;
+                if (!emailInput || !passwordInput) {
+                    console.error('Email or password input missing');
+                    showToast('Something went wrong. Please try again.', 'error');
+                    return;
+                }
                 var email = emailInput.value.trim();
                 var pass = passwordInput.value;
-                if (!validateEmailField()) { showToast('Please enter a valid email', 'error'); return; }
-                if (!validatePasswordField()) { showToast('Please enter your password', 'error'); return; }
+                console.log('Attempting instructor login for:', email);
+
+                // Validate fields
+                if (!validateEmailField()) {
+                    showToast('Please enter a valid email', 'error');
+                    return;
+                }
+                if (!validatePasswordField()) {
+                    showToast('Please enter your password', 'error');
+                    return;
+                }
+
+                // Look up user
                 var user = instructorDatabase[email];
+                console.log('User found:', user);
+
                 if (!user) {
                     if (emailWrapper) emailWrapper.classList.add('error');
                     if (emailError) emailError.classList.add('show');
@@ -1373,21 +1390,36 @@
                     showToast('❌ Incorrect password. Please try again.', 'error');
                     return;
                 }
+
+                // ✅ FIX: Set the proper login flags
+                if (user.role === 'instructor') {
+                    localStorage.setItem('qskillInstructorLoggedIn', 'true');
+                } else if (user.role === 'admin') {
+                    localStorage.setItem('qskillAdminLoggedIn', 'true');
+                } else {
+                    // fallback
+                    localStorage.setItem('qskillInstructorLoggedIn', 'true');
+                }
+
                 localStorage.setItem('qskillUser', JSON.stringify({ email: email, name: user.name, role: user.role }));
                 showToast('✅ Welcome back, ' + (user.role === 'admin' ? 'Admin' : 'Instructor') + '!', 'success');
                 if (loginSubmitBtn) { loginSubmitBtn.classList.add('loading');
                     loginSubmitBtn.disabled = true; }
+
+                var redirectUrl = user.role === 'admin' ? 'admin.html' : 'instructor-dashboard.html';
+                console.log('Redirecting to:', redirectUrl);
+
                 setTimeout(function() {
                     if (loginSubmitBtn) { loginSubmitBtn.classList.remove('loading');
                         loginSubmitBtn.disabled = false; }
-                    window.location.href = user.role === 'admin' ? 'admin.html' : 'instructor-dashboard.html';
+                    window.location.href = redirectUrl;
                 }, 1500);
             }
 
             if (loginForm) {
                 loginForm.addEventListener('submit', function(e) {
                     e.preventDefault();
-                    console.log('🔑 Login form submitted');
+                    console.log('🔑 Login form submitted, currentRole:', currentRole);
                     if (currentRole === 'student') handleStudentLogin();
                     else handleInstructorLogin();
                 });

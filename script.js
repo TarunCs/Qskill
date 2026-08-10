@@ -61,23 +61,18 @@ function initLoginDropdown() {
 // ============================================================ */
 function logout() {
     if (confirm('Are you sure you want to logout?')) {
-        // Clear ALL session data
         localStorage.removeItem('qskillAdminLoggedIn');
         localStorage.removeItem('qskillStudentLoggedIn');
         localStorage.removeItem('qskillInstructorLoggedIn');
         localStorage.removeItem('qskillUser');
         localStorage.removeItem('qskillStudentId');
-        
-        // Clear session storage
         sessionStorage.clear();
-        
-        // Redirect to login page
         window.location.href = 'login.html';
     }
 }
 
 // ============================================================ */
-// ===== SESSION CHECK - VALIDATE ON PAGE LOAD ===== */
+// ===== SESSION CHECK ===== */
 // ============================================================ */
 function checkSession() {
     const adminLoggedIn = localStorage.getItem('qskillAdminLoggedIn');
@@ -85,11 +80,9 @@ function checkSession() {
     const instructorLoggedIn = localStorage.getItem('qskillInstructorLoggedIn');
     const currentPage = window.location.pathname.split('/').pop();
     
-    // Pages that require login
     const protectedPages = ['dashboard.html', 'admin.html', 'instructor-dashboard.html', 
                            'all-courses.html', 'my-courses.html'];
     
-    // If on a protected page and not logged in, redirect to login
     if (protectedPages.includes(currentPage)) {
         if (currentPage === 'admin.html' && !adminLoggedIn) {
             window.location.href = 'login.html';
@@ -109,7 +102,6 @@ function checkSession() {
         }
     }
     
-    // If on login page and already logged in, redirect to appropriate dashboard
     if (currentPage === 'login.html') {
         if (adminLoggedIn) {
             window.location.href = 'admin.html';
@@ -127,26 +119,20 @@ function checkSession() {
 }
 
 // ============================================================ */
-// ===== SESSION TIMEOUT - Auto logout after inactivity ===== */
+// ===== SESSION TIMEOUT ===== */
 // ============================================================ */
 let sessionTimeout;
-const SESSION_TIMEOUT = 30 * 60 * 1000; // 30 minutes
+const SESSION_TIMEOUT = 30 * 60 * 1000;
 
 function resetSessionTimer() {
-    if (sessionTimeout) {
-        clearTimeout(sessionTimeout);
-    }
+    if (sessionTimeout) clearTimeout(sessionTimeout);
     sessionTimeout = setTimeout(function() {
-        // Check if user is logged in before auto-logout
         const studentLoggedIn = localStorage.getItem('qskillStudentLoggedIn');
         const instructorLoggedIn = localStorage.getItem('qskillInstructorLoggedIn');
         const adminLoggedIn = localStorage.getItem('qskillAdminLoggedIn');
-        
         if (studentLoggedIn || instructorLoggedIn || adminLoggedIn) {
             showToast('Session expired. Please login again.', 'error');
-            setTimeout(function() {
-                logout();
-            }, 2000);
+            setTimeout(logout, 2000);
         }
     }, SESSION_TIMEOUT);
 }
@@ -159,7 +145,6 @@ function initTogglePassword() {
         toggle.addEventListener('click', function() {
             const input = this.closest('.input-wrapper').querySelector('input');
             const icon = this.querySelector('i');
-            
             if (input.type === 'password') {
                 input.type = 'text';
                 icon.className = 'fas fa-eye-slash';
@@ -177,18 +162,12 @@ function initTogglePassword() {
 function validateEmail(email) {
     return email !== '' && /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
 }
-
 function validatePassword(password) {
     return password.length >= 6;
 }
-
 function validateStudentId(id) {
     return id !== '' && id.length >= 6;
 }
-
-// ============================================================ */
-// ===== GENERATE STUDENT ID ===== */
-// ============================================================ */
 function generateStudentId() {
     const year = new Date().getFullYear().toString().slice(-2);
     const random = Math.floor(10000 + Math.random() * 90000).toString();
@@ -196,12 +175,11 @@ function generateStudentId() {
 }
 
 // ============================================================ */
-// ===== FAQ TOGGLE ===== */
+// ===== FAQ TOGGLES ===== */
 // ============================================================ */
 function toggleFAQ(element) {
     const answer = element.nextElementSibling;
     const icon = element.querySelector('i');
-    
     if (answer && answer.classList.contains('faq-answer')) {
         if (answer.classList.contains('open')) {
             answer.classList.remove('open');
@@ -212,10 +190,6 @@ function toggleFAQ(element) {
         }
     }
 }
-
-// ============================================================ */
-// ===== DEMO FAQ TOGGLE ===== */
-// ============================================================ */
 function toggleDemoFAQ(element) {
     const icon = element.querySelector('i');
     if (icon) {
@@ -237,7 +211,6 @@ function openModal(modalId) {
         document.body.style.overflow = 'hidden';
     }
 }
-
 function closeModal(modalId) {
     const modal = document.getElementById(modalId);
     if (modal) {
@@ -247,36 +220,504 @@ function closeModal(modalId) {
 }
 
 // ============================================================ */
+// ===== EMAILJS CONFIGURATION (safe fallback) ===== */
+// ============================================================ */
+const EMAILJS_CONFIG = {
+    PUBLIC_KEY: 'YOUR_EMAILJS_PUBLIC_KEY',
+    SERVICE_ID: 'YOUR_EMAILJS_SERVICE_ID',
+    TEMPLATES: {
+        STUDENT_WELCOME: 'YOUR_STUDENT_TEMPLATE_ID',
+        ADMIN_NOTIFICATION: 'YOUR_ADMIN_TEMPLATE_ID',
+        PASSWORD_RESET: 'YOUR_PASSWORD_RESET_TEMPLATE_ID',
+        OTP_VERIFICATION: 'YOUR_OTP_TEMPLATE_ID'
+    }
+};
+const ADMIN_EMAIL = 'admin@qskillcareersolutions.com';
+
+let emailjsReady = false;
+function initEmailService() {
+    try {
+        if (typeof emailjs !== 'undefined' && 
+            EMAILJS_CONFIG.PUBLIC_KEY && 
+            EMAILJS_CONFIG.PUBLIC_KEY !== 'YOUR_EMAILJS_PUBLIC_KEY') {
+            emailjs.init(EMAILJS_CONFIG.PUBLIC_KEY);
+            emailjsReady = true;
+            console.log('✅ EmailJS initialized with real key.');
+        } else {
+            console.log('ℹ️ EmailJS not configured — running in DEMO mode.');
+        }
+    } catch (e) {
+        console.warn('⚠️ EmailJS init failed:', e);
+        console.log('ℹ️ Falling back to DEMO mode.');
+    }
+    return emailjsReady;
+}
+
+async function sendRegistrationEmails(studentData) {
+    if (emailjsReady) {
+        try {
+            const studentParams = {
+                to_email: studentData.email,
+                student_name: studentData.name || 'Student',
+                student_id: studentData.id,
+                registration_date: new Date().toLocaleDateString('en-US', {
+                    weekday: 'long', year: 'numeric', month: 'long', day: 'numeric',
+                    hour: '2-digit', minute: '2-digit'
+                }),
+                login_link: window.location.origin + '/login.html',
+                dashboard_link: window.location.origin + '/dashboard.html'
+            };
+            await emailjs.send(EMAILJS_CONFIG.SERVICE_ID, EMAILJS_CONFIG.TEMPLATES.STUDENT_WELCOME, studentParams);
+            console.log('✅ Student welcome email sent.');
+            const adminParams = {
+                to_email: ADMIN_EMAIL,
+                student_name: studentData.name || 'Student',
+                student_email: studentData.email,
+                student_id: studentData.id,
+                registration_date: new Date().toLocaleDateString('en-US', {
+                    weekday: 'long', year: 'numeric', month: 'long', day: 'numeric',
+                    hour: '2-digit', minute: '2-digit'
+                }),
+                admin_dashboard_link: window.location.origin + '/admin.html'
+            };
+            await emailjs.send(EMAILJS_CONFIG.SERVICE_ID, EMAILJS_CONFIG.TEMPLATES.ADMIN_NOTIFICATION, adminParams);
+            console.log('✅ Admin notification sent.');
+            return { success: true };
+        } catch (error) {
+            console.error('❌ Email sending failed:', error);
+            return simulateEmailSend(studentData);
+        }
+    } else {
+        return simulateEmailSend(studentData);
+    }
+}
+function simulateEmailSend(studentData) {
+    console.log(`📧 [DEMO] Registration emails for ${studentData.email} (ID: ${studentData.id})`);
+    return { success: true, demo: true };
+}
+
+async function sendPasswordResetEmail(email, resetLink) {
+    if (emailjsReady) {
+        try {
+            const params = {
+                to_email: email,
+                reset_link: resetLink || window.location.origin + '/reset-password.html',
+                current_year: new Date().getFullYear()
+            };
+            await emailjs.send(EMAILJS_CONFIG.SERVICE_ID, EMAILJS_CONFIG.TEMPLATES.PASSWORD_RESET, params);
+            console.log('✅ Password reset email sent to:', email);
+            return { success: true };
+        } catch (error) {
+            console.error('❌ Reset email failed:', error);
+            return simulateResetSend(email, resetLink);
+        }
+    } else {
+        return simulateResetSend(email, resetLink);
+    }
+}
+function simulateResetSend(email, resetLink) {
+    console.log(`📧 [DEMO] Reset link for ${email}: ${resetLink}`);
+    return { success: true, demo: true };
+}
+
+// ============================================================ */
+// ===== LOGIN PAGE SPECIFIC FUNCTIONS ===== */
+// ============================================================ */
+function initLoginPage() {
+    // Only run on login page
+    if (!document.getElementById('loginForm')) return;
+
+    console.log('🔐 Initializing login page...');
+
+    // DOM refs
+    const studentTab = document.getElementById('studentTab');
+    const instructorTab = document.getElementById('instructorTab');
+    const roleSubtitle = document.getElementById('roleSubtitle');
+    const emailField = document.getElementById('emailField');
+    const studentIdField = document.getElementById('studentIdField');
+    const passwordField = document.getElementById('passwordField');
+    const emailInput = document.getElementById('emailInput');
+    const studentIdInput = document.getElementById('studentIdInput');
+    const passwordInput = document.getElementById('passwordInput');
+    const emailWrapper = document.getElementById('emailWrapper');
+    const studentIdWrapper = document.getElementById('studentIdWrapper');
+    const passwordWrapper = document.getElementById('passwordWrapper');
+    const emailError = document.getElementById('emailError');
+    const studentIdError = document.getElementById('studentIdError');
+    const passwordError = document.getElementById('passwordError');
+    const togglePassword = document.getElementById('togglePassword');
+    const loginForm = document.getElementById('loginForm');
+    const loginSubmitBtn = document.getElementById('loginSubmitBtn');
+    const forgotLink = document.getElementById('forgotLink');
+    const forgotModalOverlay = document.getElementById('forgotModalOverlay');
+    const forgotModalClose = document.getElementById('forgotModalClose');
+    const forgotCancel = document.getElementById('forgotCancel');
+    const forgotSend = document.getElementById('forgotSend');
+    const forgotInput = document.getElementById('forgotInput');
+    const forgotWrapper = document.getElementById('forgotWrapper');
+    const forgotError = document.getElementById('forgotError');
+    const forgotErrorText = document.getElementById('forgotErrorText');
+    const forgotLabel = document.getElementById('forgotLabel');
+    const forgotModalDesc = document.getElementById('forgotModalDesc');
+
+    // Databases
+    let studentDatabase = JSON.parse(localStorage.getItem('qskillStudents')) || {};
+    const instructorDatabase = {
+        'instructor@qskill.com': { password: 'instructor123', name: 'Demo Instructor', role: 'instructor' },
+        'admin@qskill.com': { password: 'admin123', name: 'Super Admin', role: 'admin' }
+    };
+
+    if (Object.keys(studentDatabase).length === 0) {
+        studentDatabase['QSK24012345'] = {
+            email: 'student@qskill.com',
+            phone: '9876543210',
+            password: 'a1b2c3d4e5f67890',
+            name: 'Demo Student'
+        };
+        studentDatabase['QSK24067890'] = {
+            email: 'demo@qskill.com',
+            phone: '9876543211',
+            password: 'f9e8d7c6b5a43210',
+            name: 'Demo User'
+        };
+        localStorage.setItem('qskillStudents', JSON.stringify(studentDatabase));
+    }
+
+    let currentRole = 'student';
+    let forgotResetting = false;
+
+    function validateEmailField() {
+        if (!emailInput || !emailWrapper || !emailError) return false;
+        const val = emailInput.value.trim();
+        const ok = val !== '' && /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(val);
+        if (val === '') { emailWrapper.classList.remove('success','error'); emailError.classList.remove('show'); return false; }
+        if (ok) { emailWrapper.classList.remove('error'); emailWrapper.classList.add('success'); emailError.classList.remove('show'); return true; }
+        else { emailWrapper.classList.remove('success'); emailWrapper.classList.add('error'); emailError.classList.add('show'); return false; }
+    }
+
+    function validateStudentIdField() {
+        if (!studentIdInput || !studentIdWrapper || !studentIdError) return false;
+        const val = studentIdInput.value.trim();
+        const ok = val !== '' && val.length >= 6;
+        if (val === '') { studentIdWrapper.classList.remove('success','error'); studentIdError.classList.remove('show'); return false; }
+        if (ok) { studentIdWrapper.classList.remove('error'); studentIdWrapper.classList.add('success'); studentIdError.classList.remove('show'); return true; }
+        else { studentIdWrapper.classList.remove('success'); studentIdWrapper.classList.add('error'); studentIdError.classList.add('show'); return false; }
+    }
+
+    function validatePasswordField() {
+        if (!passwordInput || !passwordWrapper || !passwordError) return false;
+        const val = passwordInput.value;
+        const ok = val.length >= 6;
+        if (val === '') { passwordWrapper.classList.remove('success','error'); passwordError.classList.remove('show'); return false; }
+        if (ok) { passwordWrapper.classList.remove('error'); passwordWrapper.classList.add('success'); passwordError.classList.remove('show'); return true; }
+        else { passwordWrapper.classList.remove('success'); passwordWrapper.classList.add('error'); passwordError.classList.add('show'); return false; }
+    }
+
+    function resetForm() {
+        [emailWrapper, studentIdWrapper, passwordWrapper].forEach(w => { if (w) w.classList.remove('error','success'); });
+        [emailError, studentIdError, passwordError].forEach(e => { if (e) e.classList.remove('show'); });
+    }
+
+    // Role switching
+    function switchToStudent() {
+        if (!studentTab || !instructorTab) return;
+        studentTab.classList.add('active');
+        instructorTab.classList.remove('active');
+        currentRole = 'student';
+        if (studentIdField) { studentIdField.classList.remove('hide'); studentIdField.style.display = 'block'; }
+        if (emailField) { emailField.classList.remove('show'); emailField.style.display = 'none'; }
+        if (passwordField) { passwordField.classList.remove('hide'); passwordField.style.display = 'block'; }
+        if (roleSubtitle) roleSubtitle.textContent = 'Welcome back! Please enter your Student ID to continue.';
+        if (studentIdInput) studentIdInput.placeholder = 'Enter your Student ID';
+        if (passwordInput) passwordInput.placeholder = 'Enter your password';
+        if (forgotLabel) forgotLabel.textContent = 'Student ID';
+        if (forgotInput) forgotInput.placeholder = 'Enter your Student ID';
+        if (forgotModalDesc) forgotModalDesc.textContent = 'Enter your Student ID to receive a password reset link.';
+        resetForm();
+    }
+
+    function switchToInstructor() {
+        if (!studentTab || !instructorTab) return;
+        instructorTab.classList.add('active');
+        studentTab.classList.remove('active');
+        currentRole = 'instructor';
+        if (studentIdField) { studentIdField.classList.add('hide'); studentIdField.style.display = 'none'; }
+        if (emailField) { emailField.classList.add('show'); emailField.style.display = 'block'; }
+        if (passwordField) { passwordField.classList.remove('hide'); passwordField.style.display = 'block'; }
+        if (roleSubtitle) roleSubtitle.textContent = 'Please enter your email and password to continue.';
+        if (emailInput) emailInput.placeholder = 'Enter your email address';
+        if (passwordInput) passwordInput.placeholder = 'Enter your password';
+        if (forgotLabel) forgotLabel.textContent = 'Email Address';
+        if (forgotInput) forgotInput.placeholder = 'Enter your email address';
+        if (forgotModalDesc) forgotModalDesc.textContent = 'Enter your email address to receive a password reset link.';
+        resetForm();
+    }
+
+    // Tab event listeners
+    if (studentTab) {
+        studentTab.addEventListener('click', function(e) {
+            e.preventDefault();
+            if (currentRole !== 'student') switchToStudent();
+        });
+    }
+    if (instructorTab) {
+        instructorTab.addEventListener('click', function(e) {
+            e.preventDefault();
+            if (currentRole !== 'instructor') switchToInstructor();
+        });
+    }
+
+    // Initial role from URL
+    const urlParams = new URLSearchParams(window.location.search);
+    if (urlParams.get('role') === 'instructor') switchToInstructor(); else switchToStudent();
+
+    // Toggle password
+    if (togglePassword && passwordInput) {
+        togglePassword.addEventListener('click', function() {
+            const isPass = passwordInput.type === 'password';
+            passwordInput.type = isPass ? 'text' : 'password';
+            this.classList.toggle('fa-eye');
+            this.classList.toggle('fa-eye-slash');
+        });
+    }
+
+    // Login handlers
+    function handleStudentLogin() {
+        if (!studentIdInput || !passwordInput) return;
+        const sid = studentIdInput.value.trim();
+        const pass = passwordInput.value;
+        if (!validateStudentIdField()) { showToast('Please enter a valid Student ID', 'error'); return; }
+        if (!validatePasswordField()) { showToast('Please enter your password', 'error'); return; }
+        const student = studentDatabase[sid];
+        if (!student) {
+            if (studentIdWrapper) studentIdWrapper.classList.add('error');
+            if (studentIdError) studentIdError.classList.add('show');
+            showToast('Student ID not found. Please check your ID.', 'error');
+            return;
+        }
+        if (student.password !== pass) {
+            if (passwordWrapper) passwordWrapper.classList.add('error');
+            if (passwordError) passwordError.classList.add('show');
+            showToast('Incorrect password. Please try again.', 'error');
+            return;
+        }
+        localStorage.setItem('qskillStudentLoggedIn', 'true');
+        localStorage.setItem('qskillStudentId', sid);
+        localStorage.setItem('qskillUser', JSON.stringify({ id: sid, email: student.email, phone: student.phone || '', name: student.name || 'Student', role: 'student' }));
+        showToast(`✅ Welcome back, ${sid}!`, 'success');
+        if (loginSubmitBtn) { loginSubmitBtn.classList.add('loading'); loginSubmitBtn.disabled = true; }
+        setTimeout(() => {
+            if (loginSubmitBtn) { loginSubmitBtn.classList.remove('loading'); loginSubmitBtn.disabled = false; }
+            window.location.href = 'dashboard.html';
+        }, 1500);
+    }
+
+    function handleInstructorLogin() {
+        if (!emailInput || !passwordInput) return;
+        const email = emailInput.value.trim();
+        const pass = passwordInput.value;
+        if (!validateEmailField()) { showToast('Please enter a valid email', 'error'); return; }
+        if (!validatePasswordField()) { showToast('Please enter your password', 'error'); return; }
+        const user = instructorDatabase[email];
+        if (!user) {
+            if (emailWrapper) emailWrapper.classList.add('error');
+            if (emailError) emailError.classList.add('show');
+            showToast('❌ User not found. Please check your email.', 'error');
+            return;
+        }
+        if (user.password !== pass) {
+            if (passwordWrapper) passwordWrapper.classList.add('error');
+            if (passwordError) passwordError.classList.add('show');
+            showToast('❌ Incorrect password. Please try again.', 'error');
+            return;
+        }
+        localStorage.setItem('qskillUser', JSON.stringify({ email, name: user.name, role: user.role }));
+        showToast(`✅ Welcome back, ${user.role === 'admin' ? 'Admin' : 'Instructor'}!`, 'success');
+        if (loginSubmitBtn) { loginSubmitBtn.classList.add('loading'); loginSubmitBtn.disabled = true; }
+        setTimeout(() => {
+            if (loginSubmitBtn) { loginSubmitBtn.classList.remove('loading'); loginSubmitBtn.disabled = false; }
+            window.location.href = user.role === 'admin' ? 'admin.html' : 'instructor-dashboard.html';
+        }, 1500);
+    }
+
+    if (loginForm) {
+        loginForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            if (currentRole === 'student') handleStudentLogin();
+            else handleInstructorLogin();
+        });
+    }
+
+    // Forgot Password Modal
+    function openForgotModal() {
+        if (!forgotInput || !forgotWrapper || !forgotError || !forgotSend) return;
+        forgotInput.value = '';
+        forgotWrapper.classList.remove('error','success');
+        forgotError.classList.remove('show');
+        forgotSend.classList.remove('loading');
+        forgotSend.disabled = false;
+        if (forgotSend.querySelector('.btn-text-modal')) forgotSend.querySelector('.btn-text-modal').textContent = 'Send Reset Link';
+        if (currentRole === 'student') {
+            if (forgotLabel) forgotLabel.textContent = 'Student ID';
+            if (forgotInput) forgotInput.placeholder = 'Enter your Student ID';
+            if (forgotModalDesc) forgotModalDesc.textContent = 'Enter your Student ID to receive a password reset link.';
+        } else {
+            if (forgotLabel) forgotLabel.textContent = 'Email Address';
+            if (forgotInput) forgotInput.placeholder = 'Enter your email address';
+            if (forgotModalDesc) forgotModalDesc.textContent = 'Enter your email address to receive a password reset link.';
+        }
+        if (forgotModalOverlay) forgotModalOverlay.classList.add('show');
+        setTimeout(() => { if (forgotInput) forgotInput.focus(); }, 200);
+    }
+
+    function closeForgotModal() {
+        if (forgotModalOverlay) forgotModalOverlay.classList.remove('show');
+        if (forgotSend) {
+            forgotSend.classList.remove('loading');
+            forgotSend.disabled = false;
+            if (forgotSend.querySelector('.btn-text-modal')) forgotSend.querySelector('.btn-text-modal').textContent = 'Send Reset Link';
+        }
+        forgotResetting = false;
+    }
+
+    if (forgotLink) {
+        forgotLink.addEventListener('click', function(e) {
+            e.preventDefault();
+            openForgotModal();
+        });
+    }
+    if (forgotModalClose) forgotModalClose.addEventListener('click', closeForgotModal);
+    if (forgotCancel) forgotCancel.addEventListener('click', closeForgotModal);
+    if (forgotModalOverlay) {
+        forgotModalOverlay.addEventListener('click', function(e) {
+            if (e.target === this) closeForgotModal();
+        });
+    }
+    document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape' && forgotModalOverlay && forgotModalOverlay.classList.contains('show')) {
+            closeForgotModal();
+        }
+    });
+
+    // Forgot Send
+    if (forgotSend) {
+        forgotSend.addEventListener('click', async function(e) {
+            e.preventDefault();
+            if (forgotResetting) return;
+            if (!forgotInput || !forgotWrapper || !forgotError || !forgotErrorText) return;
+
+            const val = forgotInput.value.trim();
+            if (!val) {
+                forgotWrapper.classList.add('error');
+                forgotError.classList.add('show');
+                forgotErrorText.textContent = 'Please enter your ' + (currentRole === 'student' ? 'Student ID' : 'email address');
+                return;
+            }
+            if (currentRole === 'instructor') {
+                if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(val)) {
+                    forgotWrapper.classList.add('error');
+                    forgotError.classList.add('show');
+                    forgotErrorText.textContent = 'Please enter a valid email address';
+                    return;
+                }
+            } else {
+                if (val.length < 6) {
+                    forgotWrapper.classList.add('error');
+                    forgotError.classList.add('show');
+                    forgotErrorText.textContent = 'Student ID must be at least 6 characters';
+                    return;
+                }
+            }
+
+            forgotWrapper.classList.remove('error','success');
+            forgotError.classList.remove('show');
+
+            let found = false, userEmail = '', userName = '';
+            if (currentRole === 'student') {
+                const s = studentDatabase[val];
+                if (s) { found = true; userEmail = s.email; userName = s.name || 'Student'; }
+            } else {
+                const u = instructorDatabase[val];
+                if (u) { found = true; userEmail = val; userName = u.name || 'Instructor'; }
+            }
+            if (!found) {
+                forgotWrapper.classList.add('error');
+                forgotError.classList.add('show');
+                forgotErrorText.textContent = currentRole === 'student' ? 'Student ID not found.' : 'Email not found.';
+                return;
+            }
+
+            forgotResetting = true;
+            forgotSend.classList.add('loading');
+            forgotSend.disabled = true;
+            if (forgotSend.querySelector('.btn-text-modal')) forgotSend.querySelector('.btn-text-modal').textContent = 'Sending...';
+
+            const resetToken = generateResetToken();
+            const resetLink = window.location.origin + '/reset-password.html?token=' + resetToken + '&role=' + currentRole + '&id=' + encodeURIComponent(val);
+            const resetData = { token: resetToken, id: val, role: currentRole, email: userEmail, createdAt: Date.now() };
+            localStorage.setItem('qskillReset_' + resetToken, JSON.stringify(resetData));
+
+            const result = await sendPasswordResetEmail(userEmail, resetLink);
+
+            forgotSend.classList.remove('loading');
+            forgotSend.disabled = false;
+            if (forgotSend.querySelector('.btn-text-modal')) forgotSend.querySelector('.btn-text-modal').textContent = 'Send Reset Link';
+            forgotResetting = false;
+
+            if (result.success) {
+                forgotWrapper.classList.remove('error');
+                forgotWrapper.classList.add('success');
+                const demoMsg = result.demo ? ' [DEMO]' : '';
+                showToast(`📧 Reset link sent to ${userEmail}${demoMsg}`, 'success');
+                setTimeout(closeForgotModal, 1500);
+            } else {
+                forgotWrapper.classList.add('error');
+                forgotError.classList.add('show');
+                forgotErrorText.textContent = 'Failed to send email. Please try again.';
+                showToast('❌ Failed to send reset email. Please try again.', 'error');
+            }
+        });
+    }
+
+    function generateResetToken() {
+        const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+        let token = '';
+        for (let i = 0; i < 32; i++) {
+            token += chars.charAt(Math.floor(Math.random() * chars.length));
+        }
+        return token;
+    }
+
+    console.log('✅ Login page initialised successfully!');
+    console.log('📝 Student IDs: QSK24012345, QSK24067890');
+    console.log('👨‍🏫 Instructor: instructor@qskill.com | Password: instructor123');
+    console.log('👨‍💼 Admin: admin@qskill.com | Password: admin123');
+}
+
+// ============================================================ */
 // ===== INITIALIZE ON PAGE LOAD ===== */
 // ============================================================ */
 document.addEventListener('DOMContentLoaded', function() {
-    // Initialize login dropdown
+    console.log('🚀 Document loaded, initializing...');
+    
     initLoginDropdown();
-    
-    // Initialize toggle password
     initTogglePassword();
-    
-    // Check session
+    initEmailService();
+
     const sessionValid = checkSession();
-    
-    // If session is valid and user is logged in, start session timer
     if (sessionValid) {
         const studentLoggedIn = localStorage.getItem('qskillStudentLoggedIn');
         const instructorLoggedIn = localStorage.getItem('qskillInstructorLoggedIn');
         const adminLoggedIn = localStorage.getItem('qskillAdminLoggedIn');
-        
         if (studentLoggedIn || instructorLoggedIn || adminLoggedIn) {
             resetSessionTimer();
-            
-            // Reset timer on user activity
             document.addEventListener('click', resetSessionTimer);
             document.addEventListener('keydown', resetSessionTimer);
             document.addEventListener('scroll', resetSessionTimer);
             document.addEventListener('mousemove', resetSessionTimer);
         }
     }
-    
-    // Close modals on overlay click
+
     document.querySelectorAll('.modal-overlay').forEach(modal => {
         modal.addEventListener('click', function(e) {
             if (e.target === this) {
@@ -285,641 +726,15 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         });
     });
+
+    // Initialize login page
+    initLoginPage();
 });
-
-// ============================================================ */
-// ===== ADMIN DATA FUNCTIONS ===== */
-// ============================================================ */
-function getAdminData() {
-    return JSON.parse(localStorage.getItem('qskillAdminData')) || {
-        students: {},
-        instructors: {},
-        courses: [],
-        enrollments: []
-    };
-}
-
-function saveAdminData(data) {
-    localStorage.setItem('qskillAdminData', JSON.stringify(data));
-}
-
-// ============================================================ */
-// ===== STUDENT DATABASE FUNCTIONS ===== */
-// ============================================================ */
-function getStudentDatabase() {
-    return JSON.parse(localStorage.getItem('qskillStudents')) || {};
-}
-
-function saveStudentDatabase(data) {
-    localStorage.setItem('qskillStudents', JSON.stringify(data));
-}
-
-// ============================================================ */
-// ===== INSTRUCTOR DATABASE ===== */
-// ============================================================ */
-const instructorDatabase = {
-    'instructor@qskill.com': {
-        password: 'instructor123',
-        name: 'Demo Instructor',
-        role: 'instructor',
-        joinedAt: new Date().toISOString()
-    },
-    'admin@qskill.com': {
-        password: 'admin123',
-        name: 'Super Admin',
-        role: 'admin',
-        joinedAt: new Date().toISOString()
-    }
+const EMAILJS_CONFIG = {
+    PUBLIC_KEY: 'your_public_key',
+    SERVICE_ID: 'your_service_id',
+    STUDENT_WELCOME_TEMPLATE: 'your_welcome_template_id',
+    STUDENT_REMINDER_TEMPLATE: 'your_reminder_template_id'
 };
-
-// ============================================================ */
-// ===== BOOKING MODAL (Calendar) ===== */
-// ============================================================ */
-const MAX_PARTICIPANTS = 7;
-const SLOTS = ['09:00', '10:00', '11:00', '12:00', '14:00', '15:00', '16:00', '17:00'];
-const MAX_MONTHS_FUTURE = 3;
-
-let modalCurrentDate = new Date();
-let modalSelectedDate = null;
-let modalSelectedTimeSlot = null;
-let modalBookedSlots = {};
-
-function generateModalBookings() {
-    const today = new Date();
-    const bookings = {};
-    
-    for (let d = 0; d < 90; d++) {
-        const date = new Date(today);
-        date.setDate(today.getDate() + d);
-        const dateKey = date.toDateString();
-        
-        if (date.getDay() === 0) continue;
-        
-        bookings[dateKey] = SLOTS.map(time => ({
-            time: time,
-            booked: Math.random() > 0.55
-        }));
-    }
-    
-    return bookings;
-}
-
-function initBookingModal() {
-    modalBookedSlots = generateModalBookings();
-    
-    const modal = document.getElementById('bookingModal');
-    const openBtn = document.getElementById('openScheduleBtn2');
-    const closeBtn = document.getElementById('closeModalBtn');
-    
-    if (!modal || !openBtn || !closeBtn) return;
-    
-    openBtn.addEventListener('click', function() {
-        modal.classList.add('active');
-        document.body.style.overflow = 'hidden';
-        modalCurrentDate = new Date();
-        renderModalCalendar();
-    });
-    
-    closeBtn.addEventListener('click', function() {
-        closeBookingModal();
-    });
-    
-    modal.addEventListener('click', function(e) {
-        if (e.target === modal) {
-            closeBookingModal();
-        }
-    });
-}
-
-function closeBookingModal() {
-    const modal = document.getElementById('bookingModal');
-    if (modal) {
-        modal.classList.remove('active');
-        document.body.style.overflow = '';
-        modalSelectedDate = null;
-        modalSelectedTimeSlot = null;
-        const bookBtn = document.getElementById('modalBookBtn');
-        if (bookBtn) bookBtn.disabled = true;
-    }
-}
-
-function renderModalCalendar() {
-    const modalGrid = document.getElementById('modalCalendarGrid');
-    const modalMonthYear = document.getElementById('modalMonthYear');
-    const modalNextMonth = document.getElementById('modalNextMonth');
-    
-    if (!modalGrid || !modalMonthYear || !modalNextMonth) return;
-    
-    const year = modalCurrentDate.getFullYear();
-    const month = modalCurrentDate.getMonth();
-    const today = new Date();
-    today.setHours(0, 0, 0, 0);
-    
-    const maxDate = new Date(today);
-    maxDate.setMonth(today.getMonth() + MAX_MONTHS_FUTURE);
-    
-    if (new Date(year, month, 1) > maxDate) {
-        modalCurrentDate = new Date(maxDate.getFullYear(), maxDate.getMonth(), 1);
-        renderModalCalendar();
-        return;
-    }
-    
-    modalMonthYear.textContent = new Date(year, month).toLocaleString('default', { month: 'long', year: 'numeric' });
-    
-    const nextMonthDate = new Date(year, month + 1, 1);
-    modalNextMonth.style.display = nextMonthDate > maxDate ? 'none' : 'flex';
-    
-    const firstDay = new Date(year, month, 1).getDay();
-    const daysInMonth = new Date(year, month + 1, 0).getDate();
-    
-    modalGrid.innerHTML = '';
-    
-    ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'].forEach(day => {
-        const div = document.createElement('div');
-        div.className = 'day-header';
-        div.textContent = day;
-        modalGrid.appendChild(div);
-    });
-    
-    for (let i = 0; i < firstDay; i++) {
-        const div = document.createElement('div');
-        div.className = 'day-cell empty';
-        modalGrid.appendChild(div);
-    }
-    
-    for (let day = 1; day <= daysInMonth; day++) {
-        const dateObj = new Date(year, month, day);
-        const dateKey = dateObj.toDateString();
-        const isPast = dateObj < today;
-        const isToday = dateObj.toDateString() === today.toDateString();
-        const isSunday = dateObj.getDay() === 0;
-        const isWeekday = dateObj.getDay() >= 1 && dateObj.getDay() <= 6;
-        const isWithinRange = isWithinNext3Months(dateObj);
-        
-        const div = document.createElement('div');
-        div.className = 'day-cell';
-        if (isPast || isSunday || !isWithinRange) div.classList.add('past');
-        if (isToday) div.classList.add('today');
-        
-        const dayNumber = document.createElement('span');
-        dayNumber.className = 'day-number';
-        dayNumber.textContent = day;
-        div.appendChild(dayNumber);
-        
-        if (isWeekday && !isPast && isWithinRange) {
-            const slots = modalBookedSlots[dateKey] || [];
-            const availableSlots = slots.filter(s => !s.booked).length;
-            
-            const slotInfo = document.createElement('span');
-            slotInfo.className = 'day-slots';
-            if (availableSlots > 0) {
-                slotInfo.textContent = `${availableSlots} slots available`;
-                slotInfo.className = 'day-slots available';
-            } else if (slots.length > 0) {
-                slotInfo.textContent = 'Fully booked';
-                slotInfo.className = 'day-slots full';
-            } else {
-                slotInfo.textContent = 'No slots';
-            }
-            div.appendChild(slotInfo);
-            div.style.cursor = 'pointer';
-            div.addEventListener('click', () => { selectModalDate(dateObj); });
-        } else if (isSunday && !isPast && isWithinRange) {
-            const slotInfo = document.createElement('span');
-            slotInfo.className = 'day-slots';
-            slotInfo.textContent = 'Closed';
-            slotInfo.style.color = '#6B7280';
-            div.appendChild(slotInfo);
-            div.classList.add('no-slots');
-        }
-        modalGrid.appendChild(div);
-    }
-    
-    document.getElementById('modalTimeSlotsGrid').innerHTML = '';
-    document.getElementById('modalSelectedDate').textContent = 'Select a date to see available slots';
-    document.getElementById('modalBookBtn').disabled = true;
-    modalSelectedDate = null;
-    modalSelectedTimeSlot = null;
-}
-
-function isWithinNext3Months(date) {
-    const today = new Date();
-    const maxDate = new Date(today);
-    maxDate.setMonth(today.getMonth() + MAX_MONTHS_FUTURE);
-    return date >= today && date <= maxDate;
-}
-
-function selectModalDate(date) {
-    modalSelectedDate = date;
-    modalSelectedTimeSlot = null;
-    
-    document.querySelectorAll('.modal-calendar-grid .day-cell').forEach(el => {
-        el.classList.remove('selected');
-    });
-    
-    const dateStr = date.toDateString();
-    document.querySelectorAll('.modal-calendar-grid .day-cell').forEach(cell => {
-        const dayNum = cell.querySelector('.day-number');
-        if (dayNum) {
-            const cellDate = new Date(modalCurrentDate.getFullYear(), modalCurrentDate.getMonth(), parseInt(dayNum.textContent));
-            if (cellDate.toDateString() === dateStr) {
-                cell.classList.add('selected');
-            }
-        }
-    });
-    
-    renderModalTimeSlots(date);
-}
-
-function renderModalTimeSlots(date) {
-    const dateKey = date.toDateString();
-    const slots = modalBookedSlots[dateKey] || [];
-    const modalTimeSlotsGrid = document.getElementById('modalTimeSlotsGrid');
-    const modalSelectedDateEl = document.getElementById('modalSelectedDate');
-    const modalBookBtn = document.getElementById('modalBookBtn');
-    
-    if (!modalTimeSlotsGrid || !modalSelectedDateEl || !modalBookBtn) return;
-    
-    modalSelectedDateEl.textContent = `Available slots for ${date.toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric', year: 'numeric' })}`;
-    modalTimeSlotsGrid.innerHTML = '';
-    
-    if (slots.length === 0) {
-        const msg = document.createElement('p');
-        msg.style.color = '#6B7280';
-        msg.style.padding = '12px';
-        msg.textContent = 'No slots available for this date.';
-        modalTimeSlotsGrid.appendChild(msg);
-        modalBookBtn.disabled = true;
-        return;
-    }
-    
-    slots.forEach(slot => {
-        const div = document.createElement('div');
-        div.className = 'time-slot';
-        if (slot.booked) div.classList.add('booked');
-        
-        const timeSpan = document.createElement('span');
-        timeSpan.textContent = slot.time;
-        div.appendChild(timeSpan);
-        
-        const bookedCount = slot.booked ? Math.floor(Math.random() * 7) + 1 : 0;
-        const available = MAX_PARTICIPANTS - bookedCount;
-        const countSpan = document.createElement('span');
-        countSpan.className = 'slot-count';
-        
-        if (slot.booked) {
-            countSpan.textContent = ` (${bookedCount}/${MAX_PARTICIPANTS} booked)`;
-            const icon = document.createElement('span');
-            icon.className = 'booked-icon';
-            icon.innerHTML = ' ❌';
-            div.appendChild(icon);
-        } else {
-            countSpan.textContent = ` (${available} spots left)`;
-            const icon = document.createElement('span');
-            icon.className = 'available-icon';
-            icon.innerHTML = ' ✅';
-            div.appendChild(icon);
-        }
-        div.appendChild(countSpan);
-        
-        if (!slot.booked) {
-            div.addEventListener('click', () => {
-                document.querySelectorAll('.modal-time-slots-grid .time-slot').forEach(el => {
-                    el.classList.remove('selected-slot');
-                });
-                div.classList.add('selected-slot');
-                modalSelectedTimeSlot = slot.time;
-                modalBookBtn.disabled = false;
-            });
-        }
-        modalTimeSlotsGrid.appendChild(div);
-    });
-    modalBookBtn.disabled = true;
-}
-
-// ============================================================ */
-// ===== BOOKING MODAL - NEXT MONTH & BOOK BUTTON ===== */
-// ============================================================ */
-document.addEventListener('DOMContentLoaded', function() {
-    const modalNextMonth = document.getElementById('modalNextMonth');
-    const modalBookBtn = document.getElementById('modalBookBtn');
-    
-    if (modalNextMonth) {
-        modalNextMonth.addEventListener('click', function() {
-            const today = new Date();
-            const maxDate = new Date(today);
-            maxDate.setMonth(today.getMonth() + MAX_MONTHS_FUTURE);
-            const nextMonthDate = new Date(modalCurrentDate.getFullYear(), modalCurrentDate.getMonth() + 1, 1);
-            if (nextMonthDate <= maxDate) {
-                modalCurrentDate.setMonth(modalCurrentDate.getMonth() + 1);
-                renderModalCalendar();
-            }
-        });
-    }
-    
-    if (modalBookBtn) {
-        modalBookBtn.addEventListener('click', function() {
-            if (modalSelectedDate && modalSelectedTimeSlot) {
-                const dateStr = modalSelectedDate.toLocaleDateString('en-US', {
-                    weekday: 'long',
-                    month: 'long',
-                    day: 'numeric',
-                    year: 'numeric'
-                });
-                alert(`✅ Booking Confirmed!\n\nDate: ${dateStr}\nTime: ${modalSelectedTimeSlot}\nDuration: 1 Hour\nMax Participants: 7\n\nThank you for booking with QSkill!`);
-                
-                const dateKey = modalSelectedDate.toDateString();
-                const slots = modalBookedSlots[dateKey] || [];
-                const slotIndex = slots.findIndex(s => s.time === modalSelectedTimeSlot);
-                if (slotIndex !== -1) slots[slotIndex].booked = true;
-                
-                modalSelectedTimeSlot = null;
-                modalBookBtn.disabled = true;
-                document.querySelectorAll('.modal-time-slots-grid .time-slot').forEach(el => {
-                    el.classList.remove('selected-slot');
-                });
-                renderModalCalendar();
-            }
-        });
-    }
-});
-
-// ============================================================ */
-// ===== INITIALIZE BOOKING MODAL ON LOAD ===== */
-// ============================================================ */
-document.addEventListener('DOMContentLoaded', function() {
-    // Check if booking modal elements exist
-    if (document.getElementById('bookingModal')) {
-        initBookingModal();
-        renderModalCalendar();
-    }
-});
 
 console.log('🔐 QSkill Scripts Loaded');
-console.log('📌 Session timeout: 30 minutes');
-console.log('🔗 Protected pages: dashboard.html, admin.html, instructor-dashboard.html, all-courses.html, my-courses.html');
-// ============================================================ */
-// ===== EMAIL SERVICE - Complete File ===== */
-// ============================================================ */
-
-// ============================================================ */
-// ===== EMAILJS CONFIGURATION ===== */
-// ============================================================ */
-
-const EMAILJS_CONFIG = {
-    PUBLIC_KEY: 'YOUR_EMAILJS_PUBLIC_KEY',      // Get from EmailJS Dashboard
-    SERVICE_ID: 'YOUR_EMAILJS_SERVICE_ID',      // Get from EmailJS Dashboard
-    TEMPLATES: {
-        STUDENT_WELCOME: 'YOUR_STUDENT_TEMPLATE_ID',   // Template ID for student
-        ADMIN_NOTIFICATION: 'YOUR_ADMIN_TEMPLATE_ID',  // Template ID for admin
-        PASSWORD_RESET: 'YOUR_PASSWORD_RESET_TEMPLATE_ID', // Optional: Forgot password
-        OTP_VERIFICATION: 'YOUR_OTP_TEMPLATE_ID'      // Optional: OTP email
-    }
-};
-
-// Admin email address
-const ADMIN_EMAIL = 'admin@qskillcareersolutions.com';
-
-// ============================================================ */
-// ===== INITIALIZE EMAILJS ===== */
-// ============================================================ */
-
-function initEmailService() {
-    if (typeof emailjs !== 'undefined') {
-        emailjs.init(EMAILJS_CONFIG.PUBLIC_KEY);
-        console.log('✅ EmailJS initialized successfully');
-        return true;
-    } else {
-        console.warn('⚠️ EmailJS library not loaded. Please include the CDN.');
-        return false;
-    }
-}
-
-// ============================================================ */
-// ===== SEND STUDENT WELCOME EMAIL ===== */
-// ============================================================ */
-
-async function sendStudentWelcomeEmail(studentData) {
-    try {
-        const params = {
-            to_email: studentData.email,
-            student_name: studentData.name || 'Student',
-            student_id: studentData.id,
-            registration_date: new Date().toLocaleDateString('en-US', {
-                weekday: 'long',
-                year: 'numeric',
-                month: 'long',
-                day: 'numeric',
-                hour: '2-digit',
-                minute: '2-digit'
-            }),
-            login_link: window.location.origin + '/login.html',
-            dashboard_link: window.location.origin + '/dashboard.html'
-        };
-
-        const response = await emailjs.send(
-            EMAILJS_CONFIG.SERVICE_ID,
-            EMAILJS_CONFIG.TEMPLATES.STUDENT_WELCOME,
-            params
-        );
-
-        console.log('✅ Student welcome email sent to:', studentData.email);
-        return { success: true, response: response };
-
-    } catch (error) {
-        console.error('❌ Failed to send student welcome email:', error);
-        return { success: false, error: error };
-    }
-}
-
-// ============================================================ */
-// ===== SEND ADMIN NOTIFICATION EMAIL ===== */
-// ============================================================ */
-
-async function sendAdminNotification(studentData) {
-    try {
-        const params = {
-            to_email: ADMIN_EMAIL,
-            student_name: studentData.name || 'Student',
-            student_email: studentData.email,
-            student_id: studentData.id,
-            registration_date: new Date().toLocaleDateString('en-US', {
-                weekday: 'long',
-                year: 'numeric',
-                month: 'long',
-                day: 'numeric',
-                hour: '2-digit',
-                minute: '2-digit'
-            }),
-            admin_dashboard_link: window.location.origin + '/admin.html'
-        };
-
-        const response = await emailjs.send(
-            EMAILJS_CONFIG.SERVICE_ID,
-            EMAILJS_CONFIG.TEMPLATES.ADMIN_NOTIFICATION,
-            params
-        );
-
-        console.log('✅ Admin notification sent to:', ADMIN_EMAIL);
-        return { success: true, response: response };
-
-    } catch (error) {
-        console.error('❌ Failed to send admin notification:', error);
-        return { success: false, error: error };
-    }
-}
-
-// ============================================================ */
-// ===== SEND OTP VERIFICATION EMAIL ===== */
-// ============================================================ */
-
-async function sendOTPEmail(email, otp) {
-    try {
-        const params = {
-            to_email: email,
-            otp_code: otp,
-            expiry_time: '05:00',
-            current_year: new Date().getFullYear()
-        };
-
-        const response = await emailjs.send(
-            EMAILJS_CONFIG.SERVICE_ID,
-            EMAILJS_CONFIG.TEMPLATES.OTP_VERIFICATION,
-            params
-        );
-
-        console.log('✅ OTP email sent to:', email);
-        return { success: true, response: response };
-
-    } catch (error) {
-        console.error('❌ Failed to send OTP email:', error);
-        return { success: false, error: error };
-    }
-}
-
-// ============================================================ */
-// ===== SEND PASSWORD RESET EMAIL ===== */
-// ============================================================ */
-
-async function sendPasswordResetEmail(email, resetLink) {
-    try {
-        const params = {
-            to_email: email,
-            reset_link: resetLink || window.location.origin + '/reset-password.html',
-            current_year: new Date().getFullYear()
-        };
-
-        const response = await emailjs.send(
-            EMAILJS_CONFIG.SERVICE_ID,
-            EMAILJS_CONFIG.TEMPLATES.PASSWORD_RESET,
-            params
-        );
-
-        console.log('✅ Password reset email sent to:', email);
-        return { success: true, response: response };
-
-    } catch (error) {
-        console.error('❌ Failed to send password reset email:', error);
-        return { success: false, error: error };
-    }
-}
-
-// ============================================================ */
-// ===== SEND ALL REGISTRATION EMAILS ===== */
-// ============================================================ */
-
-async function sendRegistrationEmails(studentData) {
-    const results = {
-        student: null,
-        admin: null
-    };
-
-    // 1. Send welcome email to student
-    results.student = await sendStudentWelcomeEmail(studentData);
-
-    // 2. Send notification to admin
-    results.admin = await sendAdminNotification(studentData);
-
-    // Return combined result
-    const allSuccess = results.student.success && results.admin.success;
-    
-    return {
-        success: allSuccess,
-        student: results.student,
-        admin: results.admin
-    };
-}
-
-// ============================================================ */
-// ===== TEST EMAIL SERVICE ===== */
-// ============================================================ */
-
-async function testEmailService() {
-    console.log('📧 Testing Email Service...');
-    
-    const testStudent = {
-        id: 'QSK2612345',
-        email: 'test@example.com',
-        name: 'Test Student'
-    };
-    
-    console.log('📧 Sending test student email...');
-    const studentResult = await sendStudentWelcomeEmail(testStudent);
-    
-    console.log('📧 Sending test admin notification...');
-    const adminResult = await sendAdminNotification(testStudent);
-    
-    console.log('📧 Test Results:', {
-        student: studentResult.success ? '✅ Success' : '❌ Failed',
-        admin: adminResult.success ? '✅ Success' : '❌ Failed'
-    });
-    
-    return { student: studentResult, admin: adminResult };
-}
-
-// ============================================================ */
-// ===== EXPORT FUNCTIONS ===== */
-// ============================================================ */
-
-// For use in browser (global scope)
-window.EmailService = {
-    init: initEmailService,
-    sendStudentWelcome: sendStudentWelcomeEmail,
-    sendAdminNotification: sendAdminNotification,
-    sendOTP: sendOTPEmail,
-    sendPasswordReset: sendPasswordResetEmail,
-    sendRegistrationEmails: sendRegistrationEmails,
-    test: testEmailService,
-    CONFIG: EMAILJS_CONFIG,
-    ADMIN_EMAIL: ADMIN_EMAIL
-};
-
-console.log('📧 Email Service loaded successfully!');
-console.log('📌 To test: EmailService.test()');
-console.log('📌 To send registration emails: EmailService.sendRegistrationEmails(studentData)');
-
-// ============================================================ */
-// ===== AUTO-INITIALIZE ON LOAD ===== */
-// ============================================================ */
-
-document.addEventListener('DOMContentLoaded', function() {
-    // Initialize EmailJS automatically
-    if (typeof emailjs !== 'undefined') {
-        initEmailService();
-    } else {
-        console.warn('⚠️ EmailJS not loaded. Include CDN: <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>');
-    }
-});
-function goToEnroll() {
-    const courseId = getCourseId();
-    if (courseId) {
-        window.location.href = 'enroll.html?course=' + courseId;
-    } else {
-        window.location.href = 'enroll.html';
-    }
-}
-
-function getCourseId() {
-    const urlParams = new URLSearchParams(window.location.search);
-    return urlParams.get('course') || 'manual';
-}

@@ -10,49 +10,37 @@
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
 
-    <!-- Main stylesheet -->
     <link rel="stylesheet" href="style.css" />
 
-    <!-- About page specific styles -->
     <style>
         /* ============================================================ */
-        /* ===== ABOUT HERO – FADE FROM BOTTOM (WHITE) TO TOP ===== */
+        /* ===== ABOUT HERO – FIXED HEIGHT 600px ===== */
         /* ============================================================ */
         .about-hero {
             display: flex;
             align-items: center;
             padding: 60px 80px;
-            min-height: 500px;
+            height: 600px;
             position: relative;
             overflow: hidden;
 
-            background-color: #E6EFFC;
-            background-image: url('images/photo16.png');
+            background-color: #FFFFFF;
+            background-image: url('images/photo16.jpeg');
             background-repeat: no-repeat;
             background-position: right center;
-            background-size: 40% auto;
-        }
-
-        .about-hero::before {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            width: 100%;
-            height: 60%;
-            background: linear-gradient(to top, rgba(255, 255, 255, 1) 0%, rgba(255, 255, 255, 0) 100%);
-            pointer-events: none;
-            z-index: 0;
+            background-size: 45% auto;
         }
 
         .about-hero .hero-text {
             flex: 1;
-            max-width: 55%;
+            max-width: 50%;
             min-width: 320px;
             position: relative;
             z-index: 2;
+            color: #1A1A1A;
         }
 
+        /* ===== TAGLINE - SAME AS COURSES PAGE ===== */
         .about-hero .hero-text .tag {
             color: var(--orange);
             font-weight: 600;
@@ -61,20 +49,22 @@
             text-transform: uppercase;
         }
 
+        /* ===== HEADING - SAME AS COURSES PAGE ===== */
         .about-hero .hero-text h1 {
             font-size: 42px;
             font-weight: 700;
             line-height: 1.2;
             margin: 12px 0 6px;
-            color: var(--text-dark);
+            color: #1A1A1A;
         }
 
         .about-hero .hero-text h1 span {
             color: var(--primary);
         }
 
+        /* ===== SUB-TAGLINE - SAME AS COURSES PAGE ===== */
         .about-hero .hero-text .sub-tagline {
-            color: var(--text-gray);
+            color: #4B5563;
             font-size: 16px;
             margin: 4px 0 24px;
             max-width: 480px;
@@ -82,6 +72,12 @@
             font-weight: 400;
         }
 
+        .about-hero .hero-text .sub-tagline .highlight {
+            color: var(--primary);
+            font-weight: 600;
+        }
+
+        /* ===== FLOATING ICONS ===== */
         .about-hero .floating-icons {
             position: absolute;
             top: 0;
@@ -104,8 +100,147 @@
         .about-hero .floating-icons i:nth-child(3) { bottom: 20%; left: 8%; font-size: 34px; }
         .about-hero .floating-icons i:nth-child(4) { bottom: 15%; right: 5%; font-size: 44px; }
 
+        /* ===== HERO BUTTONS - SAME AS COURSES PAGE ===== */
+        .hero-buttons {
+            display: flex;
+            gap: 14px;
+            flex-wrap: wrap;
+            align-items: center;
+        }
+
+        .btn-primary {
+            background: var(--primary) !important;
+            color: var(--white) !important;
+            border: none !important;
+            padding: 14px 34px !important;
+            border-radius: 999px !important;
+            font-weight: 600 !important;
+            font-size: 16px !important;
+            cursor: pointer !important;
+            transition: 0.3s !important;
+            box-shadow: 0 4px 16px rgba(31, 60, 136, 0.25) !important;
+            text-decoration: none !important;
+            display: inline-flex !important;
+            align-items: center !important;
+            gap: 10px !important;
+            font-family: 'Poppins', sans-serif !important;
+        }
+
+        .btn-primary:hover {
+            background: var(--secondary) !important;
+            transform: translateY(-2px) !important;
+            box-shadow: 0 6px 24px rgba(31, 60, 136, 0.35) !important;
+        }
+
+        .btn-secondary {
+            background: rgba(255, 255, 255, 0.8) !important;
+            backdrop-filter: blur(10px) !important;
+            border: 1px solid var(--border) !important;
+            color: var(--text-dark) !important;
+            padding: 14px 34px !important;
+            border-radius: 999px !important;
+            font-weight: 600 !important;
+            font-size: 16px !important;
+            cursor: pointer !important;
+            transition: 0.3s !important;
+            display: flex !important;
+            align-items: center !important;
+            gap: 10px !important;
+            font-family: 'Poppins', sans-serif !important;
+            text-decoration: none !important;
+        }
+
+        .btn-secondary:hover {
+            border-color: var(--primary) !important;
+            color: var(--primary) !important;
+            background: var(--white) !important;
+            transform: translateY(-2px) !important;
+        }
+
         /* ============================================================ */
-        /* ===== OUR STORY – BACKGROUND IMAGE WITH LEFT PADDING ===== */
+        /* ===== RESPONSIVE ===== */
+        /* ============================================================ */
+        @media (max-width: 992px) {
+            .about-hero {
+                height: auto;
+                min-height: 500px;
+                flex-direction: column;
+                text-align: center;
+                padding: 40px;
+                background-color: #FFFFFF;
+                background-image: url('images/photo16.jpeg');
+                background-repeat: no-repeat;
+                background-position: bottom center;
+                background-size: 50% auto;
+            }
+
+            .about-hero .hero-text {
+                max-width: 100%;
+                min-width: unset;
+            }
+
+            .about-hero .hero-text .sub-tagline {
+                max-width: 100%;
+                margin-left: auto;
+                margin-right: auto;
+            }
+
+            .about-hero .hero-text h1 {
+                font-size: 36px;
+            }
+
+            .about-hero .floating-icons {
+                display: none;
+            }
+
+            .hero-buttons {
+                justify-content: center;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .about-hero {
+                padding: 20px;
+                min-height: 400px;
+                background-color: #FFFFFF;
+                background-image: url('images/photo16.jpeg');
+                background-repeat: no-repeat;
+                background-position: bottom center;
+                background-size: 60% auto;
+            }
+
+            .about-hero .hero-text h1 {
+                font-size: 30px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .about-hero .hero-text h1 {
+                font-size: 26px;
+            }
+
+            .about-hero {
+                min-height: 350px;
+                background-color: #FFFFFF;
+                background-image: url('images/photo16.jpeg');
+                background-repeat: no-repeat;
+                background-position: bottom center;
+                background-size: 70% auto;
+            }
+
+            .hero-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .btn-primary, .btn-secondary {
+                width: 100%;
+                justify-content: center;
+            }
+        }
+
+        /* ============================================================ */
+        /* ===== THE REST OF THE PAGE ===== */
         /* ============================================================ */
         .story-section {
             padding: 70px 80px;
@@ -175,9 +310,6 @@
             width: 24px;
         }
 
-        /* ============================================================ */
-        /* ===== MISSION & VISION ===== */
-        /* ============================================================ */
         .mv-section {
             padding: 70px 80px;
             background: var(--light-bg);
@@ -225,9 +357,6 @@
             line-height: 1.6;
         }
 
-        /* ============================================================ */
-        /* ===== WHAT MAKES US DIFFERENT ===== */
-        /* ============================================================ */
         .diff-section {
             padding: 70px 80px;
             background: var(--white);
@@ -273,9 +402,6 @@
             line-height: 1.5;
         }
 
-        /* ============================================================ */
-        /* ===== CORE VALUES + WHO CAN JOIN – VERTICAL STACK ===== */
-        /* ============================================================ */
         .values-join-section {
             padding: 70px 80px;
             background: var(--light-bg);
@@ -283,10 +409,6 @@
             flex-direction: column;
             gap: 60px;
             text-align: center;
-        }
-
-        .values-join-section .block {
-            width: 100%;
         }
 
         .values-join-section .block h2 {
@@ -389,9 +511,6 @@
             color: var(--text-dark);
         }
 
-        /* ============================================================ */
-        /* ===== TRAINING IMPACT (STATS) – ONE LINE ===== */
-        /* ============================================================ */
         .impact-section {
             background: var(--primary);
             padding: 60px 80px;
@@ -426,9 +545,6 @@
             margin-top: 2px;
         }
 
-        /* ============================================================ */
-        /* ===== TRAINERS ===== */
-        /* ============================================================ */
         .trainers-section {
             padding: 70px 80px;
             background: var(--white);
@@ -505,9 +621,6 @@
             transform: scale(1.1);
         }
 
-        /* ============================================================ */
-        /* ===== TESTIMONIALS ===== */
-        /* ============================================================ */
         .testimonials-section {
             padding: 70px 80px;
             background: var(--light-bg);
@@ -561,9 +674,6 @@
             font-size: 13px;
         }
 
-        /* ============================================================ */
-        /* ===== FAQ ===== */
-        /* ============================================================ */
         .faq-section {
             padding: 70px 80px;
             background: var(--white);
@@ -614,9 +724,6 @@
             display: block;
         }
 
-        /* ============================================================ */
-        /* ===== CTA BANNER ===== */
-        /* ============================================================ */
         .cta-banner {
             background: linear-gradient(135deg, var(--primary), var(--secondary));
             padding: 50px 80px;
@@ -660,8 +767,30 @@
             box-shadow: 0 6px 24px rgba(0, 0, 0, 0.2);
         }
 
+        .cta-banner .btn-white-outline {
+            background: transparent;
+            color: var(--white);
+            border: 2px solid rgba(255,255,255,0.6);
+            padding: 12px 32px;
+            border-radius: 999px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: 0.3s;
+            font-family: 'Poppins', sans-serif;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .cta-banner .btn-white-outline:hover {
+            background: rgba(255,255,255,0.15);
+            border-color: #FFFFFF;
+        }
+
         /* ============================================================ */
-        /* ===== LOGIN BUTTON - MORE SPACING ===== */
+        /* ===== NAVBAR & LOGIN DROPDOWN ===== */
         /* ============================================================ */
         .login-btn {
             background: var(--primary) !important;
@@ -694,9 +823,6 @@
             box-shadow: 0 4px 16px rgba(31, 60, 136, 0.25) !important;
         }
 
-        /* ============================================================ */
-        /* ===== LOGIN DROPDOWN - MATCHING COURSE LOGIN ===== */
-        /* ============================================================ */
         .login-dropdown-wrapper {
             position: relative;
             display: inline-block;
@@ -792,40 +918,9 @@
         }
 
         /* ============================================================ */
-        /* ===== RESPONSIVE ===== */
+        /* ===== RESPONSIVE (rest of page) ===== */
         /* ============================================================ */
         @media (max-width: 992px) {
-            .about-hero {
-                flex-direction: column;
-                text-align: center;
-                padding: 40px;
-                min-height: auto;
-                background-color: #E6EFFC;
-                background-image: url('images/photo16.png');
-                background-repeat: no-repeat;
-                background-position: bottom center;
-                background-size: 50% auto;
-            }
-
-            .about-hero .hero-text {
-                max-width: 100%;
-                min-width: unset;
-            }
-
-            .about-hero .hero-text .sub-tagline {
-                max-width: 100%;
-                margin-left: auto;
-                margin-right: auto;
-            }
-
-            .about-hero .hero-text h1 {
-                font-size: 36px;
-            }
-
-            .about-hero::before {
-                height: 40%;
-            }
-
             .story-section {
                 padding: 50px 40px;
                 padding-left: 40px;
@@ -891,30 +986,9 @@
             .faq-section {
                 padding: 50px 40px;
             }
-
-            .about-hero .floating-icons {
-                display: none;
-            }
         }
 
         @media (max-width: 768px) {
-            .about-hero {
-                padding: 20px;
-                background-color: #E6EFFC;
-                background-image: url('images/photo16.png');
-                background-repeat: no-repeat;
-                background-position: bottom center;
-                background-size: 60% auto;
-            }
-
-            .about-hero .hero-text h1 {
-                font-size: 30px;
-            }
-
-            .about-hero::before {
-                height: 30%;
-            }
-
             .story-section {
                 padding: 30px 20px;
                 padding-left: 20px;
@@ -977,29 +1051,9 @@
             .faq-section {
                 padding: 30px 20px;
             }
-
-            .about-hero .floating-icons {
-                display: none;
-            }
         }
 
         @media (max-width: 480px) {
-            .about-hero .hero-text h1 {
-                font-size: 26px;
-            }
-
-            .about-hero {
-                background-color: #E6EFFC;
-                background-image: url('images/photo16.png');
-                background-repeat: no-repeat;
-                background-position: bottom center;
-                background-size: 40% auto;
-            }
-
-            .about-hero::before {
-                height: 25%;
-            }
-
             .story-section {
                 padding: 20px 16px;
                 padding-left: 16px;
@@ -1075,6 +1129,12 @@
 </head>
 <body>
 
+    <!-- ===== TOAST ===== -->
+    <div class="toast" id="toast">
+        <i class="fas fa-check-circle" id="toastIcon"></i>
+        <span id="toastMessage">Success!</span>
+    </div>
+
     <!-- ============================================================ -->
     <!-- ===== NAVBAR ===== -->
     <!-- ============================================================ -->
@@ -1114,7 +1174,7 @@
     </nav>
 
     <!-- ============================================================ -->
-    <!-- ===== HERO – BOTTOM-TO-TOP WHITE FADE ===== -->
+    <!-- ===== HERO – TEXT STYLE MATCHES COURSES PAGE ===== -->
     <!-- ============================================================ -->
     <section class="about-hero">
         <div class="floating-icons">
@@ -1223,7 +1283,6 @@
     <!-- ===== CORE VALUES + WHO CAN JOIN – VERTICAL STACK ===== -->
     <!-- ============================================================ -->
     <section class="values-join-section">
-        <!-- Core Values Block -->
         <div class="block">
             <h2>Our Core Values</h2>
             <div class="values-grid">
@@ -1250,7 +1309,6 @@
             </div>
         </div>
 
-        <!-- Who Can Join Block -->
         <div class="block">
             <h2>Who Can Join</h2>
             <div class="join-grid">
@@ -1279,28 +1337,28 @@
     </section>
 
     <!-- ============================================================ -->
-    <!-- ===== TRAINING IMPACT (STATS) – ONE LINE ===== -->
+    <!-- ===== TRAINING IMPACT (STATS) – ANIMATED COUNTERS ===== -->
     <!-- ============================================================ -->
     <section class="impact-section">
         <div class="impact-grid">
             <div class="impact-item">
-                <div class="number">500+</div>
+                <div class="number" data-target="500">0</div>
                 <div class="label">Students Trained</div>
             </div>
             <div class="impact-item">
-                <div class="number">95%</div>
-                <div class="label">Satisfaction</div>
+                <div class="number" data-target="95">0</div>
+                <div class="label">Satisfaction %</div>
             </div>
             <div class="impact-item">
-                <div class="number">100+</div>
+                <div class="number" data-target="100">0</div>
                 <div class="label">Interview Sessions</div>
             </div>
             <div class="impact-item">
-                <div class="number">50+</div>
+                <div class="number" data-target="50">0</div>
                 <div class="label">Hiring Partners</div>
             </div>
             <div class="impact-item">
-                <div class="number">10+</div>
+                <div class="number" data-target="10">0</div>
                 <div class="label">Industry Trainers</div>
             </div>
         </div>
@@ -1431,7 +1489,7 @@
         <h2>Ready to Start Your IT Career?</h2>
         <p>Join thousands of successful professionals who transformed their careers with QSkill.</p>
         <a href="courses.html" class="btn-white">Enroll Now <i class="fas fa-arrow-right"></i></a>
-        <a href="demo.html" class="btn-white" style="background: transparent; color: var(--white); border: 2px solid var(--white); margin-left: 12px;">Book Free Demo</a>
+        <a href="demo.html" class="btn-white-outline" style="margin-left: 12px;">Book Free Demo</a>
     </section>
 
     <!-- ============================================================ -->
@@ -1492,29 +1550,91 @@
             }
         }
 
+        // ===== NUMBER ROLLING ANIMATION =====
+        function animateNumbers() {
+            const counters = document.querySelectorAll('.impact-item .number');
+            counters.forEach(counter => {
+                const target = parseInt(counter.getAttribute('data-target'));
+                const duration = 2000;
+                const startTime = performance.now();
+
+                function updateCounter(currentTime) {
+                    const elapsed = currentTime - startTime;
+                    const progress = Math.min(elapsed / duration, 1);
+                    const easeOut = 1 - Math.pow(1 - progress, 3);
+                    const currentValue = Math.floor(easeOut * target);
+
+                    const label = counter.closest('.impact-item').querySelector('.label');
+                    if (label && label.textContent.includes('%')) {
+                        counter.textContent = currentValue + '%';
+                    } else {
+                        counter.textContent = currentValue + '+';
+                    }
+
+                    if (progress < 1) {
+                        requestAnimationFrame(updateCounter);
+                    } else {
+                        const label = counter.closest('.impact-item').querySelector('.label');
+                        if (label && label.textContent.includes('%')) {
+                            counter.textContent = target + '%';
+                        } else {
+                            counter.textContent = target + '+';
+                        }
+                    }
+                }
+
+                const delay = Array.from(counters).indexOf(counter) * 200;
+                setTimeout(() => {
+                    requestAnimationFrame(updateCounter);
+                }, delay);
+            });
+        }
+
+        // ===== INTERSECTION OBSERVER =====
+        function setupIntersectionObserver() {
+            const impactSection = document.querySelector('.impact-section');
+            if (!impactSection) return;
+            let hasAnimated = false;
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting && !hasAnimated) {
+                        hasAnimated = true;
+                        animateNumbers();
+                    }
+                });
+            }, { threshold: 0.3 });
+            observer.observe(impactSection);
+        }
+
         // ===== LOGIN DROPDOWN =====
         const dropdownBtn = document.getElementById('loginDropdownBtn');
         const dropdown = document.getElementById('loginDropdown');
-
         if (dropdownBtn && dropdown) {
             dropdownBtn.addEventListener('click', function(e) {
                 e.preventDefault();
                 e.stopPropagation();
                 dropdown.classList.toggle('show');
             });
-
             document.addEventListener('click', function(e) {
                 if (!dropdownBtn.contains(e.target) && !dropdown.contains(e.target)) {
                     dropdown.classList.remove('show');
                 }
             });
-
             document.addEventListener('keydown', function(e) {
                 if (e.key === 'Escape') {
                     dropdown.classList.remove('show');
                 }
             });
         }
+
+        // ============================================================ */
+        // ===== INITIALIZE ===== */
+        // ============================================================ */
+        document.addEventListener('DOMContentLoaded', function() {
+            setupIntersectionObserver();
+        });
+
+        console.log('📊 About Page Loaded - Text Style Matches Courses Page');
     </script>
 </body>
-</html> 
+</html>

@@ -145,232 +145,195 @@
             color: var(--success);
         }
 
-        /* ===== RIGHT SIDE - PAYMENT FORM ===== */
-        .payment-form {
-            background: var(--white);
-            border: 1px solid var(--border);
-            border-radius: 16px;
-            padding: 30px;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04);
-        }
-
-        .payment-form h3 {
-            font-size: 20px;
-            font-weight: 600;
-            color: var(--text-dark);
-            margin-bottom: 6px;
-        }
-
-        .payment-form .form-sub {
-            color: var(--text-gray);
-            font-size: 14px;
-            margin-bottom: 20px;
-        }
-
-        .form-group {
-            margin-bottom: 16px;
-        }
-
-        .form-group label {
-            font-size: 13px;
-            font-weight: 600;
-            display: block;
-            margin-bottom: 4px;
-            color: var(--text-dark);
-        }
-
-        .form-group label .required {
-            color: var(--error);
-        }
-
-        .form-group input,
-        .form-group select {
-            width: 100%;
-            height: 44px;
-            padding: 0 14px;
-            border: 1px solid var(--border);
-            border-radius: 8px;
-            font-size: 14px;
-            font-family: 'Poppins', sans-serif;
-            transition: 0.3s;
-            background: var(--white);
-            color: var(--text-dark);
-        }
-
-        .form-group input:focus,
-        .form-group select:focus {
-            border-color: var(--primary);
-            outline: none;
-            box-shadow: 0 0 0 3px rgba(31, 60, 136, 0.1);
-        }
-
-        .form-group .input-wrapper {
-            display: flex;
-            align-items: center;
-            border: 1px solid var(--border);
-            border-radius: 8px;
-            transition: 0.3s;
-            background: var(--white);
-        }
-
-        .form-group .input-wrapper:focus-within {
-            border-color: var(--primary);
-            box-shadow: 0 0 0 3px rgba(31, 60, 136, 0.1);
-        }
-
-        .form-group .input-wrapper .prefix {
-            padding: 0 12px;
-            font-size: 14px;
-            color: var(--text-gray);
-            font-weight: 500;
-            border-right: 1px solid var(--border);
-        }
-
-        .form-group .input-wrapper input {
-            border: none;
-            outline: none;
-            flex: 1;
-            height: 42px;
-            padding: 0 14px;
-            font-size: 14px;
-            font-family: 'Poppins', sans-serif;
-            background: transparent;
-            color: var(--text-dark);
-        }
-
-        .form-row {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 14px;
-        }
-
-        /* ===== PAYMENT METHODS ===== */
-        .payment-methods {
+        /* ============================================================ */
+        /* ===== PAYMENT GRID - RADIO BUTTON STYLE ===== */
+        /* ============================================================ */
+        .payment-section {
             margin: 20px 0;
         }
 
-        .payment-methods .method-label {
-            font-size: 14px;
+        .payment-section .section-label {
+            font-size: 15px;
             font-weight: 600;
             color: var(--text-dark);
             display: block;
-            margin-bottom: 10px;
+            margin-bottom: 14px;
         }
 
-        .payment-methods .method-options {
+        .payment-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
-            gap: 10px;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 12px;
         }
 
-        .payment-methods .method-option {
-            padding: 12px 16px;
+        .payment-option {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 14px 16px;
             border: 2px solid var(--border);
-            border-radius: 10px;
+            border-radius: 12px;
             cursor: pointer;
-            transition: 0.3s;
-            text-align: center;
+            transition: all 0.3s ease;
             background: var(--white);
+            min-height: 56px;
         }
 
-        .payment-methods .method-option:hover {
+        .payment-option:hover {
             border-color: var(--primary);
             background: var(--light-bg);
         }
 
-        .payment-methods .method-option.selected {
+        .payment-option.selected {
             border-color: var(--primary);
             background: var(--light-bg);
-            box-shadow: 0 0 0 3px rgba(31, 60, 136, 0.1);
+            box-shadow: 0 0 0 3px rgba(31, 60, 136, 0.08);
         }
 
-        .payment-methods .method-option i {
-            font-size: 24px;
-            display: block;
-            margin-bottom: 4px;
-            color: var(--text-dark);
+        .payment-option .option-icon {
+            font-size: 22px;
+            color: var(--text-gray);
+            min-width: 32px;
+            text-align: center;
+            transition: 0.3s;
         }
 
-        .payment-methods .method-option .method-name {
-            font-size: 12px;
-            font-weight: 500;
-            color: var(--text-dark);
-        }
-
-        .payment-methods .method-option .method-name .badge {
-            background: var(--success);
-            color: var(--white);
-            font-size: 9px;
-            padding: 1px 8px;
-            border-radius: 999px;
-            margin-left: 4px;
-        }
-
-        .payment-methods .method-option.selected i {
+        .payment-option.selected .option-icon {
             color: var(--primary);
         }
 
-        /* ===== UPI OPTIONS ===== */
-        .upi-options {
+        .payment-option .option-text {
+            font-size: 13px;
+            font-weight: 500;
+            color: var(--text-dark);
+            flex: 1;
+        }
+
+        .payment-option .option-radio {
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            border: 2px solid var(--border);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            transition: 0.3s;
+        }
+
+        .payment-option.selected .option-radio {
+            border-color: var(--primary);
+        }
+
+        .payment-option .option-radio .radio-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: var(--primary);
+            opacity: 0;
+            transform: scale(0.5);
+            transition: 0.3s;
+        }
+
+        .payment-option.selected .option-radio .radio-dot {
+            opacity: 1;
+            transform: scale(1);
+        }
+
+        /* ===== PAYMENT METHOD SPECIFIC ICON COLORS ===== */
+        .payment-option[data-method="upi"] .option-icon { color: #6B7280; }
+        .payment-option[data-method="card"] .option-icon { color: #1A5D8C; }
+        .payment-option[data-method="debit"] .option-icon { color: #0D9488; }
+        .payment-option[data-method="netbanking"] .option-icon { color: #7C3AED; }
+        .payment-option[data-method="googlepay"] .option-icon { color: #4285F4; }
+        .payment-option[data-method="phonepe"] .option-icon { color: #5F259F; }
+        .payment-option[data-method="paytm"] .option-icon { color: #00BAF2; }
+
+        .payment-option.selected[data-method="upi"] .option-icon { color: var(--primary); }
+        .payment-option.selected[data-method="card"] .option-icon { color: #1A5D8C; }
+        .payment-option.selected[data-method="debit"] .option-icon { color: #0D9488; }
+        .payment-option.selected[data-method="netbanking"] .option-icon { color: #7C3AED; }
+        .payment-option.selected[data-method="googlepay"] .option-icon { color: #4285F4; }
+        .payment-option.selected[data-method="phonepe"] .option-icon { color: #5F259F; }
+        .payment-option.selected[data-method="paytm"] .option-icon { color: #00BAF2; }
+
+        /* ===== PAYMENT DETAILS ===== */
+        .payment-details {
             display: none;
-            margin-top: 12px;
+            margin-top: 16px;
             padding: 16px;
             background: var(--light-bg);
-            border-radius: 10px;
+            border-radius: 12px;
+            animation: fadeIn 0.3s ease;
         }
 
-        .upi-options.show {
+        .payment-details.show {
             display: block;
         }
 
-        .upi-options .upi-grid {
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-8px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .payment-details .detail-row {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
-            gap: 10px;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
         }
 
-        .upi-options .upi-item {
-            padding: 10px;
-            border: 2px solid transparent;
-            border-radius: 8px;
-            cursor: pointer;
-            text-align: center;
-            transition: 0.3s;
-            background: var(--white);
+        .payment-details .form-group {
+            margin-bottom: 0;
         }
 
-        .upi-options .upi-item:hover {
-            border-color: var(--primary);
-        }
-
-        .upi-options .upi-item.selected-upi {
-            border-color: var(--primary);
-            background: var(--light-bg);
-        }
-
-        .upi-options .upi-item i {
-            font-size: 28px;
+        .payment-details .form-group label {
+            font-size: 12px;
+            font-weight: 600;
             display: block;
-            margin-bottom: 4px;
-        }
-
-        .upi-options .upi-item .upi-name {
-            font-size: 11px;
-            font-weight: 500;
+            margin-bottom: 3px;
             color: var(--text-dark);
         }
 
-        /* ===== CARD DETAILS ===== */
-        .card-details {
-            display: none;
-            margin-top: 12px;
-            padding: 16px;
-            background: var(--light-bg);
-            border-radius: 10px;
+        .payment-details .form-group input {
+            width: 100%;
+            height: 38px;
+            padding: 0 12px;
+            border: 1.5px solid var(--border);
+            border-radius: 8px;
+            font-size: 13px;
+            font-family: 'Poppins', sans-serif;
+            transition: 0.3s;
+            background: var(--white);
+            color: var(--text-dark);
         }
 
-        .card-details.show {
-            display: block;
+        .payment-details .form-group input:focus {
+            border-color: var(--primary);
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(31, 60, 136, 0.08);
+        }
+
+        .payment-details .upi-input {
+            margin-top: 0;
+        }
+
+        .payment-details .upi-input input {
+            width: 100%;
+            height: 38px;
+            padding: 0 12px;
+            border: 1.5px solid var(--border);
+            border-radius: 8px;
+            font-size: 13px;
+            font-family: 'Poppins', sans-serif;
+            transition: 0.3s;
+            background: var(--white);
+            color: var(--text-dark);
+        }
+
+        .payment-details .upi-input input:focus {
+            border-color: var(--primary);
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(31, 60, 136, 0.08);
         }
 
         /* ===== SECURE BADGE ===== */
@@ -398,10 +361,10 @@
             background: var(--primary);
             color: var(--white);
             border: none;
-            padding: 16px;
+            padding: 14px;
             border-radius: 999px;
             font-weight: 600;
-            font-size: 18px;
+            font-size: 16px;
             cursor: pointer;
             transition: 0.3s;
             font-family: 'Poppins', sans-serif;
@@ -423,137 +386,6 @@
             opacity: 0.5;
             cursor: not-allowed;
             transform: none;
-        }
-
-        /* ============================================================ */
-        /* ===== LOGIN BUTTON - SAME AS INDEX ===== */
-        /* ============================================================ */
-        .login-btn {
-            background: var(--primary) !important;
-            color: var(--white) !important;
-            padding: 10px 28px !important;
-            border-radius: 999px !important;
-            font-weight: 600 !important;
-            font-size: 15px !important;
-            transition: 0.3s !important;
-            cursor: pointer !important;
-            display: inline-block !important;
-            border: none !important;
-            text-decoration: none !important;
-            border-bottom: none !important;
-            font-family: 'Poppins', sans-serif !important;
-            box-shadow: 0 2px 8px rgba(31, 60, 136, 0.12) !important;
-            line-height: 1.4 !important;
-            letter-spacing: 1px !important;
-        }
-
-        .login-btn i {
-            margin-left: 8px !important;
-            font-size: 12px !important;
-        }
-
-        .login-btn:hover {
-            background: var(--secondary) !important;
-            transform: translateY(-2px) !important;
-            border-bottom: none !important;
-            box-shadow: 0 4px 16px rgba(31, 60, 136, 0.25) !important;
-        }
-
-        /* ============================================================ */
-        /* ===== LOGIN DROPDOWN ===== */
-        /* ============================================================ */
-        .login-dropdown-wrapper {
-            position: relative;
-            display: inline-block;
-        }
-
-        .login-dropdown {
-            display: none;
-            position: absolute;
-            background: var(--white);
-            top: 48px;
-            right: 0;
-            box-shadow: 0 12px 32px rgba(0, 0, 0, 0.12);
-            border-radius: 14px;
-            padding: 6px 0;
-            min-width: 260px;
-            border: 1px solid var(--border);
-            z-index: 200;
-        }
-
-        .login-dropdown.show {
-            display: block;
-        }
-
-        .login-dropdown a {
-            display: flex;
-            align-items: center;
-            gap: 14px;
-            padding: 14px 22px;
-            color: var(--text-dark) !important;
-            text-decoration: none;
-            transition: 0.3s;
-            border-bottom: none !important;
-        }
-
-        .login-dropdown a:not(:last-child) {
-            border-bottom: 1px solid var(--border) !important;
-        }
-
-        .login-dropdown a:hover {
-            background: var(--light-bg);
-        }
-
-        .login-dropdown .dropdown-icon {
-            width: 42px;
-            height: 42px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .login-dropdown .dropdown-icon i {
-            font-size: 17px;
-        }
-
-        .login-dropdown a[data-role="student"] .dropdown-icon {
-            background: var(--light-bg);
-        }
-
-        .login-dropdown a[data-role="student"] .dropdown-icon i {
-            color: var(--primary);
-        }
-
-        .login-dropdown a[data-role="instructor"] .dropdown-icon {
-            background: #FFEBDD;
-        }
-
-        .login-dropdown a[data-role="instructor"] .dropdown-icon i {
-            color: var(--orange);
-        }
-
-        .login-dropdown .dropdown-text {
-            display: flex !important;
-            flex-direction: column !important;
-            gap: 2px !important;
-        }
-
-        .login-dropdown .role-title {
-            font-weight: 600;
-            font-size: 15px;
-            color: var(--text-dark);
-        }
-
-        .login-dropdown .role-sub {
-            font-weight: 400;
-            font-size: 12px;
-            color: var(--text-gray);
-            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
-        }
-
-        .login-dropdown a:hover .role-title {
-            color: var(--primary);
         }
 
         /* ============================================================ */
@@ -581,7 +413,7 @@
         .success-modal .modal-content {
             background: var(--white);
             border-radius: 24px;
-            max-width: 480px;
+            max-width: 520px;
             width: 100%;
             padding: 40px 35px;
             text-align: center;
@@ -622,22 +454,23 @@
             color: var(--text-dark);
         }
 
-        .success-modal .modal-content p {
+        .success-modal .modal-content .sub-text {
             color: var(--text-gray);
-            font-size: 15px;
-            margin: 8px 0 20px;
-            line-height: 1.7;
+            font-size: 14px;
+            margin: 4px 0 16px;
+            line-height: 1.6;
         }
 
-        .success-modal .modal-content .order-details {
+        .success-modal .modal-content .credentials-box {
             background: var(--light-bg);
             border-radius: 12px;
-            padding: 16px;
+            padding: 16px 20px;
+            margin: 12px 0 16px;
             text-align: left;
-            margin-bottom: 20px;
+            border: 1px solid var(--border);
         }
 
-        .success-modal .modal-content .order-details .detail-row {
+        .success-modal .modal-content .credentials-box .cred-row {
             display: flex;
             justify-content: space-between;
             padding: 4px 0;
@@ -645,8 +478,28 @@
             color: var(--text-dark);
         }
 
-        .success-modal .modal-content .order-details .detail-row .label {
+        .success-modal .modal-content .credentials-box .cred-row .label {
             color: var(--text-gray);
+            font-weight: 500;
+        }
+
+        .success-modal .modal-content .credentials-box .cred-row .value {
+            font-weight: 600;
+            color: var(--primary);
+            word-break: break-all;
+        }
+
+        .success-modal .modal-content .email-sent {
+            background: #EAF1FF;
+            border-radius: 8px;
+            padding: 10px 14px;
+            font-size: 13px;
+            color: var(--primary);
+            margin: 10px 0 16px;
+        }
+
+        .success-modal .modal-content .email-sent i {
+            margin-right: 6px;
         }
 
         .success-modal .modal-content .btn-continue {
@@ -667,6 +520,29 @@
             transform: translateY(-2px);
         }
 
+        .success-modal .modal-content .btn-continue i {
+            margin-right: 8px;
+        }
+
+        .success-modal .modal-content .btn-login-now {
+            background: transparent;
+            color: var(--primary);
+            border: 2px solid var(--primary);
+            padding: 12px 40px;
+            border-radius: 999px;
+            font-weight: 600;
+            font-size: 16px;
+            cursor: pointer;
+            transition: 0.3s;
+            font-family: 'Poppins', sans-serif;
+            margin-left: 10px;
+        }
+
+        .success-modal .modal-content .btn-login-now:hover {
+            background: var(--primary);
+            color: var(--white);
+        }
+
         /* ============================================================ */
         /* ===== RESPONSIVE ===== */
         /* ============================================================ */
@@ -679,18 +555,34 @@
         @media (max-width: 768px) {
             .enroll-wrapper { padding: 20px; }
             .enroll-header h1 { font-size: 26px; }
-            .form-row { grid-template-columns: 1fr; }
-            .payment-methods .method-options { grid-template-columns: 1fr 1fr; }
+            .payment-grid { grid-template-columns: repeat(2, 1fr); }
             .course-summary { padding: 20px; }
-            .payment-form { padding: 20px; }
+            .payment-section { padding: 0; }
+            .success-modal .modal-content { padding: 30px 20px; }
+            .success-modal .modal-content .credentials-box .cred-row { flex-direction: column; gap: 2px; }
+            .success-modal .modal-content .btn-login-now { margin-left: 0; margin-top: 10px; }
         }
 
-        @media (max-width: 480px) {
-            .enroll-header h1 { font-size: 22px; }
-            .payment-methods .method-options { grid-template-columns: 1fr 1fr; }
-            .payment-methods .method-option { padding: 10px 12px; }
-            .payment-methods .method-option i { font-size: 20px; }
-            .success-modal .modal-content { padding: 30px 20px; }
+        @media (max-width: 500px) {
+            .payment-grid { grid-template-columns: 1fr 1fr; gap: 8px; }
+            .payment-option { padding: 10px 12px; min-height: 48px; gap: 8px; }
+            .payment-option .option-icon { font-size: 18px; min-width: 24px; }
+            .payment-option .option-text { font-size: 12px; }
+            .payment-option .option-radio { width: 14px; height: 14px; }
+            .payment-option .option-radio .radio-dot { width: 6px; height: 6px; }
+            .payment-details .detail-row { grid-template-columns: 1fr; gap: 8px; }
+            .payment-details .form-group input { height: 34px; font-size: 12px; }
+            .success-modal .modal-content .btn-login-now { width: 100%; }
+            .success-modal .modal-content .btn-continue { width: 100%; }
+        }
+
+        @media (max-width: 380px) {
+            .payment-grid { grid-template-columns: 1fr 1fr; gap: 6px; }
+            .payment-option { padding: 8px 8px; min-height: 40px; gap: 6px; }
+            .payment-option .option-icon { font-size: 14px; min-width: 18px; }
+            .payment-option .option-text { font-size: 10px; }
+            .payment-option .option-radio { width: 12px; height: 12px; }
+            .payment-option .option-radio .radio-dot { width: 5px; height: 5px; }
         }
     </style>
 </head>
@@ -703,7 +595,7 @@
     </div>
 
     <!-- ============================================================ -->
-    <!-- ===== NAVBAR ===== -->
+    <!-- ===== NAVBAR (MATCHING courses.html) ===== -->
     <!-- ============================================================ -->
     <nav class="navbar">
         <a href="index.html" class="logo">
@@ -716,7 +608,8 @@
         <ul class="nav-links">
             <li><a href="index.html">Home</a></li>
             <li><a href="about.html">About Us</a></li>
-            <li><a href="courses.html" style="font-weight:600;">Courses</a></li>
+            <li><a href="courses.html">Courses</a></li>
+            <li><a href="contact.html">Contact</a></li>
             <li class="login-dropdown-wrapper">
                 <a href="#" class="login-btn" id="loginDropdownBtn">Login <i class="fas fa-chevron-down"></i></a>
                 <div class="login-dropdown" id="loginDropdown">
@@ -818,136 +711,64 @@
                         </div>
                     </div>
 
-                    <!-- ===== PAYMENT METHODS ===== -->
-                    <div class="payment-methods">
-                        <span class="method-label">Select Payment Method</span>
-                        <div class="method-options">
-                            <div class="method-option selected" data-method="card" onclick="selectMethod('card')">
-                                <i class="fas fa-credit-card"></i>
-                                <span class="method-name">Card</span>
+                    <!-- ========================================================== -->
+                    <!-- ===== PAYMENT GRID - RADIO BUTTON STYLE ===== -->
+                    <!-- ========================================================== -->
+                    <div class="payment-section">
+                        <span class="section-label">Select Payment Method</span>
+                        <div class="payment-grid" id="paymentGrid">
+                            <!-- Row 1: UPI, Credit Card, Debit Card -->
+                            <div class="payment-option selected" data-method="upi" data-label="UPI" onclick="selectPayment(this)">
+                                <span class="option-icon"><i class="fas fa-mobile-alt"></i></span>
+                                <span class="option-text">UPI</span>
+                                <span class="option-radio"><span class="radio-dot"></span></span>
                             </div>
-                            <div class="method-option" data-method="upi" onclick="selectMethod('upi')">
-                                <i class="fas fa-mobile-alt"></i>
-                                <span class="method-name">UPI</span>
+                            <div class="payment-option" data-method="card" data-label="Credit Card" onclick="selectPayment(this)">
+                                <span class="option-icon"><i class="fas fa-credit-card"></i></span>
+                                <span class="option-text">Credit Card</span>
+                                <span class="option-radio"><span class="radio-dot"></span></span>
                             </div>
-                            <div class="method-option" data-method="netbanking" onclick="selectMethod('netbanking')">
-                                <i class="fas fa-university"></i>
-                                <span class="method-name">Net Banking</span>
+                            <div class="payment-option" data-method="debit" data-label="Debit Card" onclick="selectPayment(this)">
+                                <span class="option-icon"><i class="fas fa-wallet"></i></span>
+                                <span class="option-text">Debit Card</span>
+                                <span class="option-radio"><span class="radio-dot"></span></span>
                             </div>
-                            <div class="method-option" data-method="wallet" onclick="selectMethod('wallet')">
-                                <i class="fas fa-wallet"></i>
-                                <span class="method-name">Wallet</span>
+
+                            <!-- Row 2: Net Banking, Google Pay, PhonePe -->
+                            <div class="payment-option" data-method="netbanking" data-label="Net Banking" onclick="selectPayment(this)">
+                                <span class="option-icon"><i class="fas fa-university"></i></span>
+                                <span class="option-text">Net Banking</span>
+                                <span class="option-radio"><span class="radio-dot"></span></span>
+                            </div>
+                            <div class="payment-option" data-method="googlepay" data-label="Google Pay" onclick="selectPayment(this)">
+                                <span class="option-icon"><i class="fab fa-google-pay"></i></span>
+                                <span class="option-text">Google Pay</span>
+                                <span class="option-radio"><span class="radio-dot"></span></span>
+                            </div>
+                            <div class="payment-option" data-method="phonepe" data-label="PhonePe" onclick="selectPayment(this)">
+                                <span class="option-icon"><i class="fas fa-mobile-alt"></i></span>
+                                <span class="option-text">PhonePe</span>
+                                <span class="option-radio"><span class="radio-dot"></span></span>
+                            </div>
+
+                            <!-- Row 3: Paytm (single item, spans full width) -->
+                            <div class="payment-option" data-method="paytm" data-label="Paytm" onclick="selectPayment(this)" style="grid-column: 1 / -1;">
+                                <span class="option-icon"><i class="fab fa-paytm"></i></span>
+                                <span class="option-text">Paytm</span>
+                                <span class="option-radio"><span class="radio-dot"></span></span>
                             </div>
                         </div>
                     </div>
 
-                    <!-- ===== CARD DETAILS ===== -->
-                    <div class="card-details show" id="cardDetails">
-                        <div class="form-group">
-                            <label>Card Number <span class="required">*</span></label>
-                            <input type="text" id="cardNumber" placeholder="1234 5678 9012 3456" maxlength="19" oninput="formatCardNumber(this)" />
-                        </div>
-                        <div class="form-row">
-                            <div class="form-group">
-                                <label>Expiry Date <span class="required">*</span></label>
-                                <input type="text" id="expiryDate" placeholder="MM/YY" maxlength="5" oninput="formatExpiry(this)" />
-                            </div>
-                            <div class="form-group">
-                                <label>CVV <span class="required">*</span></label>
-                                <input type="password" id="cvv" placeholder="123" maxlength="4" />
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label>Cardholder Name <span class="required">*</span></label>
-                            <input type="text" id="cardholderName" placeholder="Name on card" />
-                        </div>
-                    </div>
-
-                    <!-- ===== UPI OPTIONS ===== -->
-                    <div class="upi-options" id="upiOptions">
-                        <p style="font-size:13px; color:var(--text-gray); margin-bottom:10px;">Select your UPI app:</p>
-                        <div class="upi-grid">
-                            <div class="upi-item" data-upi="googlepay" onclick="selectUPI(this)">
-                                <i class="fas fa-google-pay" style="color:#4285F4;"></i>
-                                <span class="upi-name">Google Pay</span>
-                            </div>
-                            <div class="upi-item" data-upi="phonepe" onclick="selectUPI(this)">
-                                <i class="fas fa-mobile-alt" style="color:#5F259F;"></i>
-                                <span class="upi-name">PhonePe</span>
-                            </div>
-                            <div class="upi-item" data-upi="paytm" onclick="selectUPI(this)">
-                                <i class="fas fa-paytm" style="color:#00BAF2;"></i>
-                                <span class="upi-name">Paytm</span>
-                            </div>
-                            <div class="upi-item" data-upi="amazonpay" onclick="selectUPI(this)">
-                                <i class="fab fa-amazon-pay" style="color:#FF9900;"></i>
-                                <span class="upi-name">Amazon Pay</span>
-                            </div>
-                            <div class="upi-item" data-upi="bhim" onclick="selectUPI(this)">
-                                <i class="fas fa-bhim" style="color:#0057B3;"></i>
-                                <span class="upi-name">BHIM UPI</span>
-                            </div>
-                            <div class="upi-item" data-upi="other" onclick="selectUPI(this)">
-                                <i class="fas fa-qrcode" style="color:#6B7280;"></i>
-                                <span class="upi-name">Other UPI</span>
-                            </div>
-                        </div>
-                        <div class="form-group" style="margin-top:12px;">
-                            <label>UPI ID</label>
-                            <input type="text" id="upiId" placeholder="example@upi" />
-                        </div>
-                    </div>
-
-                    <!-- ===== NET BANKING OPTIONS ===== -->
-                    <div class="upi-options" id="netbankingOptions">
-                        <p style="font-size:13px; color:var(--text-gray); margin-bottom:10px;">Select your bank:</p>
-                        <div class="upi-grid">
-                            <div class="upi-item" data-bank="sbi" onclick="selectBank(this)">
-                                <i class="fas fa-university" style="color:#1B4A8B;"></i>
-                                <span class="upi-name">SBI</span>
-                            </div>
-                            <div class="upi-item" data-bank="hdfc" onclick="selectBank(this)">
-                                <i class="fas fa-university" style="color:#004C8C;"></i>
-                                <span class="upi-name">HDFC</span>
-                            </div>
-                            <div class="upi-item" data-bank="icici" onclick="selectBank(this)">
-                                <i class="fas fa-university" style="color:#F26522;"></i>
-                                <span class="upi-name">ICICI</span>
-                            </div>
-                            <div class="upi-item" data-bank="axis" onclick="selectBank(this)">
-                                <i class="fas fa-university" style="color:#862633;"></i>
-                                <span class="upi-name">Axis</span>
-                            </div>
-                            <div class="upi-item" data-bank="kotak" onclick="selectBank(this)">
-                                <i class="fas fa-university" style="color:#1A2D5A;"></i>
-                                <span class="upi-name">Kotak</span>
-                            </div>
-                            <div class="upi-item" data-bank="yes" onclick="selectBank(this)">
-                                <i class="fas fa-university" style="color:#1A2D5A;"></i>
-                                <span class="upi-name">Yes Bank</span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- ===== WALLET OPTIONS ===== -->
-                    <div class="upi-options" id="walletOptions">
-                        <p style="font-size:13px; color:var(--text-gray); margin-bottom:10px;">Select your wallet:</p>
-                        <div class="upi-grid">
-                            <div class="upi-item" data-wallet="paytm" onclick="selectWallet(this)">
-                                <i class="fas fa-paytm" style="color:#00BAF2;"></i>
-                                <span class="upi-name">Paytm</span>
-                            </div>
-                            <div class="upi-item" data-wallet="amazon" onclick="selectWallet(this)">
-                                <i class="fab fa-amazon-pay" style="color:#FF9900;"></i>
-                                <span class="upi-name">Amazon Pay</span>
-                            </div>
-                            <div class="upi-item" data-wallet="google" onclick="selectWallet(this)">
-                                <i class="fas fa-google-pay" style="color:#4285F4;"></i>
-                                <span class="upi-name">Google Pay</span>
-                            </div>
-                            <div class="upi-item" data-wallet="phonepe" onclick="selectWallet(this)">
-                                <i class="fas fa-mobile-alt" style="color:#5F259F;"></i>
-                                <span class="upi-name">PhonePe</span>
+                    <!-- ===== PAYMENT DETAILS ===== -->
+                    <div class="payment-details show" id="paymentDetails">
+                        <div id="paymentDetailsContent">
+                            <!-- UPI Details (default) -->
+                            <div class="upi-input">
+                                <div class="form-group">
+                                    <label>UPI ID <span class="required">*</span></label>
+                                    <input type="text" id="upiId" placeholder="example@upi or phone@bank" />
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -968,36 +789,40 @@
     </section>
 
     <!-- ============================================================ -->
-    <!-- ===== SUCCESS MODAL ===== -->
+    <!-- ===== SUCCESS MODAL (Updated with Credentials) ===== -->
     <!-- ============================================================ -->
     <div class="success-modal" id="successModal">
         <div class="modal-content">
             <div class="success-icon">
                 <i class="fas fa-check-circle"></i>
             </div>
-            <h2>🎉 Payment Successful!</h2>
-            <p>Your enrollment is complete. Check your email for course access details.</p>
-            <div class="order-details">
-                <div class="detail-row">
-                    <span class="label">Course</span>
-                    <span id="orderCourse">Manual Testing</span>
+            <h2 id="successTitle">🎉 Payment Successful!</h2>
+            <p class="sub-text" id="successSubText">Your enrollment is complete. Check your email for course access details.</p>
+            
+            <!-- ===== CREDENTIALS BOX ===== -->
+            <div class="credentials-box" id="credentialsBox">
+                <div class="cred-row">
+                    <span class="label">🆔 Student ID</span>
+                    <span class="value" id="displayStudentId">QSK26012345</span>
                 </div>
-                <div class="detail-row">
-                    <span class="label">Amount Paid</span>
-                    <span id="orderAmount">₹4,999</span>
-                </div>
-                <div class="detail-row">
-                    <span class="label">Payment Method</span>
-                    <span id="orderMethod">Card</span>
-                </div>
-                <div class="detail-row">
-                    <span class="label">Order ID</span>
-                    <span id="orderId">QSK-2026-001</span>
+                <div class="cred-row">
+                    <span class="label">🔑 Password</span>
+                    <span class="value" id="displayPassword">••••••••••••••••</span>
                 </div>
             </div>
-            <button class="btn-continue" onclick="window.location.href='dashboard.html'">
-                <i class="fas fa-arrow-right"></i> Go to Dashboard
-            </button>
+
+            <div class="email-sent" id="emailStatusBox">
+                <i class="fas fa-envelope"></i> <span id="emailStatusText">📧 Credentials sent to your email</span>
+            </div>
+
+            <div style="display:flex; flex-wrap:wrap; gap:10px; justify-content:center; margin-top:6px;">
+                <button class="btn-continue" onclick="window.location.href='dashboard.html'">
+                    <i class="fas fa-arrow-right"></i> Go to Dashboard
+                </button>
+                <button class="btn-login-now" onclick="window.location.href='login.html'">
+                    <i class="fas fa-sign-in-alt"></i> Login Now
+                </button>
+            </div>
         </div>
     </div>
 
@@ -1043,6 +868,16 @@
     <!-- ===== SCRIPTS ===== -->
     <!-- ============================================================ -->
     <script>
+        // ============================================================ */
+        // ===== EMAILJS CONFIGURATION ===== */
+        // ============================================================ */
+        const EMAILJS_CONFIG = {
+            PUBLIC_KEY: 'YOUR_EMAILJS_PUBLIC_KEY',
+            SERVICE_ID: 'YOUR_EMAILJS_SERVICE_ID',
+            STUDENT_WELCOME_TEMPLATE: 'YOUR_STUDENT_WELCOME_TEMPLATE_ID',
+            STUDENT_REMINDER_TEMPLATE: 'YOUR_STUDENT_REMINDER_TEMPLATE_ID'
+        };
+
         // ============================================================ */
         // ===== GET COURSE PARAMETER FROM URL ===== */
         // ============================================================ */
@@ -1110,6 +945,105 @@
         };
 
         // ============================================================ */
+        // ===== STUDENT DATABASE FUNCTIONS ===== */
+        // ============================================================ */
+        function getStudentDatabase() {
+            return JSON.parse(localStorage.getItem('qskillStudents')) || {};
+        }
+
+        function saveStudentDatabase(data) {
+            localStorage.setItem('qskillStudents', JSON.stringify(data));
+        }
+
+        function findStudentByEmail(email) {
+            const db = getStudentDatabase();
+            for (const [id, info] of Object.entries(db)) {
+                if (info.email === email) {
+                    return { id, ...info };
+                }
+            }
+            return null;
+        }
+
+        function generateStudentId() {
+            const year = new Date().getFullYear().toString().slice(-2);
+            const random = Math.floor(10000 + Math.random() * 90000).toString();
+            return 'QSK' + year + random;
+        }
+
+        function generateHexPassword() {
+            const chars = '0123456789abcdef';
+            let password = '';
+            for (let i = 0; i < 16; i++) {
+                password += chars.charAt(Math.floor(Math.random() * chars.length));
+            }
+            return password;
+        }
+
+        // ============================================================ */
+        // ===== EMAIL SENDING FUNCTIONS ===== */
+        // ============================================================ */
+        let emailjsReady = false;
+
+        function initEmailService() {
+            try {
+                if (typeof emailjs !== 'undefined' && 
+                    EMAILJS_CONFIG.PUBLIC_KEY && 
+                    EMAILJS_CONFIG.PUBLIC_KEY !== 'YOUR_EMAILJS_PUBLIC_KEY') {
+                    emailjs.init(EMAILJS_CONFIG.PUBLIC_KEY);
+                    emailjsReady = true;
+                    console.log('✅ EmailJS initialized');
+                } else {
+                    console.log('ℹ️ EmailJS not configured — running in DEMO mode.');
+                }
+            } catch (e) {
+                console.warn('⚠️ EmailJS init failed, using demo mode.', e);
+            }
+            return emailjsReady;
+        }
+
+        async function sendStudentCredentials(studentData, isNew) {
+            const email = studentData.email;
+            const name = studentData.name || 'Student';
+            const studentId = studentData.id;
+            const password = studentData.password;
+
+            if (emailjsReady) {
+                try {
+                    const templateId = isNew ? 
+                        EMAILJS_CONFIG.STUDENT_WELCOME_TEMPLATE : 
+                        EMAILJS_CONFIG.STUDENT_REMINDER_TEMPLATE;
+                    
+                    const params = {
+                        to_email: email,
+                        student_name: name,
+                        student_id: studentId,
+                        student_password: password,
+                        login_link: window.location.origin + '/login.html',
+                        dashboard_link: window.location.origin + '/dashboard.html',
+                        current_year: new Date().getFullYear()
+                    };
+                    await emailjs.send(EMAILJS_CONFIG.SERVICE_ID, templateId, params);
+                    console.log('✅ Email sent to:', email);
+                    return { success: true, sent: true };
+                } catch (error) {
+                    console.error('❌ Email failed:', error);
+                    return simulateEmailSend(email, name, studentId, password, isNew);
+                }
+            } else {
+                return simulateEmailSend(email, name, studentId, password, isNew);
+            }
+        }
+
+        function simulateEmailSend(email, name, studentId, password, isNew) {
+            const type = isNew ? 'Welcome' : 'Credential Reminder';
+            console.log(`📧 [DEMO] ${type} email to ${email}`);
+            console.log(`   Student ID: ${studentId}`);
+            console.log(`   Password: ${password}`);
+            return { success: true, sent: false, demo: true };
+        }
+
+        // ============================================================ */
         // ===== LOAD COURSE DATA ===== */
         // ============================================================ */
         function loadCourse(courseId) {
@@ -1124,175 +1058,258 @@
             document.getElementById('totalPrice').textContent = course.price;
             document.getElementById('payAmount').textContent = course.price;
             
-            // Store for order details
             window.selectedCourse = course;
         }
 
         // ============================================================ */
-        // ===== PAYMENT METHOD SELECTION ===== */
+        // ===== PAYMENT SELECTION ===== */
         // ============================================================ */
-        let selectedMethod = 'card';
-        let selectedUPI = '';
-        let selectedBank = '';
-        let selectedWallet = '';
+        let selectedPaymentMethod = 'upi';
+        let paymentDetailsContent = document.getElementById('paymentDetailsContent');
 
-        function selectMethod(method) {
-            selectedMethod = method;
-            
-            // Update UI
-            document.querySelectorAll('.method-option').forEach(el => {
-                el.classList.remove('selected');
+        function selectPayment(element) {
+            document.querySelectorAll('.payment-option').forEach(opt => {
+                opt.classList.remove('selected');
             });
-            document.querySelector(`.method-option[data-method="${method}"]`).classList.add('selected');
-            
-            // Hide all payment details
-            document.getElementById('cardDetails').classList.remove('show');
-            document.getElementById('upiOptions').classList.remove('show');
-            document.getElementById('netbankingOptions').classList.remove('show');
-            document.getElementById('walletOptions').classList.remove('show');
-            
-            // Show selected payment details
-            if (method === 'card') {
-                document.getElementById('cardDetails').classList.add('show');
-            } else if (method === 'upi') {
-                document.getElementById('upiOptions').classList.add('show');
-            } else if (method === 'netbanking') {
-                document.getElementById('netbankingOptions').classList.add('show');
-            } else if (method === 'wallet') {
-                document.getElementById('walletOptions').classList.add('show');
-            }
+            element.classList.add('selected');
+            selectedPaymentMethod = element.dataset.method;
+            updatePaymentDetails(selectedPaymentMethod);
         }
 
-        function selectUPI(element) {
-            document.querySelectorAll('.upi-item').forEach(el => el.classList.remove('selected-upi'));
-            element.classList.add('selected-upi');
-            selectedUPI = element.dataset.upi;
-        }
+        function updatePaymentDetails(method) {
+            const detailsHtml = {
+                'upi': `
+                    <div class="upi-input">
+                        <div class="form-group">
+                            <label>UPI ID <span class="required">*</span></label>
+                            <input type="text" id="upiId" placeholder="example@upi or phone@bank" />
+                        </div>
+                    </div>
+                `,
+                'card': `
+                    <div class="detail-row">
+                        <div class="form-group">
+                            <label>Card Number <span class="required">*</span></label>
+                            <input type="text" id="cardNumber" placeholder="1234 5678 9012 3456" />
+                        </div>
+                        <div class="form-group">
+                            <label>Cardholder Name <span class="required">*</span></label>
+                            <input type="text" id="cardholderName" placeholder="Name on card" />
+                        </div>
+                    </div>
+                    <div class="detail-row" style="margin-top:10px;">
+                        <div class="form-group">
+                            <label>Expiry Date <span class="required">*</span></label>
+                            <input type="text" id="expiryDate" placeholder="MM/YY" />
+                        </div>
+                        <div class="form-group">
+                            <label>CVV <span class="required">*</span></label>
+                            <input type="password" id="cvv" placeholder="123" />
+                        </div>
+                    </div>
+                `,
+                'debit': `
+                    <div class="detail-row">
+                        <div class="form-group">
+                            <label>Card Number <span class="required">*</span></label>
+                            <input type="text" id="debitCardNumber" placeholder="1234 5678 9012 3456" />
+                        </div>
+                        <div class="form-group">
+                            <label>Cardholder Name <span class="required">*</span></label>
+                            <input type="text" id="debitCardholderName" placeholder="Name on card" />
+                        </div>
+                    </div>
+                    <div class="detail-row" style="margin-top:10px;">
+                        <div class="form-group">
+                            <label>Expiry Date <span class="required">*</span></label>
+                            <input type="text" id="debitExpiryDate" placeholder="MM/YY" />
+                        </div>
+                        <div class="form-group">
+                            <label>CVV <span class="required">*</span></label>
+                            <input type="password" id="debitCvv" placeholder="123" />
+                        </div>
+                    </div>
+                `,
+                'netbanking': `
+                    <div class="form-group">
+                        <label>Select Bank <span class="required">*</span></label>
+                        <select id="bankSelect" style="width:100%; height:38px; padding:0 12px; border:1.5px solid var(--border); border-radius:8px; font-family:'Poppins',sans-serif; font-size:13px;">
+                            <option value="">Select your bank</option>
+                            <option value="sbi">State Bank of India</option>
+                            <option value="hdfc">HDFC Bank</option>
+                            <option value="icici">ICICI Bank</option>
+                            <option value="axis">Axis Bank</option>
+                            <option value="kotak">Kotak Mahindra Bank</option>
+                            <option value="yes">Yes Bank</option>
+                        </select>
+                    </div>
+                `,
+                'googlepay': `
+                    <div class="form-group">
+                        <label>Google Pay UPI ID <span class="required">*</span></label>
+                        <input type="text" id="googlePayUpi" placeholder="your-email@googlepay" />
+                    </div>
+                `,
+                'phonepe': `
+                    <div class="form-group">
+                        <label>PhonePe UPI ID <span class="required">*</span></label>
+                        <input type="text" id="phonePeUpi" placeholder="your-email@phonepe" />
+                    </div>
+                `,
+                'paytm': `
+                    <div class="form-group">
+                        <label>Paytm UPI ID <span class="required">*</span></label>
+                        <input type="text" id="paytmUpi" placeholder="your-email@paytm" />
+                    </div>
+                `
+            };
 
-        function selectBank(element) {
-            document.querySelectorAll('.upi-item').forEach(el => el.classList.remove('selected-upi'));
-            element.classList.add('selected-upi');
-            selectedBank = element.dataset.bank;
-        }
-
-        function selectWallet(element) {
-            document.querySelectorAll('.upi-item').forEach(el => el.classList.remove('selected-upi'));
-            element.classList.add('selected-upi');
-            selectedWallet = element.dataset.wallet;
+            paymentDetailsContent.innerHTML = detailsHtml[method] || detailsHtml['upi'];
         }
 
         // ============================================================ */
-        // ===== FORMAT CARD NUMBER ===== */
+        // ===== TOAST ===== */
         // ============================================================ */
-        function formatCardNumber(input) {
-            let value = input.value.replace(/\D/g, '');
-            if (value.length > 16) value = value.slice(0, 16);
-            let formatted = '';
-            for (let i = 0; i < value.length; i++) {
-                if (i > 0 && i % 4 === 0) formatted += ' ';
-                formatted += value[i];
-            }
-            input.value = formatted;
-        }
-
-        function formatExpiry(input) {
-            let value = input.value.replace(/\D/g, '');
-            if (value.length > 4) value = value.slice(0, 4);
-            if (value.length >= 2) {
-                input.value = value.slice(0, 2) + '/' + value.slice(2);
-            } else {
-                input.value = value;
-            }
+        function showToast(message, type = 'success') {
+            const toast = document.getElementById('toast');
+            const toastIcon = document.getElementById('toastIcon');
+            const toastMessage = document.getElementById('toastMessage');
+            if (!toast) return;
+            toastIcon.className = type === 'success' ? 'fas fa-check-circle' : 
+                                type === 'error' ? 'fas fa-exclamation-circle' : 
+                                'fas fa-info-circle';
+            toastMessage.textContent = message;
+            toast.className = 'toast ' + type;
+            setTimeout(() => toast.classList.add('show'), 10);
+            setTimeout(() => toast.classList.remove('show'), 4000);
         }
 
         // ============================================================ */
-        // ===== HANDLE PAYMENT ===== */
+        // ===== HANDLE PAYMENT WITH ACCOUNT CREATION ===== */
         // ============================================================ */
-        function handlePayment(event) {
+        let generatedStudentData = null;
+
+        async function handlePayment(event) {
             event.preventDefault();
             
             const name = document.getElementById('studentName').value.trim();
             const email = document.getElementById('studentEmail').value.trim();
             const phone = document.getElementById('studentPhone').value.trim();
             
-            // Basic validation
             if (!name || !email || !phone) {
                 showToast('⚠️ Please fill in all required fields', 'error');
                 return;
             }
             
-            // Validate email
             if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
                 showToast('⚠️ Please enter a valid email address', 'error');
                 return;
             }
             
-            // Validate phone
             if (phone.length < 10) {
                 showToast('⚠️ Please enter a valid phone number', 'error');
                 return;
             }
             
-            // Payment method validation
-            if (selectedMethod === 'card') {
-                const cardNumber = document.getElementById('cardNumber').value.replace(/\s/g, '');
-                const expiry = document.getElementById('expiryDate').value;
-                const cvv = document.getElementById('cvv').value;
-                const cardholder = document.getElementById('cardholderName').value.trim();
-                
-                if (cardNumber.length < 16) {
-                    showToast('⚠️ Please enter a valid card number', 'error');
-                    return;
-                }
-                if (!expiry || expiry.length < 5) {
-                    showToast('⚠️ Please enter a valid expiry date', 'error');
-                    return;
-                }
-                if (!cvv || cvv.length < 3) {
-                    showToast('⚠️ Please enter a valid CVV', 'error');
-                    return;
-                }
-                if (!cardholder) {
-                    showToast('⚠️ Please enter cardholder name', 'error');
-                    return;
-                }
-            }
-            
-            if (selectedMethod === 'upi') {
-                const upiId = document.getElementById('upiId').value.trim();
-                if (!upiId) {
+            // Validate payment method specific fields
+            if (selectedPaymentMethod === 'upi') {
+                const upiId = document.getElementById('upiId');
+                if (upiId && !upiId.value.trim()) {
                     showToast('⚠️ Please enter your UPI ID', 'error');
                     return;
                 }
             }
             
-            // Show loading state
             const payBtn = document.getElementById('payButton');
             payBtn.disabled = true;
             payBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Processing...';
+
+            // Check if student exists
+            const existingStudent = findStudentByEmail(email);
+            let studentId, password, isNew = false;
+
+            if (existingStudent) {
+                // Existing student – use their credentials
+                studentId = existingStudent.id;
+                password = existingStudent.password;
+                console.log('👤 Existing student found:', studentId);
+            } else {
+                // New student – generate ID and password
+                studentId = generateStudentId();
+                password = generateHexPassword();
+                isNew = true;
+                console.log('🆕 New student, generated ID:', studentId);
+            }
+
+            // Save or update student in database
+            const db = getStudentDatabase();
+            if (isNew) {
+                db[studentId] = {
+                    email: email,
+                    phone: phone,
+                    password: password,
+                    name: name,
+                    registeredAt: new Date().toISOString()
+                };
+                saveStudentDatabase(db);
+                console.log('💾 New student saved to database');
+            } else {
+                // Update name/phone if changed
+                if (db[studentId]) {
+                    db[studentId].name = name;
+                    db[studentId].phone = phone;
+                    saveStudentDatabase(db);
+                    console.log('💾 Existing student info updated');
+                }
+            }
+
+            // Store for display
+            generatedStudentData = { id: studentId, password, isNew };
+
+            // Send email (real or simulated)
+            const emailResult = await sendStudentCredentials(
+                { id: studentId, email, name, password },
+                isNew
+            );
+
+            // Show success modal with credentials
+            const modal = document.getElementById('successModal');
+            const orderId = 'QSK-' + new Date().getFullYear() + '-' + String(Math.floor(Math.random() * 1000)).padStart(3, '0');
             
-            // Simulate payment processing
-            setTimeout(() => {
-                // Show success modal
-                const modal = document.getElementById('successModal');
-                const orderId = 'QSK-' + new Date().getFullYear() + '-' + String(Math.floor(Math.random() * 1000)).padStart(3, '0');
-                
-                document.getElementById('orderCourse').textContent = window.selectedCourse.title;
-                document.getElementById('orderAmount').textContent = window.selectedCourse.price;
-                document.getElementById('orderMethod').textContent = selectedMethod.charAt(0).toUpperCase() + selectedMethod.slice(1);
-                document.getElementById('orderId').textContent = orderId;
-                
-                modal.classList.add('active');
-                document.body.style.overflow = 'hidden';
-                
-                // Reset button
-                payBtn.disabled = false;
-                payBtn.innerHTML = '<i class="fas fa-lock"></i> Pay ' + window.selectedCourse.price + ' Now';
-                
-                // Show success toast
-                showToast('✅ Payment successful! Welcome to the course.', 'success');
-                
-            }, 2000);
+            document.getElementById('displayStudentId').textContent = studentId;
+            document.getElementById('displayPassword').textContent = password;
+            
+            // Update modal text based on new/existing
+            if (isNew) {
+                document.getElementById('successTitle').textContent = '🎉 Welcome to QSkill!';
+                document.getElementById('successSubText').textContent = 'Your account has been created successfully. Check your email for login credentials.';
+                document.getElementById('emailStatusText').textContent = emailResult.sent ? '📧 Credentials sent to your email' : '📧 [DEMO] Credentials logged to console (check developer tools)';
+            } else {
+                document.getElementById('successTitle').textContent = '🎉 Welcome Back!';
+                document.getElementById('successSubText').textContent = 'You already have an account. Your credentials have been sent to your email.';
+                document.getElementById('emailStatusText').textContent = emailResult.sent ? '📧 Existing credentials sent to your email' : '📧 [DEMO] Credentials logged to console (check developer tools)';
+            }
+
+            // Show credentials box
+            document.getElementById('credentialsBox').style.display = 'block';
+            document.getElementById('emailStatusBox').style.display = 'block';
+
+            modal.classList.add('active');
+            document.body.style.overflow = 'hidden';
+
+            // Re-enable button
+            payBtn.disabled = false;
+            payBtn.innerHTML = '<i class="fas fa-lock"></i> Pay ' + window.selectedCourse.price + ' Now';
+
+            showToast(isNew ? '✅ Account created! Check your email.' : '✅ Welcome back! Credentials sent.', 'success');
+
+            // Enroll the student in the course (add to enrolled courses)
+            const enrolledCourses = JSON.parse(localStorage.getItem('enrolledCourses')) || [];
+            if (courseParam && !enrolledCourses.includes(courseParam)) {
+                enrolledCourses.push(courseParam);
+                localStorage.setItem('enrolledCourses', JSON.stringify(enrolledCourses));
+                console.log('📚 Student enrolled in:', courseParam);
+            }
         }
 
         // ============================================================ */
@@ -1304,32 +1321,6 @@
                 document.body.style.overflow = '';
             }
         });
-
-        // ============================================================ */
-        // ===== TOAST FUNCTION ===== */
-        // ============================================================ */
-        function showToast(message, type = 'success') {
-            const toast = document.getElementById('toast');
-            const toastIcon = document.getElementById('toastIcon');
-            const toastMessage = document.getElementById('toastMessage');
-            
-            if (!toast) return;
-            
-            toastIcon.className = type === 'success' ? 'fas fa-check-circle' : 
-                                type === 'error' ? 'fas fa-exclamation-circle' : 
-                                'fas fa-info-circle';
-            
-            toastMessage.textContent = message;
-            toast.className = 'toast ' + type;
-            
-            setTimeout(() => {
-                toast.classList.add('show');
-            }, 10);
-            
-            setTimeout(() => {
-                toast.classList.remove('show');
-            }, 4000);
-        }
 
         // ============================================================ */
         // ===== LOGIN DROPDOWN ===== */
@@ -1361,20 +1352,27 @@
         // ===== INITIALIZE ===== */
         // ============================================================ */
         document.addEventListener('DOMContentLoaded', function() {
-            // Load course data
+            // Load course
             if (courseParam && courseData[courseParam]) {
                 loadCourse(courseParam);
             } else {
                 loadCourse('manual');
             }
             
-            // Set default payment method
-            selectMethod('card');
-        });
+            // Set default payment details (UPI)
+            updatePaymentDetails('upi');
+            
+            // Initialize EmailJS
+            initEmailService();
 
-        console.log('💳 QSkill Enroll Page Loaded');
-        console.log('📌 Payment methods: Card, UPI, Net Banking, Wallet');
-        console.log('🔒 Secure payment processing');
+            // Hide credentials box initially (shown after payment)
+            document.getElementById('credentialsBox').style.display = 'none';
+            document.getElementById('emailStatusBox').style.display = 'none';
+
+            console.log('💳 QSkill Enroll Page Loaded');
+            console.log('✅ Student ID & Password generation enabled');
+            console.log('📧 Email notifications (real or demo mode)');
+        });
     </script>
 
 </body>

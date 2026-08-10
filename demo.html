@@ -160,12 +160,10 @@
             gap: 16px;
         }
 
-        /* ================================================================ */
-        /* ===== ALL CARDS – SAME FIXED HEIGHT (MATCHES CARD 1) ===== */
-        /* ================================================================ */
+        /* ----- All cards use the same style ----- */
         .demo-why .card {
             background: var(--light-bg);
-            padding: 16px 12px;
+            padding: 20px;
             border-radius: 12px;
             text-align: center;
             transition: 0.3s;
@@ -173,8 +171,7 @@
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            height: 160px;
-            /* ← fixed height – all cards the same size */
+            min-height: 130px;
         }
 
         .demo-why .card:hover {
@@ -187,54 +184,31 @@
             color: var(--primary);
             margin-bottom: 8px;
             display: block;
-            flex-shrink: 0;
         }
 
         .demo-why .card h4 {
             font-size: 15px;
             font-weight: 600;
-            margin-bottom: 0px;
+            margin-bottom: 4px;
         }
 
         .demo-why .card p {
             font-size: 13px;
             color: var(--text-gray);
-            margin: 0;
         }
 
-        /* ================================================================ */
-        /* ===== CERTIFICATION CARD – SAME SIZE + RELATIVE POSITIONING ===== */
-        /* ================================================================ */
+        /* ----- Certification card with image (sized to match icon area of other cards) ----- */
+        .demo-why .card.card-cert .cert-img {
+            width: 36px;
+            height: 36px;
+            object-fit: contain;
+            margin-bottom: 8px;
+            border-radius: 4px;
+        }
 
         .demo-why .card.card-cert i {
             display: none;
         }
-
-        /* Image sized to fit comfortably */
-        .demo-why .card.card-cert .cert-img {
-            width: 80px;
-            height: 80px;
-            object-fit: contain;
-            margin-bottom: 0px;
-            border-radius: 8px;
-            flex-shrink: 0;
-        }
-
-        /* Use relative positioning to shift heading and paragraph up,
-           so they visually align with the text in the other cards */
-        .demo-why .card.card-cert h4 {
-            position: relative;
-            top: -19px;
-            /* move up 8px */
-        }
-
-        .demo-why .card.card-cert p {
-            position: relative;
-            top: -19px;
-            /* move up 6px */
-        }
-
-        /* ================================================================ */
 
         .demo-testimonial {
             background: var(--light-bg);
@@ -591,6 +565,37 @@
         }
 
         /* ============================================================ */
+        /* ===== OPEN CALENDAR BUTTON - SPACE BETWEEN ICON AND TEXT ===== */
+        /* ============================================================ */
+        #openCalendarBtn {
+            display: inline-flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+            gap: 10px !important;
+            background: var(--primary) !important;
+            color: var(--white) !important;
+            border: none !important;
+            padding: 14px !important;
+            border-radius: 999px !important;
+            font-weight: 600 !important;
+            font-size: 16px !important;
+            cursor: pointer !important;
+            transition: 0.3s !important;
+            font-family: 'Poppins', sans-serif !important;
+            width: 100% !important;
+        }
+
+        #openCalendarBtn i {
+            font-size: 18px !important;
+        }
+
+        #openCalendarBtn:hover {
+            background: var(--secondary) !important;
+            transform: translateY(-2px) !important;
+            box-shadow: 0 4px 16px rgba(31, 60, 136, 0.25) !important;
+        }
+
+        /* ============================================================ */
         /* ===== LOGIN BUTTON - MORE SPACING ===== */
         /* ============================================================ */
         .login-btn {
@@ -721,10 +726,6 @@
             color: var(--primary);
         }
 
-        /* ============================================================ */
-        /* ===== RESPONSIVE ===== */
-        /* ============================================================ */
-
         @media (max-width: 992px) {
             .demo-hero {
                 padding: 40px 40px;
@@ -758,8 +759,7 @@
                 grid-template-columns: 1fr 1fr;
             }
             .demo-why .card {
-                height: 150px;
-                padding: 14px 10px;
+                min-height: 120px;
             }
             .demo-form-section .form-card {
                 padding: 20px;
@@ -792,18 +792,7 @@
                 grid-template-columns: 1fr;
             }
             .demo-why .card {
-                height: 160px;
-                padding: 16px 14px;
-            }
-            .demo-why .card.card-cert .cert-img {
-                width: 60px;
-                height: 60px;
-            }
-            .demo-why .card.card-cert h4 {
-                top: -6px;
-            }
-            .demo-why .card.card-cert p {
-                top: -4px;
+                min-height: 100px;
             }
             .modal-calendar-grid {
                 gap: 2px;
@@ -929,8 +918,8 @@
                         placeholder="Any specific topics or questions you'd like to cover..."></textarea>
                 </div>
 
-                <button type="button" class="btn-full" id="openCalendarBtn"
-                    style="background: var(--primary); color: var(--white); border: none; padding: 14px; border-radius: 999px; font-weight: 600; font-size: 16px; cursor: pointer; transition: 0.3s; font-family: 'Poppins', sans-serif;">
+                <!-- ===== OPEN CALENDAR BUTTON - WITH SPACE BETWEEN ICON AND TEXT ===== -->
+                <button type="button" id="openCalendarBtn">
                     <i class="fas fa-calendar-alt"></i> Select Date & Time
                 </button>
             </form>
@@ -939,25 +928,25 @@
         <div>
             <h3 style="font-size: 20px; font-weight: 600; margin-bottom: 16px;">🌟 Why Attend?</h3>
             <div class="demo-why">
-                <!-- Card 1 – Expert Guidance (REFERENCE) -->
+                <!-- Card 1 -->
                 <div class="card">
                     <i class="fas fa-chalkboard-teacher"></i>
                     <h4>Expert Guidance</h4>
                     <p>Learn from industry veterans</p>
                 </div>
-                <!-- Card 2 – Live Projects -->
+                <!-- Card 2 -->
                 <div class="card">
                     <i class="fas fa-project-diagram"></i>
                     <h4>Live Projects</h4>
                     <p>Hands-on real-time scenarios</p>
                 </div>
-                <!-- Card 3 – Certification Path (same height + relative positioning) -->
+                <!-- Card 3 – Certification with image -->
                 <div class="card card-cert">
                     <img src="images/photo9.png" alt="Certification" class="cert-img" />
                     <h4>Certification Path</h4>
                     <p>Get industry recognized certificate</p>
                 </div>
-                <!-- Card 4 – Peer Learning -->
+                <!-- Card 4 -->
                 <div class="card">
                     <i class="fas fa-users"></i>
                     <h4>Peer Learning</h4>
@@ -1197,6 +1186,7 @@
         let modalSelectedTimeSlot = null;
         let modalBookedSlots = {};
 
+        // ===== DOM REFS =====
         const selectedInfo = document.getElementById('selectedInfo');
         const infoDate = document.getElementById('infoDate');
         const infoTime = document.getElementById('infoTime');
@@ -1205,15 +1195,23 @@
         function generateModalBookings() {
             const today = new Date();
             const bookings = {};
+
             for (let d = 0; d < 7; d++) {
                 const date = new Date(today);
                 date.setDate(today.getDate() + d);
                 const dateKey = date.toDateString();
                 const dayOfWeek = date.getDay();
+
                 if (dayOfWeek === 0) continue;
-                const slots = SLOTS.map(time => ({ time, booked: Math.random() > 0.55 }));
+
+                const slots = SLOTS.map(time => ({
+                    time: time,
+                    booked: Math.random() > 0.55
+                }));
+
                 bookings[dateKey] = slots;
             }
+
             return bookings;
         }
 
@@ -1230,6 +1228,7 @@
         const modalSelectedDateEl = document.getElementById('modalSelectedDate');
         const modalBookBtn = document.getElementById('modalBookBtn');
 
+        // ===== ALLOW 3 MONTHS NAVIGATION =====
         const MIN_MONTHS_OFFSET = -1;
         const MAX_MONTHS_OFFSET = 3;
         let currentMonthOffset = 0;
@@ -1248,9 +1247,17 @@
             renderModalCalendar();
         }
 
-        if (openBtn) openBtn.addEventListener('click', openModal);
-        if (closeBtn) closeBtn.addEventListener('click', closeModal);
-        modal.addEventListener('click', (e) => { if (e.target === modal) closeModal(); });
+        if (openBtn) {
+            openBtn.addEventListener('click', openModal);
+        }
+
+        if (closeBtn) {
+            closeBtn.addEventListener('click', closeModal);
+        }
+
+        modal.addEventListener('click', (e) => {
+            if (e.target === modal) closeModal();
+        });
 
         function closeModal() {
             modal.classList.remove('active');
@@ -1285,6 +1292,7 @@
             const daysInMonth = new Date(year, month + 1, 0).getDate();
 
             modalGrid.innerHTML = '';
+
             const dayHeaders = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
             dayHeaders.forEach(day => {
                 const div = document.createElement('div');
@@ -1338,7 +1346,9 @@
                         slotInfo.textContent = `${availableSlots} slots`;
                         slotInfo.className = 'day-slots available';
                         div.style.cursor = 'pointer';
-                        div.addEventListener('click', () => { selectModalDate(dateObj); });
+                        div.addEventListener('click', () => {
+                            selectModalDate(dateObj);
+                        });
                     } else if (totalSlots > 0) {
                         slotInfo.textContent = 'Full';
                         slotInfo.className = 'day-slots full';
@@ -1369,14 +1379,19 @@
             modalSelectedDate = date;
             modalSelectedTimeSlot = null;
 
-            document.querySelectorAll('.modal-calendar-grid .day-cell').forEach(el => el.classList.remove('selected'));
+            document.querySelectorAll('.modal-calendar-grid .day-cell').forEach(el => {
+                el.classList.remove('selected');
+            });
+
             const cells = document.querySelectorAll('.modal-calendar-grid .day-cell');
             const dateStr = date.toDateString();
-            cells.forEach(cell => {
+            cells.forEach((cell, index) => {
                 const dayNum = cell.querySelector('.day-number');
                 if (dayNum) {
                     const cellDate = new Date(modalCurrentDate.getFullYear(), modalCurrentDate.getMonth(), parseInt(dayNum.textContent));
-                    if (cellDate.toDateString() === dateStr) cell.classList.add('selected');
+                    if (cellDate.toDateString() === dateStr) {
+                        cell.classList.add('selected');
+                    }
                 }
             });
 
@@ -1432,7 +1447,9 @@
 
                 if (!slot.booked) {
                     div.addEventListener('click', () => {
-                        document.querySelectorAll('.modal-time-slots-grid .time-slot').forEach(el => el.classList.remove('selected-slot'));
+                        document.querySelectorAll('.modal-time-slots-grid .time-slot').forEach(el => {
+                            el.classList.remove('selected-slot');
+                        });
                         div.classList.add('selected-slot');
                         modalSelectedTimeSlot = slot.time;
                         modalBookBtn.disabled = false;
@@ -1445,6 +1462,7 @@
             modalBookBtn.disabled = true;
         }
 
+        // ===== MONTH NAVIGATION =====
         modalPrevMonth.addEventListener('click', () => {
             const newOffset = currentMonthOffset - 1;
             if (newOffset >= -1) {
@@ -1463,6 +1481,9 @@
             }
         });
 
+        // ============================================================ */
+        // ===== UPDATE FORM WITH SELECTED DATE/TIME ===== */
+        // ============================================================ */
         function updateFormSelection() {
             if (modalSelectedDate && modalSelectedTimeSlot) {
                 const dateStr = modalSelectedDate.toLocaleDateString('en-US', {
@@ -1471,13 +1492,18 @@
                     day: 'numeric',
                     year: 'numeric'
                 });
+
                 infoDate.textContent = dateStr;
                 infoTime.textContent = modalSelectedTimeSlot;
                 selectedInfo.classList.add('show');
+
                 modalBookBtn.disabled = false;
             }
         }
 
+        // ============================================================ */
+        // ===== CLEAR SELECTION ===== */
+        // ============================================================ */
         function clearSelection() {
             modalSelectedDate = null;
             modalSelectedTimeSlot = null;
@@ -1486,8 +1512,13 @@
             renderModalCalendar();
         }
 
-        if (clearSelectionBtn) clearSelectionBtn.addEventListener('click', clearSelection);
+        if (clearSelectionBtn) {
+            clearSelectionBtn.addEventListener('click', clearSelection);
+        }
 
+        // ============================================================ */
+        // ===== BOOK NOW - SAVE LOCALLY ===== */
+        // ============================================================ */
         if (modalBookBtn) {
             modalBookBtn.addEventListener('click', async () => {
                 if (modalSelectedDate && modalSelectedTimeSlot) {
@@ -1511,15 +1542,27 @@
                     modalBookBtn.textContent = 'Booking...';
                     modalBookBtn.disabled = true;
 
-                    const bookingData = { name, email, phone, date: dateStr, time: modalSelectedTimeSlot, message: message || 'No message provided' };
+                    const bookingData = {
+                        name: name,
+                        email: email,
+                        phone: phone,
+                        date: dateStr,
+                        time: modalSelectedTimeSlot,
+                        message: message || 'No message provided'
+                    };
+
                     const result = saveBookingLocally(bookingData);
 
                     if (result.success) {
                         showToast('✅ Demo booking confirmed! Check your email for details.', 'success');
+
                         const dateKey = modalSelectedDate.toDateString();
                         const slots = modalBookedSlots[dateKey] || [];
                         const slotIndex = slots.findIndex(s => s.time === modalSelectedTimeSlot);
-                        if (slotIndex !== -1) slots[slotIndex].booked = true;
+                        if (slotIndex !== -1) {
+                            slots[slotIndex].booked = true;
+                        }
+
                         updateFormSelection();
                         document.getElementById('demoForm').reset();
                         clearSelection();
@@ -1532,17 +1575,24 @@
 
                     modalSelectedTimeSlot = null;
                     modalBookBtn.disabled = true;
-                    document.querySelectorAll('.modal-time-slots-grid .time-slot').forEach(el => el.classList.remove('selected-slot'));
+                    document.querySelectorAll('.modal-time-slots-grid .time-slot').forEach(el => {
+                        el.classList.remove('selected-slot');
+                    });
 
                     renderModalCalendar();
                     if (modalSelectedDate) {
                         const dateKey2 = modalSelectedDate.toDateString();
-                        if (modalBookedSlots[dateKey2]) renderModalTimeSlots(modalSelectedDate);
+                        if (modalBookedSlots[dateKey2]) {
+                            renderModalTimeSlots(modalSelectedDate);
+                        }
                     }
                 }
             });
         }
 
+        // ============================================================ */
+        // ===== INITIALIZE ===== */
+        // ============================================================ */
         renderModalCalendar();
 
         console.log('📅 Demo Page Loaded - 3 Month Calendar with 7 Day Slots');
@@ -1553,4 +1603,4 @@
 
 </body>
 
-</html>
+</html> 
