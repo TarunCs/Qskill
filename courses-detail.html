@@ -453,8 +453,8 @@
                     <button class="btn-download-curriculum" onclick="alert('📄 Downloading curriculum...')">
                         <i class="fas fa-download"></i> Curriculum
                     </button>
-                    <!-- ===== ENROLL NOW BUTTON - DIRECT TO ENROLL PAGE ===== -->
-                    <button class="btn-enroll-now" id="enrollNowBtn" onclick="goToEnroll()">
+                    <!-- ===== ENROLL NOW - DIRECT TO ENROLL PAGE (NO LOGIN CHECK) ===== -->
+                    <button class="btn-enroll-now" onclick="window.location.href='enroll.html?course=' + getCourseId()">
                         Enroll Now <i class="fas fa-arrow-right"></i>
                     </button>
                 </div>
@@ -594,7 +594,7 @@
                         <li><i class="fas fa-check-circle"></i> Placement Assistance</li>
                         <li><i class="fas fa-check-circle"></i> Completion Certificate</li>
                     </ul>
-                    <button class="btn-enroll-full" onclick="goToEnroll()">
+                    <button class="btn-enroll-full" onclick="window.location.href='enroll.html?course=' + getCourseId()">
                         Enroll Now <i class="fas fa-arrow-right"></i>
                     </button>
                 </div>
@@ -723,14 +723,8 @@
         }
 
         // ============================================================ */
-        // ===== ENROLL NOW – goes directly to enroll.html ===== */
+        // ===== GET COURSE ID FROM URL ===== */
         // ============================================================ */
-        function goToEnroll() {
-            const courseId = getCourseId();
-            // Always go to enroll page without checking login
-            window.location.href = 'enroll.html?course=' + courseId;
-        }
-
         function getCourseId() {
             const urlParams = new URLSearchParams(window.location.search);
             return urlParams.get('course') || 'manual';
