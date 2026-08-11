@@ -453,8 +453,8 @@
                     <button class="btn-download-curriculum" onclick="alert('📄 Downloading curriculum...')">
                         <i class="fas fa-download"></i> Curriculum
                     </button>
-                    <!-- ===== ENROLL NOW - DIRECT TO ENROLL PAGE (NO LOGIN CHECK) ===== -->
-                    <button class="btn-enroll-now" onclick="window.location.href='enroll.html?course=' + getCourseId()">
+                    <!-- ===== ENROLL NOW - HARDCODED URL WITH COURSE PARAM ===== -->
+                    <button class="btn-enroll-now" id="enrollBtn">
                         Enroll Now <i class="fas fa-arrow-right"></i>
                     </button>
                 </div>
@@ -594,7 +594,7 @@
                         <li><i class="fas fa-check-circle"></i> Placement Assistance</li>
                         <li><i class="fas fa-check-circle"></i> Completion Certificate</li>
                     </ul>
-                    <button class="btn-enroll-full" onclick="window.location.href='enroll.html?course=' + getCourseId()">
+                    <button class="btn-enroll-full" id="enrollBtnFull">
                         Enroll Now <i class="fas fa-arrow-right"></i>
                     </button>
                 </div>
@@ -723,12 +723,32 @@
         }
 
         // ============================================================ */
-        // ===== GET COURSE ID FROM URL ===== */
+        // ===== ENROLL BUTTON HANDLER - GETS COURSE ID AND NAVIGATES ===== */
         // ============================================================ */
-        function getCourseId() {
-            const urlParams = new URLSearchParams(window.location.search);
-            return urlParams.get('course') || 'manual';
-        }
+        document.addEventListener('DOMContentLoaded', function() {
+            function getCourseId() {
+                const urlParams = new URLSearchParams(window.location.search);
+                return urlParams.get('course') || 'manual';
+            }
+
+            const courseId = getCourseId();
+            
+            // Set up both enroll buttons
+            const enrollBtn = document.getElementById('enrollBtn');
+            const enrollBtnFull = document.getElementById('enrollBtnFull');
+            
+            if (enrollBtn) {
+                enrollBtn.addEventListener('click', function() {
+                    window.location.href = 'enroll.html?course=' + courseId;
+                });
+            }
+            
+            if (enrollBtnFull) {
+                enrollBtnFull.addEventListener('click', function() {
+                    window.location.href = 'enroll.html?course=' + courseId;
+                });
+            }
+        });
 
         // ============================================================ */
         // ===== TOAST (for optional messages) ===== */
