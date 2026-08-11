@@ -220,6 +220,20 @@ function closeModal(modalId) {
 }
 
 // ============================================================ */
+// ===== ENROLL NOW - DIRECT TO ENROLL PAGE ===== */
+// ============================================================ */
+function goToEnroll() {
+    const courseId = getCourseIdFromUrl();
+    // Always go directly to enroll page without login check
+    window.location.href = 'enroll.html?course=' + courseId;
+}
+
+function getCourseIdFromUrl() {
+    const urlParams = new URLSearchParams(window.location.search);
+    return urlParams.get('course') || 'manual';
+}
+
+// ============================================================ */
 // ===== EMAILJS CONFIGURATION (safe fallback) ===== */
 // ============================================================ */
 const EMAILJS_CONFIG = {
@@ -253,71 +267,55 @@ function initEmailService() {
     return emailjsReady;
 }
 
-async function sendRegistrationEmails(studentData) {
-    if (emailjsReady) {
-        try {
-            const studentParams = {
-                to_email: studentData.email,
-                student_name: studentData.name || 'Student',
-                student_id: studentData.id,
-                registration_date: new Date().toLocaleDateString('en-US', {
-                    weekday: 'long', year: 'numeric', month: 'long', day: 'numeric',
-                    hour: '2-digit', minute: '2-digit'
-                }),
-                login_link: window.location.origin + '/login.html',
-                dashboard_link: window.location.origin + '/dashboard.html'
-            };
-            await emailjs.send(EMAILJS_CONFIG.SERVICE_ID, EMAILJS_CONFIG.TEMPLATES.STUDENT_WELCOME, studentParams);
-            console.log('✅ Student welcome email sent.');
-            const adminParams = {
-                to_email: ADMIN_EMAIL,
-                student_name: studentData.name || 'Student',
-                student_email: studentData.email,
-                student_id: studentData.id,
-                registration_date: new Date().toLocaleDateString('en-US', {
-                    weekday: 'long', year: 'numeric', month: 'long', day: 'numeric',
-                    hour: '2-digit', minute: '2-digit'
-                }),
-                admin_dashboard_link: window.location.origin + '/admin.html'
-            };
-            await emailjs.send(EMAILJS_CONFIG.SERVICE_ID, EMAILJS_CONFIG.TEMPLATES.ADMIN_NOTIFICATION, adminParams);
-            console.log('✅ Admin notification sent.');
-            return { success: true };
-        } catch (error) {
-            console.error('❌ Email sending failed:', error);
-            return simulateEmailSend(studentData);
-        }
-    } else {
-        return simulateEmailSend(studentData);
+// ============================================================ */
+// ===== GENERATE PASSWORD & STUDENT ID ===== */
+// ============================================================ */
+function generatePassword() {
+    const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+    let password = '';
+    for (let i = 0; i < 12; i++) {
+        password += chars.charAt(Math.floor(Math.random() * chars.length));
     }
-}
-function simulateEmailSend(studentData) {
-    console.log(`📧 [DEMO] Registration emails for ${studentData.email} (ID: ${studentData.id})`);
-    return { success: true, demo: true };
+    return password;
 }
 
-async function sendPasswordResetEmail(email, resetLink) {
-    if (emailjsReady) {
-        try {
-            const params = {
-                to_email: email,
-                reset_link: resetLink || window.location.origin + '/reset-password.html',
-                current_year: new Date().getFullYear()
-            };
-            await emailjs.send(EMAILJS_CONFIG.SERVICE_ID, EMAILJS_CONFIG.TEMPLATES.PASSWORD_RESET, params);
-            console.log('✅ Password reset email sent to:', email);
-            return { success: true };
-        } catch (error) {
-            console.error('❌ Reset email failed:', error);
-            return simulateResetSend(email, resetLink);
-        }
-    } else {
-        return simulateResetSend(email, resetLink);
-    }
+function generateStudentId() {
+    const year = new Date().getFullYear().toString().slice(-2);
+    const random = Math.floor(10000 + Math.random() * 90000).toString();
+    return 'QSK' + year + random;
 }
-function simulateResetSend(email, resetLink) {
-    console.log(`📧 [DEMO] Reset link for ${email}: ${resetLink}`);
-    return { success: true, demo: true };
+
+// ============================================================ */
+// ===== SEND WELCOME EMAIL ===== */
+// ============================================================ */
+function sendWelcomeEmail(studentData) {
+    console.log('📧 ==========================================');
+    console.log('📧 WELCOME EMAIL SENT TO: ' + studentData.email);
+    console.log('📧 ==========================================');
+    console.log('📧 Subject: Welcome to QSkill Career Solutions!');
+    console.log('📧');
+    console.log('📧 Dear ' + studentData.name + ',');
+    console.log('📧');
+    console.log('📧 Thank you for enrolling in the "' + studentData.course + '" course!');
+    console.log('📧');
+    console.log('📧 Your account has been created successfully:');
+    console.log('📧');
+    console.log('📧   🆔 Student ID: ' + studentData.studentId);
+    console.log('📧   🔑 Password:   ' + studentData.password);
+    console.log('📧');
+    console.log('📧 You can login at: ' + window.location.origin + '/login.html');
+    console.log('📧');
+    console.log('📧 ⚠️ Please keep your credentials safe. You can change your password');
+    console.log('📧    after logging in from your dashboard.');
+    console.log('📧');
+    console.log('📧 If you have any questions, contact us at support@qskill.com');
+    console.log('📧');
+    console.log('📧 Best regards,');
+    console.log('📧 QSkill Career Solutions Team');
+    console.log('📧 ==========================================');
+    
+    // Show toast notification
+    showToast('📧 Welcome email sent to ' + studentData.email, 'success');
 }
 
 // ============================================================ */
@@ -367,19 +365,30 @@ function initLoginPage() {
         'admin@qskill.com': { password: 'admin123', name: 'Super Admin', role: 'admin' }
     };
 
-    if (Object.keys(studentDatabase).length === 0) {
-        studentDatabase['QSK24012345'] = {
+    // Always ensure default students exist
+    const defaultStudents = {
+        'QSK24012345': {
             email: 'student@qskill.com',
             phone: '9876543210',
             password: 'a1b2c3d4e5f67890',
             name: 'Demo Student'
-        };
-        studentDatabase['QSK24067890'] = {
+        },
+        'QSK24067890': {
             email: 'demo@qskill.com',
             phone: '9876543211',
             password: 'f9e8d7c6b5a43210',
             name: 'Demo User'
-        };
+        }
+    };
+
+    let needsUpdate = false;
+    for (var key in defaultStudents) {
+        if (!studentDatabase[key]) {
+            studentDatabase[key] = defaultStudents[key];
+            needsUpdate = true;
+        }
+    }
+    if (needsUpdate) {
         localStorage.setItem('qskillStudents', JSON.stringify(studentDatabase));
     }
 
@@ -484,11 +493,14 @@ function initLoginPage() {
     // Login handlers
     function handleStudentLogin() {
         if (!studentIdInput || !passwordInput) return;
-        const sid = studentIdInput.value.trim();
+        const sid = studentIdInput.value.trim().toUpperCase();
         const pass = passwordInput.value;
         if (!validateStudentIdField()) { showToast('Please enter a valid Student ID', 'error'); return; }
         if (!validatePasswordField()) { showToast('Please enter your password', 'error'); return; }
-        const student = studentDatabase[sid];
+        
+        const currentDb = JSON.parse(localStorage.getItem('qskillStudents')) || {};
+        const student = currentDb[sid];
+        
         if (!student) {
             if (studentIdWrapper) studentIdWrapper.classList.add('error');
             if (studentIdError) studentIdError.classList.add('show');
@@ -501,14 +513,25 @@ function initLoginPage() {
             showToast('Incorrect password. Please try again.', 'error');
             return;
         }
+        
+        // Check for redirect parameter
+        const redirect = urlParams.get('redirect');
+        const course = urlParams.get('course');
+        
         localStorage.setItem('qskillStudentLoggedIn', 'true');
         localStorage.setItem('qskillStudentId', sid);
         localStorage.setItem('qskillUser', JSON.stringify({ id: sid, email: student.email, phone: student.phone || '', name: student.name || 'Student', role: 'student' }));
+        
         showToast(`✅ Welcome back, ${sid}!`, 'success');
         if (loginSubmitBtn) { loginSubmitBtn.classList.add('loading'); loginSubmitBtn.disabled = true; }
+        
         setTimeout(() => {
             if (loginSubmitBtn) { loginSubmitBtn.classList.remove('loading'); loginSubmitBtn.disabled = false; }
-            window.location.href = 'dashboard.html';
+            if (redirect === 'course' && course) {
+                window.location.href = 'enroll.html?course=' + course;
+            } else {
+                window.location.href = 'dashboard.html';
+            }
         }, 1500);
     }
 
@@ -531,9 +554,17 @@ function initLoginPage() {
             showToast('❌ Incorrect password. Please try again.', 'error');
             return;
         }
+        
+        if (user.role === 'instructor') {
+            localStorage.setItem('qskillInstructorLoggedIn', 'true');
+        } else if (user.role === 'admin') {
+            localStorage.setItem('qskillAdminLoggedIn', 'true');
+        }
+        
         localStorage.setItem('qskillUser', JSON.stringify({ email, name: user.name, role: user.role }));
         showToast(`✅ Welcome back, ${user.role === 'admin' ? 'Admin' : 'Instructor'}!`, 'success');
         if (loginSubmitBtn) { loginSubmitBtn.classList.add('loading'); loginSubmitBtn.disabled = true; }
+        
         setTimeout(() => {
             if (loginSubmitBtn) { loginSubmitBtn.classList.remove('loading'); loginSubmitBtn.disabled = false; }
             window.location.href = user.role === 'admin' ? 'admin.html' : 'instructor-dashboard.html';
@@ -621,7 +652,9 @@ function initLoginPage() {
                     return;
                 }
             } else {
-                if (val.length < 6) {
+                const upperVal = val.toUpperCase();
+                forgotInput.value = upperVal;
+                if (upperVal.length < 6) {
                     forgotWrapper.classList.add('error');
                     forgotError.classList.add('show');
                     forgotErrorText.textContent = 'Student ID must be at least 6 characters';
@@ -634,7 +667,8 @@ function initLoginPage() {
 
             let found = false, userEmail = '', userName = '';
             if (currentRole === 'student') {
-                const s = studentDatabase[val];
+                const db = JSON.parse(localStorage.getItem('qskillStudents')) || {};
+                const s = db[val.toUpperCase()];
                 if (s) { found = true; userEmail = s.email; userName = s.name || 'Student'; }
             } else {
                 const u = instructorDatabase[val];
@@ -730,11 +764,5 @@ document.addEventListener('DOMContentLoaded', function() {
     // Initialize login page
     initLoginPage();
 });
-const EMAILJS_CONFIG = {
-    PUBLIC_KEY: 'your_public_key',
-    SERVICE_ID: 'your_service_id',
-    STUDENT_WELCOME_TEMPLATE: 'your_welcome_template_id',
-    STUDENT_REMINDER_TEMPLATE: 'your_reminder_template_id'
-};
 
 console.log('🔐 QSkill Scripts Loaded');
