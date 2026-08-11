@@ -17,9 +17,7 @@
     <link rel="stylesheet" href="style.css" />
 
     <style>
-        /* ============================================================ */
         /* ===== LOGO WITH TAGLINE BELOW ===== */
-        /* ============================================================ */
         .logo-wrapper {
             display: flex;
             flex-direction: column;
@@ -67,9 +65,7 @@
             font-weight: 700;
         }
 
-        /* ============================================================ */
         /* ===== NAVBAR ===== */
-        /* ============================================================ */
         .navbar {
             display: flex;
             justify-content: space-between;
@@ -108,9 +104,7 @@
             border-bottom-color: var(--primary);
         }
 
-        /* ============================================================ */
-        /* ===== LOGIN BUTTON - MORE SPACING ===== */
-        /* ============================================================ */
+        /* ===== LOGIN BUTTON ===== */
         .login-btn {
             background: var(--primary) !important;
             color: var(--white) !important;
@@ -142,9 +136,7 @@
             box-shadow: 0 4px 16px rgba(31, 60, 136, 0.25) !important;
         }
 
-        /* ============================================================ */
         /* ===== LOGIN DROPDOWN ===== */
-        /* ============================================================ */
         .login-dropdown-wrapper {
             position: relative;
             display: inline-block;
@@ -239,9 +231,7 @@
             color: var(--primary);
         }
 
-        /* ============================================================ */
-        /* ===== SLIDING BACKGROUND - IMAGE SLIDES IN (1s) ===== */
-        /* ============================================================ */
+        /* ===== HERO ===== */
         .hero {
             position: relative;
             overflow: hidden;
@@ -318,9 +308,7 @@
             font-size: 44px;
         }
 
-        /* ============================================================ */
-        /* ===== WHY QSKILL - SAME PADDING AS CONTACT ===== */
-        /* ============================================================ */
+        /* ===== WHY QSKILL ===== */
         .why-section {
             padding: 30px 80px 20px !important;
             background: var(--white);
@@ -412,7 +400,6 @@
             transition: 0.3s;
         }
 
-        /* ===== CERTIFICATION IMAGE - ZOOMED IN ===== */
         .why-item .icon-wrapper img {
             width: 44px !important;
             height: 44px !important;
@@ -432,9 +419,7 @@
             line-height: 1.3;
         }
 
-        /* ============================================================ */
-        /* ===== COURSES SECTION - 0 PADDING ===== */
-        /* ============================================================ */
+        /* ===== COURSES SECTION ===== */
         .courses-section {
             padding: 0px 80px 0px !important;
             background: var(--white);
@@ -587,18 +572,6 @@
             opacity: 1;
         }
 
-        .course-card .no-image-placeholder {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(135deg, #EAF1FF, #DEEAFD);
-            font-size: 40px;
-            color: var(--primary);
-            opacity: 0.6;
-        }
-
         .course-card h3 {
             font-size: 21px;
             color: var(--text-dark);
@@ -647,7 +620,8 @@
             padding-top: 4px;
         }
 
-        .course-card .btn-group button {
+        .course-card .btn-group button,
+        .course-card .btn-group a {
             padding: 8px 24px;
             border-radius: 999px;
             border: none;
@@ -662,6 +636,7 @@
             letter-spacing: 0.2px;
             gap: 8px;
             font-family: 'Poppins', sans-serif;
+            text-decoration: none;
         }
 
         .btn-outline-course {
@@ -679,15 +654,19 @@
         .btn-enroll {
             background: var(--primary);
             color: var(--white);
+            border: none;
         }
 
         .btn-enroll:hover {
             background: var(--secondary);
         }
 
-        /* ============================================================ */
-        /* ===== DEMO CTA SECTION - AFTER CONTACT ===== */
-        /* ============================================================ */
+        /* ===== CONTACT ===== */
+        .contact {
+            padding: 30px 80px 20px !important;
+        }
+
+        /* ===== DEMO CTA ===== */
         .demo-cta-section {
             background: var(--primary);
             padding: 50px 80px;
@@ -733,16 +712,7 @@
             box-shadow: 0 6px 24px rgba(0, 0, 0, 0.25);
         }
 
-        /* ============================================================ */
-        /* ===== CONTACT ===== */
-        /* ============================================================ */
-        .contact {
-            padding: 30px 80px 20px !important;
-        }
-
-        /* ============================================================ */
         /* ===== RESPONSIVE ===== */
-        /* ============================================================ */
         @media (max-width: 768px) {
             .floating-icons {
                 display: none;
@@ -886,7 +856,8 @@
                 font-size: 18px;
             }
 
-            .course-card .btn-group button {
+            .course-card .btn-group button,
+            .course-card .btn-group a {
                 padding: 6px 16px;
                 font-size: 12px;
                 height: 32px;
@@ -916,9 +887,7 @@
         <span id="toastMessage">Success!</span>
     </div>
 
-    <!-- ============================================================ -->
     <!-- ===== NAVBAR ===== -->
-    <!-- ============================================================ -->
     <nav class="navbar">
         <a href="index.html" class="logo">
             <img src="images/logo.png" alt="QSkill Logo" />
@@ -954,9 +923,7 @@
         </ul>
     </nav>
 
-    <!-- ============================================================ -->
     <!-- ===== HERO ===== -->
-    <!-- ============================================================ -->
     <section class="hero">
 
         <div class="hero-slider" id="heroSlider">
@@ -988,9 +955,7 @@
         </div>
     </section>
 
-    <!-- ============================================================ -->
     <!-- ===== FEATURES ===== -->
-    <!-- ============================================================ -->
     <section class="features">
         <div class="feature-item">
             <div class="icon-wrapper"><i class="fas fa-graduation-cap"></i></div>
@@ -1014,9 +979,7 @@
         </div>
     </section>
 
-    <!-- ============================================================ -->
     <!-- ===== WHY QSKILL ===== -->
-    <!-- ============================================================ -->
     <section class="why-section">
         <h2>Why QSkill?</h2>
         <p>At Qskill Career Solutions, we are committed to helping aspiring professionals build successful careers in
@@ -1054,9 +1017,7 @@
         </div>
     </section>
 
-    <!-- ============================================================ -->
     <!-- ===== COURSES ===== -->
-    <!-- ============================================================ -->
     <section class="courses-section" id="courses">
         <div class="section-header">
             <h2>OUR COURSES</h2>
@@ -1075,9 +1036,8 @@
                 <p class="card-description">Learn SDLC, STLC, test cases, defect tracking and more.</p>
                 <div class="rating">⭐ 4.8 <span>(320 Reviews)</span></div>
                 <div class="btn-group">
-                    <button class="btn-outline-course">Curriculum <i class="fas fa-download"></i></button>
-                    <button class="btn-enroll" onclick="window.location.href='courses-detail.html?course=manual'">View
-                        More →</button>
+                    <button class="btn-outline-course">Curriculum <i class="fas fa-download"></i>
+                    </button><a href="courses-detail.html?course=manual" class="btn-enroll">View More →</a>
                 </div>
             </div>
 
@@ -1092,8 +1052,7 @@
                 <div class="rating">⭐ 4.7 <span>(280 Reviews)</span></div>
                 <div class="btn-group">
                     <button class="btn-outline-course">Curriculum <i class="fas fa-download"></i></button>
-                    <button class="btn-enroll"
-                        onclick="window.location.href='courses-detail.html?course=automation'">View More →</button>
+                    <a href="courses-detail.html?course=automation" class="btn-enroll">View More →</a>
                 </div>
             </div>
 
@@ -1108,17 +1067,14 @@
                 <div class="rating">⭐ 4.6 <span>(210 Reviews)</span></div>
                 <div class="btn-group">
                     <button class="btn-outline-course">Curriculum <i class="fas fa-download"></i></button>
-                    <button class="btn-enroll" onclick="window.location.href='courses-detail.html?course=api'">View More
-                        →</button>
+                    <a href="courses-detail.html?course=api" class="btn-enroll">View More →</a>
                 </div>
             </div>
 
         </div>
     </section>
 
-    <!-- ============================================================ -->
     <!-- ===== CONTACT ===== -->
-    <!-- ============================================================ -->
     <section class="contact" id="contact">
         <h2>Enquiry / Contact Us</h2>
         <div class="contact-grid">
@@ -1145,9 +1101,7 @@
         </div>
     </section>
 
-    <!-- ============================================================ -->
-    <!-- ===== BOOK A DEMO CLASS - AFTER CONTACT ===== -->
-    <!-- ============================================================ -->
+    <!-- ===== BOOK A DEMO CLASS ===== -->
     <section class="demo-cta-section">
         <h2>📅 Ready to Start Your Journey?</h2>
         <p>Book a free demo class and experience our training methodology firsthand.</p>
@@ -1156,9 +1110,7 @@
         </a>
     </section>
 
-    <!-- ============================================================ -->
     <!-- ===== FOOTER ===== -->
-    <!-- ============================================================ -->
     <footer class="footer">
         <div class="footer-top">
             <div class="footer-logo">
@@ -1200,10 +1152,9 @@
     <!-- ===== SCRIPTS ===== -->
     <!-- ============================================================ -->
     <script>
-        // ===== IMAGE SLIDES IN ON PAGE LOAD (1s) =====
+        // ===== HERO SLIDE IN =====
         (function () {
             const slider = document.getElementById('heroSlider');
-
             window.addEventListener('load', function () {
                 setTimeout(function () {
                     slider.style.transform = 'translateX(0%)';

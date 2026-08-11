@@ -4,29 +4,25 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Course Detail - QSkill Career Solutions</title>
-    
+
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
-    
+
     <link rel="stylesheet" href="style.css" />
-    
+
     <style>
-        /* ============================================================ */
-        /* ===== COURSE DETAIL PAGE STYLES ===== */
-        /* ============================================================ */
+        /* ===== All styles (same as before) ===== */
         .course-detail-wrapper {
             padding: 30px 80px 60px;
             background: var(--white);
         }
-
         .course-detail-grid {
             display: grid;
             grid-template-columns: 2fr 1fr;
             gap: 40px;
         }
-
         .course-detail-left .course-image {
             width: 100%;
             max-height: 320px;
@@ -49,7 +45,6 @@
             line-height: 1.8;
             margin: 10px 0 14px;
         }
-        
         .course-detail-left .rating-row {
             display: flex;
             align-items: center;
@@ -77,7 +72,6 @@
         .course-detail-left .rating-row .enrolled i {
             color: var(--primary);
         }
-
         .course-tags {
             display: flex;
             flex-wrap: wrap;
@@ -95,22 +89,10 @@
             align-items: center;
             gap: 6px;
         }
-        .course-tags .tag i {
-            font-size: 13px;
-        }
-        .course-tags .tag.orange {
-            background: #FFEBDD;
-            color: var(--orange);
-        }
-        .course-tags .tag.green {
-            background: #DCFCE7;
-            color: #16a34a;
-        }
-        .course-tags .tag.purple {
-            background: #EDE7F6;
-            color: #7C3AED;
-        }
-
+        .course-tags .tag i { font-size: 13px; }
+        .course-tags .tag.orange { background: #FFEBDD; color: var(--orange); }
+        .course-tags .tag.green { background: #DCFCE7; color: #16a34a; }
+        .course-tags .tag.purple { background: #EDE7F6; color: #7C3AED; }
         .course-action-buttons {
             display: flex;
             flex-direction: row;
@@ -119,7 +101,6 @@
             gap: 14px;
             margin:16px 0 20px;
         }
-
         .btn-download-curriculum,
         .btn-enroll-now {
             padding: 10px 28px;
@@ -144,32 +125,27 @@
             width: auto;
             margin: 0px;
         }
-
         .btn-download-curriculum {
             border-color: var(--primary);
             color: var(--primary);
         }
-
         .btn-download-curriculum:hover {
             background: var(--primary);
             color: var(--white);
             transform: translateY(-2px);
             box-shadow: 0 4px 16px rgba(31, 60, 136, 0.2);
         }
-
         .btn-enroll-now {
             background: var(--primary);
             color: var(--white);
             border-color: var(--primary);
         }
-
         .btn-enroll-now:hover {
             background: var(--secondary);
             border-color: var(--secondary);
             transform: translateY(-2px);
             box-shadow: 0 4px 16px rgba(31, 60, 136, 0.25);
         }
-
         .course-tabs {
             display: flex;
             flex-wrap: wrap;
@@ -193,43 +169,14 @@
             background: transparent;
             color: var(--text-gray);
         }
-        .course-tab:hover {
-            background: var(--light-bg);
-            color: var(--text-dark);
-        }
-        .course-tab.active {
-            background: var(--primary);
-            color: var(--white);
-        }
-        .course-tab i {
-            margin-right: 6px;
-        }
-
-        .tab-content {
-            display: none;
-            animation: fadeIn 0.4s ease;
-            padding: 10px 0 20px;
-        }
-        .tab-content.active {
-            display: block;
-        }
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(15px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        .overview-grid {
-            display: grid;
-            grid-template-columns: 1fr;
-            gap: 0;
-        }
-
-        .overview-grid .about-text {
-            font-size: 14px;
-            color: var(--text-gray);
-            line-height: 1.8;
-        }
-
+        .course-tab:hover { background: var(--light-bg); color: var(--text-dark); }
+        .course-tab.active { background: var(--primary); color: var(--white); }
+        .course-tab i { margin-right: 6px; }
+        .tab-content { display: none; animation: fadeIn 0.4s ease; padding: 10px 0 20px; }
+        .tab-content.active { display: block; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(15px); } to { opacity: 1; transform: translateY(0); } }
+        .overview-grid { display: grid; grid-template-columns: 1fr; gap: 0; }
+        .overview-grid .about-text { font-size: 14px; color: var(--text-gray); line-height: 1.8; }
         .highlights-single {
             display: flex;
             flex-wrap: wrap;
@@ -238,7 +185,6 @@
             padding: 0;
             list-style: none;
         }
-
         .highlights-single li {
             display: flex;
             align-items: center;
@@ -250,12 +196,7 @@
             color: var(--primary);
             font-weight: 500;
         }
-
-        .highlights-single li i {
-            font-size: 13px;
-            color: var(--primary);
-        }
-
+        .highlights-single li i { font-size: 13px; color: var(--primary); }
         .module-item {
             border: 1px solid var(--border);
             border-radius: 10px;
@@ -273,57 +214,20 @@
             font-size: 15px;
             transition: 0.3s;
         }
-        .module-header:hover {
-            background: var(--light-bg);
-        }
-        .module-header .module-info {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-        }
-        .module-header .module-info .lecture-count {
-            font-size: 12px;
-            color: var(--text-gray);
-            font-weight: 400;
-        }
-        .module-header i {
-            transition: 0.3s;
-            color: var(--primary);
-        }
-        .module-body {
-            padding: 0 20px;
-            max-height: 0;
-            overflow: hidden;
-            transition: max-height 0.3s ease;
-        }
-        .module-body.open {
-            max-height: 500px;
-            padding: 14px 20px;
-        }
-        .module-body ul {
-            list-style: none;
-            padding: 0;
-        }
-        .module-body ul li {
-            padding: 4px 0;
-            font-size: 14px;
-            color: var(--text-dark);
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-        .module-body ul li i {
-            color: var(--primary);
-            font-size: 10px;
-        }
-
+        .module-header:hover { background: var(--light-bg); }
+        .module-header .module-info { display: flex; align-items: center; gap: 12px; }
+        .module-header .module-info .lecture-count { font-size: 12px; color: var(--text-gray); font-weight: 400; }
+        .module-header i { transition: 0.3s; color: var(--primary); }
+        .module-body { padding: 0 20px; max-height: 0; overflow: hidden; transition: max-height 0.3s ease; }
+        .module-body.open { max-height: 500px; padding: 14px 20px; }
+        .module-body ul { list-style: none; padding: 0; }
+        .module-body ul li { padding: 4px 0; font-size: 14px; color: var(--text-dark); display: flex; align-items: center; gap: 8px; }
+        .module-body ul li i { color: var(--primary); font-size: 10px; }
         .review-item {
             border-bottom: 1px solid var(--border);
             padding: 16px 0;
         }
-        .review-item:last-child {
-            border-bottom: none;
-        }
+        .review-item:last-child { border-bottom: none; }
         .review-item .review-header {
             display: flex;
             justify-content: space-between;
@@ -331,41 +235,16 @@
             flex-wrap: wrap;
             gap: 8px;
         }
-        .review-item .review-header .name {
-            font-weight: 600;
-            font-size: 15px;
-            color: var(--text-dark);
-        }
-        .review-item .review-header .badge-verified {
-            background: #DCFCE7;
-            color: #16a34a;
-            padding: 2px 12px;
-            border-radius: 999px;
-            font-size: 11px;
-            font-weight: 500;
-        }
-        .review-item .review-stars {
-            color: var(--star);
-            font-size: 14px;
-        }
-        .review-item .review-text {
-            font-size: 14px;
-            color: var(--text-gray);
-            margin: 6px 0;
-            line-height: 1.7;
-        }
-        .review-item .review-date {
-            font-size: 12px;
-            color: var(--text-gray);
-        }
-
+        .review-item .review-header .name { font-weight: 600; font-size: 15px; color: var(--text-dark); }
+        .review-item .review-header .badge-verified { background: #DCFCE7; color: #16a34a; padding: 2px 12px; border-radius: 999px; font-size: 11px; font-weight: 500; }
+        .review-item .review-stars { color: var(--star); font-size: 14px; }
+        .review-item .review-text { font-size: 14px; color: var(--text-gray); margin: 6px 0; line-height: 1.7; }
+        .review-item .review-date { font-size: 12px; color: var(--text-gray); }
         .faq-item {
             border-bottom: 1px solid var(--border);
             padding: 16px 0;
         }
-        .faq-item:last-child {
-            border-bottom: none;
-        }
+        .faq-item:last-child { border-bottom: none; }
         .faq-question {
             display: flex;
             justify-content: space-between;
@@ -375,22 +254,9 @@
             font-weight: 500;
             color: var(--text-dark);
         }
-        .faq-question i {
-            color: var(--primary);
-            transition: 0.3s;
-            font-size: 18px;
-        }
-        .faq-answer {
-            font-size: 14px;
-            color: var(--text-gray);
-            padding-top: 10px;
-            display: none;
-            line-height: 1.7;
-        }
-        .faq-answer.open {
-            display: block;
-        }
-
+        .faq-question i { color: var(--primary); transition: 0.3s; font-size: 18px; }
+        .faq-answer { font-size: 14px; color: var(--text-gray); padding-top: 10px; display: none; line-height: 1.7; }
+        .faq-answer.open { display: block; }
         .course-detail-right .pricing-card {
             background: var(--white);
             border: 1px solid var(--border);
@@ -400,27 +266,9 @@
             position: relative;
             top: 0;
         }
-        .course-detail-right .pricing-card .price-current {
-            font-size: 32px;
-            font-weight: 700;
-            color: var(--primary);
-        }
-        .course-detail-right .pricing-card .price-old {
-            font-size: 18px;
-            color: var(--text-gray);
-            text-decoration: line-through;
-            margin-left: 10px;
-        }
-        .course-detail-right .pricing-card .discount-badge {
-            background: #FEE2E2;
-            color: #dc2626;
-            padding: 3px 14px;
-            border-radius: 999px;
-            font-size: 13px;
-            font-weight: 600;
-            margin-left: 10px;
-        }
-
+        .course-detail-right .pricing-card .price-current { font-size: 32px; font-weight: 700; color: var(--primary); }
+        .course-detail-right .pricing-card .price-old { font-size: 18px; color: var(--text-gray); text-decoration: line-through; margin-left: 10px; }
+        .course-detail-right .pricing-card .discount-badge { background: #FEE2E2; color: #dc2626; padding: 3px 14px; border-radius: 999px; font-size: 13px; font-weight: 600; margin-left: 10px; }
         .course-detail-right .pricing-card .features-list {
             list-style: none;
             padding: 16px 0;
@@ -436,12 +284,7 @@
             align-items: center;
             gap: 10px;
         }
-        .course-detail-right .pricing-card .features-list li i {
-            color: var(--success);
-            width: 18px;
-            font-size: 14px;
-        }
-
+        .course-detail-right .pricing-card .features-list li i { color: var(--success); width: 18px; font-size: 14px; }
         .course-detail-right .pricing-card .btn-enroll-full {
             width: 100%;
             background: var(--primary);
@@ -465,7 +308,6 @@
             transform: translateY(-2px);
             box-shadow: 0 6px 24px rgba(31, 60, 136, 0.35);
         }
-
         .sidebar-section {
             margin-top: 24px;
             background: var(--white);
@@ -473,80 +315,20 @@
             border-radius: 12px;
             padding: 20px;
         }
-        .sidebar-section h4 {
-            font-size: 16px;
-            font-weight: 600;
-            color: var(--text-dark);
-            margin-bottom: 12px;
-        }
-
-        .sidebar-section .learn-list {
-            list-style: none;
-            padding: 0;
-        }
-        .sidebar-section .learn-list li {
-            padding: 5px 0;
-            font-size: 13px;
-            color: var(--text-dark);
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-        .sidebar-section .learn-list li i {
-            color: var(--success);
-            font-size: 13px;
-        }
-
-        .tools-grid {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 10px;
-            margin-top: 6px;
-        }
-        .tools-grid .tool-item {
-            background: var(--light-bg);
-            padding: 8px 16px;
-            border-radius: 8px;
-            font-size: 13px;
-            font-weight: 500;
-            color: var(--primary);
-            display: flex;
-            align-items: center;
-            gap: 6px;
-        }
-        .tools-grid .tool-item i {
-            font-size: 16px;
-        }
-
-        .sidebar-section .review-mini {
-            margin-top: 4px;
-        }
-        .sidebar-section .review-mini .review-row {
-            display: flex;
-            align-items: center;
-            gap: 6px;
-        }
-        .sidebar-section .review-mini .review-row .big-rating {
-            font-size: 22px;
-            font-weight: 700;
-            color: var(--text-dark);
-        }
-        .sidebar-section .review-mini .review-row .stars {
-            color: var(--star);
-        }
-        .sidebar-section .review-mini .review-row .count {
-            font-size: 13px;
-            color: var(--text-gray);
-        }
-        .sidebar-section .review-mini .review-text {
-            font-size: 13px;
-            color: var(--text-gray);
-            margin: 8px 0 4px;
-        }
-        .sidebar-section .review-mini .review-text strong {
-            color: var(--text-dark);
-        }
-
+        .sidebar-section h4 { font-size: 16px; font-weight: 600; color: var(--text-dark); margin-bottom: 12px; }
+        .sidebar-section .learn-list { list-style: none; padding: 0; }
+        .sidebar-section .learn-list li { padding: 5px 0; font-size: 13px; color: var(--text-dark); display: flex; align-items: center; gap: 8px; }
+        .sidebar-section .learn-list li i { color: var(--success); font-size: 13px; }
+        .tools-grid { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 6px; }
+        .tools-grid .tool-item { background: var(--light-bg); padding: 8px 16px; border-radius: 8px; font-size: 13px; font-weight: 500; color: var(--primary); display: flex; align-items: center; gap: 6px; }
+        .tools-grid .tool-item i { font-size: 16px; }
+        .sidebar-section .review-mini { margin-top: 4px; }
+        .sidebar-section .review-mini .review-row { display: flex; align-items: center; gap: 6px; }
+        .sidebar-section .review-mini .review-row .big-rating { font-size: 22px; font-weight: 700; color: var(--text-dark); }
+        .sidebar-section .review-mini .review-row .stars { color: var(--star); }
+        .sidebar-section .review-mini .review-row .count { font-size: 13px; color: var(--text-gray); }
+        .sidebar-section .review-mini .review-text { font-size: 13px; color: var(--text-gray); margin: 8px 0 4px; }
+        .sidebar-section .review-mini .review-text strong { color: var(--text-dark); }
         .footer-cta {
             margin-top: 50px;
             background: linear-gradient(135deg, var(--primary), var(--secondary));
@@ -558,68 +340,14 @@
             flex-wrap: wrap;
             gap: 20px;
         }
-        .footer-cta .cta-text h3 {
-            font-size: 24px;
-            font-weight: 700;
-            color: var(--white);
-            margin-bottom: 4px;
-        }
-        .footer-cta .cta-text p {
-            color: rgba(255,255,255,0.8);
-            font-size: 15px;
-        }
-        .footer-cta .cta-text .phone {
-            font-weight: 600;
-            font-size: 18px;
-            color: var(--white);
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            margin-top: 4px;
-        }
-        .footer-cta .cta-buttons {
-            display: flex;
-            gap: 14px;
-            flex-wrap: wrap;
-        }
-        .footer-cta .cta-buttons .btn-white {
-            background: var(--white);
-            color: var(--primary);
-            border: none;
-            padding: 12px 32px;
-            border-radius: 999px;
-            font-weight: 600;
-            font-size: 15px;
-            cursor: pointer;
-            transition: 0.3s;
-            font-family: 'Poppins', sans-serif;
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-        }
-        .footer-cta .cta-buttons .btn-white:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 24px rgba(0,0,0,0.2);
-        }
-        .footer-cta .cta-buttons .btn-outline-white {
-            background: transparent;
-            color: var(--white);
-            border: 2px solid rgba(255,255,255,0.6);
-            padding: 10px 28px;
-            border-radius: 999px;
-            font-weight: 600;
-            font-size: 15px;
-            cursor: pointer;
-            transition: 0.3s;
-            font-family: 'Poppins', sans-serif;
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-        }
-        .footer-cta .cta-buttons .btn-outline-white:hover {
-            background: rgba(255,255,255,0.15);
-            border-color: var(--white);
-        }
+        .footer-cta .cta-text h3 { font-size: 24px; font-weight: 700; color: var(--white); margin-bottom: 4px; }
+        .footer-cta .cta-text p { color: rgba(255,255,255,0.8); font-size: 15px; }
+        .footer-cta .cta-text .phone { font-weight: 600; font-size: 18px; color: var(--white); display: flex; align-items: center; gap: 8px; margin-top: 4px; }
+        .footer-cta .cta-buttons { display: flex; gap: 14px; flex-wrap: wrap; }
+        .footer-cta .cta-buttons .btn-white { background: var(--white); color: var(--primary); border: none; padding: 12px 32px; border-radius: 999px; font-weight: 600; font-size: 15px; cursor: pointer; transition: 0.3s; font-family: 'Poppins', sans-serif; display: inline-flex; align-items: center; gap: 8px; }
+        .footer-cta .cta-buttons .btn-white:hover { transform: translateY(-2px); box-shadow: 0 6px 24px rgba(0,0,0,0.2); }
+        .footer-cta .cta-buttons .btn-outline-white { background: transparent; color: var(--white); border: 2px solid rgba(255,255,255,0.6); padding: 10px 28px; border-radius: 999px; font-weight: 600; font-size: 15px; cursor: pointer; transition: 0.3s; font-family: 'Poppins', sans-serif; display: inline-flex; align-items: center; gap: 8px; }
+        .footer-cta .cta-buttons .btn-outline-white:hover { background: rgba(255,255,255,0.15); border-color: var(--white); }
 
         @media (max-width: 992px) {
             .course-detail-wrapper { padding: 20px 40px 40px; }
@@ -627,7 +355,6 @@
             .course-detail-right .pricing-card { position: relative; top: 0; }
             .footer-cta { flex-direction: column; text-align: center; padding: 30px 30px; }
         }
-
         @media (max-width: 768px) {
             .course-detail-wrapper { padding: 15px 20px 30px; }
             .course-detail-left h1 { font-size: 24px; }
@@ -640,10 +367,8 @@
             .footer-cta { padding: 24px 20px; }
             .footer-cta .cta-text h3 { font-size: 20px; }
             .footer-cta .cta-buttons { flex-direction: column; width: 100%; }
-            .footer-cta .cta-buttons .btn-white,
-            .footer-cta .cta-buttons .btn-outline-white { width: 100%; justify-content: center; }
+            .footer-cta .cta-buttons .btn-white, .footer-cta .cta-buttons .btn-outline-white { width: 100%; justify-content: center; }
         }
-
         @media (max-width: 480px) {
             .course-detail-left h1 { font-size: 20px; }
             .course-tab { font-size: 10px; padding: 4px 8px; }
@@ -664,9 +389,9 @@
     </div>
 
     <!-- ============================================================ -->
-    <!-- ===== HEADER - SAME AS DASHBOARD ===== -->
+    <!-- ===== PUBLIC NAVBAR (matches index.html) ===== -->
     <!-- ============================================================ -->
-    <header class="header">
+    <nav class="navbar">
         <a href="index.html" class="logo">
             <img src="images/logo.png" alt="QSkill Logo" />
             <span class="logo-text">
@@ -674,27 +399,38 @@
                 <span class="careersolutions">careersolutions</span>
             </span>
         </a>
-
-        <ul class="header-menu">
-            <li><a href="dashboard.html">Dashboard</a></li>
-            <li><a href="all-courses.html">Courses</a></li>
-            <li><a href="my-courses.html">My Courses</a></li>
-            <li><a href="student-assignments.html">Assignments</a></li>
-            <li><a href="#" onclick="logout()" style="color: #EF4444;">Logout</a></li>
+        <ul class="nav-links">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="about.html">About Us</a></li>
+            <li><a href="courses.html">Courses</a></li>
+            <li><a href="contact.html">Contact</a></li>
+            <li class="login-dropdown-wrapper">
+                <a href="#" class="login-btn" id="loginDropdownBtn">Login <i class="fas fa-chevron-down"></i></a>
+                <div class="login-dropdown" id="loginDropdown">
+                    <a href="login.html?role=student" data-role="student">
+                        <span class="dropdown-icon"><i class="fas fa-user-graduate"></i></span>
+                        <span class="dropdown-text">
+                            <span class="role-title">Student</span>
+                            <span class="role-sub">Login as a student</span>
+                        </span>
+                    </a>
+                    <a href="login.html?role=instructor" data-role="instructor">
+                        <span class="dropdown-icon"><i class="fas fa-chalkboard-teacher"></i></span>
+                        <span class="dropdown-text">
+                            <span class="role-title">Instructor</span>
+                            <span class="role-sub">Login as an instructor</span>
+                        </span>
+                    </a>
+                </div>
+            </li>
         </ul>
-
-        <div class="user-profile">
-            <span class="name" id="studentName">Student</span>
-            <span class="role-badge">Student</span>
-            <div class="avatar" id="studentAvatar">S</div>
-        </div>
-    </header>
+    </nav>
 
     <!-- ============================================================ -->
     <!-- ===== COURSE DETAIL ===== -->
     <!-- ============================================================ -->
     <section class="course-detail-wrapper" id="courseDetail">
-        
+
         <div class="course-detail-grid">
             <div class="course-detail-left">
                 <img src="images/manual-testing.jpg" alt="Course" class="course-image" id="courseImage" />
@@ -712,7 +448,7 @@
                     <span class="tag green"><i class="fas fa-globe"></i> English</span>
                     <span class="tag purple"><i class="fas fa-certificate"></i> Certificate Included</span>
                 </div>
-                
+
                 <div class="course-action-buttons">
                     <button class="btn-download-curriculum" onclick="alert('📄 Downloading curriculum...')">
                         <i class="fas fa-download"></i> Curriculum
@@ -964,41 +700,41 @@
     <!-- ===== SCRIPTS ===== -->
     <!-- ============================================================ -->
     <script>
-        // ===== SESSION CHECK =====
-        const studentLoggedIn = localStorage.getItem('qskillStudentLoggedIn');
-        if (!studentLoggedIn) {
-            window.location.href = 'login.html';
-        }
-
-        // ===== LOGOUT =====
-        function logout() {
-            if (confirm('Are you sure you want to logout?')) {
-                localStorage.removeItem('qskillStudentLoggedIn');
-                localStorage.removeItem('qskillStudentId');
-                localStorage.removeItem('qskillUser');
-                window.location.href = 'login.html';
-            }
-        }
-
-        // ===== UPDATE STUDENT NAME =====
-        function updateStudentName() {
-            const userData = JSON.parse(localStorage.getItem('qskillUser') || '{}');
-            const name = userData.name || 'Student';
-            const nameEl = document.getElementById('studentName');
-            const avatarEl = document.getElementById('studentAvatar');
-            if (nameEl) nameEl.textContent = name;
-            if (avatarEl) avatarEl.textContent = name.charAt(0).toUpperCase();
+        // ============================================================ */
+        // ===== DROPDOWN (public) ===== */
+        // ============================================================ */
+        const dropdownBtn = document.getElementById('loginDropdownBtn');
+        const dropdown = document.getElementById('loginDropdown');
+        if (dropdownBtn && dropdown) {
+            dropdownBtn.addEventListener('click', function(e) {
+                e.preventDefault();
+                e.stopPropagation();
+                dropdown.classList.toggle('show');
+            });
+            document.addEventListener('click', function(e) {
+                if (!dropdownBtn.contains(e.target) && !dropdown.contains(e.target)) {
+                    dropdown.classList.remove('show');
+                }
+            });
+            document.addEventListener('keydown', function(e) {
+                if (e.key === 'Escape') dropdown.classList.remove('show');
+            });
         }
 
         // ============================================================ */
-        // ===== GO TO ENROLL PAGE WITH COURSE PARAMETER ===== */
+        // ===== ENROLL NOW – checks login or redirects ===== */
         // ============================================================ */
         function goToEnroll() {
             const courseId = getCourseId();
-            if (courseId) {
+            // Check if user is logged in as student/instructor/admin
+            const isLoggedIn = localStorage.getItem('qskillStudentLoggedIn') === 'true' ||
+                               localStorage.getItem('qskillInstructorLoggedIn') === 'true' ||
+                               localStorage.getItem('qskillAdminLoggedIn') === 'true';
+            if (isLoggedIn) {
                 window.location.href = 'enroll.html?course=' + courseId;
             } else {
-                window.location.href = 'enroll.html';
+                // Redirect to login with a return URL
+                window.location.href = 'login.html?redirect=course&course=' + courseId;
             }
         }
 
@@ -1007,6 +743,63 @@
             return urlParams.get('course') || 'manual';
         }
 
+        // ============================================================ */
+        // ===== TOAST (for optional messages) ===== */
+        // ============================================================ */
+        function showToast(message, type = 'success') {
+            const toast = document.getElementById('toast');
+            const toastIcon = document.getElementById('toastIcon');
+            const toastMessage = document.getElementById('toastMessage');
+            if (!toast) return;
+            toastIcon.className = type === 'success' ? 'fas fa-check-circle' :
+                                 type === 'error' ? 'fas fa-exclamation-circle' :
+                                 'fas fa-info-circle';
+            toastMessage.textContent = message;
+            toast.className = 'toast ' + type;
+            setTimeout(() => toast.classList.add('show'), 10);
+            setTimeout(() => toast.classList.remove('show'), 4000);
+        }
+
+        // ============================================================ */
+        // ===== TAB & FAQ TOGGLES ===== */
+        // ============================================================ */
+        document.querySelectorAll('.course-tab').forEach(tab => {
+            tab.addEventListener('click', function() {
+                document.querySelectorAll('.course-tab').forEach(t => t.classList.remove('active'));
+                this.classList.add('active');
+                const tabId = this.dataset.tab;
+                document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+                document.getElementById('tab-' + tabId).classList.add('active');
+            });
+        });
+
+        function toggleFAQ(element) {
+            const answer = element.nextElementSibling;
+            const icon = element.querySelector('i');
+            if (answer.classList.contains('open')) {
+                answer.classList.remove('open');
+                icon.className = 'fas fa-plus';
+            } else {
+                answer.classList.add('open');
+                icon.className = 'fas fa-minus';
+            }
+        }
+
+        function toggleModule(element) {
+            const body = element.nextElementSibling;
+            const icon = element.querySelector('i');
+            if (body.classList.contains('open')) {
+                body.classList.remove('open');
+                icon.className = 'fas fa-chevron-down';
+            } else {
+                body.classList.add('open');
+                icon.className = 'fas fa-chevron-up';
+            }
+        }
+
+        // ============================================================ */
+        // ===== COURSE DATA ===== */
+        // ============================================================ */
         const urlParams = new URLSearchParams(window.location.search);
         const courseParam = urlParams.get('course');
 
@@ -1040,36 +833,12 @@
                     'Real-time project experience'
                 ],
                 modules: [
-                    {
-                        title: 'Module 1: Software Testing Fundamentals',
-                        lectures: 4,
-                        topics: ['What is Software Testing?', 'Why Testing is Important', 'Software Development Life Cycle (SDLC)', 'Software Testing Life Cycle (STLC)']
-                    },
-                    {
-                        title: 'Module 2: SDLC Models',
-                        lectures: 3,
-                        topics: ['Waterfall Model', 'Agile Methodology', 'V-Model']
-                    },
-                    {
-                        title: 'Module 3: Testing Types',
-                        lectures: 5,
-                        topics: ['Functional Testing', 'Non-Functional Testing', 'Smoke &amp; Sanity Testing', 'Regression Testing', 'User Acceptance Testing (UAT)']
-                    },
-                    {
-                        title: 'Module 4: Defect Management',
-                        lectures: 3,
-                        topics: ['Defect Life Cycle', 'Bug Reporting', 'Defect Tracking Tools']
-                    },
-                    {
-                        title: 'Module 5: Test Documentation',
-                        lectures: 4,
-                        topics: ['Test Plan', 'Test Strategy', 'Test Case Writing', 'Test Summary Report']
-                    },
-                    {
-                        title: 'Module 6: Real-time Project',
-                        lectures: 6,
-                        topics: ['Project Overview', 'Test Case Design', 'Execution &amp; Reporting', 'Project Submission']
-                    }
+                    { title: 'Module 1: Software Testing Fundamentals', lectures: 4, topics: ['What is Software Testing?', 'Why Testing is Important', 'Software Development Life Cycle (SDLC)', 'Software Testing Life Cycle (STLC)'] },
+                    { title: 'Module 2: SDLC Models', lectures: 3, topics: ['Waterfall Model', 'Agile Methodology', 'V-Model'] },
+                    { title: 'Module 3: Testing Types', lectures: 5, topics: ['Functional Testing', 'Non-Functional Testing', 'Smoke &amp; Sanity Testing', 'Regression Testing', 'User Acceptance Testing (UAT)'] },
+                    { title: 'Module 4: Defect Management', lectures: 3, topics: ['Defect Life Cycle', 'Bug Reporting', 'Defect Tracking Tools'] },
+                    { title: 'Module 5: Test Documentation', lectures: 4, topics: ['Test Plan', 'Test Strategy', 'Test Case Writing', 'Test Summary Report'] },
+                    { title: 'Module 6: Real-time Project', lectures: 6, topics: ['Project Overview', 'Test Case Design', 'Execution &amp; Reporting', 'Project Submission'] }
                 ]
             },
             'automation': {
@@ -1101,31 +870,11 @@
                     'Cross-Browser Testing'
                 ],
                 modules: [
-                    {
-                        title: 'Module 1: Core Java Basics',
-                        lectures: 5,
-                        topics: ['Java Introduction', 'OOP Concepts', 'Collections', 'Exception Handling']
-                    },
-                    {
-                        title: 'Module 2: Selenium WebDriver',
-                        lectures: 6,
-                        topics: ['WebDriver Architecture', 'Locators (ID, Name, XPath, CSS)', 'Handling Web Elements', 'Waits in Selenium']
-                    },
-                    {
-                        title: 'Module 3: TestNG Framework',
-                        lectures: 4,
-                        topics: ['TestNG Annotations', 'Assertions', 'Test Suites', 'Parameterization']
-                    },
-                    {
-                        title: 'Module 4: Page Object Model',
-                        lectures: 4,
-                        topics: ['POM Architecture', 'Page Factory', 'Reusable Components', 'Test Case Design']
-                    },
-                    {
-                        title: 'Module 5: CI/CD Integration',
-                        lectures: 3,
-                        topics: ['Jenkins Setup', 'Pipeline Creation', 'Automated Testing', 'Reporting']
-                    }
+                    { title: 'Module 1: Core Java Basics', lectures: 5, topics: ['Java Introduction', 'OOP Concepts', 'Collections', 'Exception Handling'] },
+                    { title: 'Module 2: Selenium WebDriver', lectures: 6, topics: ['WebDriver Architecture', 'Locators (ID, Name, XPath, CSS)', 'Handling Web Elements', 'Waits in Selenium'] },
+                    { title: 'Module 3: TestNG Framework', lectures: 4, topics: ['TestNG Annotations', 'Assertions', 'Test Suites', 'Parameterization'] },
+                    { title: 'Module 4: Page Object Model', lectures: 4, topics: ['POM Architecture', 'Page Factory', 'Reusable Components', 'Test Case Design'] },
+                    { title: 'Module 5: CI/CD Integration', lectures: 3, topics: ['Jenkins Setup', 'Pipeline Creation', 'Automated Testing', 'Reporting'] }
                 ]
             },
             'api': {
@@ -1157,26 +906,10 @@
                     'Real-time Projects'
                 ],
                 modules: [
-                    {
-                        title: 'Module 1: API Fundamentals',
-                        lectures: 4,
-                        topics: ['What is API?', 'REST vs SOAP', 'HTTP Methods', 'Status Codes']
-                    },
-                    {
-                        title: 'Module 2: Postman Basics',
-                        lectures: 4,
-                        topics: ['Postman Installation', 'Creating Requests', 'Variables &amp; Environments', 'Collections']
-                    },
-                    {
-                        title: 'Module 3: Automation Testing',
-                        lectures: 4,
-                        topics: ['Test Scripts', 'Assertions', 'Data-Driven Testing', 'Newman CLI']
-                    },
-                    {
-                        title: 'Module 4: Reporting &amp; CI/CD',
-                        lectures: 4,
-                        topics: ['HTML Reports', 'Jenkins Integration', 'Pipeline Setup', 'Monitoring']
-                    }
+                    { title: 'Module 1: API Fundamentals', lectures: 4, topics: ['What is API?', 'REST vs SOAP', 'HTTP Methods', 'Status Codes'] },
+                    { title: 'Module 2: Postman Basics', lectures: 4, topics: ['Postman Installation', 'Creating Requests', 'Variables &amp; Environments', 'Collections'] },
+                    { title: 'Module 3: Automation Testing', lectures: 4, topics: ['Test Scripts', 'Assertions', 'Data-Driven Testing', 'Newman CLI'] },
+                    { title: 'Module 4: Reporting &amp; CI/CD', lectures: 4, topics: ['HTML Reports', 'Jenkins Integration', 'Pipeline Setup', 'Monitoring'] }
                 ]
             },
             'playwright': {
@@ -1208,26 +941,10 @@
                     'Real-time Project'
                 ],
                 modules: [
-                    {
-                        title: 'Module 1: Playwright Introduction',
-                        lectures: 4,
-                        topics: ['What is Playwright?', 'Installation &amp; Setup', 'First Test Script', 'Test Runner']
-                    },
-                    {
-                        title: 'Module 2: Locators &amp; Actions',
-                        lectures: 5,
-                        topics: ['Selectors', 'Auto-Waiting', 'Interactions', 'Assertions']
-                    },
-                    {
-                        title: 'Module 3: Advanced Features',
-                        lectures: 5,
-                        topics: ['Network Interception', 'API Testing', 'Visual Testing', 'Debugging']
-                    },
-                    {
-                        title: 'Module 4: CI/CD Integration',
-                        lectures: 4,
-                        topics: ['Jenkins Integration', 'GitHub Actions', 'Reporting', 'Real-time Project']
-                    }
+                    { title: 'Module 1: Playwright Introduction', lectures: 4, topics: ['What is Playwright?', 'Installation &amp; Setup', 'First Test Script', 'Test Runner'] },
+                    { title: 'Module 2: Locators &amp; Actions', lectures: 5, topics: ['Selectors', 'Auto-Waiting', 'Interactions', 'Assertions'] },
+                    { title: 'Module 3: Advanced Features', lectures: 5, topics: ['Network Interception', 'API Testing', 'Visual Testing', 'Debugging'] },
+                    { title: 'Module 4: CI/CD Integration', lectures: 4, topics: ['Jenkins Integration', 'GitHub Actions', 'Reporting', 'Real-time Project'] }
                 ]
             },
             'cypress': {
@@ -1259,26 +976,10 @@
                     'Modern JavaScript'
                 ],
                 modules: [
-                    {
-                        title: 'Module 1: Cypress Introduction',
-                        lectures: 4,
-                        topics: ['What is Cypress?', 'Installation &amp; Setup', 'Writing First Test', 'Cypress Dashboard']
-                    },
-                    {
-                        title: 'Module 2: Testing with Cypress',
-                        lectures: 5,
-                        topics: ['Selectors &amp; Assertions', 'Interactions', 'Time-Travel Debugging', 'Fixtures &amp; Data']
-                    },
-                    {
-                        title: 'Module 3: Advanced Features',
-                        lectures: 4,
-                        topics: ['API Testing', 'Custom Commands', 'Video Recording', 'Parallel Testing']
-                    },
-                    {
-                        title: 'Module 4: CI/CD &amp; Projects',
-                        lectures: 4,
-                        topics: ['CI/CD Integration', 'Real-time Project', 'Reporting', 'Best Practices']
-                    }
+                    { title: 'Module 1: Cypress Introduction', lectures: 4, topics: ['What is Cypress?', 'Installation &amp; Setup', 'Writing First Test', 'Cypress Dashboard'] },
+                    { title: 'Module 2: Testing with Cypress', lectures: 5, topics: ['Selectors &amp; Assertions', 'Interactions', 'Time-Travel Debugging', 'Fixtures &amp; Data'] },
+                    { title: 'Module 3: Advanced Features', lectures: 4, topics: ['API Testing', 'Custom Commands', 'Video Recording', 'Parallel Testing'] },
+                    { title: 'Module 4: CI/CD &amp; Projects', lectures: 4, topics: ['CI/CD Integration', 'Real-time Project', 'Reporting', 'Best Practices'] }
                 ]
             },
             'restassured': {
@@ -1310,36 +1011,18 @@
                     'Enterprise API Testing'
                 ],
                 modules: [
-                    {
-                        title: 'Module 1: REST Assured Introduction',
-                        lectures: 4,
-                        topics: ['What is REST Assured?', 'Setup &amp; Configuration', 'Making GET Requests', 'Response Validation']
-                    },
-                    {
-                        title: 'Module 2: Advanced Testing',
-                        lectures: 4,
-                        topics: ['POST, PUT, DELETE Requests', 'Request Specification', 'Response Specification', 'Authentication']
-                    },
-                    {
-                        title: 'Module 3: Test Framework Integration',
-                        lectures: 4,
-                        topics: ['TestNG Integration', 'Data-Driven Testing', 'Assertions', 'Test Suites']
-                    },
-                    {
-                        title: 'Module 4: CI/CD &amp; Projects',
-                        lectures: 4,
-                        topics: ['Reporting', 'Jenkins Integration', 'Real-time Project', 'Best Practices']
-                    }
+                    { title: 'Module 1: REST Assured Introduction', lectures: 4, topics: ['What is REST Assured?', 'Setup &amp; Configuration', 'Making GET Requests', 'Response Validation'] },
+                    { title: 'Module 2: Advanced Testing', lectures: 4, topics: ['POST, PUT, DELETE Requests', 'Request Specification', 'Response Specification', 'Authentication'] },
+                    { title: 'Module 3: Test Framework Integration', lectures: 4, topics: ['TestNG Integration', 'Data-Driven Testing', 'Assertions', 'Test Suites'] },
+                    { title: 'Module 4: CI/CD &amp; Projects', lectures: 4, topics: ['Reporting', 'Jenkins Integration', 'Real-time Project', 'Best Practices'] }
                 ]
             }
         };
 
+        // ===== LOAD COURSE DATA =====
         function loadCourse(courseId) {
             const course = courseData[courseId];
-            if (!course) {
-                loadCourse('manual');
-                return;
-            }
+            if (!course) { loadCourse('manual'); return; }
 
             const img = document.getElementById('courseImage');
             if (course.image) {
@@ -1394,7 +1077,7 @@
 
             const modulesContainer = document.getElementById('modulesContainer');
             modulesContainer.innerHTML = '';
-            course.modules.forEach((module, index) => {
+            course.modules.forEach(module => {
                 const moduleDiv = document.createElement('div');
                 moduleDiv.className = 'module-item';
                 moduleDiv.innerHTML = `
@@ -1415,51 +1098,12 @@
             });
         }
 
-        function toggleModule(element) {
-            const body = element.nextElementSibling;
-            const icon = element.querySelector('i');
-            if (body.classList.contains('open')) {
-                body.classList.remove('open');
-                icon.className = 'fas fa-chevron-down';
-            } else {
-                body.classList.add('open');
-                icon.className = 'fas fa-chevron-up';
-            }
-        }
-
-        document.querySelectorAll('.course-tab').forEach(tab => {
-            tab.addEventListener('click', function() {
-                document.querySelectorAll('.course-tab').forEach(t => t.classList.remove('active'));
-                this.classList.add('active');
-                const tabId = this.dataset.tab;
-                document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
-                document.getElementById('tab-' + tabId).classList.add('active');
-            });
-        });
-
-        function toggleFAQ(element) {
-            const answer = element.nextElementSibling;
-            const icon = element.querySelector('i');
-            if (answer.classList.contains('open')) {
-                answer.classList.remove('open');
-                icon.className = 'fas fa-plus';
-            } else {
-                answer.classList.add('open');
-                icon.className = 'fas fa-minus';
-            }
-        }
-
         if (courseParam && courseData[courseParam]) {
             loadCourse(courseParam);
         } else {
             loadCourse('manual');
         }
-
-        // ===== INIT =====
-        document.addEventListener('DOMContentLoaded', function() {
-            updateStudentName();
-        });
     </script>
 
 </body>
-</html>
+</html> 
