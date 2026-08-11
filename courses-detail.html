@@ -453,6 +453,7 @@
                     <button class="btn-download-curriculum" onclick="alert('📄 Downloading curriculum...')">
                         <i class="fas fa-download"></i> Curriculum
                     </button>
+                    <!-- ===== ENROLL NOW BUTTON - DIRECT TO ENROLL PAGE ===== -->
                     <button class="btn-enroll-now" id="enrollNowBtn" onclick="goToEnroll()">
                         Enroll Now <i class="fas fa-arrow-right"></i>
                     </button>
@@ -722,20 +723,12 @@
         }
 
         // ============================================================ */
-        // ===== ENROLL NOW – checks login or redirects ===== */
+        // ===== ENROLL NOW – goes directly to enroll.html ===== */
         // ============================================================ */
         function goToEnroll() {
             const courseId = getCourseId();
-            // Check if user is logged in as student/instructor/admin
-            const isLoggedIn = localStorage.getItem('qskillStudentLoggedIn') === 'true' ||
-                               localStorage.getItem('qskillInstructorLoggedIn') === 'true' ||
-                               localStorage.getItem('qskillAdminLoggedIn') === 'true';
-            if (isLoggedIn) {
-                window.location.href = 'enroll.html?course=' + courseId;
-            } else {
-                // Redirect to login with a return URL
-                window.location.href = 'login.html?redirect=course&course=' + courseId;
-            }
+            // Always go to enroll page without checking login
+            window.location.href = 'enroll.html?course=' + courseId;
         }
 
         function getCourseId() {
@@ -1106,4 +1099,4 @@
     </script>
 
 </body>
-</html> 
+</html>
