@@ -12,9 +12,6 @@
     <link rel="stylesheet" href="style.css" />
 
     <style>
-        /* ============================================================ */
-        /* ===== PAGE BACKGROUND ===== */
-        /* ============================================================ */
         * {
             margin: 0;
             padding: 0;
@@ -26,8 +23,8 @@
             height: 100%;
             margin: 0;
             padding: 0;
-            overflow: hidden;
             font-family: 'Poppins', sans-serif;
+            background: #F5F8FF;
         }
 
         .login-page {
@@ -35,30 +32,19 @@
             justify-content: center;
             align-items: center;
             min-height: 100vh;
-            height: 100vh;
             padding: 20px;
             background: linear-gradient(135deg, #DEEAFD 0%, #EAF1FF 50%, #FFFFFF 100%);
         }
 
         .login-container {
+            background: #FFFFFF;
             border-radius: 24px;
             box-shadow: 0 20px 60px rgba(31, 60, 136, 0.12);
             max-width: 440px;
             width: 100%;
-            max-height: 98vh;
-            overflow-y: auto;
+            padding: 30px 32px 32px;
             border: 1px solid #e2e8f0;
             animation: fadeInUp 0.5s ease;
-            padding: 24px 28px 28px;
-            position: relative;
-            background: linear-gradient(to top, #DEEAFD 0%, #FFFFFF 70%, #FFFFFF 100%);
-            pointer-events: auto;
-            z-index: 1;
-        }
-
-        .login-container::-webkit-scrollbar {
-            width: 0;
-            background: transparent;
         }
 
         @keyframes fadeInUp {
@@ -72,192 +58,37 @@
             }
         }
 
-        /* ===== DECORATIVE SHAPES - MUST NOT BLOCK CLICKS ===== */
-        .design-shapes {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            pointer-events: none !important;
-            overflow: hidden;
-            border-radius: 24px;
-            z-index: 0;
-        }
-        .design-shapes * {
-            pointer-events: none !important;
-        }
-        .shape {
-            position: absolute;
-            border-radius: 50%;
-            background: rgba(31, 60, 136, 0.06);
-            pointer-events: none !important;
-        }
-        .shape-1 {
-            width: 200px;
-            height: 200px;
-            top: -80px;
-            right: -60px;
-            background: rgba(31, 60, 136, 0.04);
-        }
-        .shape-2 {
-            width: 150px;
-            height: 150px;
-            bottom: -50px;
-            left: -40px;
-            background: rgba(255, 165, 0, 0.08);
-        }
-        .shape-3 {
-            width: 100px;
-            height: 100px;
-            top: 40%;
-            left: 50%;
-            transform: translateX(-50%);
-            background: rgba(31, 60, 136, 0.03);
-        }
-        .dot {
-            position: absolute;
-            border-radius: 50%;
-            background: rgba(31, 60, 136, 0.08);
-            pointer-events: none !important;
-        }
-        .dot-1 {
-            width: 8px;
-            height: 8px;
-            top: 20%;
-            right: 15%;
-        }
-        .dot-2 {
-            width: 12px;
-            height: 12px;
-            bottom: 25%;
-            left: 10%;
-            background: rgba(255, 165, 0, 0.12);
-        }
-        .dot-3 {
-            width: 6px;
-            height: 6px;
-            top: 60%;
-            right: 20%;
-        }
-        .ring {
-            position: absolute;
-            border: 2px solid rgba(31, 60, 136, 0.06);
-            border-radius: 50%;
-            pointer-events: none !important;
-        }
-        .ring-1 {
-            width: 60px;
-            height: 60px;
-            bottom: 15%;
-            right: 10%;
-        }
-        .ring-2 {
-            width: 40px;
-            height: 40px;
-            top: 30%;
-            left: 5%;
-        }
-
-        /* ============================================================ */
-        /* ===== TOAST - FIXED: SMALL, FLOATING, CORNER ===== */
-        /* ============================================================ */
-        .toast {
-            position: fixed;
-            bottom: 30px;
-            left: 50%;
-            transform: translateX(-50%) translateY(80px);
-            background: #ffffff;
-            padding: 12px 24px;
-            border-radius: 12px;
-            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.12);
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            font-size: 13px;
-            font-weight: 500;
-            color: #1e293b;
-            opacity: 0;
-            transition: opacity 0.4s ease, transform 0.4s ease;
-            z-index: 99999 !important;
-            border: 1px solid #e2e8f0;
-            max-width: 90%;
-            width: auto;
-            height: auto;
-            min-height: 50px;
-            pointer-events: auto;
-            top: auto;
-            right: auto;
-            left: 50%;
-        }
-        .toast.show {
-            opacity: 1;
-            transform: translateX(-50%) translateY(0);
-        }
-        .toast i {
-            font-size: 18px;
-            flex-shrink: 0;
-        }
-        .toast.success i {
-            color: #22c55e;
-        }
-        .toast.error i {
-            color: #ef4444;
-        }
-        .toast.info i {
-            color: #1f3c88;
-        }
-
-        /* ============================================================ */
-        /* ===== TOP ROW: LOGO + BACK TO HOME ===== */
-        /* ============================================================ */
+        /* Top row */
         .login-top {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 10px;
-            position: relative;
-            z-index: 10 !important;
-        }
-
-        .login-logo {
-            display: flex;
-            align-items: center;
+            margin-bottom: 16px;
         }
         .login-logo img {
             height: 55px;
             width: auto;
         }
-
         .back-link {
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
             color: #6b7280;
             text-decoration: none;
             font-size: 13px;
             font-weight: 500;
             transition: 0.3s;
             cursor: pointer;
-            position: relative;
-            z-index: 10;
         }
         .back-link:hover {
             color: #1f3c88;
         }
         .back-link i {
-            font-size: 14px;
+            margin-right: 4px;
         }
 
-        /* ============================================================ */
-        /* ===== PHOTO - MADE BIGGER (only illustration) ===== */
-        /* ============================================================ */
+        /* Illustration */
         .login-photo-section {
-            position: relative;
-            z-index: 5 !important;
             display: flex;
             justify-content: center;
-            margin-bottom: 14px;
+            margin-bottom: 16px;
         }
         .login-photo-wrapper {
             max-width: 300px;
@@ -270,14 +101,10 @@
             max-height: 230px;
         }
 
-        /* ============================================================ */
-        /* ===== WELCOME HEADER & TABS ===== */
-        /* ============================================================ */
+        /* Header */
         .login-header {
             text-align: center;
-            margin-bottom: 14px;
-            position: relative;
-            z-index: 5 !important;
+            margin-bottom: 16px;
         }
         .login-header h2 {
             font-size: 22px;
@@ -293,21 +120,18 @@
             margin-top: 2px;
         }
 
+        /* Tabs */
         .role-tabs {
             display: flex;
             gap: 8px;
-            margin-bottom: 16px;
-            background: rgba(255, 255, 255, 0.6);
+            margin-bottom: 20px;
+            background: #F1F4F9;
             padding: 4px;
             border-radius: 12px;
-            border: 1px solid #e2e8f0;
-            position: relative;
-            z-index: 10 !important;
-            backdrop-filter: blur(4px);
         }
         .role-tab {
             flex: 1;
-            padding: 8px 10px;
+            padding: 8px 12px;
             border: none;
             border-radius: 8px;
             font-family: 'Poppins', sans-serif;
@@ -321,8 +145,6 @@
             align-items: center;
             justify-content: center;
             gap: 6px;
-            position: relative;
-            z-index: 10;
         }
         .role-tab i {
             font-size: 14px;
@@ -336,23 +158,20 @@
             color: #1e293b;
         }
 
-        /* ============================================================ */
-        /* ===== FORM ===== */
-        /* ============================================================ */
+        /* Form */
         .login-form {
-            position: relative;
-            z-index: 10 !important;
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
         }
         .form-group {
-            margin-bottom: 14px;
-            position: relative;
-            z-index: 10;
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
         }
         .form-group label {
             font-size: 13px;
             font-weight: 600;
-            display: block;
-            margin-bottom: 4px;
             color: #1e293b;
         }
         .form-group label .required {
@@ -362,24 +181,20 @@
         .input-wrapper {
             display: flex;
             align-items: center;
-            border: 1.5px solid rgba(0, 0, 0, 0.08);
+            border: 1.5px solid #e2e8f0;
             border-radius: 10px;
             padding: 8px 14px;
             transition: 0.3s;
-            background: rgba(255, 255, 255, 0.7);
-            backdrop-filter: blur(4px);
-            position: relative;
-            z-index: 10;
+            background: #FAFBFC;
         }
         .input-wrapper:focus-within {
             border-color: #1f3c88;
             box-shadow: 0 0 0 4px rgba(31, 60, 136, 0.08);
-            background: rgba(255, 255, 255, 0.9);
+            background: #ffffff;
         }
         .input-wrapper i {
             color: #6b7280;
             font-size: 16px;
-            min-width: 18px;
             margin-right: 10px;
         }
         .input-wrapper:focus-within i {
@@ -393,9 +208,6 @@
             font-family: 'Poppins', sans-serif;
             color: #1e293b;
             background: transparent;
-            width: 100%;
-            position: relative;
-            z-index: 10;
         }
         .input-wrapper input::placeholder {
             color: #B0B8C4;
@@ -405,9 +217,6 @@
             color: #6b7280;
             font-size: 16px;
             padding: 4px;
-            margin-left: 6px;
-            position: relative;
-            z-index: 10;
         }
         .input-wrapper .toggle-password:hover {
             color: #1e293b;
@@ -425,11 +234,8 @@
             display: none;
             font-size: 12px;
             color: #ef4444;
-            margin-top: 4px;
             align-items: center;
             gap: 4px;
-            position: relative;
-            z-index: 10;
         }
         .error-message.show {
             display: flex;
@@ -438,109 +244,7 @@
             font-size: 13px;
         }
 
-        .phone-input-wrapper {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            border: 1.5px solid rgba(0, 0, 0, 0.08);
-            border-radius: 10px;
-            padding: 8px 14px;
-            transition: 0.3s;
-            background: rgba(255, 255, 255, 0.7);
-            backdrop-filter: blur(4px);
-            position: relative;
-            z-index: 10;
-        }
-        .phone-input-wrapper:focus-within {
-            border-color: #1f3c88;
-            box-shadow: 0 0 0 4px rgba(31, 60, 136, 0.08);
-            background: rgba(255, 255, 255, 0.9);
-        }
-        .phone-input-wrapper i {
-            color: #6b7280;
-            font-size: 16px;
-            min-width: 18px;
-        }
-        .phone-input-wrapper:focus-within i {
-            color: #1f3c88;
-        }
-        .phone-input-wrapper .country-code {
-            font-weight: 600;
-            color: #1e293b;
-            font-size: 14px;
-            padding-right: 8px;
-            border-right: 1px solid #e2e8f0;
-            margin-right: 8px;
-        }
-        .phone-input-wrapper input {
-            border: none;
-            outline: none;
-            flex: 1;
-            font-size: 14px;
-            font-family: 'Poppins', sans-serif;
-            color: #1e293b;
-            background: transparent;
-            width: 100%;
-            position: relative;
-            z-index: 10;
-        }
-        .phone-input-wrapper input::placeholder {
-            color: #B0B8C4;
-        }
-        .phone-input-wrapper.error {
-            border-color: #ef4444;
-            box-shadow: 0 0 0 4px rgba(239, 68, 68, 0.08);
-        }
-        .phone-input-wrapper.success {
-            border-color: #22c55e;
-            box-shadow: 0 0 0 4px rgba(34, 197, 94, 0.08);
-        }
-
-        /* ============================================================ */
-        /* ===== LOGIN OPTIONS ===== */
-        /* ============================================================ */
-        .login-options {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin: 12px 0 16px;
-            position: relative;
-            z-index: 10 !important;
-        }
-        .login-options .remember-me {
-            display: flex;
-            align-items: center;
-            gap: 6px;
-            font-size: 13px;
-            color: #6b7280;
-            cursor: pointer;
-            position: relative;
-            z-index: 10;
-        }
-        .login-options .remember-me input[type="checkbox"] {
-            width: 15px;
-            height: 15px;
-            accent-color: #1f3c88;
-            cursor: pointer;
-            position: relative;
-            z-index: 10;
-        }
-        .login-options .forgot-link {
-            font-size: 13px;
-            color: #1f3c88;
-            text-decoration: none;
-            font-weight: 500;
-            cursor: pointer;
-            position: relative;
-            z-index: 10;
-        }
-        .login-options .forgot-link:hover {
-            text-decoration: underline;
-        }
-
-        /* ============================================================ */
-        /* ===== HIDE/SHOW FIELD CLASSES ===== */
-        /* ============================================================ */
+        /* Hide/show fields */
         #emailField {
             display: none !important;
         }
@@ -553,12 +257,6 @@
         #studentIdField.hide {
             display: none !important;
         }
-        #phoneField {
-            display: none !important;
-        }
-        #phoneField.show {
-            display: block !important;
-        }
         #passwordField {
             display: block !important;
         }
@@ -566,9 +264,93 @@
             display: none !important;
         }
 
-        /* ============================================================ */
-        /* ===== FORGOT PASSWORD MODAL ===== */
-        /* ============================================================ */
+        /* Options */
+        .login-options {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin: 4px 0 6px;
+        }
+        .login-options .remember-me {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 13px;
+            color: #6b7280;
+            cursor: pointer;
+        }
+        .login-options .remember-me input[type="checkbox"] {
+            width: 15px;
+            height: 15px;
+            accent-color: #1f3c88;
+            cursor: pointer;
+        }
+        .login-options .forgot-link {
+            font-size: 13px;
+            color: #1f3c88;
+            text-decoration: none;
+            font-weight: 500;
+            cursor: pointer;
+        }
+        .login-options .forgot-link:hover {
+            text-decoration: underline;
+        }
+
+        /* Submit */
+        .login-submit-btn {
+            width: 100%;
+            background: #1f3c88;
+            color: #ffffff;
+            border: none;
+            padding: 12px;
+            border-radius: 999px;
+            font-weight: 600;
+            font-size: 16px;
+            cursor: pointer;
+            transition: 0.3s;
+            font-family: 'Poppins', sans-serif;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            box-shadow: 0 4px 16px rgba(31, 60, 136, 0.2);
+            margin-top: 4px;
+        }
+        .login-submit-btn:hover:not(:disabled) {
+            background: #162d6e;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 24px rgba(31, 60, 136, 0.3);
+        }
+        .login-submit-btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+        .login-submit-btn .spinner {
+            display: none;
+            width: 22px;
+            height: 22px;
+            border: 2.5px solid rgba(255, 255, 255, 0.3);
+            border-top-color: #fff;
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+        }
+        .login-submit-btn.loading .spinner {
+            display: inline-block;
+        }
+        .login-submit-btn .btn-text {
+            display: inline;
+        }
+        .login-submit-btn.loading .btn-text {
+            opacity: 0.7;
+        }
+        @keyframes spin {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        /* Forgot modal */
         .forgot-modal-overlay {
             display: none;
             position: fixed;
@@ -578,7 +360,7 @@
             height: 100%;
             background: rgba(0, 0, 0, 0.4);
             backdrop-filter: blur(6px);
-            z-index: 9999 !important;
+            z-index: 9999;
             justify-content: center;
             align-items: center;
         }
@@ -593,12 +375,7 @@
             width: 90%;
             box-shadow: 0 20px 60px rgba(0, 0, 0, 0.2);
             position: relative;
-            z-index: 10000 !important;
             animation: slideUp 0.3s ease;
-        }
-        .forgot-modal * {
-            position: relative;
-            z-index: 10001 !important;
         }
         @keyframes slideUp {
             from {
@@ -646,8 +423,6 @@
             cursor: pointer;
             font-family: 'Poppins', sans-serif;
             transition: 0.3s;
-            position: relative;
-            z-index: 10001;
         }
         .forgot-modal .modal-actions .btn-cancel {
             background: #f1f3f6;
@@ -669,7 +444,6 @@
         .forgot-modal .modal-actions .btn-send:disabled {
             opacity: 0.6;
             cursor: not-allowed;
-            transform: none;
         }
         .forgot-modal .modal-close {
             position: absolute;
@@ -681,7 +455,6 @@
             color: #6b7280;
             cursor: pointer;
             transition: 0.3s;
-            z-index: 10001;
         }
         .forgot-modal .modal-close:hover {
             color: #1e293b;
@@ -703,71 +476,10 @@
             opacity: 0.7;
         }
 
-        /* ============================================================ */
-        /* ===== LOGIN BUTTON ===== */
-        /* ============================================================ */
-        .login-submit-btn {
-            width: 100%;
-            background: #1f3c88;
-            color: #ffffff;
-            border: none;
-            padding: 12px;
-            border-radius: 999px;
-            font-weight: 600;
-            font-size: 16px;
-            cursor: pointer;
-            transition: 0.3s;
-            font-family: 'Poppins', sans-serif;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 10px;
-            box-shadow: 0 4px 16px rgba(31, 60, 136, 0.2);
-            position: relative;
-            margin-top: 4px;
-            z-index: 10 !important;
-        }
-        .login-submit-btn:hover:not(:disabled) {
-            background: #162d6e;
-            transform: translateY(-2px);
-            box-shadow: 0 6px 24px rgba(31, 60, 136, 0.3);
-        }
-        .login-submit-btn:disabled {
-            opacity: 0.6;
-            cursor: not-allowed;
-            transform: none;
-        }
-        .login-submit-btn .spinner {
-            display: none;
-            width: 22px;
-            height: 22px;
-            border: 2.5px solid rgba(255, 255, 255, 0.3);
-            border-top-color: #fff;
-            border-radius: 50%;
-            animation: spin 0.8s linear infinite;
-        }
-        .login-submit-btn.loading .spinner {
-            display: inline-block;
-        }
-        .login-submit-btn .btn-text {
-            display: inline;
-        }
-        .login-submit-btn.loading .btn-text {
-            opacity: 0.7;
-        }
-        @keyframes spin {
-            to {
-                transform: rotate(360deg);
-            }
-        }
-
-        /* ============================================================ */
-        /* ===== RESPONSIVE ===== */
-        /* ============================================================ */
+        /* Responsive */
         @media (max-width: 480px) {
             .login-container {
-                padding: 20px 16px 20px;
-                max-width: 100%;
+                padding: 20px 16px;
             }
             .login-logo img {
                 height: 45px;
@@ -798,27 +510,16 @@
             .login-photo-wrapper img {
                 max-height: 170px;
             }
-            .login-top {
-                flex-wrap: wrap;
-                gap: 8px;
-            }
             .back-link {
                 font-size: 12px;
             }
             .forgot-modal {
                 padding: 24px 18px 20px;
             }
-            .toast {
-                bottom: 20px;
-                padding: 10px 18px;
-                font-size: 12px;
-                min-height: 44px;
-            }
         }
-
         @media (max-height: 700px) {
             .login-container {
-                padding: 16px 20px 18px;
+                padding: 16px 20px;
             }
             .login-logo img {
                 height: 42px;
@@ -834,7 +535,6 @@
             }
             .role-tabs {
                 margin-bottom: 12px;
-                padding: 4px;
             }
             .role-tab {
                 font-size: 12px;
@@ -853,13 +553,7 @@
                 font-size: 13px;
             }
             .login-options {
-                margin: 8px 0 12px;
-            }
-            .login-options .remember-me {
-                font-size: 12px;
-            }
-            .login-options .forgot-link {
-                font-size: 12px;
+                margin: 6px 0 10px;
             }
             .login-submit-btn {
                 padding: 10px;
@@ -874,23 +568,13 @@
             .login-photo-section {
                 margin-bottom: 10px;
             }
-            .login-top {
-                margin-bottom: 6px;
-            }
             .back-link {
                 font-size: 12px;
             }
-            .toast {
-                bottom: 16px;
-                padding: 8px 16px;
-                font-size: 12px;
-                min-height: 40px;
-            }
         }
-
         @media (max-height: 600px) {
             .login-container {
-                padding: 12px 16px 14px;
+                padding: 12px 16px;
             }
             .login-logo img {
                 height: 32px;
@@ -942,9 +626,6 @@
             .login-photo-section {
                 margin-bottom: 6px;
             }
-            .login-top {
-                margin-bottom: 4px;
-            }
             .back-link {
                 font-size: 11px;
             }
@@ -958,22 +639,10 @@
                 padding: 8px;
                 font-size: 12px;
             }
-            .toast {
-                bottom: 12px;
-                padding: 6px 14px;
-                font-size: 11px;
-                min-height: 36px;
-            }
         }
     </style>
 </head>
 <body class="login-page">
-
-    <!-- ===== TOAST - SMALL, FLOATING, BOTTOM CENTER ===== -->
-    <div class="toast" id="toast">
-        <i class="fas fa-check-circle" id="toastIcon"></i>
-        <span id="toastMessage">Success!</span>
-    </div>
 
     <!-- ===== FORGOT PASSWORD MODAL ===== -->
     <div class="forgot-modal-overlay" id="forgotModalOverlay">
@@ -1003,17 +672,6 @@
 
     <!-- ===== LOGIN CONTAINER ===== -->
     <div class="login-container">
-
-        <div class="design-shapes">
-            <div class="shape shape-1"></div>
-            <div class="shape shape-2"></div>
-            <div class="shape shape-3"></div>
-            <div class="dot dot-1"></div>
-            <div class="dot dot-2"></div>
-            <div class="dot dot-3"></div>
-            <div class="ring ring-1"></div>
-            <div class="ring ring-2"></div>
-        </div>
 
         <div class="login-top">
             <div class="login-logo">
@@ -1057,18 +715,6 @@
                 </span>
             </div>
 
-            <div class="form-group" id="phoneField">
-                <label for="phoneInput">Phone Number <span class="required">*</span></label>
-                <div class="phone-input-wrapper" id="phoneWrapper">
-                    <i class="fas fa-phone-alt"></i>
-                    <span class="country-code">+91</span>
-                    <input type="tel" id="phoneInput" placeholder="Enter 10-digit phone number" required />
-                </div>
-                <span class="error-message" id="phoneError">
-                    <i class="fas fa-exclamation-circle"></i> Please enter a valid 10-digit phone number
-                </span>
-            </div>
-
             <div class="form-group" id="studentIdField">
                 <label for="studentIdInput">Student ID <span class="required">*</span></label>
                 <div class="input-wrapper" id="studentIdWrapper">
@@ -1109,57 +755,48 @@
     </div>
 
     <script>
-        // ============================================================ */
-        // ===== COMPLETE LOGIN SCRIPT - SELF CONTAINED ===== */
-        // ============================================================ */
+        // ============================================================
+        // COMPLETE LOGIN SCRIPT - NO ALERTS, DIRECT REDIRECT
+        // ============================================================
 
         (function() {
             'use strict';
 
-            console.log('🚀 Login page script loaded');
+            console.log('🚀 Login page loaded');
 
-            // --- Toast ---
-            var toastTimeout;
-
-            function showToast(message, type) {
-                type = type || 'success';
-                var toast = document.getElementById('toast');
-                var toastIcon = document.getElementById('toastIcon');
-                var toastMessage = document.getElementById('toastMessage');
-                if (!toast) return;
-                if (toastTimeout) clearTimeout(toastTimeout);
-                toastIcon.className = type === 'success' ? 'fas fa-check-circle' :
-                    type === 'error' ? 'fas fa-exclamation-circle' :
-                    'fas fa-info-circle';
-                toastMessage.textContent = message;
-                toast.className = 'toast ' + type;
-                setTimeout(function() { toast.classList.add('show'); }, 10);
-                toastTimeout = setTimeout(function() { toast.classList.remove('show'); }, 4000);
-            }
-
-            // --- Databases ---
-            var studentDatabase = JSON.parse(localStorage.getItem('qskillStudents')) || {};
-            var instructorDatabase = {
-                'instructor@qskill.com': { password: 'instructor123', name: 'Demo Instructor', role: 'instructor' },
-                'admin@qskill.com': { password: 'admin123', name: 'Super Admin', role: 'admin' }
-            };
-
-            // Init default students
-            if (Object.keys(studentDatabase).length === 0) {
-                studentDatabase['QSK24012345'] = {
+            // --- Force correct student accounts ---
+            var defaultStudents = {
+                'QSK24012345': {
                     email: 'student@qskill.com',
                     phone: '9876543210',
                     password: 'a1b2c3d4e5f67890',
                     name: 'Demo Student'
-                };
-                studentDatabase['QSK24067890'] = {
+                },
+                'QSK24067890': {
                     email: 'demo@qskill.com',
                     phone: '9876543211',
                     password: 'f9e8d7c6b5a43210',
                     name: 'Demo User'
-                };
-                localStorage.setItem('qskillStudents', JSON.stringify(studentDatabase));
+                }
+            };
+
+            var studentDb = JSON.parse(localStorage.getItem('qskillStudents')) || {};
+            var needsUpdate = false;
+            for (var key in defaultStudents) {
+                if (!studentDb[key] || studentDb[key].password !== defaultStudents[key].password) {
+                    studentDb[key] = defaultStudents[key];
+                    needsUpdate = true;
+                }
             }
+            if (needsUpdate) {
+                localStorage.setItem('qskillStudents', JSON.stringify(studentDb));
+                console.log('✅ Default students set with correct passwords');
+            }
+
+            var instructorDb = {
+                'instructor@qskill.com': { password: 'instructor123', name: 'Demo Instructor', role: 'instructor' },
+                'admin@qskill.com': { password: 'admin123', name: 'Super Admin', role: 'admin' }
+            };
 
             // --- DOM refs ---
             var studentTab = document.getElementById('studentTab');
@@ -1189,388 +826,339 @@
             var forgotWrapper = document.getElementById('forgotWrapper');
             var forgotError = document.getElementById('forgotError');
             var forgotErrorText = document.getElementById('forgotErrorText');
-            var forgotLabel = document.getElementById('forgotLabel');
-            var forgotModalDesc = document.getElementById('forgotModalDesc');
-
-            console.log('✅ DOM elements found');
 
             var currentRole = 'student';
-            var forgotResetting = false;
 
-            // --- Validators ---
-            function validateEmailField() {
-                if (!emailInput || !emailWrapper || !emailError) return false;
-                var val = emailInput.value.trim();
-                var ok = val !== '' && /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(val);
-                if (val === '') { emailWrapper.classList.remove('success', 'error');
-                    emailError.classList.remove('show'); return false; }
-                if (ok) { emailWrapper.classList.remove('error');
-                    emailWrapper.classList.add('success');
-                    emailError.classList.remove('show'); return true; } else { emailWrapper.classList.remove('success');
-                    emailWrapper.classList.add('error');
-                    emailError.classList.add('show'); return false; }
-            }
-
+            // --- Validate functions ---
             function validateStudentIdField() {
-                if (!studentIdInput || !studentIdWrapper || !studentIdError) return false;
                 var val = studentIdInput.value.trim();
                 var ok = val !== '' && val.length >= 6;
-                if (val === '') { studentIdWrapper.classList.remove('success', 'error');
-                    studentIdError.classList.remove('show'); return false; }
-                if (ok) { studentIdWrapper.classList.remove('error');
+                if (val === '') {
+                    studentIdWrapper.classList.remove('success', 'error');
+                    studentIdError.classList.remove('show');
+                    return false;
+                }
+                if (ok) {
+                    studentIdWrapper.classList.remove('error');
                     studentIdWrapper.classList.add('success');
-                    studentIdError.classList.remove('show'); return true; } else { studentIdWrapper.classList.remove('success');
+                    studentIdError.classList.remove('show');
+                    return true;
+                } else {
+                    studentIdWrapper.classList.remove('success');
                     studentIdWrapper.classList.add('error');
-                    studentIdError.classList.add('show'); return false; }
+                    studentIdError.classList.add('show');
+                    return false;
+                }
             }
 
             function validatePasswordField() {
-                if (!passwordInput || !passwordWrapper || !passwordError) return false;
                 var val = passwordInput.value;
                 var ok = val.length >= 6;
-                if (val === '') { passwordWrapper.classList.remove('success', 'error');
-                    passwordError.classList.remove('show'); return false; }
-                if (ok) { passwordWrapper.classList.remove('error');
+                if (val === '') {
+                    passwordWrapper.classList.remove('success', 'error');
+                    passwordError.classList.remove('show');
+                    return false;
+                }
+                if (ok) {
+                    passwordWrapper.classList.remove('error');
                     passwordWrapper.classList.add('success');
-                    passwordError.classList.remove('show'); return true; } else { passwordWrapper.classList.remove('success');
+                    passwordError.classList.remove('show');
+                    return true;
+                } else {
+                    passwordWrapper.classList.remove('success');
                     passwordWrapper.classList.add('error');
-                    passwordError.classList.add('show'); return false; }
+                    passwordError.classList.add('show');
+                    return false;
+                }
             }
 
-            function resetForm() {
-                [emailWrapper, studentIdWrapper, passwordWrapper].forEach(function(w) {
-                    if (w) w.classList.remove('error', 'success');
-                });
-                [emailError, studentIdError, passwordError].forEach(function(e) {
-                    if (e) e.classList.remove('show');
-                });
+            function validateEmailField() {
+                var val = emailInput.value.trim();
+                var ok = val !== '' && /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(val);
+                if (val === '') {
+                    emailWrapper.classList.remove('success', 'error');
+                    emailError.classList.remove('show');
+                    return false;
+                }
+                if (ok) {
+                    emailWrapper.classList.remove('error');
+                    emailWrapper.classList.add('success');
+                    emailError.classList.remove('show');
+                    return true;
+                } else {
+                    emailWrapper.classList.remove('success');
+                    emailWrapper.classList.add('error');
+                    emailError.classList.add('show');
+                    return false;
+                }
             }
 
             // --- Role switching ---
             function switchToStudent() {
-                if (!studentTab || !instructorTab) return;
                 studentTab.classList.add('active');
                 instructorTab.classList.remove('active');
                 currentRole = 'student';
-                if (studentIdField) { studentIdField.classList.remove('hide');
-                    studentIdField.style.display = 'block'; }
-                if (emailField) { emailField.classList.remove('show');
-                    emailField.style.display = 'none'; }
-                if (passwordField) { passwordField.classList.remove('hide');
-                    passwordField.style.display = 'block'; }
-                if (roleSubtitle) roleSubtitle.textContent = 'Welcome back! Please enter your Student ID to continue.';
-                if (studentIdInput) studentIdInput.placeholder = 'Enter your Student ID';
-                if (passwordInput) passwordInput.placeholder = 'Enter your password';
-                if (forgotLabel) forgotLabel.textContent = 'Student ID';
-                if (forgotInput) forgotInput.placeholder = 'Enter your Student ID';
-                if (forgotModalDesc) forgotModalDesc.textContent = 'Enter your Student ID to receive a password reset link.';
-                resetForm();
+                studentIdField.style.display = 'block';
+                studentIdField.classList.remove('hide');
+                emailField.style.display = 'none';
+                emailField.classList.remove('show');
+                passwordField.style.display = 'block';
+                passwordField.classList.remove('hide');
+                roleSubtitle.textContent = 'Welcome back! Please enter your Student ID to continue.';
+                studentIdInput.placeholder = 'Enter your Student ID';
+                passwordInput.placeholder = 'Enter your password';
+                studentIdWrapper.classList.remove('error', 'success');
+                passwordWrapper.classList.remove('error', 'success');
+                studentIdError.classList.remove('show');
+                passwordError.classList.remove('show');
             }
 
             function switchToInstructor() {
-                if (!studentTab || !instructorTab) return;
                 instructorTab.classList.add('active');
                 studentTab.classList.remove('active');
                 currentRole = 'instructor';
-                if (studentIdField) { studentIdField.classList.add('hide');
-                    studentIdField.style.display = 'none'; }
-                if (emailField) { emailField.classList.add('show');
-                    emailField.style.display = 'block'; }
-                if (passwordField) { passwordField.classList.remove('hide');
-                    passwordField.style.display = 'block'; }
-                if (roleSubtitle) roleSubtitle.textContent = 'Please enter your email and password to continue.';
-                if (emailInput) emailInput.placeholder = 'Enter your email address';
-                if (passwordInput) passwordInput.placeholder = 'Enter your password';
-                if (forgotLabel) forgotLabel.textContent = 'Email Address';
-                if (forgotInput) forgotInput.placeholder = 'Enter your email address';
-                if (forgotModalDesc) forgotModalDesc.textContent = 'Enter your email address to receive a password reset link.';
-                resetForm();
+                studentIdField.style.display = 'none';
+                studentIdField.classList.add('hide');
+                emailField.style.display = 'block';
+                emailField.classList.add('show');
+                passwordField.style.display = 'block';
+                passwordField.classList.remove('hide');
+                roleSubtitle.textContent = 'Please enter your email and password to continue.';
+                emailInput.placeholder = 'Enter your email address';
+                passwordInput.placeholder = 'Enter your password';
+                emailWrapper.classList.remove('error', 'success');
+                passwordWrapper.classList.remove('error', 'success');
+                emailError.classList.remove('show');
+                passwordError.classList.remove('show');
             }
 
-            // --- Tab event listeners ---
-            if (studentTab) {
-                studentTab.addEventListener('click', function(e) {
-                    e.preventDefault();
-                    if (currentRole !== 'student') switchToStudent();
-                });
-                console.log('✅ Student tab listener attached');
-            }
+            // --- Tab listeners ---
+            studentTab.addEventListener('click', function(e) {
+                e.preventDefault();
+                if (currentRole !== 'student') switchToStudent();
+            });
 
-            if (instructorTab) {
-                instructorTab.addEventListener('click', function(e) {
-                    e.preventDefault();
-                    if (currentRole !== 'instructor') switchToInstructor();
-                });
-                console.log('✅ Instructor tab listener attached');
-            }
+            instructorTab.addEventListener('click', function(e) {
+                e.preventDefault();
+                if (currentRole !== 'instructor') switchToInstructor();
+            });
 
-            // Initial role
+            // Initial role from URL
             var urlParams = new URLSearchParams(window.location.search);
-            if (urlParams.get('role') === 'instructor') switchToInstructor();
-            else switchToStudent();
+            if (urlParams.get('role') === 'instructor') {
+                switchToInstructor();
+            } else {
+                switchToStudent();
+            }
 
             // --- Toggle password ---
-            if (togglePassword && passwordInput) {
-                togglePassword.addEventListener('click', function() {
-                    var isPass = passwordInput.type === 'password';
-                    passwordInput.type = isPass ? 'text' : 'password';
-                    this.classList.toggle('fa-eye');
-                    this.classList.toggle('fa-eye-slash');
-                });
-                console.log('✅ Password toggle listener attached');
-            }
+            togglePassword.addEventListener('click', function() {
+                var isPass = passwordInput.type === 'password';
+                passwordInput.type = isPass ? 'text' : 'password';
+                this.classList.toggle('fa-eye');
+                this.classList.toggle('fa-eye-slash');
+            });
 
-            // --- Login handlers ---
+            // --- Login handlers (NO ALERTS, DIRECT REDIRECT) ---
             function handleStudentLogin() {
-                if (!studentIdInput || !passwordInput) return;
-                var sid = studentIdInput.value.trim();
+                var sid = studentIdInput.value.trim().toUpperCase();
                 var pass = passwordInput.value;
-                if (!validateStudentIdField()) { showToast('Please enter a valid Student ID', 'error'); return; }
-                if (!validatePasswordField()) { showToast('Please enter your password', 'error'); return; }
-                var student = studentDatabase[sid];
-                if (!student) {
-                    if (studentIdWrapper) studentIdWrapper.classList.add('error');
-                    if (studentIdError) studentIdError.classList.add('show');
-                    showToast('Student ID not found. Please check your ID.', 'error');
-                    return;
-                }
-                if (student.password !== pass) {
-                    if (passwordWrapper) passwordWrapper.classList.add('error');
-                    if (passwordError) passwordError.classList.add('show');
-                    showToast('Incorrect password. Please try again.', 'error');
-                    return;
-                }
-                localStorage.setItem('qskillStudentLoggedIn', 'true');
-                localStorage.setItem('qskillStudentId', sid);
-                localStorage.setItem('qskillUser', JSON.stringify({ id: sid, email: student.email, phone: student.phone || '',
-                    name: student.name || 'Student', role: 'student' }));
-                showToast('✅ Welcome back, ' + sid + '!', 'success');
-                if (loginSubmitBtn) { loginSubmitBtn.classList.add('loading');
-                    loginSubmitBtn.disabled = true; }
-                setTimeout(function() {
-                    if (loginSubmitBtn) { loginSubmitBtn.classList.remove('loading');
-                        loginSubmitBtn.disabled = false; }
-                    window.location.href = 'dashboard.html';
-                }, 1500);
-            }
 
-            function handleInstructorLogin() {
-                if (!emailInput || !passwordInput) {
-                    console.error('Email or password input missing');
-                    showToast('Something went wrong. Please try again.', 'error');
-                    return;
-                }
-                var email = emailInput.value.trim();
-                var pass = passwordInput.value;
-                console.log('Attempting instructor login for:', email);
-
-                // Validate fields
-                if (!validateEmailField()) {
-                    showToast('Please enter a valid email', 'error');
+                if (!validateStudentIdField()) {
                     return;
                 }
                 if (!validatePasswordField()) {
-                    showToast('Please enter your password', 'error');
                     return;
                 }
 
-                // Look up user
-                var user = instructorDatabase[email];
-                console.log('User found:', user);
+                var db = JSON.parse(localStorage.getItem('qskillStudents')) || {};
+                var student = db[sid];
+
+                if (!student) {
+                    studentIdWrapper.classList.add('error');
+                    studentIdError.classList.add('show');
+                    return;
+                }
+
+                if (student.password !== pass) {
+                    passwordWrapper.classList.add('error');
+                    passwordError.classList.add('show');
+                    return;
+                }
+
+                localStorage.setItem('qskillStudentLoggedIn', 'true');
+                localStorage.setItem('qskillStudentId', sid);
+                localStorage.setItem('qskillUser', JSON.stringify({
+                    id: sid,
+                    email: student.email,
+                    phone: student.phone || '',
+                    name: student.name || 'Student',
+                    role: 'student'
+                }));
+
+                // ✅ Redirect to dashboard.html
+                window.location.href = 'dashboard.html';
+            }
+
+            function handleInstructorLogin() {
+                var email = emailInput.value.trim();
+                var pass = passwordInput.value;
+
+                if (!validateEmailField()) {
+                    return;
+                }
+                if (!validatePasswordField()) {
+                    return;
+                }
+
+                var user = instructorDb[email];
 
                 if (!user) {
-                    if (emailWrapper) emailWrapper.classList.add('error');
-                    if (emailError) emailError.classList.add('show');
-                    showToast('❌ User not found. Please check your email.', 'error');
-                    return;
-                }
-                if (user.password !== pass) {
-                    if (passwordWrapper) passwordWrapper.classList.add('error');
-                    if (passwordError) passwordError.classList.add('show');
-                    showToast('❌ Incorrect password. Please try again.', 'error');
+                    emailWrapper.classList.add('error');
+                    emailError.classList.add('show');
                     return;
                 }
 
-                // ✅ FIX: Set the proper login flags
+                if (user.password !== pass) {
+                    passwordWrapper.classList.add('error');
+                    passwordError.classList.add('show');
+                    return;
+                }
+
                 if (user.role === 'instructor') {
                     localStorage.setItem('qskillInstructorLoggedIn', 'true');
                 } else if (user.role === 'admin') {
                     localStorage.setItem('qskillAdminLoggedIn', 'true');
-                } else {
-                    // fallback
-                    localStorage.setItem('qskillInstructorLoggedIn', 'true');
                 }
 
-                localStorage.setItem('qskillUser', JSON.stringify({ email: email, name: user.name, role: user.role }));
-                showToast('✅ Welcome back, ' + (user.role === 'admin' ? 'Admin' : 'Instructor') + '!', 'success');
-                if (loginSubmitBtn) { loginSubmitBtn.classList.add('loading');
-                    loginSubmitBtn.disabled = true; }
+                localStorage.setItem('qskillUser', JSON.stringify({
+                    email: email,
+                    name: user.name,
+                    role: user.role
+                }));
 
                 var redirectUrl = user.role === 'admin' ? 'admin.html' : 'instructor-dashboard.html';
-                console.log('Redirecting to:', redirectUrl);
-
-                setTimeout(function() {
-                    if (loginSubmitBtn) { loginSubmitBtn.classList.remove('loading');
-                        loginSubmitBtn.disabled = false; }
-                    window.location.href = redirectUrl;
-                }, 1500);
+                window.location.href = redirectUrl;
             }
 
-            if (loginForm) {
-                loginForm.addEventListener('submit', function(e) {
-                    e.preventDefault();
-                    console.log('🔑 Login form submitted, currentRole:', currentRole);
-                    if (currentRole === 'student') handleStudentLogin();
-                    else handleInstructorLogin();
-                });
-                console.log('✅ Login form listener attached');
-            }
+            // --- Form submit ---
+            loginForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                if (currentRole === 'student') {
+                    handleStudentLogin();
+                } else {
+                    handleInstructorLogin();
+                }
+            });
 
             // --- Forgot Password Modal ---
             function openForgotModal() {
-                if (!forgotInput || !forgotWrapper || !forgotError || !forgotSend) return;
                 forgotInput.value = '';
                 forgotWrapper.classList.remove('error', 'success');
                 forgotError.classList.remove('show');
                 forgotSend.classList.remove('loading');
                 forgotSend.disabled = false;
-                if (forgotSend.querySelector('.btn-text-modal')) forgotSend.querySelector('.btn-text-modal').textContent =
-                    'Send Reset Link';
+                forgotSend.querySelector('.btn-text-modal').textContent = 'Send Reset Link';
                 if (currentRole === 'student') {
-                    if (forgotLabel) forgotLabel.textContent = 'Student ID';
-                    if (forgotInput) forgotInput.placeholder = 'Enter your Student ID';
-                    if (forgotModalDesc) forgotModalDesc.textContent =
-                    'Enter your Student ID to receive a password reset link.';
+                    document.getElementById('forgotLabel').textContent = 'Student ID';
+                    forgotInput.placeholder = 'Enter your Student ID';
+                    document.getElementById('forgotModalDesc').textContent =
+                        'Enter your Student ID to receive a password reset link.';
                 } else {
-                    if (forgotLabel) forgotLabel.textContent = 'Email Address';
-                    if (forgotInput) forgotInput.placeholder = 'Enter your email address';
-                    if (forgotModalDesc) forgotModalDesc.textContent =
+                    document.getElementById('forgotLabel').textContent = 'Email Address';
+                    forgotInput.placeholder = 'Enter your email address';
+                    document.getElementById('forgotModalDesc').textContent =
                         'Enter your email address to receive a password reset link.';
                 }
-                if (forgotModalOverlay) forgotModalOverlay.classList.add('show');
-                setTimeout(function() { if (forgotInput) forgotInput.focus(); }, 200);
-                console.log('🔐 Forgot password modal opened');
+                forgotModalOverlay.classList.add('show');
+                setTimeout(function() { forgotInput.focus(); }, 200);
             }
 
             function closeForgotModal() {
-                if (forgotModalOverlay) forgotModalOverlay.classList.remove('show');
-                if (forgotSend) {
-                    forgotSend.classList.remove('loading');
-                    forgotSend.disabled = false;
-                    if (forgotSend.querySelector('.btn-text-modal')) forgotSend.querySelector('.btn-text-modal')
-                        .textContent = 'Send Reset Link';
-                }
-                forgotResetting = false;
+                forgotModalOverlay.classList.remove('show');
+                forgotSend.classList.remove('loading');
+                forgotSend.disabled = false;
+                forgotSend.querySelector('.btn-text-modal').textContent = 'Send Reset Link';
             }
 
-            if (forgotLink) {
-                forgotLink.addEventListener('click', function(e) {
-                    e.preventDefault();
-                    openForgotModal();
-                });
-                console.log('✅ Forgot link listener attached');
-            }
+            forgotLink.addEventListener('click', function(e) {
+                e.preventDefault();
+                openForgotModal();
+            });
 
-            if (forgotModalClose) forgotModalClose.addEventListener('click', closeForgotModal);
-            if (forgotCancel) forgotCancel.addEventListener('click', closeForgotModal);
+            forgotModalClose.addEventListener('click', closeForgotModal);
+            forgotCancel.addEventListener('click', closeForgotModal);
 
-            if (forgotModalOverlay) {
-                forgotModalOverlay.addEventListener('click', function(e) {
-                    if (e.target === this) closeForgotModal();
-                });
-            }
+            forgotModalOverlay.addEventListener('click', function(e) {
+                if (e.target === this) closeForgotModal();
+            });
 
             document.addEventListener('keydown', function(e) {
-                if (e.key === 'Escape' && forgotModalOverlay && forgotModalOverlay.classList.contains('show')) {
+                if (e.key === 'Escape' && forgotModalOverlay.classList.contains('show')) {
                     closeForgotModal();
                 }
             });
 
-            // --- Forgot Send (simulate) ---
-            if (forgotSend) {
-                forgotSend.addEventListener('click', function(e) {
-                    e.preventDefault();
-                    if (forgotResetting) return;
-                    if (!forgotInput || !forgotWrapper || !forgotError || !forgotErrorText) return;
+            // --- Forgot Send ---
+            forgotSend.addEventListener('click', function(e) {
+                e.preventDefault();
 
-                    var val = forgotInput.value.trim();
-                    if (!val) {
+                var val = forgotInput.value.trim();
+                if (!val) {
+                    forgotWrapper.classList.add('error');
+                    forgotError.classList.add('show');
+                    forgotErrorText.textContent = 'Please enter your ' + (currentRole === 'student' ?
+                        'Student ID' : 'email address');
+                    return;
+                }
+
+                if (currentRole === 'instructor') {
+                    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(val)) {
                         forgotWrapper.classList.add('error');
                         forgotError.classList.add('show');
-                        forgotErrorText.textContent = 'Please enter your ' + (currentRole === 'student' ?
-                            'Student ID' : 'email address');
+                        forgotErrorText.textContent = 'Please enter a valid email address';
                         return;
                     }
-                    if (currentRole === 'instructor') {
-                        if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(val)) {
-                            forgotWrapper.classList.add('error');
-                            forgotError.classList.add('show');
-                            forgotErrorText.textContent = 'Please enter a valid email address';
-                            return;
-                        }
-                    } else {
-                        if (val.length < 6) {
-                            forgotWrapper.classList.add('error');
-                            forgotError.classList.add('show');
-                            forgotErrorText.textContent = 'Student ID must be at least 6 characters';
-                            return;
-                        }
-                    }
-
-                    forgotWrapper.classList.remove('error', 'success');
-                    forgotError.classList.remove('show');
-
-                    // Check existence
-                    var found = false,
-                        userEmail = '',
-                        userName = '';
-                    if (currentRole === 'student') {
-                        var s = studentDatabase[val];
-                        if (s) { found = true;
-                            userEmail = s.email;
-                            userName = s.name || 'Student'; }
-                    } else {
-                        var u = instructorDatabase[val];
-                        if (u) { found = true;
-                            userEmail = val;
-                            userName = u.name || 'Instructor'; }
-                    }
-                    if (!found) {
+                } else {
+                    val = val.toUpperCase();
+                    forgotInput.value = val;
+                    if (val.length < 6) {
                         forgotWrapper.classList.add('error');
                         forgotError.classList.add('show');
-                        forgotErrorText.textContent = currentRole === 'student' ? 'Student ID not found.' :
-                            'Email not found.';
+                        forgotErrorText.textContent = 'Student ID must be at least 6 characters';
                         return;
                     }
+                }
 
-                    // Simulate sending
-                    forgotResetting = true;
-                    forgotSend.classList.add('loading');
-                    forgotSend.disabled = true;
-                    if (forgotSend.querySelector('.btn-text-modal')) forgotSend.querySelector('.btn-text-modal')
-                        .textContent = 'Sending...';
+                forgotWrapper.classList.remove('error', 'success');
+                forgotError.classList.remove('show');
 
-                    var fakeToken = Math.random().toString(36).substring(2, 10);
-                    var resetLink = window.location.origin + '/reset-password.html?token=' + fakeToken + '&role=' +
-                        currentRole + '&id=' + encodeURIComponent(val);
-                    console.log('📧 [DEMO] Reset link for ' + userEmail + ': ' + resetLink);
+                var found = false,
+                    userEmail = '';
+                if (currentRole === 'student') {
+                    var db = JSON.parse(localStorage.getItem('qskillStudents')) || {};
+                    var s = db[val];
+                    if (s) { found = true;
+                        userEmail = s.email; }
+                } else {
+                    var u = instructorDb[val];
+                    if (u) { found = true;
+                        userEmail = val; }
+                }
 
-                    setTimeout(function() {
-                        forgotSend.classList.remove('loading');
-                        forgotSend.disabled = false;
-                        if (forgotSend.querySelector('.btn-text-modal')) forgotSend.querySelector(
-                            '.btn-text-modal').textContent = 'Send Reset Link';
-                        forgotResetting = false;
-                        forgotWrapper.classList.remove('error');
-                        forgotWrapper.classList.add('success');
-                        showToast('📧 Reset link sent to ' + userEmail + ' (DEMO)', 'success');
-                        setTimeout(closeForgotModal, 1500);
-                    }, 800);
-                });
-                console.log('✅ Forgot send listener attached');
-            }
+                if (!found) {
+                    forgotWrapper.classList.add('error');
+                    forgotError.classList.add('show');
+                    forgotErrorText.textContent = currentRole === 'student' ? 'Student ID not found.' :
+                        'Email not found.';
+                    return;
+                }
 
-            console.log('✅ Login page fully initialized!');
+                forgotWrapper.classList.add('success');
+                setTimeout(closeForgotModal, 1500);
+            });
+
+            console.log('✅ Login page ready!');
             console.log('📝 Student IDs: QSK24012345, QSK24067890');
             console.log('👨‍🏫 Instructor: instructor@qskill.com | Password: instructor123');
             console.log('👨‍💼 Admin: admin@qskill.com | Password: admin123');

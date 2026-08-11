@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Instructor Dashboard - QSkill Career Solutions</title>
+    <title>Dashboard - QSkill Career Solutions</title>
     
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -525,22 +525,23 @@
             </span>
         </a>
         <ul class="nav-links">
-            <li><a href="instructor-dashboard.html" class="active">Dashboard</a></li>
-            <li><a href="instructor-my-courses.html">My Courses</a></li>
+            <li><a href="dashboard.html" class="active">Dashboard</a></li>
+            <li><a href="my-courses.html">My Courses</a></li>
+            <li><a href="all-courses.html">All Courses</a></li>
             <li><a href="#" onclick="logout()" style="color: #EF4444;">Logout</a></li>
         </ul>
     </nav>
 
     <!-- ============================================================ -->
-    <!-- ===== INSTRUCTOR DASHBOARD ===== -->
+    <!-- ===== DASHBOARD ===== -->
     <!-- ============================================================ -->
     <section class="dashboard-wrapper" id="dashboardWrapper">
         
         <!-- Header -->
         <div class="dashboard-header">
             <div class="welcome">
-                <h1>👋 Welcome back, <span id="instructorName">Instructor</span></h1>
-                <p id="dashboardSubtitle">Here's what's happening with your courses and students</p>
+                <h1>👋 Welcome back, <span id="userName">User</span></h1>
+                <p id="dashboardSubtitle">Here's what's happening with your learning journey</p>
             </div>
             <div class="header-actions">
                 <button class="logout-btn" onclick="logout()">
@@ -554,22 +555,22 @@
             <div class="stat-card">
                 <i class="fas fa-book stat-icon"></i>
                 <div class="number" id="totalCourses">4</div>
-                <div class="label">Active Courses</div>
-            </div>
-            <div class="stat-card">
-                <i class="fas fa-users stat-icon"></i>
-                <div class="number" id="totalStudents">78</div>
-                <div class="label">Total Students</div>
+                <div class="label">My Courses</div>
             </div>
             <div class="stat-card">
                 <i class="fas fa-tasks stat-icon"></i>
-                <div class="number" id="pendingAssignments">12</div>
-                <div class="label">Pending Assignments</div>
+                <div class="number" id="totalAssignments">8</div>
+                <div class="label">Assignments</div>
+            </div>
+            <div class="stat-card">
+                <i class="fas fa-check-circle stat-icon"></i>
+                <div class="number" id="completedAssignments">3</div>
+                <div class="label">Completed</div>
             </div>
             <div class="stat-card">
                 <i class="fas fa-star stat-icon"></i>
-                <div class="number" id="avgRating">4.7</div>
-                <div class="label">Average Rating</div>
+                <div class="number" id="avgProgress">65%</div>
+                <div class="label">Average Progress</div>
             </div>
         </div>
 
@@ -588,7 +589,7 @@
                             <h4>Automation Testing (Selenium)</h4>
                             <p><i class="fas fa-calendar-alt"></i> Mon, Wed, Fri - 5:00 PM</p>
                         </div>
-                        <span class="student-count">32</span>
+                        <span class="student-count">In Progress</span>
                     </div>
                     
                     <div class="course-item">
@@ -597,7 +598,7 @@
                             <h4>Manual Testing</h4>
                             <p><i class="fas fa-calendar-alt"></i> Tue, Thu - 6:00 PM</p>
                         </div>
-                        <span class="student-count">18</span>
+                        <span class="student-count">Completed</span>
                     </div>
                     
                     <div class="course-item">
@@ -606,7 +607,7 @@
                             <h4>Postman API Testing</h4>
                             <p><i class="fas fa-calendar-alt"></i> Sat - 10:00 AM</p>
                         </div>
-                        <span class="student-count">15</span>
+                        <span class="student-count">In Progress</span>
                     </div>
                     
                     <div class="course-item">
@@ -615,121 +616,107 @@
                             <h4>Playwright Automation</h4>
                             <p><i class="fas fa-calendar-alt"></i> Sun - 11:00 AM</p>
                         </div>
-                        <span class="student-count">13</span>
+                        <span class="student-count">Not Started</span>
                     </div>
                 </div>
 
-                <!-- Recent Students -->
+                <!-- Recent Activities -->
                 <div class="dash-card">
-                    <div class="card-title"><i class="fas fa-user-graduate"></i> Recent Students</div>
+                    <div class="card-title"><i class="fas fa-clock"></i> Recent Activities</div>
                     
                     <div class="student-item">
-                        <div class="avatar">T</div>
+                        <div class="avatar"><i class="fas fa-check" style="font-size:14px;"></i></div>
                         <div class="student-info">
-                            <h4>Tejaswini Reddy</h4>
-                            <p>Automation Testing</p>
+                            <h4>Completed Module 3</h4>
+                            <p>Automation Testing - 2 hours ago</p>
                         </div>
-                        <span class="student-badge">85%</span>
+                        <span class="student-badge">✅ Done</span>
                     </div>
                     
                     <div class="student-item">
-                        <div class="avatar">A</div>
+                        <div class="avatar"><i class="fas fa-file" style="font-size:14px;"></i></div>
                         <div class="student-info">
-                            <h4>Arjun Kumar</h4>
-                            <p>Manual Testing</p>
+                            <h4>Assignment Submitted</h4>
+                            <p>API Testing Collection - Yesterday</p>
                         </div>
-                        <span class="student-badge">92%</span>
+                        <span class="student-badge">📤 Submitted</span>
                     </div>
                     
                     <div class="student-item">
-                        <div class="avatar">P</div>
+                        <div class="avatar"><i class="fas fa-video" style="font-size:14px;"></i></div>
                         <div class="student-info">
-                            <h4>Priya Sharma</h4>
-                            <p>API Testing</p>
+                            <h4>Class Recording Viewed</h4>
+                            <p>Playwright Session 2 - 2 days ago</p>
                         </div>
-                        <span class="student-badge">67%</span>
+                        <span class="student-badge">👀 Watched</span>
                     </div>
                     
                     <div class="student-item">
-                        <div class="avatar">R</div>
+                        <div class="avatar"><i class="fas fa-star" style="font-size:14px;"></i></div>
                         <div class="student-info">
-                            <h4>Rahul Gupta</h4>
-                            <p>Playwright Automation</p>
+                            <h4>Certificate Earned</h4>
+                            <p>Manual Testing - 1 week ago</p>
                         </div>
-                        <span class="student-badge">45%</span>
+                        <span class="student-badge">🎓 Certified</span>
                     </div>
                 </div>
             </div>
 
             <!-- Right Column -->
             <div>
-                <!-- ===== QUICK ACTIONS - UNIFORM ===== -->
+                <!-- ===== QUICK ACTIONS ===== -->
                 <div class="dash-card" style="margin-bottom: 24px;">
                     <div class="card-title"><i class="fas fa-bolt"></i> Quick Actions</div>
                     <div class="quick-actions">
-                        <button class="quick-action" onclick="window.location.href='create-course.html'">
+                        <button class="quick-action" onclick="window.location.href='all-courses.html'">
                             <i class="fas fa-plus-circle"></i>
-                            <span class="label">New Course</span>
+                            <span class="label">Browse Courses</span>
                         </button>
-                        <button class="quick-action" onclick="window.location.href='create-assignment.html'">
-                            <i class="fas fa-file-alt"></i>
-                            <span class="label">Create Assignment</span>
+                        <button class="quick-action" onclick="window.location.href='my-courses.html'">
+                            <i class="fas fa-book"></i>
+                            <span class="label">My Courses</span>
                         </button>
-                        <button class="quick-action" onclick="window.location.href='upload-videos.html'">
-                            <i class="fas fa-video"></i>
-                            <span class="label">Upload Videos</span>
+                        <button class="quick-action" onclick="window.location.href='student-assignments.html'">
+                            <i class="fas fa-tasks"></i>
+                            <span class="label">Assignments</span>
                         </button>
-                        <!-- ===== START CLASS BUTTON - NO EXTRA TEXT ===== -->
-                        <button class="quick-action" onclick="openStartClassModal()">
-                            <i class="fas fa-broadcast"></i>
-                            <span class="label">Start Class</span>
+                        <button class="quick-action" onclick="window.location.href='certificates.html'">
+                            <i class="fas fa-certificate"></i>
+                            <span class="label">Certificates</span>
                         </button>
                     </div>
                 </div>
 
-                <!-- Pending Assignments -->
+                <!-- Upcoming Classes -->
                 <div class="dash-card" style="margin-bottom: 24px;">
-                    <div class="card-title"><i class="fas fa-tasks"></i> Pending Assignments</div>
+                    <div class="card-title"><i class="fas fa-calendar-alt"></i> Upcoming Classes</div>
                     
-                    <a href="instructor-assignment-review.html?id=1" class="assignment-link">
-                        <div class="student-item" style="border-bottom: 1px solid #F1F5F9;">
-                            <div class="student-info">
-                                <h4>Module 4: WebDriver</h4>
-                                <p>Due: Tomorrow, 11:59 PM</p>
-                            </div>
-                            <span style="background:#FEF3C7; color:#d97706; padding:3px 12px; border-radius:20px; font-size:12px; font-weight:500;">Pending</span>
+                    <div class="student-item" style="border-bottom: 1px solid #F1F5F9;">
+                        <i class="fas fa-video" style="width:20px; color:var(--primary);"></i>
+                        <div class="student-info">
+                            <h4>Selenium WebDriver</h4>
+                            <p>Today, 5:00 PM</p>
                         </div>
-                    </a>
-
-                    <a href="instructor-assignment-review.html?id=2" class="assignment-link">
-                        <div class="student-item" style="border-bottom: 1px solid #F1F5F9;">
-                            <div class="student-info">
-                                <h4>API Testing Collection</h4>
-                                <p>Due: 2 days left</p>
-                            </div>
-                            <span style="background:#FEF3C7; color:#d97706; padding:3px 12px; border-radius:20px; font-size:12px; font-weight:500;">Pending</span>
+                        <span style="background:#DCFCE7; color:#16a34a; padding:3px 12px; border-radius:20px; font-size:12px; font-weight:500;">Upcoming</span>
+                    </div>
+                    
+                    <div class="student-item" style="border-bottom: 1px solid #F1F5F9;">
+                        <i class="fas fa-video" style="width:20px; color:var(--primary);"></i>
+                        <div class="student-info">
+                            <h4>Manual Testing</h4>
+                            <p>Tomorrow, 6:00 PM</p>
                         </div>
-                    </a>
-
-                    <a href="instructor-assignment-review.html?id=3" class="assignment-link">
-                        <div class="student-item" style="border-bottom: 1px solid #F1F5F9;">
-                            <div class="student-info">
-                                <h4>Test Cases for Login</h4>
-                                <p>Due: 5 days left</p>
-                            </div>
-                            <span style="background:#DBEAFE; color:#2563EB; padding:3px 12px; border-radius:20px; font-size:12px; font-weight:500;">Submitted</span>
+                        <span style="background:#FEF3C7; color:#d97706; padding:3px 12px; border-radius:20px; font-size:12px; font-weight:500;">Tomorrow</span>
+                    </div>
+                    
+                    <div class="student-item">
+                        <i class="fas fa-video" style="width:20px; color:var(--primary);"></i>
+                        <div class="student-info">
+                            <h4>API Testing</h4>
+                            <p>Sat, 10:00 AM</p>
                         </div>
-                    </a>
-
-                    <a href="instructor-assignment-review.html?id=4" class="assignment-link">
-                        <div class="student-item">
-                            <div class="student-info">
-                                <h4>Jenkins Pipeline Setup</h4>
-                                <p>Due: 1 week left</p>
-                            </div>
-                            <span style="background:#FEE2E2; color:#dc2626; padding:3px 12px; border-radius:20px; font-size:12px; font-weight:500;">Late</span>
-                        </div>
-                    </a>
+                        <span style="background:#DBEAFE; color:#2563EB; padding:3px 12px; border-radius:20px; font-size:12px; font-weight:500;">In 2 Days</span>
+                    </div>
                 </div>
 
                 <!-- Support -->
@@ -808,20 +795,27 @@
     <!-- ============================================================ -->
     <script>
         // ============================================================ */
-        // ===== SESSION CHECK ===== */
+        // ===== SESSION CHECK - NOW ACCEPTS STUDENTS ===== */
         // ============================================================ */
         function checkSession() {
             const instructorLoggedIn = localStorage.getItem('qskillInstructorLoggedIn');
             const adminLoggedIn = localStorage.getItem('qskillAdminLoggedIn');
+            const studentLoggedIn = localStorage.getItem('qskillStudentLoggedIn');
             const userData = JSON.parse(localStorage.getItem('qskillUser') || '{}');
             
-            if (instructorLoggedIn !== 'true' && adminLoggedIn !== 'true') {
+            // Allow students, instructors, and admins
+            if (instructorLoggedIn !== 'true' && adminLoggedIn !== 'true' && studentLoggedIn !== 'true') {
                 window.location.href = 'login.html';
                 return false;
             }
             
+            // Update user name in header
             if (userData.name) {
-                document.getElementById('instructorName').textContent = userData.name;
+                document.getElementById('userName').textContent = userData.name;
+            } else if (userData.id) {
+                document.getElementById('userName').textContent = userData.id;
+            } else {
+                document.getElementById('userName').textContent = 'User';
             }
             
             return true;
@@ -1043,7 +1037,8 @@
         // ============================================================ */
         document.addEventListener('DOMContentLoaded', function() {
             checkSession();
-            console.log('📚 Instructor Dashboard Loaded');
+            console.log('📚 Dashboard Loaded');
+            console.log('✅ Students, Instructors, and Admins can all access this page.');
             console.log('🎥 "Start Class" saves session and sends meeting link to students.');
         });
     </script>
