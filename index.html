@@ -17,6 +17,23 @@
     <link rel="stylesheet" href="style.css" />
 
     <style>
+        /* ============================================================ */
+        /* ===== UPDATED: GLOBAL TYPOGRAPHY ===== */
+        /* ============================================================ */
+        h1 {
+            font-size: 64px !important;
+        }
+
+        h2 {
+            font-size: 48px !important;
+        }
+
+        /* reduce gap between lines in hero heading */
+        .hero-text h1 {
+            line-height: 1.1 !important;
+            margin: 0 0 6px 0 !important;
+        }
+
         /* ===== LOGO WITH TAGLINE BELOW ===== */
         .logo-wrapper {
             display: flex;
@@ -308,6 +325,148 @@
             font-size: 44px;
         }
 
+        /* ===== UPDATED: Hero heading with color #0000CD and reduced gap ===== */
+        .hero-text .tag {
+            color: var(--orange);
+            font-weight: 600;
+            letter-spacing: 2px;
+            font-size: 13px;
+            text-transform: uppercase;
+        }
+
+        .hero-text h1 {
+            font-size: 64px;
+            font-weight: 700;
+            line-height: 1.1;
+            color: var(--text-dark);
+            margin: 8px 0 4px;
+        }
+
+        .hero-text h1 span {
+            color: #0000CD;
+        }
+
+        .hero-text .sub-tagline {
+            color: var(--text-gray);
+            font-size: 18px;
+            margin: 4px 0 28px;
+            max-width: 480px;
+            line-height: 1.7;
+            font-weight: 400;
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 14px;
+            flex-wrap: wrap;
+            align-items: center;
+        }
+
+        .btn-primary {
+            background: var(--primary) !important;
+            color: var(--white) !important;
+            border: none !important;
+            padding: 14px 34px !important;
+            border-radius: 999px !important;
+            font-weight: 600 !important;
+            font-size: 16px !important;
+            cursor: pointer !important;
+            transition: 0.3s !important;
+            box-shadow: 0 4px 16px rgba(31, 60, 136, 0.25) !important;
+            text-decoration: none !important;
+            display: inline-flex !important;
+            align-items: center !important;
+            gap: 10px !important;
+            font-family: 'Poppins', sans-serif !important;
+        }
+
+        .btn-primary:hover {
+            background: var(--secondary) !important;
+            transform: translateY(-2px) !important;
+            box-shadow: 0 6px 24px rgba(31, 60, 136, 0.35) !important;
+        }
+
+        .btn-secondary {
+            background: rgba(255, 255, 255, 0.8) !important;
+            backdrop-filter: blur(10px) !important;
+            border: 1px solid var(--border) !important;
+            color: var(--text-dark) !important;
+            padding: 14px 34px !important;
+            border-radius: 999px !important;
+            font-weight: 600 !important;
+            font-size: 16px !important;
+            cursor: pointer !important;
+            transition: 0.3s !important;
+            display: flex !important;
+            align-items: center !important;
+            gap: 10px !important;
+            font-family: 'Poppins', sans-serif !important;
+            text-decoration: none !important;
+        }
+
+        .btn-secondary:hover {
+            border-color: var(--primary) !important;
+            color: var(--primary) !important;
+            background: var(--white) !important;
+            transform: translateY(-2px) !important;
+        }
+
+        /* ===== FEATURES ===== */
+        .features {
+            display: flex;
+            justify-content: space-around;
+            padding: 40px 80px;
+            background: var(--white);
+            flex-wrap: wrap;
+            gap: 20px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .feature-item {
+            text-align: center;
+            flex: 1;
+            min-width: 140px;
+            padding: 10px;
+        }
+
+        .feature-item .icon-wrapper {
+            width: 60px;
+            height: 60px;
+            background: var(--light-bg);
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 10px;
+            transition: 0.3s;
+        }
+
+        .feature-item .icon-wrapper i {
+            font-size: 26px;
+            color: var(--primary);
+        }
+
+        .feature-item:hover .icon-wrapper {
+            background: var(--primary);
+            transform: translateY(-4px);
+        }
+
+        .feature-item:hover .icon-wrapper i {
+            color: var(--white);
+        }
+
+        .feature-item h4 {
+            font-size: 16px;
+            font-weight: 600;
+            color: var(--text-dark);
+        }
+
+        .feature-item p {
+            font-size: 13px;
+            color: var(--text-gray);
+            margin-top: 2px;
+        }
+
         /* ===== WHY QSKILL ===== */
         .why-section {
             padding: 30px 80px 20px !important;
@@ -316,7 +475,7 @@
         }
 
         .why-section h2 {
-            font-size: 42px;
+            font-size: 48px !important;
             color: var(--primary);
             font-weight: 700;
             position: relative;
@@ -431,7 +590,7 @@
         }
 
         .courses-section .section-header h2 {
-            font-size: 42px;
+            font-size: 48px !important;
             color: var(--primary);
             font-weight: 700;
             position: relative;
@@ -661,9 +820,61 @@
             background: var(--secondary);
         }
 
-        /* ===== CONTACT ===== */
-        .contact {
+        /* ============================================================ */
+        /* ===== UPDATED: ENQUIRY / CONTACT SECTION (FLEX, NO COLORED BOXES) ===== */
+        /* ============================================================ */
+        .enquiry-section {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 20px 40px;
             padding: 30px 80px 20px !important;
+            background: var(--white);
+            border-top: 1px solid var(--border);
+        }
+
+        .enquiry-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            flex: 0 1 auto;
+        }
+
+        .enquiry-item .enquiry-icon {
+            font-size: 20px;
+            color: var(--primary);
+            width: 24px;
+            text-align: center;
+            flex-shrink: 0;
+        }
+
+        .enquiry-item .enquiry-text {
+            display: flex;
+            flex-direction: column;
+            gap: 0px;
+        }
+
+        .enquiry-item .enquiry-text .enquiry-label {
+            font-size: 11px;
+            font-weight: 500;
+            color: var(--text-gray);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .enquiry-item .enquiry-text .enquiry-value {
+            font-size: 14px;
+            font-weight: 500;
+            color: var(--text-dark);
+        }
+
+        .enquiry-item .enquiry-text .enquiry-value a {
+            color: var(--primary);
+            text-decoration: none;
+        }
+
+        .enquiry-item .enquiry-text .enquiry-value a:hover {
+            text-decoration: underline;
         }
 
         /* ===== DEMO CTA ===== */
@@ -712,7 +923,476 @@
             box-shadow: 0 6px 24px rgba(0, 0, 0, 0.25);
         }
 
+        /* ============================================================ */
+        /* ===== ADDED: CURRICULUM DOWNLOAD MODAL ===== */
+        /* ============================================================ */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.6);
+            backdrop-filter: blur(6px);
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+            padding: 20px;
+        }
+
+        .modal-overlay.active {
+            display: flex;
+        }
+
+        .modal-container {
+            background: #FFFFFF;
+            border-radius: 24px;
+            max-width: 580px;
+            width: 100%;
+            padding: 40px 38px 32px;
+            position: relative;
+            box-shadow: 0 25px 60px rgba(0, 0, 0, 0.25);
+            animation: modalSlideIn 0.4s ease;
+        }
+
+        @keyframes modalSlideIn {
+            from {
+                opacity: 0;
+                transform: translateY(30px) scale(0.96);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+
+        .close-btn {
+            position: absolute;
+            top: 14px;
+            right: 16px;
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background: #F0F4FF;
+            border: none;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: 0.3s;
+            font-size: 18px;
+            color: #1A1A2E;
+        }
+
+        .close-btn:hover {
+            background: #E2E8F0;
+            transform: rotate(90deg);
+        }
+
+        .modal-logo {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-bottom: 16px;
+        }
+
+        .modal-logo .logo-row {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .modal-logo .logo-icon {
+            width: 42px;
+            height: 42px;
+            background: #1F3C88;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #FFFFFF;
+            font-size: 20px;
+            font-weight: 700;
+        }
+
+        .modal-logo .logo-text {
+            font-size: 22px;
+            font-weight: 700;
+            color: #1A1A2E;
+            letter-spacing: 0.5px;
+        }
+
+        .modal-logo .logo-sub {
+            font-size: 10px;
+            font-weight: 500;
+            color: #F97316;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            margin-top: -2px;
+        }
+
+        .modal-heading {
+            text-align: center;
+            font-size: 24px;
+            font-weight: 700;
+            color: #1A1A2E;
+            margin: 4px 0 6px;
+        }
+
+        .modal-desc {
+            text-align: center;
+            font-size: 14px;
+            color: #6B7280;
+            line-height: 1.6;
+            margin-bottom: 22px;
+            max-width: 440px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .form-group {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 14px;
+        }
+
+        .form-group .field-icon {
+            width: 42px;
+            height: 42px;
+            border-radius: 10px;
+            border: 1.5px solid #D1D5DB;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            color: #1F3C88;
+            font-size: 16px;
+            background: #FAFBFC;
+        }
+
+        .form-group .field-wrapper {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+        }
+
+        .form-group .field-wrapper label {
+            font-size: 13px;
+            font-weight: 600;
+            color: #1A1A2E;
+        }
+
+        .form-group .field-wrapper label .required {
+            color: #EF4444;
+        }
+
+        .form-group .field-wrapper input,
+        .form-group .field-wrapper select {
+            width: 100%;
+            height: 42px;
+            padding: 0 14px;
+            border: 1.5px solid #D1D5DB;
+            border-radius: 10px;
+            font-size: 14px;
+            font-family: 'Poppins', sans-serif;
+            transition: 0.3s;
+            background: #FFFFFF;
+            color: #1A1A2E;
+            appearance: none;
+        }
+
+        .form-group .field-wrapper input:focus,
+        .form-group .field-wrapper select:focus {
+            border-color: #1F3C88;
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(31, 60, 136, 0.08);
+        }
+
+        .form-group .field-wrapper input::placeholder {
+            color: #9CA3AF;
+        }
+
+        .phone-wrapper {
+            display: flex;
+            align-items: center;
+            border: 1.5px solid #D1D5DB;
+            border-radius: 10px;
+            background: #FFFFFF;
+            transition: 0.3s;
+            overflow: hidden;
+            height: 42px;
+        }
+
+        .phone-wrapper:focus-within {
+            border-color: #1F3C88;
+            box-shadow: 0 0 0 3px rgba(31, 60, 136, 0.08);
+        }
+
+        .phone-wrapper .prefix {
+            padding: 0 12px 0 14px;
+            font-weight: 600;
+            font-size: 14px;
+            color: #1A1A2E;
+            border-right: 1.5px solid #D1D5DB;
+            flex-shrink: 0;
+            background: #FAFBFC;
+            height: 100%;
+            display: flex;
+            align-items: center;
+        }
+
+        .phone-wrapper input {
+            border: none !important;
+            outline: none !important;
+            flex: 1;
+            padding: 0 14px;
+            font-size: 14px;
+            font-family: 'Poppins', sans-serif;
+            color: #1A1A2E;
+            background: transparent;
+            height: 100%;
+            min-width: 0;
+            box-shadow: none !important;
+        }
+
+        .phone-wrapper input::placeholder {
+            color: #9CA3AF;
+        }
+
+        .form-group .field-wrapper select {
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%236B7280' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 14px center;
+            padding-right: 38px;
+            cursor: pointer;
+        }
+
+        .btn-register {
+            width: 100%;
+            background: #1F3C88;
+            color: #FFFFFF;
+            border: none;
+            padding: 14px;
+            border-radius: 999px;
+            font-weight: 700;
+            font-size: 16px;
+            cursor: pointer;
+            transition: 0.3s;
+            font-family: 'Poppins', sans-serif;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            margin-top: 6px;
+            box-shadow: 0 4px 16px rgba(31, 60, 136, 0.25);
+            letter-spacing: 0.5px;
+        }
+
+        .btn-register:hover {
+            background: #152B66;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 24px rgba(31, 60, 136, 0.35);
+        }
+
+        .btn-register i {
+            font-size: 16px;
+        }
+
+        .security-message {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            margin-top: 16px;
+            font-size: 12px;
+            color: #6B7280;
+        }
+
+        .security-message i {
+            color: #1F3C88;
+            font-size: 14px;
+        }
+
+        /* ===== TOAST ===== */
+        .toast {
+            position: fixed;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%) translateY(100px);
+            background: #1A1A2E;
+            color: #FFFFFF;
+            padding: 14px 28px;
+            border-radius: 12px;
+            font-family: 'Poppins', sans-serif;
+            font-size: 14px;
+            font-weight: 500;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.2);
+            opacity: 0;
+            transition: all 0.4s ease;
+            z-index: 99999;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .toast.show {
+            opacity: 1;
+            transform: translateX(-50%) translateY(0);
+        }
+
+        .toast i {
+            font-size: 18px;
+        }
+
+        .toast.success i {
+            color: #22C55E;
+        }
+
+        .toast.error i {
+            color: #EF4444;
+        }
+
+        /* ============================================================ */
+        /* ===== FOOTER ===== */
+        /* ============================================================ */
+        .footer {
+            background: #1A1A2E;
+            color: var(--white);
+            padding: 40px 80px 20px;
+        }
+
+        .footer-top {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 40px;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding-bottom: 20px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+        }
+
+        .footer-logo img {
+            height: 40px;
+            width: auto;
+        }
+
+        .footer-logo p {
+            font-size: 13px;
+            color: rgba(255, 255, 255, 0.7);
+            margin: 8px 0 12px;
+            line-height: 1.6;
+        }
+
+        .footer-social {
+            display: flex;
+            gap: 14px;
+        }
+
+        .footer-social i {
+            font-size: 20px;
+            color: rgba(255, 255, 255, 0.6);
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .footer-social i:hover {
+            color: var(--white);
+            transform: translateY(-2px);
+        }
+
+        .footer h4 {
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 12px;
+            color: var(--white);
+        }
+
+        .footer a {
+            display: block;
+            color: rgba(255, 255, 255, 0.7);
+            text-decoration: none;
+            font-size: 14px;
+            padding: 4px 0;
+            transition: 0.3s;
+        }
+
+        .footer a:hover {
+            color: var(--white);
+        }
+
+        .footer-contact p {
+            font-size: 14px;
+            color: rgba(255, 255, 255, 0.7);
+            padding: 4px 0;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .footer-contact p i {
+            width: 18px;
+            color: var(--orange);
+        }
+
+        .footer-bottom {
+            text-align: center;
+            font-size: 13px;
+            color: rgba(255, 255, 255, 0.5);
+            padding-top: 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        /* ============================================================ */
         /* ===== RESPONSIVE ===== */
+        /* ============================================================ */
+        @media (max-width: 992px) {
+            h1 {
+                font-size: 48px !important;
+            }
+
+            h2 {
+                font-size: 36px !important;
+            }
+
+            .navbar {
+                padding: 12px 40px;
+            }
+
+            .features {
+                padding: 30px 40px;
+            }
+
+            .why-section {
+                padding: 20px 40px 15px !important;
+            }
+
+            .courses-section {
+                padding: 0px 40px 0px !important;
+            }
+
+            .enquiry-section {
+                padding: 20px 40px !important;
+                gap: 16px 30px;
+            }
+
+            .demo-cta-section {
+                padding: 40px 40px;
+            }
+
+            .footer {
+                padding: 30px 40px 20px;
+            }
+
+            .modal-container {
+                padding: 30px 24px 24px;
+            }
+        }
+
         @media (max-width: 768px) {
             .floating-icons {
                 display: none;
@@ -731,16 +1411,18 @@
                 gap: 12px;
             }
 
-            .logo-wrapper .logo-text {
-                font-size: 20px;
+            .hero-text h1 {
+                font-size: 36px !important;
             }
 
-            .logo-wrapper .logo-row img {
-                height: 38px;
+            .features {
+                flex-direction: column;
+                align-items: center;
+                padding: 20px;
             }
 
-            .logo-wrapper .tagline {
-                font-size: 11px;
+            .feature-item {
+                min-width: 100%;
             }
 
             .why-section {
@@ -780,8 +1462,16 @@
                 padding: 0px 20px 0px !important;
             }
 
-            .contact {
-                padding: 20px 20px 15px !important;
+            .enquiry-section {
+                padding: 16px 20px !important;
+                flex-direction: column;
+                align-items: center;
+                gap: 12px;
+            }
+
+            .enquiry-item {
+                width: 100%;
+                justify-content: center;
             }
 
             .course-grid {
@@ -805,9 +1495,65 @@
                 padding: 10px 20px;
                 font-size: 14px;
             }
+
+            .footer {
+                padding: 20px 20px 15px;
+            }
+
+            .footer-top {
+                grid-template-columns: 1fr 1fr;
+                gap: 20px;
+            }
+
+            .modal-container {
+                padding: 24px 18px 20px;
+            }
+
+            .modal-heading {
+                font-size: 20px;
+            }
+
+            .modal-desc {
+                font-size: 13px;
+            }
+
+            .form-group {
+                gap: 10px;
+                margin-bottom: 12px;
+            }
+
+            .form-group .field-icon {
+                width: 36px;
+                height: 36px;
+                font-size: 14px;
+            }
+
+            .form-group .field-wrapper input,
+            .form-group .field-wrapper select,
+            .phone-wrapper {
+                height: 38px;
+                font-size: 13px;
+            }
+
+            .btn-register {
+                padding: 12px;
+                font-size: 14px;
+            }
         }
 
         @media (max-width: 480px) {
+            h1 {
+                font-size: 32px !important;
+            }
+
+            h2 {
+                font-size: 26px !important;
+            }
+
+            .hero-text h1 {
+                font-size: 28px !important;
+            }
+
             .logo-wrapper .logo-text {
                 font-size: 16px;
             }
@@ -825,7 +1571,7 @@
             }
 
             .why-section h2 {
-                font-size: 24px;
+                font-size: 26px !important;
             }
 
             .why-item {
@@ -875,6 +1621,41 @@
                 padding: 8px 16px;
                 font-size: 12px;
             }
+
+            .footer-top {
+                grid-template-columns: 1fr;
+                gap: 16px;
+            }
+
+            .modal-container {
+                padding: 20px 14px 16px;
+            }
+
+            .modal-heading {
+                font-size: 17px;
+            }
+
+            .modal-logo .logo-icon {
+                width: 32px;
+                height: 32px;
+                font-size: 15px;
+            }
+
+            .modal-logo .logo-text {
+                font-size: 17px;
+            }
+
+            .form-group {
+                flex-direction: column;
+                align-items: stretch;
+                gap: 4px;
+            }
+
+            .form-group .field-icon {
+                width: 100%;
+                height: 32px;
+                border-radius: 8px;
+            }
         }
     </style>
 </head>
@@ -885,6 +1666,83 @@
     <div class="toast" id="toast">
         <i class="fas fa-check-circle" id="toastIcon"></i>
         <span id="toastMessage">Success!</span>
+    </div>
+
+    <!-- ===== ADDED: CURRICULUM MODAL ===== -->
+    <div class="modal-overlay" id="curriculumModal">
+        <div class="modal-container">
+            <button class="close-btn" onclick="closeCurriculumModal()" aria-label="Close">
+                <i class="fas fa-times"></i>
+            </button>
+
+            <div class="modal-logo">
+                <div class="logo-row">
+                    <div class="logo-icon"><i class="fas fa-graduation-cap"></i></div>
+                    <span class="logo-text">QSKILL</span>
+                </div>
+                <span class="logo-sub">Career Solutions</span>
+            </div>
+
+            <h2 class="modal-heading">Download Course Curriculum</h2>
+            <p class="modal-desc">
+                Register below to receive the complete course curriculum, modules, learning outcomes and course details.
+            </p>
+
+            <form id="curriculumForm" onsubmit="handleCurriculumSubmit(event)">
+                <div class="form-group">
+                    <div class="field-icon"><i class="fas fa-user"></i></div>
+                    <div class="field-wrapper">
+                        <label>Full Name <span class="required">*</span></label>
+                        <input type="text" id="modalFullName" placeholder="Enter your full name" required />
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="field-icon"><i class="fas fa-phone-alt"></i></div>
+                    <div class="field-wrapper">
+                        <label>Mobile Number <span class="required">*</span></label>
+                        <div class="phone-wrapper">
+                            <span class="prefix">+91</span>
+                            <input type="tel" id="modalMobile" placeholder="Enter mobile number" required />
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="field-icon"><i class="fas fa-envelope"></i></div>
+                    <div class="field-wrapper">
+                        <label>Email Address <span class="required">*</span></label>
+                        <input type="email" id="modalEmail" placeholder="Enter your email address" required />
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="field-icon"><i class="fas fa-book"></i></div>
+                    <div class="field-wrapper">
+                        <label>Course Interested In <span class="required">*</span></label>
+                        <select id="modalCourse" required>
+                            <option value="">Select Course</option>
+                            <option value="Manual Testing">Manual Testing</option>
+                            <option value="Automation Testing (Java + Selenium)">Automation Testing (Java + Selenium)
+                            </option>
+                            <option value="Postman API Testing">Postman API Testing</option>
+                            <option value="REST Assured API Testing">REST Assured API Testing</option>
+                            <option value="Cypress Automation">Cypress Automation</option>
+                            <option value="Playwright Automation">Playwright Automation</option>
+                        </select>
+                    </div>
+                </div>
+
+                <button type="submit" class="btn-register">
+                    <i class="fas fa-download"></i> DOWNLOAD CURRICULUM
+                </button>
+            </form>
+
+            <div class="security-message">
+                <i class="fas fa-shield-alt"></i>
+                <span>Your information is kept secure and will not be shared.</span>
+            </div>
+        </div>
     </div>
 
     <!-- ===== NAVBAR ===== -->
@@ -925,7 +1783,6 @@
 
     <!-- ===== HERO ===== -->
     <section class="hero">
-
         <div class="hero-slider" id="heroSlider">
             <div class="slide slide-1"></div>
         </div>
@@ -937,12 +1794,13 @@
             <i class="fas fa-chart-line"></i>
         </div>
 
+        <!-- ===== UPDATED: Hero with #1F3C88 and gray subtitle ===== -->
         <div class="hero-text">
             <p class="tag">WELCOME TO QSKILL CAREER SOLUTIONS</p>
-            <h2>Excel in <br /><span>Software testing</span></h2>
+            <h1>Excel in <br /><span style="color:#1F3C88;">Software testing</span></h1>
             <p class="sub-tagline">
-                Build career in <span class="highlight">Software Testing</span> with industry-relevant skills and real
-                time projects
+                Build career in <span style="color:var(--text-gray);">Software Testing</span> with industry-relevant
+                skills and real time projects
             </p>
             <div class="hero-buttons">
                 <a href="courses.html#courses" class="btn-primary">
@@ -1036,13 +1894,15 @@
                 <p class="card-description">Learn SDLC, STLC, test cases, defect tracking and more.</p>
                 <div class="rating">⭐ 4.8 <span>(320 Reviews)</span></div>
                 <div class="btn-group">
-                    <button class="btn-outline-course">Curriculum <i class="fas fa-download"></i>
-                    </button><a href="courses-detail.html?course=manual" class="btn-enroll">View More →</a>
+                    <button class="btn-outline-course" onclick="openCurriculumModal('Manual Testing')">Curriculum <i
+                            class="fas fa-download"></i>
+                    </button>
+                    <a href="courses-detail.html?course=manual" class="btn-enroll">Enroll Now →</a>
                 </div>
             </div>
 
             <!-- CARD 2: Automation Testing (Java + Selenium) -->
-            <div class="course-card">
+               <div class="course-card">
                 <div class="card-image">
                     <img src="images/automation-testing.jpg" alt="Automation Testing" />
                     <span class="image-badge blue-badge">⚙️ Automation</span>
@@ -1051,8 +1911,10 @@
                 <p class="card-description">Learn Selenium with real-time projects, frameworks and CI/CD pipeline.</p>
                 <div class="rating">⭐ 4.7 <span>(280 Reviews)</span></div>
                 <div class="btn-group">
-                    <button class="btn-outline-course">Curriculum <i class="fas fa-download"></i></button>
-                    <a href="courses-detail.html?course=automation" class="btn-enroll">View More →</a>
+                    <button class="btn-outline-course" onclick="openCurriculumModal('Automation Testing (Java + Selenium)')">
+                        Curriculum <i class="fas fa-download"></i>
+                    </button>
+                    <a href="courses-detail.html?course=automation" class="btn-enroll">Enroll Now →</a>
                 </div>
             </div>
 
@@ -1066,8 +1928,9 @@
                 <p class="card-description">Learn REST API testing, Postman collections, automation and reporting.</p>
                 <div class="rating">⭐ 4.6 <span>(210 Reviews)</span></div>
                 <div class="btn-group">
-                    <button class="btn-outline-course">Curriculum <i class="fas fa-download"></i></button>
-                    <a href="courses-detail.html?course=api" class="btn-enroll">View More →</a>
+                    <button class="btn-outline-course" onclick="openCurriculumModal('Postman API Testing')">Curriculum
+                        <i class="fas fa-download"></i></button>
+                    <a href="courses-detail.html?course=api" class="btn-enroll">Enroll Now →</a>
                 </div>
             </div>
 
@@ -1100,6 +1963,7 @@
             </div>
         </div>
     </section>
+
 
     <!-- ===== BOOK A DEMO CLASS ===== -->
     <section class="demo-cta-section">
@@ -1183,6 +2047,161 @@
                 dropdown.classList.remove('show');
             }
         });
+
+        // ============================================================ */
+        // ===== ADDED: CURRICULUM MODAL FUNCTIONS ===== */
+        // ============================================================ */
+        function openCurriculumModal(courseName) {
+            const modal = document.getElementById('curriculumModal');
+            modal.classList.add('active');
+            document.body.style.overflow = 'hidden';
+
+            // Reset form
+            document.getElementById('curriculumForm').reset();
+
+            // Pre-select the course in dropdown if provided
+            if (courseName) {
+                const select = document.getElementById('modalCourse');
+                for (let i = 0; i < select.options.length; i++) {
+                    if (select.options[i].value === courseName) {
+                        select.selectedIndex = i;
+                        break;
+                    }
+                }
+            }
+        }
+
+        function closeCurriculumModal() {
+            const modal = document.getElementById('curriculumModal');
+            modal.classList.remove('active');
+            document.body.style.overflow = '';
+        }
+
+        // Close on overlay click
+        document.getElementById('curriculumModal').addEventListener('click', function (e) {
+            if (e.target === this) {
+                closeCurriculumModal();
+            }
+        });
+
+        // Close on Escape key
+        document.addEventListener('keydown', function (e) {
+            if (e.key === 'Escape') {
+                closeCurriculumModal();
+            }
+        });
+
+        // ============================================================ */
+        // ===== TOAST ===== */
+        // ============================================================ */
+        function showToast(message, type) {
+            type = type || 'success';
+            const toast = document.getElementById('toast');
+            const toastIcon = document.getElementById('toastIcon');
+            const toastMessage = document.getElementById('toastMessage');
+            if (!toast) return;
+            toastIcon.className = type === 'success' ? 'fas fa-check-circle' :
+                type === 'error' ? 'fas fa-exclamation-circle' :
+                    'fas fa-info-circle';
+            toastMessage.textContent = message;
+            toast.className = 'toast ' + type;
+            setTimeout(function () {toast.classList.add('show');}, 10);
+            setTimeout(function () {toast.classList.remove('show');}, 5000);
+        }
+
+        // ============================================================ */
+        // ===== GET COURSE PDF URL ===== */
+        // ============================================================ */
+        function getCoursePDF(courseName) {
+            const pdfMap = {
+                'Manual Testing': 'pdfs/manual-testing-curriculum.pdf',
+                'Automation Testing (Java + Selenium)': 'pdfs/automation-testing-curriculum.pdf',
+                'Postman API Testing': 'pdfs/postman-api-testing-curriculum.pdf',
+                'REST Assured API Testing': 'pdfs/rest-assured-api-testing-curriculum.pdf',
+                'Cypress Automation': 'pdfs/cypress-automation-curriculum.pdf',
+                'Playwright Automation': 'pdfs/playwright-automation-curriculum.pdf'
+            };
+            return pdfMap[courseName] || 'pdfs/default-curriculum.pdf';
+        }
+
+        // ============================================================ */
+        // ===== SAVE TO ADMIN ===== */
+        // ============================================================ */
+        function saveToAdmin(data) {
+            let requests = JSON.parse(localStorage.getItem('curriculumRequests')) || [];
+
+            const newRequest = {
+                id: 'REQ' + Date.now().toString().slice(-6),
+                ...data,
+                timestamp: new Date().toISOString(),
+                status: 'pending'
+            };
+
+            requests.push(newRequest);
+            localStorage.setItem('curriculumRequests', JSON.stringify(requests));
+
+            console.log('📊 Saved to Admin Dashboard:', newRequest);
+            console.log('📊 Total Requests:', requests.length);
+        }
+
+        // ============================================================ */
+        // ===== CURRICULUM FORM SUBMIT ===== */
+        // ============================================================ */
+        function handleCurriculumSubmit(event) {
+            event.preventDefault();
+
+            const name = document.getElementById('modalFullName').value.trim();
+            const mobile = document.getElementById('modalMobile').value.trim();
+            const email = document.getElementById('modalEmail').value.trim();
+            const course = document.getElementById('modalCourse').value;
+
+            if (!name || !mobile || !email || !course) {
+                showToast('⚠️ Please fill in all required fields', 'error');
+                return;
+            }
+
+            if (mobile.length < 10) {
+                showToast('⚠️ Please enter a valid 10-digit mobile number', 'error');
+                return;
+            }
+
+            if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+                showToast('⚠️ Please enter a valid email address', 'error');
+                return;
+            }
+
+            const requestData = {
+                name: name,
+                mobile: mobile,
+                email: email,
+                course: course,
+                pdfUrl: getCoursePDF(course)
+            };
+
+            // Save to admin
+            saveToAdmin(requestData);
+
+            // Show success
+            showToast('✅ Curriculum for "' + course + '" sent to ' + email, 'success');
+
+            console.log('📄 ==========================================');
+            console.log('📄 CURRICULUM DOWNLOAD REQUEST');
+            console.log('📄 ==========================================');
+            console.log('📄 Name:    ' + name);
+            console.log('📄 Mobile:  +91 ' + mobile);
+            console.log('📄 Email:   ' + email);
+            console.log('📄 Course:  ' + course);
+            console.log('📄 PDF:     ' + getCoursePDF(course));
+            console.log('📄 ==========================================');
+
+            // Reset form
+            document.getElementById('curriculumForm').reset();
+
+            // Close modal after 2.5 seconds
+            setTimeout(function () {
+                closeCurriculumModal();
+            }, 2500);
+        }
     </script>
 
 </body>
