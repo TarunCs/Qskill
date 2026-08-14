@@ -1,2209 +1,1669 @@
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>QSkill Career Solutions</title>
-
-    <!-- ===== FONTS ===== -->
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap"
-        rel="stylesheet" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
-
-    <!-- ===== SHARED CSS ===== -->
-    <link rel="stylesheet" href="style.css" />
-
-    <style>
-        /* ============================================================ */
-        /* ===== UPDATED: GLOBAL TYPOGRAPHY ===== */
-        /* ============================================================ */
-        h1 {
-            font-size: 64px !important;
-        }
-
-        h2 {
-            font-size: 48px !important;
-        }
-
-        /* reduce gap between lines in hero heading */
-        .hero-text h1 {
-            line-height: 1.1 !important;
-            margin: 0 0 6px 0 !important;
-        }
-
-        /* ===== LOGO WITH TAGLINE BELOW ===== */
-        .logo-wrapper {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            text-decoration: none;
-        }
-
-        .logo-wrapper .logo-row {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-        }
-
-        .logo-wrapper .logo-row img {
-            height: 48px;
-            width: auto;
-            display: block;
-        }
-
-        .logo-wrapper .logo-text {
-            font-size: 24px;
-            font-weight: 700;
-            color: var(--text-dark);
-        }
-
-        .logo-wrapper .logo-text .qskill {
-            color: var(--primary);
-        }
-
-        .logo-wrapper .logo-text .careersolutions {
-            color: var(--orange);
-            font-weight: 300;
-        }
-
-        .logo-wrapper .tagline {
-            font-size: 13px;
-            color: var(--text-gray);
-            font-weight: 400;
-            letter-spacing: 1.5px;
-            margin-top: 2px;
-        }
-
-        .logo-wrapper .tagline .dot {
-            color: var(--orange);
-            font-weight: 700;
-        }
-
-        /* ===== NAVBAR ===== */
-        .navbar {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 12px 80px;
-            background: #FFFFFF;
-            box-shadow: 0 2px 16px rgba(0, 0, 0, 0.06);
-            position: sticky;
-            top: 0;
-            z-index: 100;
-            border-bottom: 1px solid rgba(31, 60, 136, 0.05);
-            height: auto;
-            min-height: 76px;
-        }
-
-        .nav-links {
-            display: flex;
-            gap: 24px;
-            align-items: center;
-            list-style: none;
-        }
-
-        .nav-links a {
-            text-decoration: none;
-            color: var(--text-dark);
-            font-weight: 500;
-            font-size: 15px;
-            transition: 0.3s;
-            padding: 6px 0;
-            border-bottom: 2px solid transparent;
-        }
-
-        .nav-links a:hover,
-        .nav-links a.active {
-            color: var(--primary);
-            border-bottom-color: var(--primary);
-        }
-
-        /* ===== LOGIN BUTTON ===== */
-        .login-btn {
-            background: var(--primary) !important;
-            color: var(--white) !important;
-            padding: 10px 28px !important;
-            border-radius: 999px !important;
-            font-weight: 600 !important;
-            font-size: 15px !important;
-            transition: 0.3s !important;
-            cursor: pointer !important;
-            display: inline-block !important;
-            border: none !important;
-            text-decoration: none !important;
-            border-bottom: none !important;
-            font-family: 'Poppins', sans-serif !important;
-            box-shadow: 0 2px 8px rgba(31, 60, 136, 0.12) !important;
-            line-height: 1.4 !important;
-            letter-spacing: 1px !important;
-        }
-
-        .login-btn i {
-            margin-left: 8px !important;
-            font-size: 12px !important;
-        }
-
-        .login-btn:hover {
-            background: var(--secondary) !important;
-            transform: translateY(-2px) !important;
-            border-bottom: none !important;
-            box-shadow: 0 4px 16px rgba(31, 60, 136, 0.25) !important;
-        }
-
-        /* ===== LOGIN DROPDOWN ===== */
-        .login-dropdown-wrapper {
-            position: relative;
-            display: inline-block;
-        }
-
-        .login-dropdown {
-            display: none;
-            position: absolute;
-            background: var(--white);
-            top: 48px;
-            right: 0;
-            box-shadow: 0 12px 32px rgba(0, 0, 0, 0.12);
-            border-radius: 14px;
-            padding: 6px 0;
-            min-width: 260px;
-            border: 1px solid var(--border);
-            z-index: 200;
-        }
-
-        .login-dropdown.show {
-            display: block;
-        }
-
-        .login-dropdown a {
-            display: flex;
-            align-items: center;
-            gap: 14px;
-            padding: 14px 22px;
-            color: var(--text-dark) !important;
-            text-decoration: none;
-            transition: 0.3s;
-            border-bottom: none !important;
-        }
-
-        .login-dropdown a:not(:last-child) {
-            border-bottom: 1px solid var(--border) !important;
-        }
-
-        .login-dropdown a:hover {
-            background: var(--light-bg);
-        }
-
-        .login-dropdown .dropdown-icon {
-            width: 42px;
-            height: 42px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .login-dropdown .dropdown-icon i {
-            font-size: 17px;
-        }
-
-        .login-dropdown a[data-role="student"] .dropdown-icon {
-            background: var(--light-bg);
-        }
-
-        .login-dropdown a[data-role="student"] .dropdown-icon i {
-            color: var(--primary);
-        }
-
-        .login-dropdown a[data-role="instructor"] .dropdown-icon {
-            background: #FFEBDD;
-        }
-
-        .login-dropdown a[data-role="instructor"] .dropdown-icon i {
-            color: var(--orange);
-        }
-
-        .login-dropdown .dropdown-text {
-            display: flex !important;
-            flex-direction: column !important;
-            gap: 2px !important;
-        }
-
-        .login-dropdown .role-title {
-            font-weight: 600;
-            font-size: 15px;
-            color: var(--text-dark);
-        }
-
-        .login-dropdown .role-sub {
-            font-weight: 400;
-            font-size: 12px;
-            color: var(--text-gray);
-            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
-        }
-
-        .login-dropdown a:hover .role-title {
-            color: var(--primary);
-        }
-
-        /* ===== HERO ===== */
-        .hero {
-            position: relative;
-            overflow: hidden;
-            background: #DEEAFD;
-        }
-
-        .hero-slider {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: 0;
-            transition: transform 1s ease-in-out;
-            transform: translateX(100%);
-        }
-
-        .hero-slider .slide {
-            width: 100%;
-            height: 100%;
-            background-size: cover;
-            background-position: center;
-        }
-
-        .hero-slider .slide-1 {
-            background: linear-gradient(90deg, #DEEAFD 0%, #DEEAFD 35%, rgba(222, 234, 253, 0.1) 60%, transparent 80%),
-                url('images/hero-bg.png');
-            background-size: cover, cover;
-            background-position: center;
-        }
-
-        .hero-text {
-            position: relative;
-            z-index: 2;
-        }
-
-        .floating-icons {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
-            z-index: 1;
-        }
-
-        .floating-icons i {
-            position: absolute;
-            color: var(--secondary);
-            opacity: 0.06;
-            font-size: 40px;
-        }
-
-        .floating-icons i:nth-child(1) {
-            top: 15%;
-            left: 5%;
-        }
-
-        .floating-icons i:nth-child(2) {
-            top: 10%;
-            right: 10%;
-            font-size: 48px;
-        }
-
-        .floating-icons i:nth-child(3) {
-            bottom: 20%;
-            left: 8%;
-            font-size: 34px;
-        }
-
-        .floating-icons i:nth-child(4) {
-            bottom: 15%;
-            right: 5%;
-            font-size: 44px;
-        }
-
-        /* ===== UPDATED: Hero heading with color #0000CD and reduced gap ===== */
-        .hero-text .tag {
-            color: var(--orange);
-            font-weight: 600;
-            letter-spacing: 2px;
-            font-size: 13px;
-            text-transform: uppercase;
-        }
-
-        .hero-text h1 {
-            font-size: 64px;
-            font-weight: 700;
-            line-height: 1.1;
-            color: var(--text-dark);
-            margin: 8px 0 4px;
-        }
-
-        .hero-text h1 span {
-            color: #0000CD;
-        }
-
-        .hero-text .sub-tagline {
-            color: var(--text-gray);
-            font-size: 18px;
-            margin: 4px 0 28px;
-            max-width: 480px;
-            line-height: 1.7;
-            font-weight: 400;
-        }
-
-        .hero-buttons {
-            display: flex;
-            gap: 14px;
-            flex-wrap: wrap;
-            align-items: center;
-        }
-
-        .btn-primary {
-            background: var(--primary) !important;
-            color: var(--white) !important;
-            border: none !important;
-            padding: 14px 34px !important;
-            border-radius: 999px !important;
-            font-weight: 600 !important;
-            font-size: 16px !important;
-            cursor: pointer !important;
-            transition: 0.3s !important;
-            box-shadow: 0 4px 16px rgba(31, 60, 136, 0.25) !important;
-            text-decoration: none !important;
-            display: inline-flex !important;
-            align-items: center !important;
-            gap: 10px !important;
-            font-family: 'Poppins', sans-serif !important;
-        }
-
-        .btn-primary:hover {
-            background: var(--secondary) !important;
-            transform: translateY(-2px) !important;
-            box-shadow: 0 6px 24px rgba(31, 60, 136, 0.35) !important;
-        }
-
-        .btn-secondary {
-            background: rgba(255, 255, 255, 0.8) !important;
-            backdrop-filter: blur(10px) !important;
-            border: 1px solid var(--border) !important;
-            color: var(--text-dark) !important;
-            padding: 14px 34px !important;
-            border-radius: 999px !important;
-            font-weight: 600 !important;
-            font-size: 16px !important;
-            cursor: pointer !important;
-            transition: 0.3s !important;
-            display: flex !important;
-            align-items: center !important;
-            gap: 10px !important;
-            font-family: 'Poppins', sans-serif !important;
-            text-decoration: none !important;
-        }
-
-        .btn-secondary:hover {
-            border-color: var(--primary) !important;
-            color: var(--primary) !important;
-            background: var(--white) !important;
-            transform: translateY(-2px) !important;
-        }
-
-        /* ===== FEATURES ===== */
-        .features {
-            display: flex;
-            justify-content: space-around;
-            padding: 40px 80px;
-            background: var(--white);
-            flex-wrap: wrap;
-            gap: 20px;
-            border-bottom: 1px solid var(--border);
-        }
-
-        .feature-item {
-            text-align: center;
-            flex: 1;
-            min-width: 140px;
-            padding: 10px;
-        }
-
-        .feature-item .icon-wrapper {
-            width: 60px;
-            height: 60px;
-            background: var(--light-bg);
-            border-radius: 16px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin: 0 auto 10px;
-            transition: 0.3s;
-        }
-
-        .feature-item .icon-wrapper i {
-            font-size: 26px;
-            color: var(--primary);
-        }
-
-        .feature-item:hover .icon-wrapper {
-            background: var(--primary);
-            transform: translateY(-4px);
-        }
-
-        .feature-item:hover .icon-wrapper i {
-            color: var(--white);
-        }
-
-        .feature-item h4 {
-            font-size: 16px;
-            font-weight: 600;
-            color: var(--text-dark);
-        }
-
-        .feature-item p {
-            font-size: 13px;
-            color: var(--text-gray);
-            margin-top: 2px;
-        }
-
-        /* ===== WHY QSKILL ===== */
-        .why-section {
-            padding: 30px 80px 20px !important;
-            background: var(--white);
-            text-align: center;
-        }
-
-        .why-section h2 {
-            font-size: 48px !important;
-            color: var(--primary);
-            font-weight: 700;
-            position: relative;
-            display: inline-block;
-            margin-bottom: 10px;
-        }
-
-        .why-section h2::after {
-            content: '';
-            position: absolute;
-            bottom: -10px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 80px;
-            height: 4px;
-            background: var(--orange);
-            border-radius: 2px;
-        }
-
-        .why-section>p {
-            max-width: 900px;
-            margin: 20px auto 30px;
-            color: var(--text-gray);
-            font-size: 17px;
-            line-height: 1.8;
-            font-weight: 400;
-        }
-
-        .why-grid {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            gap: 15px;
-            width: 100%;
-            margin: 0 auto;
-        }
-
-        .why-item {
-            flex: 1 1 0;
-            min-width: 120px;
-            text-align: center;
-            background: var(--white);
-            padding: 18px 12px;
-            border-radius: 14px;
-            transition: 0.3s;
-            box-shadow: 0 2px 12px rgba(0, 0, 0, 0.02);
-            border: 1px solid var(--border);
-        }
-
-        .why-item:hover {
-            transform: translateY(-6px);
-            box-shadow: 0 12px 40px rgba(31, 60, 136, 0.08);
-            border-color: var(--secondary);
-        }
-
-        .why-item .icon-wrapper {
-            display: inline-block;
-            width: 44px;
-            height: 44px;
-            background: var(--light-bg);
-            border-radius: 12px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin: 0 auto;
-            transition: 0.3s;
-        }
-
-        .why-item:hover .icon-wrapper {
-            background: var(--primary);
-            transform: scale(1.05);
-        }
-
-        .why-item:hover .icon-wrapper i {
-            color: var(--white);
-        }
-
-        .why-item .icon-wrapper i {
-            font-size: 18px;
-            color: var(--primary);
-            transition: 0.3s;
-        }
-
-        .why-item .icon-wrapper img {
-            width: 44px !important;
-            height: 44px !important;
-            object-fit: contain;
-            transition: 0.3s;
-        }
-
-        .why-item:hover .icon-wrapper img {
-            transform: scale(1.15);
-        }
-
-        .why-item h4 {
-            margin-top: 8px;
-            font-size: 13px;
-            color: var(--text-dark);
-            font-weight: 500;
-            line-height: 1.3;
-        }
-
-        /* ===== COURSES SECTION ===== */
-        .courses-section {
-            padding: 0px 80px 0px !important;
-            background: var(--white);
-            text-align: center;
-        }
-
-        .courses-section .section-header {
-            margin-bottom: 48px;
-        }
-
-        .courses-section .section-header h2 {
-            font-size: 48px !important;
-            color: var(--primary);
-            font-weight: 700;
-            position: relative;
-            display: inline-block;
-        }
-
-        .courses-section .section-header h2::after {
-            content: '';
-            position: absolute;
-            bottom: -10px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 80px;
-            height: 4px;
-            background: var(--orange);
-            border-radius: 2px;
-        }
-
-        .courses-section .section-header p {
-            color: var(--text-gray);
-            font-size: 18px;
-            font-weight: 400;
-            margin-top: 20px;
-            max-width: 600px;
-            margin-left: auto;
-            margin-right: auto;
-        }
-
-        .course-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-            gap: 35px;
-        }
-
-        .course-card {
-            background: var(--white);
-            border-radius: 20px;
-            padding: 28px 28px 32px;
-            transition: 0.3s;
-            text-align: left;
-            display: flex;
-            flex-direction: column;
-            height: 100%;
-            min-height: 480px;
-            border: 1px solid var(--border);
-            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.03);
-        }
-
-        .course-card:hover {
-            transform: translateY(-8px);
-            box-shadow: 0 12px 40px rgba(31, 60, 136, 0.06);
-            border-color: var(--border);
-        }
-
-        .course-card .card-image {
-            width: 100%;
-            aspect-ratio: 16/9;
-            border-radius: 24px;
-            overflow: hidden;
-            margin-bottom: 22px;
-            position: relative;
-            padding: 0;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            background: #FFFFFF;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.04);
-            border: 1px solid #F1F5F9;
-            transition: all 0.3s ease;
-        }
-
-        .course-card:hover .card-image {
-            box-shadow: 0 8px 24px rgba(31, 60, 136, 0.08);
-            border-color: var(--light-bg);
-        }
-
-        .course-card .card-image img {
-            width: 100%;
-            height: 100%;
-            object-fit: contain;
-            display: block;
-            transition: all 0.5s ease;
-            padding: 16px;
-            background: #FFFFFF;
-        }
-
-        .course-card:hover .card-image img {
-            transform: scale(1.02);
-        }
-
-        .course-card .card-image .image-badge {
-            position: absolute;
-            top: 14px;
-            left: 14px;
-            background: var(--primary);
-            color: var(--white);
-            padding: 5px 16px;
-            border-radius: 999px;
-            font-size: 12px;
-            font-weight: 500;
-            letter-spacing: 0.3px;
-            z-index: 2;
-            box-shadow: 0 2px 8px rgba(31, 60, 136, 0.15);
-            text-transform: uppercase;
-        }
-
-        .course-card .card-image .image-badge.blue-badge {
-            background: var(--secondary);
-        }
-
-        .course-card .card-image .image-badge.orange-badge {
-            background: var(--orange);
-        }
-
-        .course-card .card-image .image-badge.purple-badge {
-            background: #7C3AED;
-        }
-
-        .course-card .card-image .image-badge.green-badge {
-            background: var(--success);
-        }
-
-        .course-card .card-image::after {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            width: 100%;
-            height: 40%;
-            background: linear-gradient(to top, rgba(31, 60, 136, 0.04), transparent);
-            opacity: 0;
-            transition: opacity 0.4s ease;
-            pointer-events: none;
-            border-radius: 0 0 24px 24px;
-        }
-
-        .course-card:hover .card-image::after {
-            opacity: 1;
-        }
-
-        .course-card h3 {
-            font-size: 21px;
-            color: var(--text-dark);
-            margin-bottom: 10px;
-            line-height: 1.3;
-            font-weight: 600;
-        }
-
-        .course-card .card-description {
-            color: var(--text-gray);
-            font-size: 15px;
-            margin-bottom: 14px;
-            line-height: 1.7;
-            flex-grow: 0;
-            font-weight: 400;
-        }
-
-        .course-card .rating {
-            color: var(--star);
-            font-weight: 600;
-            font-size: 17px;
-            display: flex;
-            align-items: center;
-            gap: 4px;
-            margin-bottom: 18px;
-        }
-
-        .course-card .rating .star-icon {
-            font-size: 16px;
-            line-height: 1;
-            color: var(--star);
-        }
-
-        .course-card .rating span {
-            color: var(--text-gray);
-            font-weight: 400;
-            font-size: 15px;
-            margin-left: 2px;
-        }
-
-        .course-card .btn-group {
-            display: flex;
-            gap: 14px;
-            margin-top: auto;
-            flex-wrap: wrap;
-            padding-top: 4px;
-        }
-
-        .course-card .btn-group button,
-        .course-card .btn-group a {
-            padding: 8px 24px;
-            border-radius: 999px;
-            border: none;
-            font-weight: 500;
-            font-size: 14px;
-            cursor: pointer;
-            transition: 0.3s;
-            height: 40px;
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            letter-spacing: 0.2px;
-            gap: 8px;
-            font-family: 'Poppins', sans-serif;
-            text-decoration: none;
-        }
-
-        .btn-outline-course {
-            background: transparent;
-            border: 1px solid var(--border) !important;
-            color: var(--text-gray);
-        }
-
-        .btn-outline-course:hover {
-            border-color: var(--primary) !important;
-            color: var(--primary);
-            background: var(--light-bg);
-        }
-
-        .btn-enroll {
-            background: var(--primary);
-            color: var(--white);
-            border: none;
-        }
-
-        .btn-enroll:hover {
-            background: var(--secondary);
-        }
-
-        /* ============================================================ */
-        /* ===== UPDATED: ENQUIRY / CONTACT SECTION (FLEX, NO COLORED BOXES) ===== */
-        /* ============================================================ */
-        .enquiry-section {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            gap: 20px 40px;
-            padding: 30px 80px 20px !important;
-            background: var(--white);
-            border-top: 1px solid var(--border);
-        }
-
-        .enquiry-item {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            flex: 0 1 auto;
-        }
-
-        .enquiry-item .enquiry-icon {
-            font-size: 20px;
-            color: var(--primary);
-            width: 24px;
-            text-align: center;
-            flex-shrink: 0;
-        }
-
-        .enquiry-item .enquiry-text {
-            display: flex;
-            flex-direction: column;
-            gap: 0px;
-        }
-
-        .enquiry-item .enquiry-text .enquiry-label {
-            font-size: 11px;
-            font-weight: 500;
-            color: var(--text-gray);
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-        }
-
-        .enquiry-item .enquiry-text .enquiry-value {
-            font-size: 14px;
-            font-weight: 500;
-            color: var(--text-dark);
-        }
-
-        .enquiry-item .enquiry-text .enquiry-value a {
-            color: var(--primary);
-            text-decoration: none;
-        }
-
-        .enquiry-item .enquiry-text .enquiry-value a:hover {
-            text-decoration: underline;
-        }
-
-        /* ===== DEMO CTA ===== */
-        .demo-cta-section {
-            background: var(--primary);
-            padding: 50px 80px;
-            text-align: center;
-            color: var(--white);
-        }
-
-        .demo-cta-section h2 {
-            font-size: 28px;
-            font-weight: 700;
-            margin-bottom: 8px;
-        }
-
-        .demo-cta-section p {
-            font-size: 16px;
-            opacity: 0.85;
-            margin-bottom: 16px;
-            max-width: 600px;
-            margin-left: auto;
-            margin-right: auto;
-        }
-
-        .demo-cta-section .btn-demo-cta {
-            background: var(--white);
-            color: var(--primary);
-            border: none;
-            padding: 14px 34px;
-            border-radius: 999px;
-            font-size: 16px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: 0.3s;
-            font-family: 'Poppins', sans-serif;
-            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
-            text-decoration: none;
-            display: inline-flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .demo-cta-section .btn-demo-cta:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 24px rgba(0, 0, 0, 0.25);
-        }
-
-        /* ============================================================ */
-        /* ===== ADDED: CURRICULUM DOWNLOAD MODAL ===== */
-        /* ============================================================ */
-        .modal-overlay {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.6);
-            backdrop-filter: blur(6px);
-            align-items: center;
-            justify-content: center;
-            z-index: 9999;
-            padding: 20px;
-        }
-
-        .modal-overlay.active {
-            display: flex;
-        }
-
-        .modal-container {
-            background: #FFFFFF;
-            border-radius: 24px;
-            max-width: 580px;
-            width: 100%;
-            padding: 40px 38px 32px;
-            position: relative;
-            box-shadow: 0 25px 60px rgba(0, 0, 0, 0.25);
-            animation: modalSlideIn 0.4s ease;
-        }
-
-        @keyframes modalSlideIn {
-            from {
-                opacity: 0;
-                transform: translateY(30px) scale(0.96);
-            }
-
-            to {
-                opacity: 1;
-                transform: translateY(0) scale(1);
-            }
-        }
-
-        .close-btn {
-            position: absolute;
-            top: 14px;
-            right: 16px;
-            width: 36px;
-            height: 36px;
-            border-radius: 50%;
-            background: #F0F4FF;
-            border: none;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: 0.3s;
-            font-size: 18px;
-            color: #1A1A2E;
-        }
-
-        .close-btn:hover {
-            background: #E2E8F0;
-            transform: rotate(90deg);
-        }
-
-        .modal-logo {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            margin-bottom: 16px;
-        }
-
-        .modal-logo .logo-row {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .modal-logo .logo-icon {
-            width: 42px;
-            height: 42px;
-            background: #1F3C88;
-            border-radius: 10px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: #FFFFFF;
-            font-size: 20px;
-            font-weight: 700;
-        }
-
-        .modal-logo .logo-text {
-            font-size: 22px;
-            font-weight: 700;
-            color: #1A1A2E;
-            letter-spacing: 0.5px;
-        }
-
-        .modal-logo .logo-sub {
-            font-size: 10px;
-            font-weight: 500;
-            color: #F97316;
-            letter-spacing: 2px;
-            text-transform: uppercase;
-            margin-top: -2px;
-        }
-
-        .modal-heading {
-            text-align: center;
-            font-size: 24px;
-            font-weight: 700;
-            color: #1A1A2E;
-            margin: 4px 0 6px;
-        }
-
-        .modal-desc {
-            text-align: center;
-            font-size: 14px;
-            color: #6B7280;
-            line-height: 1.6;
-            margin-bottom: 22px;
-            max-width: 440px;
-            margin-left: auto;
-            margin-right: auto;
-        }
-
-        .form-group {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            margin-bottom: 14px;
-        }
-
-        .form-group .field-icon {
-            width: 42px;
-            height: 42px;
-            border-radius: 10px;
-            border: 1.5px solid #D1D5DB;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            flex-shrink: 0;
-            color: #1F3C88;
-            font-size: 16px;
-            background: #FAFBFC;
-        }
-
-        .form-group .field-wrapper {
-            flex: 1;
-            display: flex;
-            flex-direction: column;
-            gap: 2px;
-        }
-
-        .form-group .field-wrapper label {
-            font-size: 13px;
-            font-weight: 600;
-            color: #1A1A2E;
-        }
-
-        .form-group .field-wrapper label .required {
-            color: #EF4444;
-        }
-
-        .form-group .field-wrapper input,
-        .form-group .field-wrapper select {
-            width: 100%;
-            height: 42px;
-            padding: 0 14px;
-            border: 1.5px solid #D1D5DB;
-            border-radius: 10px;
-            font-size: 14px;
-            font-family: 'Poppins', sans-serif;
-            transition: 0.3s;
-            background: #FFFFFF;
-            color: #1A1A2E;
-            appearance: none;
-        }
-
-        .form-group .field-wrapper input:focus,
-        .form-group .field-wrapper select:focus {
-            border-color: #1F3C88;
-            outline: none;
-            box-shadow: 0 0 0 3px rgba(31, 60, 136, 0.08);
-        }
-
-        .form-group .field-wrapper input::placeholder {
-            color: #9CA3AF;
-        }
-
-        .phone-wrapper {
-            display: flex;
-            align-items: center;
-            border: 1.5px solid #D1D5DB;
-            border-radius: 10px;
-            background: #FFFFFF;
-            transition: 0.3s;
-            overflow: hidden;
-            height: 42px;
-        }
-
-        .phone-wrapper:focus-within {
-            border-color: #1F3C88;
-            box-shadow: 0 0 0 3px rgba(31, 60, 136, 0.08);
-        }
-
-        .phone-wrapper .prefix {
-            padding: 0 12px 0 14px;
-            font-weight: 600;
-            font-size: 14px;
-            color: #1A1A2E;
-            border-right: 1.5px solid #D1D5DB;
-            flex-shrink: 0;
-            background: #FAFBFC;
-            height: 100%;
-            display: flex;
-            align-items: center;
-        }
-
-        .phone-wrapper input {
-            border: none !important;
-            outline: none !important;
-            flex: 1;
-            padding: 0 14px;
-            font-size: 14px;
-            font-family: 'Poppins', sans-serif;
-            color: #1A1A2E;
-            background: transparent;
-            height: 100%;
-            min-width: 0;
-            box-shadow: none !important;
-        }
-
-        .phone-wrapper input::placeholder {
-            color: #9CA3AF;
-        }
-
-        .form-group .field-wrapper select {
-            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%236B7280' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
-            background-repeat: no-repeat;
-            background-position: right 14px center;
-            padding-right: 38px;
-            cursor: pointer;
-        }
-
-        .btn-register {
-            width: 100%;
-            background: #1F3C88;
-            color: #FFFFFF;
-            border: none;
-            padding: 14px;
-            border-radius: 999px;
-            font-weight: 700;
-            font-size: 16px;
-            cursor: pointer;
-            transition: 0.3s;
-            font-family: 'Poppins', sans-serif;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 10px;
-            margin-top: 6px;
-            box-shadow: 0 4px 16px rgba(31, 60, 136, 0.25);
-            letter-spacing: 0.5px;
-        }
-
-        .btn-register:hover {
-            background: #152B66;
-            transform: translateY(-2px);
-            box-shadow: 0 6px 24px rgba(31, 60, 136, 0.35);
-        }
-
-        .btn-register i {
-            font-size: 16px;
-        }
-
-        .security-message {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 8px;
-            margin-top: 16px;
-            font-size: 12px;
-            color: #6B7280;
-        }
-
-        .security-message i {
-            color: #1F3C88;
-            font-size: 14px;
-        }
-
-        /* ===== TOAST ===== */
-        .toast {
-            position: fixed;
-            bottom: 30px;
-            left: 50%;
-            transform: translateX(-50%) translateY(100px);
-            background: #1A1A2E;
-            color: #FFFFFF;
-            padding: 14px 28px;
-            border-radius: 12px;
-            font-family: 'Poppins', sans-serif;
-            font-size: 14px;
-            font-weight: 500;
-            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.2);
-            opacity: 0;
-            transition: all 0.4s ease;
-            z-index: 99999;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .toast.show {
-            opacity: 1;
-            transform: translateX(-50%) translateY(0);
-        }
-
-        .toast i {
-            font-size: 18px;
-        }
-
-        .toast.success i {
-            color: #22C55E;
-        }
-
-        .toast.error i {
-            color: #EF4444;
-        }
-
-        /* ============================================================ */
-        /* ===== FOOTER ===== */
-        /* ============================================================ */
-        .footer {
-            background: #1A1A2E;
-            color: var(--white);
-            padding: 40px 80px 20px;
-        }
-
-        .footer-top {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-            gap: 40px;
-            max-width: 1200px;
-            margin: 0 auto;
-            padding-bottom: 20px;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-        }
-
-        .footer-logo img {
-            height: 40px;
-            width: auto;
-        }
-
-        .footer-logo p {
-            font-size: 13px;
-            color: rgba(255, 255, 255, 0.7);
-            margin: 8px 0 12px;
-            line-height: 1.6;
-        }
-
-        .footer-social {
-            display: flex;
-            gap: 14px;
-        }
-
-        .footer-social i {
-            font-size: 20px;
-            color: rgba(255, 255, 255, 0.6);
-            cursor: pointer;
-            transition: 0.3s;
-        }
-
-        .footer-social i:hover {
-            color: var(--white);
-            transform: translateY(-2px);
-        }
-
-        .footer h4 {
-            font-size: 16px;
-            font-weight: 600;
-            margin-bottom: 12px;
-            color: var(--white);
-        }
-
-        .footer a {
-            display: block;
-            color: rgba(255, 255, 255, 0.7);
-            text-decoration: none;
-            font-size: 14px;
-            padding: 4px 0;
-            transition: 0.3s;
-        }
-
-        .footer a:hover {
-            color: var(--white);
-        }
-
-        .footer-contact p {
-            font-size: 14px;
-            color: rgba(255, 255, 255, 0.7);
-            padding: 4px 0;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .footer-contact p i {
-            width: 18px;
-            color: var(--orange);
-        }
-
-        .footer-bottom {
-            text-align: center;
-            font-size: 13px;
-            color: rgba(255, 255, 255, 0.5);
-            padding-top: 20px;
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-
-        /* ============================================================ */
-        /* ===== RESPONSIVE ===== */
-        /* ============================================================ */
-        @media (max-width: 992px) {
+    <!DOCTYPE html>
+    <html lang="en">
+
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>QSkill Career Solutions</title>
+
+        <!-- ===== FONTS ===== -->
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+        <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap"
+            rel="stylesheet" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+
+        <!-- ===== SHARED CSS ===== -->
+        <link rel="stylesheet" href="style.css" />
+
+        <style>
+            /* ============================================================ */
+            /* ===== GLOBAL TYPOGRAPHY ===== */
+            /* ============================================================ */
             h1 {
+                font-size: 64px !important;
+            }
+
+            h2 {
                 font-size: 48px !important;
             }
 
-            h2 {
-                font-size: 36px !important;
-            }
-
-            .navbar {
-                padding: 12px 40px;
-            }
-
-            .features {
-                padding: 30px 40px;
-            }
-
-            .why-section {
-                padding: 20px 40px 15px !important;
-            }
-
-            .courses-section {
-                padding: 0px 40px 0px !important;
-            }
-
-            .enquiry-section {
-                padding: 20px 40px !important;
-                gap: 16px 30px;
-            }
-
-            .demo-cta-section {
-                padding: 40px 40px;
-            }
-
-            .footer {
-                padding: 30px 40px 20px;
-            }
-
-            .modal-container {
-                padding: 30px 24px 24px;
-            }
-        }
-
-        @media (max-width: 768px) {
-            .floating-icons {
-                display: none;
-            }
-
-            .navbar {
-                flex-direction: column;
-                padding: 12px 20px;
-                gap: 10px;
-                min-height: auto;
-            }
-
-            .nav-links {
-                flex-wrap: wrap;
-                justify-content: center;
-                gap: 12px;
-            }
-
+            /* reduce gap between lines in hero heading */
             .hero-text h1 {
-                font-size: 36px !important;
+                line-height: 1.1 !important;
+                margin: 0 0 6px 0 !important;
             }
 
-            .features {
+            /* ===== LOGO WITH TAGLINE BELOW ===== */
+            .logo-wrapper {
+                display: flex;
                 flex-direction: column;
                 align-items: center;
-                padding: 20px;
+                text-decoration: none;
             }
 
-            .feature-item {
-                min-width: 100%;
-            }
-
-            .why-section {
-                padding: 20px 20px 15px !important;
-            }
-
-            .why-section>p {
-                font-size: 15px;
-                margin: 15px auto 20px;
-            }
-
-            .why-item {
-                flex: 1 1 calc(50% - 15px);
-                min-width: 120px;
-                padding: 14px 8px;
-            }
-
-            .why-item h4 {
-                font-size: 12px;
-            }
-
-            .why-item .icon-wrapper {
-                width: 40px;
-                height: 40px;
-            }
-
-            .why-item .icon-wrapper i {
-                font-size: 16px;
-            }
-
-            .why-item .icon-wrapper img {
-                width: 40px !important;
-                height: 40px !important;
-            }
-
-            .courses-section {
-                padding: 0px 20px 0px !important;
-            }
-
-            .enquiry-section {
-                padding: 16px 20px !important;
-                flex-direction: column;
+            .logo-wrapper .logo-row {
+                display: flex;
                 align-items: center;
                 gap: 12px;
-            }
-
-            .enquiry-item {
-                width: 100%;
-                justify-content: center;
-            }
-
-            .course-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .course-card {
-                min-height: auto;
-                padding: 20px;
-            }
-
-            .demo-cta-section {
-                padding: 30px 20px;
-            }
-
-            .demo-cta-section h2 {
-                font-size: 22px;
-            }
-
-            .demo-cta-section .btn-demo-cta {
-                padding: 10px 20px;
-                font-size: 14px;
-            }
-
-            .footer {
-                padding: 20px 20px 15px;
-            }
-
-            .footer-top {
-                grid-template-columns: 1fr 1fr;
-                gap: 20px;
-            }
-
-            .modal-container {
-                padding: 24px 18px 20px;
-            }
-
-            .modal-heading {
-                font-size: 20px;
-            }
-
-            .modal-desc {
-                font-size: 13px;
-            }
-
-            .form-group {
-                gap: 10px;
-                margin-bottom: 12px;
-            }
-
-            .form-group .field-icon {
-                width: 36px;
-                height: 36px;
-                font-size: 14px;
-            }
-
-            .form-group .field-wrapper input,
-            .form-group .field-wrapper select,
-            .phone-wrapper {
-                height: 38px;
-                font-size: 13px;
-            }
-
-            .btn-register {
-                padding: 12px;
-                font-size: 14px;
-            }
-        }
-
-        @media (max-width: 480px) {
-            h1 {
-                font-size: 32px !important;
-            }
-
-            h2 {
-                font-size: 26px !important;
-            }
-
-            .hero-text h1 {
-                font-size: 28px !important;
-            }
-
-            .logo-wrapper .logo-text {
-                font-size: 16px;
             }
 
             .logo-wrapper .logo-row img {
-                height: 32px;
+                height: 48px;
+                width: auto;
+                display: block;
+            }
+
+            .logo-wrapper .logo-text {
+                font-size: 24px;
+                font-weight: 700;
+                color: var(--text-dark);
+            }
+
+            .logo-wrapper .logo-text .qskill {
+                color: var(--primary);
+            }
+
+            .logo-wrapper .logo-text .careersolutions {
+                color: var(--orange);
+                font-weight: 300;
             }
 
             .logo-wrapper .tagline {
-                font-size: 10px;
+                font-size: 13px;
+                color: var(--text-gray);
+                font-weight: 400;
+                letter-spacing: 1.5px;
+                margin-top: 2px;
+            }
+
+            .logo-wrapper .tagline .dot {
+                color: var(--orange);
+                font-weight: 700;
+            }
+
+            /* ===== NAVBAR ===== */
+            .navbar {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                padding: 12px 80px;
+                background: #FFFFFF;
+                box-shadow: 0 2px 16px rgba(0, 0, 0, 0.06);
+                position: sticky;
+                top: 0;
+                z-index: 100;
+                border-bottom: 1px solid rgba(31, 60, 136, 0.05);
+                height: auto;
+                min-height: 76px;
+            }
+
+            .nav-links {
+                display: flex;
+                gap: 24px;
+                align-items: center;
+                list-style: none;
             }
 
             .nav-links a {
+                text-decoration: none;
+                color: var(--text-dark);
+                font-weight: 500;
+                font-size: 15px;
+                transition: 0.3s;
+                padding: 6px 0;
+                border-bottom: 2px solid transparent;
+            }
+
+            .nav-links a:hover,
+            .nav-links a.active {
+                color: var(--primary);
+                border-bottom-color: var(--primary);
+            }
+
+            /* ===== LOGIN BUTTON ===== */
+            .login-btn {
+                background: var(--primary) !important;
+                color: var(--white) !important;
+                padding: 10px 28px !important;
+                border-radius: 999px !important;
+                font-weight: 600 !important;
+                font-size: 15px !important;
+                transition: 0.3s !important;
+                cursor: pointer !important;
+                display: inline-block !important;
+                border: none !important;
+                text-decoration: none !important;
+                border-bottom: none !important;
+                font-family: 'Poppins', sans-serif !important;
+                box-shadow: 0 2px 8px rgba(31, 60, 136, 0.12) !important;
+                line-height: 1.4 !important;
+                letter-spacing: 1px !important;
+            }
+
+            .login-btn i {
+                margin-left: 8px !important;
+                font-size: 12px !important;
+            }
+
+            .login-btn:hover {
+                background: var(--secondary) !important;
+                transform: translateY(-2px) !important;
+                border-bottom: none !important;
+                box-shadow: 0 4px 16px rgba(31, 60, 136, 0.25) !important;
+            }
+
+            /* ===== LOGIN DROPDOWN ===== */
+            .login-dropdown-wrapper {
+                position: relative;
+                display: inline-block;
+            }
+
+            .login-dropdown {
+                display: none;
+                position: absolute;
+                background: var(--white);
+                top: 48px;
+                right: 0;
+                box-shadow: 0 12px 32px rgba(0, 0, 0, 0.12);
+                border-radius: 14px;
+                padding: 6px 0;
+                min-width: 260px;
+                border: 1px solid var(--border);
+                z-index: 200;
+            }
+
+            .login-dropdown.show {
+                display: block;
+            }
+
+            .login-dropdown a {
+                display: flex;
+                align-items: center;
+                gap: 14px;
+                padding: 14px 22px;
+                color: var(--text-dark) !important;
+                text-decoration: none;
+                transition: 0.3s;
+                border-bottom: none !important;
+            }
+
+            .login-dropdown a:not(:last-child) {
+                border-bottom: 1px solid var(--border) !important;
+            }
+
+            .login-dropdown a:hover {
+                background: var(--light-bg);
+            }
+
+            .login-dropdown .dropdown-icon {
+                width: 42px;
+                height: 42px;
+                border-radius: 50%;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+
+            .login-dropdown .dropdown-icon i {
+                font-size: 17px;
+            }
+
+            .login-dropdown a[data-role="student"] .dropdown-icon {
+                background: var(--light-bg);
+            }
+
+            .login-dropdown a[data-role="student"] .dropdown-icon i {
+                color: var(--primary);
+            }
+
+            .login-dropdown a[data-role="instructor"] .dropdown-icon {
+                background: #FFEBDD;
+            }
+
+            .login-dropdown a[data-role="instructor"] .dropdown-icon i {
+                color: var(--orange);
+            }
+
+            .login-dropdown .dropdown-text {
+                display: flex !important;
+                flex-direction: column !important;
+                gap: 2px !important;
+            }
+
+            .login-dropdown .role-title {
+                font-weight: 600;
+                font-size: 15px;
+                color: var(--text-dark);
+            }
+
+            .login-dropdown .role-sub {
+                font-weight: 400;
+                font-size: 12px;
+                color: var(--text-gray);
+                font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            }
+
+            .login-dropdown a:hover .role-title {
+                color: var(--primary);
+            }
+
+            /* ===== HERO ===== */
+            .hero {
+                position: relative;
+                overflow: hidden;
+                background: #DEEAFD;
+            }
+
+            .hero-slider {
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                z-index: 0;
+                transition: transform 1s ease-in-out;
+                transform: translateX(100%);
+            }
+
+            .hero-slider .slide {
+                width: 100%;
+                height: 100%;
+                background-size: cover;
+                background-position: center;
+            }
+
+            .hero-slider .slide-1 {
+                background: linear-gradient(90deg, #DEEAFD 0%, #DEEAFD 35%, rgba(222, 234, 253, 0.1) 60%, transparent 80%),
+                    url('images/hero-bg.png');
+                background-size: cover, cover;
+                background-position: center;
+            }
+
+            .hero-text {
+                position: relative;
+                z-index: 2;
+            }
+
+            .floating-icons {
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                pointer-events: none;
+                z-index: 1;
+            }
+
+            .floating-icons i {
+                position: absolute;
+                color: var(--secondary);
+                opacity: 0.06;
+                font-size: 40px;
+            }
+
+            .floating-icons i:nth-child(1) {
+                top: 15%;
+                left: 5%;
+            }
+
+            .floating-icons i:nth-child(2) {
+                top: 10%;
+                right: 10%;
+                font-size: 48px;
+            }
+
+            .floating-icons i:nth-child(3) {
+                bottom: 20%;
+                left: 8%;
+                font-size: 34px;
+            }
+
+            .floating-icons i:nth-child(4) {
+                bottom: 15%;
+                right: 5%;
+                font-size: 44px;
+            }
+
+            .hero-text .tag {
+                color: var(--orange);
+                font-weight: 600;
+                letter-spacing: 2px;
                 font-size: 13px;
+                text-transform: uppercase;
+            }
+
+            .hero-text h1 {
+                font-size: 64px;
+                font-weight: 700;
+                line-height: 1.1;
+                color: var(--text-dark);
+                margin: 8px 0 4px;
+            }
+
+            .hero-text h1 span {
+                color: #0000CD;
+            }
+
+            .hero-text .sub-tagline {
+                color: var(--text-gray);
+                font-size: 18px;
+                margin: 4px 0 28px;
+                max-width: 480px;
+                line-height: 1.7;
+                font-weight: 400;
+            }
+
+            .hero-buttons {
+                display: flex;
+                gap: 14px;
+                flex-wrap: wrap;
+                align-items: center;
+            }
+
+            .btn-primary {
+                background: var(--primary) !important;
+                color: var(--white) !important;
+                border: none !important;
+                padding: 14px 34px !important;
+                border-radius: 999px !important;
+                font-weight: 600 !important;
+                font-size: 16px !important;
+                cursor: pointer !important;
+                transition: 0.3s !important;
+                box-shadow: 0 4px 16px rgba(31, 60, 136, 0.25) !important;
+                text-decoration: none !important;
+                display: inline-flex !important;
+                align-items: center !important;
+                gap: 10px !important;
+                font-family: 'Poppins', sans-serif !important;
+            }
+
+            .btn-primary:hover {
+                background: var(--secondary) !important;
+                transform: translateY(-2px) !important;
+                box-shadow: 0 6px 24px rgba(31, 60, 136, 0.35) !important;
+            }
+
+            .btn-secondary {
+                background: rgba(255, 255, 255, 0.8) !important;
+                backdrop-filter: blur(10px) !important;
+                border: 1px solid var(--border) !important;
+                color: var(--text-dark) !important;
+                padding: 14px 34px !important;
+                border-radius: 999px !important;
+                font-weight: 600 !important;
+                font-size: 16px !important;
+                cursor: pointer !important;
+                transition: 0.3s !important;
+                display: flex !important;
+                align-items: center !important;
+                gap: 10px !important;
+                font-family: 'Poppins', sans-serif !important;
+                text-decoration: none !important;
+            }
+
+            .btn-secondary:hover {
+                border-color: var(--primary) !important;
+                color: var(--primary) !important;
+                background: var(--white) !important;
+                transform: translateY(-2px) !important;
+            }
+
+            /* ===== FEATURES ===== */
+            .features {
+                display: flex;
+                justify-content: space-around;
+                padding: 40px 80px;
+                background: var(--white);
+                flex-wrap: wrap;
+                gap: 20px;
+                border-bottom: 1px solid var(--border);
+            }
+
+            .feature-item {
+                text-align: center;
+                flex: 1;
+                min-width: 140px;
+                padding: 10px;
+            }
+
+            .feature-item .icon-wrapper {
+                width: 60px;
+                height: 60px;
+                background: var(--light-bg);
+                border-radius: 16px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                margin: 0 auto 10px;
+                transition: 0.3s;
+            }
+
+            .feature-item .icon-wrapper i {
+                font-size: 26px;
+                color: var(--primary);
+            }
+
+            .feature-item:hover .icon-wrapper {
+                background: var(--primary);
+                transform: translateY(-4px);
+            }
+
+            .feature-item:hover .icon-wrapper i {
+                color: var(--white);
+            }
+
+            .feature-item h4 {
+                font-size: 16px;
+                font-weight: 600;
+                color: var(--text-dark);
+            }
+
+            .feature-item p {
+                font-size: 13px;
+                color: var(--text-gray);
+                margin-top: 2px;
+            }
+
+            /* ===== WHY QSKILL ===== */
+            .why-section {
+                padding: 30px 80px 20px !important;
+                background: var(--white);
+                text-align: center;
             }
 
             .why-section h2 {
-                font-size: 26px !important;
+                font-size: 48px !important;
+                color: var(--primary);
+                font-weight: 700;
+                position: relative;
+                display: inline-block;
+                margin-bottom: 10px;
+            }
+
+            .why-section h2::after {
+                content: '';
+                position: absolute;
+                bottom: -10px;
+                left: 50%;
+                transform: translateX(-50%);
+                width: 80px;
+                height: 4px;
+                background: var(--orange);
+                border-radius: 2px;
+            }
+
+            .why-section>p {
+                max-width: 900px;
+                margin: 20px auto 30px;
+                color: var(--text-gray);
+                font-size: 17px;
+                line-height: 1.8;
+                font-weight: 400;
+            }
+
+            .why-grid {
+                display: flex;
+                flex-wrap: wrap;
+                justify-content: center;
+                gap: 15px;
+                width: 100%;
+                margin: 0 auto;
             }
 
             .why-item {
-                flex: 1 1 calc(50% - 10px);
-                min-width: 80px;
-                padding: 10px 4px;
+                flex: 1 1 0;
+                min-width: 120px;
+                text-align: center;
+                background: var(--white);
+                padding: 18px 12px;
+                border-radius: 14px;
+                transition: 0.3s;
+                box-shadow: 0 2px 12px rgba(0, 0, 0, 0.02);
+                border: 1px solid var(--border);
             }
 
-            .why-item h4 {
-                font-size: 10px;
+            .why-item:hover {
+                transform: translateY(-6px);
+                box-shadow: 0 12px 40px rgba(31, 60, 136, 0.08);
+                border-color: var(--secondary);
             }
 
             .why-item .icon-wrapper {
-                width: 32px;
-                height: 32px;
+                display: inline-block;
+                width: 44px;
+                height: 44px;
+                background: var(--light-bg);
+                border-radius: 12px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                margin: 0 auto;
+                transition: 0.3s;
+            }
+
+            .why-item:hover .icon-wrapper {
+                background: var(--primary);
+                transform: scale(1.05);
+            }
+
+            .why-item:hover .icon-wrapper i {
+                color: var(--white);
             }
 
             .why-item .icon-wrapper i {
-                font-size: 12px;
+                font-size: 18px;
+                color: var(--primary);
+                transition: 0.3s;
             }
 
             .why-item .icon-wrapper img {
-                width: 32px !important;
-                height: 32px !important;
+                width: 44px !important;
+                height: 44px !important;
+                object-fit: contain;
+                transition: 0.3s;
+            }
+
+            .why-item:hover .icon-wrapper img {
+                transform: scale(1.15);
+            }
+
+            .why-item h4 {
+                margin-top: 8px;
+                font-size: 13px;
+                color: var(--text-dark);
+                font-weight: 500;
+                line-height: 1.3;
+            }
+
+            /* ===== COURSES SECTION ===== */
+            .courses-section {
+                padding: 0px 80px 0px !important;
+                background: var(--white);
+                text-align: center;
+            }
+
+            .courses-section .section-header {
+                margin-bottom: 48px;
+            }
+
+            .courses-section .section-header h2 {
+                font-size: 48px !important;
+                color: var(--primary);
+                font-weight: 700;
+                position: relative;
+                display: inline-block;
+            }
+
+            .courses-section .section-header h2::after {
+                content: '';
+                position: absolute;
+                bottom: -10px;
+                left: 50%;
+                transform: translateX(-50%);
+                width: 80px;
+                height: 4px;
+                background: var(--orange);
+                border-radius: 2px;
+            }
+
+            .courses-section .section-header p {
+                color: var(--text-gray);
+                font-size: 18px;
+                font-weight: 400;
+                margin-top: 20px;
+                max-width: 600px;
+                margin-left: auto;
+                margin-right: auto;
+            }
+
+            .course-grid {
+                display: grid;
+                grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+                gap: 35px;
+            }
+
+            .course-card {
+                background: var(--white);
+                border-radius: 20px;
+                padding: 28px 28px 32px;
+                transition: 0.3s;
+                text-align: left;
+                display: flex;
+                flex-direction: column;
+                height: 100%;
+                min-height: 480px;
+                border: 1px solid var(--border);
+                box-shadow: 0 1px 3px rgba(0, 0, 0, 0.03);
+            }
+
+            .course-card:hover {
+                transform: translateY(-8px);
+                box-shadow: 0 12px 40px rgba(31, 60, 136, 0.06);
+                border-color: var(--border);
+            }
+
+            .course-card .card-image {
+                width: 100%;
+                aspect-ratio: 16/9;
+                border-radius: 24px;
+                overflow: hidden;
+                margin-bottom: 22px;
+                position: relative;
+                padding: 0;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                background: #FFFFFF;
+                box-shadow: 0 4px 12px rgba(0, 0, 0, 0.04);
+                border: 1px solid #F1F5F9;
+                transition: all 0.3s ease;
+            }
+
+            .course-card:hover .card-image {
+                box-shadow: 0 8px 24px rgba(31, 60, 136, 0.08);
+                border-color: var(--light-bg);
+            }
+
+            .course-card .card-image img {
+                width: 100%;
+                height: 100%;
+                object-fit: contain;
+                display: block;
+                transition: all 0.5s ease;
+                padding: 16px;
+                background: #FFFFFF;
+            }
+
+            .course-card:hover .card-image img {
+                transform: scale(1.02);
+            }
+
+            .course-card .card-image .image-badge {
+                position: absolute;
+                top: 14px;
+                left: 14px;
+                background: var(--primary);
+                color: var(--white);
+                padding: 5px 16px;
+                border-radius: 999px;
+                font-size: 12px;
+                font-weight: 500;
+                letter-spacing: 0.3px;
+                z-index: 2;
+                box-shadow: 0 2px 8px rgba(31, 60, 136, 0.15);
+                text-transform: uppercase;
+            }
+
+            .course-card .card-image .image-badge.blue-badge {
+                background: var(--secondary);
+            }
+
+            .course-card .card-image .image-badge.orange-badge {
+                background: var(--orange);
+            }
+
+            .course-card .card-image .image-badge.purple-badge {
+                background: #7C3AED;
+            }
+
+            .course-card .card-image .image-badge.green-badge {
+                background: var(--success);
+            }
+
+            .course-card .card-image::after {
+                content: '';
+                position: absolute;
+                bottom: 0;
+                left: 0;
+                width: 100%;
+                height: 40%;
+                background: linear-gradient(to top, rgba(31, 60, 136, 0.04), transparent);
+                opacity: 0;
+                transition: opacity 0.4s ease;
+                pointer-events: none;
+                border-radius: 0 0 24px 24px;
+            }
+
+            .course-card:hover .card-image::after {
+                opacity: 1;
             }
 
             .course-card h3 {
-                font-size: 18px;
+                font-size: 21px;
+                color: var(--text-dark);
+                margin-bottom: 10px;
+                line-height: 1.3;
+                font-weight: 600;
+            }
+
+            .course-card .card-description {
+                color: var(--text-gray);
+                font-size: 15px;
+                margin-bottom: 14px;
+                line-height: 1.7;
+                flex-grow: 0;
+                font-weight: 400;
+            }
+
+            .course-card .rating {
+                color: var(--star);
+                font-weight: 600;
+                font-size: 17px;
+                display: flex;
+                align-items: center;
+                gap: 4px;
+                margin-bottom: 18px;
+            }
+
+            .course-card .rating .star-icon {
+                font-size: 16px;
+                line-height: 1;
+                color: var(--star);
+            }
+
+            .course-card .rating span {
+                color: var(--text-gray);
+                font-weight: 400;
+                font-size: 15px;
+                margin-left: 2px;
+            }
+
+            .course-card .btn-group {
+                display: flex;
+                gap: 14px;
+                margin-top: auto;
+                flex-wrap: wrap;
+                padding-top: 4px;
             }
 
             .course-card .btn-group button,
             .course-card .btn-group a {
-                padding: 6px 16px;
-                font-size: 12px;
-                height: 32px;
+                padding: 8px 24px;
+                border-radius: 999px;
+                border: none;
+                font-weight: 500;
+                font-size: 14px;
+                cursor: pointer;
+                transition: 0.3s;
+                height: 40px;
+                display: inline-flex;
+                align-items: center;
+                justify-content: center;
+                letter-spacing: 0.2px;
+                gap: 8px;
+                font-family: 'Poppins', sans-serif;
+                text-decoration: none;
             }
 
-            .course-card .card-image img {
-                padding: 6px;
+            .btn-outline-course {
+                background: transparent;
+                border: 1px solid var(--border) !important;
+                color: var(--text-gray);
+            }
+
+            .btn-outline-course:hover {
+                border-color: var(--primary) !important;
+                color: var(--primary);
+                background: var(--light-bg);
+            }
+
+            .btn-enroll {
+                background: var(--primary);
+                color: var(--white);
+                border: none;
+            }
+
+            .btn-enroll:hover {
+                background: var(--secondary);
+            }
+
+            /* ============================================================ */
+            /* ===== ENQUIRY / CONTACT SECTION ===== */
+            /* ============================================================ */
+            .enquiry-section {
+                display: flex;
+                flex-wrap: wrap;
+                justify-content: center;
+                gap: 20px 40px;
+                padding: 30px 80px 20px !important;
+                background: var(--white);
+                border-top: 1px solid var(--border);
+            }
+
+            .enquiry-item {
+                display: flex;
+                align-items: center;
+                gap: 12px;
+                flex: 0 1 auto;
+            }
+
+            .enquiry-item .enquiry-icon {
+                font-size: 20px;
+                color: var(--primary);
+                width: 24px;
+                text-align: center;
+                flex-shrink: 0;
+            }
+
+            .enquiry-item .enquiry-text {
+                display: flex;
+                flex-direction: column;
+                gap: 0px;
+            }
+
+            .enquiry-item .enquiry-text .enquiry-label {
+                font-size: 11px;
+                font-weight: 500;
+                color: var(--text-gray);
+                text-transform: uppercase;
+                letter-spacing: 0.5px;
+            }
+
+            .enquiry-item .enquiry-text .enquiry-value {
+                font-size: 14px;
+                font-weight: 500;
+                color: var(--text-dark);
+            }
+
+            .enquiry-item .enquiry-text .enquiry-value a {
+                color: var(--primary);
+                text-decoration: none;
+            }
+
+            .enquiry-item .enquiry-text .enquiry-value a:hover {
+                text-decoration: underline;
+            }
+
+            /* ===== DEMO CTA ===== */
+            .demo-cta-section {
+                background: var(--primary);
+                padding: 50px 80px;
+                text-align: center;
+                color: var(--white);
             }
 
             .demo-cta-section h2 {
-                font-size: 18px;
+                font-size: 28px;
+                font-weight: 700;
+                margin-bottom: 8px;
+            }
+
+            .demo-cta-section p {
+                font-size: 16px;
+                opacity: 0.85;
+                margin-bottom: 16px;
+                max-width: 600px;
+                margin-left: auto;
+                margin-right: auto;
             }
 
             .demo-cta-section .btn-demo-cta {
-                padding: 8px 16px;
-                font-size: 12px;
+                background: var(--white);
+                color: var(--primary);
+                border: none;
+                padding: 14px 34px;
+                border-radius: 999px;
+                font-size: 16px;
+                font-weight: 600;
+                cursor: pointer;
+                transition: 0.3s;
+                font-family: 'Poppins', sans-serif;
+                box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
+                text-decoration: none;
+                display: inline-flex;
+                align-items: center;
+                gap: 10px;
+            }
+
+            .demo-cta-section .btn-demo-cta:hover {
+                transform: translateY(-2px);
+                box-shadow: 0 6px 24px rgba(0, 0, 0, 0.25);
+            }
+
+            /* ============================================================ */
+            /* ===== FOOTER ===== */
+            /* ============================================================ */
+            .footer {
+                background: #1A1A2E;
+                color: var(--white);
+                padding: 40px 80px 20px;
             }
 
             .footer-top {
-                grid-template-columns: 1fr;
-                gap: 16px;
+                display: grid;
+                grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+                gap: 40px;
+                max-width: 1200px;
+                margin: 0 auto;
+                padding-bottom: 20px;
+                border-bottom: 1px solid rgba(255, 255, 255, 0.08);
             }
 
-            .modal-container {
-                padding: 20px 14px 16px;
+            .footer-logo img {
+                height: 40px;
+                width: auto;
             }
 
-            .modal-heading {
-                font-size: 17px;
+            .footer-logo p {
+                font-size: 13px;
+                color: rgba(255, 255, 255, 0.7);
+                margin: 8px 0 12px;
+                line-height: 1.6;
             }
 
-            .modal-logo .logo-icon {
-                width: 32px;
-                height: 32px;
-                font-size: 15px;
+            .footer-social {
+                display: flex;
+                gap: 14px;
             }
 
-            .modal-logo .logo-text {
-                font-size: 17px;
+            .footer-social i {
+                font-size: 20px;
+                color: rgba(255, 255, 255, 0.6);
+                cursor: pointer;
+                transition: 0.3s;
             }
 
-            .form-group {
+            .footer-social i:hover {
+                color: var(--white);
+                transform: translateY(-2px);
+            }
+
+            .footer h4 {
+                font-size: 16px;
+                font-weight: 600;
+                margin-bottom: 12px;
+                color: var(--white);
+            }
+
+            .footer a {
+                display: block;
+                color: rgba(255, 255, 255, 0.7);
+                text-decoration: none;
+                font-size: 14px;
+                padding: 4px 0;
+                transition: 0.3s;
+            }
+
+            .footer a:hover {
+                color: var(--white);
+            }
+
+            .footer-contact p {
+                font-size: 14px;
+                color: rgba(255, 255, 255, 0.7);
+                padding: 4px 0;
+                display: flex;
+                align-items: center;
+                gap: 10px;
+            }
+
+            .footer-contact p i {
+                width: 18px;
+                color: var(--orange);
+            }
+
+            .footer-bottom {
+                text-align: center;
+                font-size: 13px;
+                color: rgba(255, 255, 255, 0.5);
+                padding-top: 20px;
+                max-width: 1200px;
+                margin: 0 auto;
+            }
+
+            /* ============================================================ */
+            /* ===== CONTACT SECTION – FULL WIDTH FLEX ===== */
+            /* ============================================================ */
+            .contact {
+                padding: 40px 80px 30px;
+                background: var(--white);
+                text-align: center;
+                border-top: 1px solid var(--border);
+            }
+
+            .contact h2 {
+                font-size: 36px !important;
+                color: var(--primary);
+                font-weight: 700;
+                margin-bottom: 30px;
+            }
+
+            .contact-grid {
+                display: flex;
+                flex-wrap: wrap;
+                justify-content: center;
+                gap: 30px 50px;
+            }
+
+            .contact-item {
+                flex: 1 1 180px;
+                /* Removed max-width – items stretch to fill the container */
+                text-align: center;
+                padding: 20px 15px;
+                display: flex;
                 flex-direction: column;
-                align-items: stretch;
-                gap: 4px;
+                align-items: center;
+                border-radius: 12px;
+                transition: 0.3s;
+                background: var(--white);
+                border: 1px solid transparent;
             }
 
-            .form-group .field-icon {
-                width: 100%;
-                height: 32px;
-                border-radius: 8px;
+            .contact-item:hover {
+                transform: translateY(-4px);
+                box-shadow: 0 8px 24px rgba(31, 60, 136, 0.06);
+                border-color: var(--border);
             }
-        }
-    </style>
-</head>
 
-<body>
-
-    <!-- ===== TOAST ===== -->
-    <div class="toast" id="toast">
-        <i class="fas fa-check-circle" id="toastIcon"></i>
-        <span id="toastMessage">Success!</span>
-    </div>
-
-    <!-- ===== ADDED: CURRICULUM MODAL ===== -->
-    <div class="modal-overlay" id="curriculumModal">
-        <div class="modal-container">
-            <button class="close-btn" onclick="closeCurriculumModal()" aria-label="Close">
-                <i class="fas fa-times"></i>
-            </button>
-
-            <div class="modal-logo">
-                <div class="logo-row">
-                    <div class="logo-icon"><i class="fas fa-graduation-cap"></i></div>
-                    <span class="logo-text">QSKILL</span>
-                </div>
-                <span class="logo-sub">Career Solutions</span>
-            </div>
-
-            <h2 class="modal-heading">Download Course Curriculum</h2>
-            <p class="modal-desc">
-                Register below to receive the complete course curriculum, modules, learning outcomes and course details.
-            </p>
-
-            <form id="curriculumForm" onsubmit="handleCurriculumSubmit(event)">
-                <div class="form-group">
-                    <div class="field-icon"><i class="fas fa-user"></i></div>
-                    <div class="field-wrapper">
-                        <label>Full Name <span class="required">*</span></label>
-                        <input type="text" id="modalFullName" placeholder="Enter your full name" required />
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    <div class="field-icon"><i class="fas fa-phone-alt"></i></div>
-                    <div class="field-wrapper">
-                        <label>Mobile Number <span class="required">*</span></label>
-                        <div class="phone-wrapper">
-                            <span class="prefix">+91</span>
-                            <input type="tel" id="modalMobile" placeholder="Enter mobile number" required />
-                        </div>
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    <div class="field-icon"><i class="fas fa-envelope"></i></div>
-                    <div class="field-wrapper">
-                        <label>Email Address <span class="required">*</span></label>
-                        <input type="email" id="modalEmail" placeholder="Enter your email address" required />
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    <div class="field-icon"><i class="fas fa-book"></i></div>
-                    <div class="field-wrapper">
-                        <label>Course Interested In <span class="required">*</span></label>
-                        <select id="modalCourse" required>
-                            <option value="">Select Course</option>
-                            <option value="Manual Testing">Manual Testing</option>
-                            <option value="Automation Testing (Java + Selenium)">Automation Testing (Java + Selenium)
-                            </option>
-                            <option value="Postman API Testing">Postman API Testing</option>
-                            <option value="REST Assured API Testing">REST Assured API Testing</option>
-                            <option value="Cypress Automation">Cypress Automation</option>
-                            <option value="Playwright Automation">Playwright Automation</option>
-                        </select>
-                    </div>
-                </div>
-
-                <button type="submit" class="btn-register">
-                    <i class="fas fa-download"></i> DOWNLOAD CURRICULUM
-                </button>
-            </form>
-
-            <div class="security-message">
-                <i class="fas fa-shield-alt"></i>
-                <span>Your information is kept secure and will not be shared.</span>
-            </div>
-        </div>
-    </div>
-
-    <!-- ===== NAVBAR ===== -->
-    <nav class="navbar">
-        <a href="index.html" class="logo">
-            <img src="images/logo.png" alt="QSkill Logo" />
-            <span class="logo-text">
-                <span class="qskill">Qskill</span>
-                <span class="careersolutions">careersolutions</span>
-            </span>
-        </a>
-        <ul class="nav-links">
-            <li><a href="index.html" class="active">Home</a></li>
-            <li><a href="about.html">About Us</a></li>
-            <li><a href="courses.html">Courses</a></li>
-            <li><a href="contact.html">Contact</a></li>
-            <li class="login-dropdown-wrapper">
-                <a href="#" class="login-btn" id="loginDropdownBtn">Login <i class="fas fa-chevron-down"></i></a>
-                <div class="login-dropdown" id="loginDropdown">
-                    <a href="login.html?role=student" data-role="student">
-                        <span class="dropdown-icon"><i class="fas fa-user-graduate"></i></span>
-                        <span class="dropdown-text">
-                            <span class="role-title">Student</span>
-                            <span class="role-sub">Login as a student</span>
-                        </span>
-                    </a>
-                    <a href="login.html?role=instructor" data-role="instructor">
-                        <span class="dropdown-icon"><i class="fas fa-chalkboard-teacher"></i></span>
-                        <span class="dropdown-text">
-                            <span class="role-title">Instructor</span>
-                            <span class="role-sub">Login as an instructor</span>
-                        </span>
-                    </a>
-                </div>
-            </li>
-        </ul>
-    </nav>
-
-    <!-- ===== HERO ===== -->
-    <section class="hero">
-        <div class="hero-slider" id="heroSlider">
-            <div class="slide slide-1"></div>
-        </div>
-
-        <div class="floating-icons">
-            <i class="fas fa-bug"></i>
-            <i class="fas fa-code"></i>
-            <i class="fas fa-cog"></i>
-            <i class="fas fa-chart-line"></i>
-        </div>
-
-        <!-- ===== UPDATED: Hero with #1F3C88 and gray subtitle ===== -->
-        <div class="hero-text">
-            <p class="tag">WELCOME TO QSKILL CAREER SOLUTIONS</p>
-            <h1>Excel in <br /><span style="color:#1F3C88;">Software testing</span></h1>
-            <p class="sub-tagline">
-                Build career in <span style="color:var(--text-gray);">Software Testing</span> with industry-relevant
-                skills and real time projects
-            </p>
-            <div class="hero-buttons">
-                <a href="courses.html#courses" class="btn-primary">
-                    Explore Courses <i class="fas fa-arrow-right"></i>
-                </a>
-                <a href="demo.html" class="btn-secondary">
-                    Book a Demo Class <i class="fas fa-calendar-alt"></i>
-                </a>
-            </div>
-        </div>
-    </section>
-
-    <!-- ===== FEATURES ===== -->
-    <section class="features">
-        <div class="feature-item">
-            <div class="icon-wrapper"><i class="fas fa-graduation-cap"></i></div>
-            <h4>Expert Trainers</h4>
-            <p>Industry professionals</p>
-        </div>
-        <div class="feature-item">
-            <div class="icon-wrapper"><i class="fas fa-briefcase"></i></div>
-            <h4>Job Assistance</h4>
-            <p>100% placement support</p>
-        </div>
-        <div class="feature-item">
-            <div class="icon-wrapper"><i class="fas fa-users"></i></div>
-            <h4>Hands-on Training</h4>
-            <p>Real-time projects</p>
-        </div>
-        <div class="feature-item">
-            <div class="icon-wrapper"><i class="fas fa-certificate"></i></div>
-            <h4>Certification</h4>
-            <p>Industry recognized</p>
-        </div>
-    </section>
-
-    <!-- ===== WHY QSKILL ===== -->
-    <section class="why-section">
-        <h2>Why QSkill?</h2>
-        <p>At Qskill Career Solutions, we are committed to helping aspiring professionals build successful careers in
-            software testing through industry-focused training, hands-on practical learning, expert mentorship and
-            dedicated placement guidance. Our goal is to equip every student with the skills, confidence, and real-world
-            experience needed to excel in today's competitive IT industry.</p>
-        <div class="why-grid">
-            <div class="why-item">
-                <div class="icon-wrapper"><i class="fas fa-book-open"></i></div>
-                <h4>Industry-Oriented Curriculum</h4>
-            </div>
-            <div class="why-item">
-                <div class="icon-wrapper"><i class="fas fa-laptop-code"></i></div>
-                <h4>Hands-on Training</h4>
-            </div>
-            <div class="why-item">
-                <div class="icon-wrapper"><i class="fas fa-cogs"></i></div>
-                <h4>Real-time Projects</h4>
-            </div>
-            <div class="why-item">
-                <div class="icon-wrapper"><i class="fas fa-user-check"></i></div>
-                <h4>Placement Assistance</h4>
-            </div>
-            <div class="why-item">
-                <div class="icon-wrapper"><i class="fas fa-chalkboard-teacher"></i></div>
-                <h4>Expert Trainers</h4>
-            </div>
-            <div class="why-item">
-                <div class="icon-wrapper">
-                    <img src="./images/photo9.png" alt="Certification"
-                        style="width:44px; height:44px; object-fit:contain;" />
-                </div>
-                <h4>Certification Support</h4>
-            </div>
-        </div>
-    </section>
-
-    <!-- ===== COURSES ===== -->
-    <section class="courses-section" id="courses">
-        <div class="section-header">
-            <h2>OUR COURSES</h2>
-            <p>Choose the right course and start your journey towards a rewarding career.</p>
-        </div>
-
-        <div class="course-grid">
-
-            <!-- CARD 1: Manual Testing -->
-            <div class="course-card">
-                <div class="card-image">
-                    <img src="images/manual-testing.jpg" alt="Manual Testing" />
-                    <span class="image-badge">📋 Manual</span>
-                </div>
-                <h3>Manual Testing</h3>
-                <p class="card-description">Learn SDLC, STLC, test cases, defect tracking and more.</p>
-                <div class="rating">⭐ 4.8 <span>(320 Reviews)</span></div>
-                <div class="btn-group">
-                    <button class="btn-outline-course" onclick="openCurriculumModal('Manual Testing')">Curriculum <i
-                            class="fas fa-download"></i>
-                    </button>
-                    <a href="courses-detail.html?course=manual" class="btn-enroll">Enroll Now →</a>
-                </div>
-            </div>
-
-            <!-- CARD 2: Automation Testing (Java + Selenium) -->
-               <div class="course-card">
-                <div class="card-image">
-                    <img src="images/automation-testing.jpg" alt="Automation Testing" />
-                    <span class="image-badge blue-badge">⚙️ Automation</span>
-                </div>
-                <h3>Automation Testing (Java + Selenium)</h3>
-                <p class="card-description">Learn Selenium with real-time projects, frameworks and CI/CD pipeline.</p>
-                <div class="rating">⭐ 4.7 <span>(280 Reviews)</span></div>
-                <div class="btn-group">
-                    <button class="btn-outline-course" onclick="openCurriculumModal('Automation Testing (Java + Selenium)')">
-                        Curriculum <i class="fas fa-download"></i>
-                    </button>
-                    <a href="courses-detail.html?course=automation" class="btn-enroll">Enroll Now →</a>
-                </div>
-            </div>
-
-            <!-- CARD 3: Postman API Testing -->
-            <div class="course-card">
-                <div class="card-image">
-                    <img src="images/api-testing.jpg" alt="API Testing" />
-                    <span class="image-badge orange-badge">🔌 API</span>
-                </div>
-                <h3>Postman API Testing</h3>
-                <p class="card-description">Learn REST API testing, Postman collections, automation and reporting.</p>
-                <div class="rating">⭐ 4.6 <span>(210 Reviews)</span></div>
-                <div class="btn-group">
-                    <button class="btn-outline-course" onclick="openCurriculumModal('Postman API Testing')">Curriculum
-                        <i class="fas fa-download"></i></button>
-                    <a href="courses-detail.html?course=api" class="btn-enroll">Enroll Now →</a>
-                </div>
-            </div>
-
-        </div>
-    </section>
-
-    <!-- ===== CONTACT ===== -->
-    <section class="contact" id="contact">
-        <h2>Enquiry / Contact Us</h2>
-        <div class="contact-grid">
-            <div class="contact-item">
-                <div class="icon-wrapper"><i class="fas fa-phone-alt"></i></div>
-                <h4>Phone</h4>
-                <p>+91 99999 99999</p>
-            </div>
-            <div class="contact-item">
-                <div class="icon-wrapper"><i class="fas fa-envelope"></i></div>
-                <h4>Email</h4>
-                <p>info@qskillcareersolutions.com</p>
-            </div>
-            <div class="contact-item">
-                <div class="icon-wrapper"><i class="fab fa-whatsapp"></i></div>
-                <h4>WhatsApp</h4>
-                <p>+91 99999 99999</p>
-            </div>
-            <div class="contact-item">
-                <div class="icon-wrapper"><i class="fas fa-clock"></i></div>
-                <h4>Support</h4>
-                <p>Mon – Sat<br />9 AM – 6 PM</p>
-            </div>
-        </div>
-    </section>
-
-
-    <!-- ===== BOOK A DEMO CLASS ===== -->
-    <section class="demo-cta-section">
-        <h2>📅 Ready to Start Your Journey?</h2>
-        <p>Book a free demo class and experience our training methodology firsthand.</p>
-        <a href="demo.html" class="btn-demo-cta">
-            <i class="fas fa-calendar-alt"></i> Book a Demo Class
-        </a>
-    </section>
-
-    <!-- ===== FOOTER ===== -->
-    <footer class="footer">
-        <div class="footer-top">
-            <div class="footer-logo">
-                <img src="images/logo.png" alt="QSkill Logo" />
-                <p>Empowering careers with industry-ready Software Testing skills.</p>
-                <div class="footer-social">
-                    <i class="fab fa-instagram"></i>
-                    <i class="fab fa-whatsapp"></i>
-                    <i class="fas fa-envelope"></i>
-                </div>
-            </div>
-            <div>
-                <h4>Quick Links</h4>
-                <a href="index.html">Home</a>
-                <a href="courses.html">Courses</a>
-                <a href="contact.html">Contact</a>
-                <a href="demo.html">Free Demo</a>
-                <a href="login.html">Login</a>
-            </div>
-            <div>
-                <h4>Important Links</h4>
-                <a href="#">Terms &amp; Conditions</a>
-                <a href="#">Privacy Policy</a>
-                <a href="#">Security Policy</a>
-            </div>
-            <div class="footer-contact">
-                <h4>Contact Us</h4>
-                <p><i class="fas fa-phone-alt"></i> +91 99999 99999</p>
-                <p><i class="fas fa-envelope"></i> info@qskillcareersolutions.com</p>
-                <p><i class="fas fa-clock"></i> Mon - Sat | 9AM - 6PM</p>
-            </div>
-        </div>
-        <div class="footer-bottom">
-            © 2026 QSkill Career Solutions. All Rights Reserved.
-        </div>
-    </footer>
-
-    <!-- ============================================================ -->
-    <!-- ===== SCRIPTS ===== -->
-    <!-- ============================================================ -->
-    <script>
-        // ===== HERO SLIDE IN =====
-        (function () {
-            const slider = document.getElementById('heroSlider');
-            window.addEventListener('load', function () {
-                setTimeout(function () {
-                    slider.style.transform = 'translateX(0%)';
-                }, 200);
-            });
-        })();
-
-        // ===== LOGIN DROPDOWN =====
-        const dropdownBtn = document.getElementById('loginDropdownBtn');
-        const dropdown = document.getElementById('loginDropdown');
-
-        dropdownBtn.addEventListener('click', function (e) {
-            e.preventDefault();
-            e.stopPropagation();
-            dropdown.classList.toggle('show');
-        });
-
-        document.addEventListener('click', function (e) {
-            if (!dropdownBtn.contains(e.target) && !dropdown.contains(e.target)) {
-                dropdown.classList.remove('show');
+            .contact-item .icon-wrapper {
+                width: 60px;
+                height: 60px;
+                background: var(--light-bg);
+                border-radius: 50%;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                margin-bottom: 10px;
+                transition: 0.3s;
             }
-        });
 
-        document.addEventListener('keydown', function (e) {
-            if (e.key === 'Escape') {
-                dropdown.classList.remove('show');
+            .contact-item .icon-wrapper i {
+                font-size: 24px;
+                color: var(--primary);
             }
-        });
 
-        // ============================================================ */
-        // ===== ADDED: CURRICULUM MODAL FUNCTIONS ===== */
-        // ============================================================ */
-        function openCurriculumModal(courseName) {
-            const modal = document.getElementById('curriculumModal');
-            modal.classList.add('active');
-            document.body.style.overflow = 'hidden';
+            .contact-item:hover .icon-wrapper {
+                background: var(--primary);
+            }
 
-            // Reset form
-            document.getElementById('curriculumForm').reset();
+            .contact-item:hover .icon-wrapper i {
+                color: var(--white);
+            }
 
-            // Pre-select the course in dropdown if provided
-            if (courseName) {
-                const select = document.getElementById('modalCourse');
-                for (let i = 0; i < select.options.length; i++) {
-                    if (select.options[i].value === courseName) {
-                        select.selectedIndex = i;
-                        break;
-                    }
+            .contact-item h4 {
+                font-size: 16px;
+                font-weight: 600;
+                color: var(--text-dark);
+                margin-bottom: 2px;
+            }
+
+            .contact-item p {
+                font-size: 14px;
+                color: var(--text-gray);
+                margin: 0;
+            }
+
+            /* ============================================================ */
+            /* ===== RESPONSIVE ===== */
+            /* ============================================================ */
+            @media (max-width: 992px) {
+                h1 {
+                    font-size: 48px !important;
+                }
+
+                h2 {
+                    font-size: 36px !important;
+                }
+
+                .navbar {
+                    padding: 12px 40px;
+                }
+
+                .features {
+                    padding: 30px 40px;
+                }
+
+                .why-section {
+                    padding: 20px 40px 15px !important;
+                }
+
+                .courses-section {
+                    padding: 0px 40px 0px !important;
+                }
+
+                .enquiry-section {
+                    padding: 20px 40px !important;
+                    gap: 16px 30px;
+                }
+
+                .demo-cta-section {
+                    padding: 40px 40px;
+                }
+
+                .footer {
+                    padding: 30px 40px 20px;
+                }
+
+                .contact-item {
+                    flex: 1 1 160px;
                 }
             }
-        }
 
-        function closeCurriculumModal() {
-            const modal = document.getElementById('curriculumModal');
-            modal.classList.remove('active');
-            document.body.style.overflow = '';
-        }
+            @media (max-width: 768px) {
+                .floating-icons {
+                    display: none;
+                }
 
-        // Close on overlay click
-        document.getElementById('curriculumModal').addEventListener('click', function (e) {
-            if (e.target === this) {
-                closeCurriculumModal();
+                .navbar {
+                    flex-direction: column;
+                    padding: 12px 20px;
+                    gap: 10px;
+                    min-height: auto;
+                }
+
+                .nav-links {
+                    flex-wrap: wrap;
+                    justify-content: center;
+                    gap: 12px;
+                }
+
+                .hero-text h1 {
+                    font-size: 36px !important;
+                }
+
+                .features {
+                    flex-direction: column;
+                    align-items: center;
+                    padding: 20px;
+                }
+
+                .feature-item {
+                    min-width: 100%;
+                }
+
+                .why-section {
+                    padding: 20px 20px 15px !important;
+                }
+
+                .why-section>p {
+                    font-size: 15px;
+                    margin: 15px auto 20px;
+                }
+
+                .why-item {
+                    flex: 1 1 calc(50% - 15px);
+                    min-width: 120px;
+                    padding: 14px 8px;
+                }
+
+                .why-item h4 {
+                    font-size: 12px;
+                }
+
+                .why-item .icon-wrapper {
+                    width: 40px;
+                    height: 40px;
+                }
+
+                .why-item .icon-wrapper i {
+                    font-size: 16px;
+                }
+
+                .why-item .icon-wrapper img {
+                    width: 40px !important;
+                    height: 40px !important;
+                }
+
+                .courses-section {
+                    padding: 0px 20px 0px !important;
+                }
+
+                .enquiry-section {
+                    padding: 16px 20px !important;
+                    flex-direction: column;
+                    align-items: center;
+                    gap: 12px;
+                }
+
+                .enquiry-item {
+                    width: 100%;
+                    justify-content: center;
+                }
+
+                .course-grid {
+                    grid-template-columns: 1fr;
+                }
+
+                .course-card {
+                    min-height: auto;
+                    padding: 20px;
+                }
+
+                .demo-cta-section {
+                    padding: 30px 20px;
+                }
+
+                .demo-cta-section h2 {
+                    font-size: 22px;
+                }
+
+                .demo-cta-section .btn-demo-cta {
+                    padding: 10px 20px;
+                    font-size: 14px;
+                }
+
+                .footer {
+                    padding: 20px 20px 15px;
+                }
+
+                .footer-top {
+                    grid-template-columns: 1fr 1fr;
+                    gap: 20px;
+                }
+
+                .contact-item {
+                    flex: 1 1 140px;
+                }
             }
-        });
 
-        // Close on Escape key
-        document.addEventListener('keydown', function (e) {
-            if (e.key === 'Escape') {
-                closeCurriculumModal();
-            }
-        });
+            @media (max-width: 600px) {
+                .contact-grid {
+                    gap: 20px;
+                }
 
-        // ============================================================ */
-        // ===== TOAST ===== */
-        // ============================================================ */
-        function showToast(message, type) {
-            type = type || 'success';
-            const toast = document.getElementById('toast');
-            const toastIcon = document.getElementById('toastIcon');
-            const toastMessage = document.getElementById('toastMessage');
-            if (!toast) return;
-            toastIcon.className = type === 'success' ? 'fas fa-check-circle' :
-                type === 'error' ? 'fas fa-exclamation-circle' :
-                    'fas fa-info-circle';
-            toastMessage.textContent = message;
-            toast.className = 'toast ' + type;
-            setTimeout(function () {toast.classList.add('show');}, 10);
-            setTimeout(function () {toast.classList.remove('show');}, 5000);
-        }
-
-        // ============================================================ */
-        // ===== GET COURSE PDF URL ===== */
-        // ============================================================ */
-        function getCoursePDF(courseName) {
-            const pdfMap = {
-                'Manual Testing': 'pdfs/manual-testing-curriculum.pdf',
-                'Automation Testing (Java + Selenium)': 'pdfs/automation-testing-curriculum.pdf',
-                'Postman API Testing': 'pdfs/postman-api-testing-curriculum.pdf',
-                'REST Assured API Testing': 'pdfs/rest-assured-api-testing-curriculum.pdf',
-                'Cypress Automation': 'pdfs/cypress-automation-curriculum.pdf',
-                'Playwright Automation': 'pdfs/playwright-automation-curriculum.pdf'
-            };
-            return pdfMap[courseName] || 'pdfs/default-curriculum.pdf';
-        }
-
-        // ============================================================ */
-        // ===== SAVE TO ADMIN ===== */
-        // ============================================================ */
-        function saveToAdmin(data) {
-            let requests = JSON.parse(localStorage.getItem('curriculumRequests')) || [];
-
-            const newRequest = {
-                id: 'REQ' + Date.now().toString().slice(-6),
-                ...data,
-                timestamp: new Date().toISOString(),
-                status: 'pending'
-            };
-
-            requests.push(newRequest);
-            localStorage.setItem('curriculumRequests', JSON.stringify(requests));
-
-            console.log('📊 Saved to Admin Dashboard:', newRequest);
-            console.log('📊 Total Requests:', requests.length);
-        }
-
-        // ============================================================ */
-        // ===== CURRICULUM FORM SUBMIT ===== */
-        // ============================================================ */
-        function handleCurriculumSubmit(event) {
-            event.preventDefault();
-
-            const name = document.getElementById('modalFullName').value.trim();
-            const mobile = document.getElementById('modalMobile').value.trim();
-            const email = document.getElementById('modalEmail').value.trim();
-            const course = document.getElementById('modalCourse').value;
-
-            if (!name || !mobile || !email || !course) {
-                showToast('⚠️ Please fill in all required fields', 'error');
-                return;
+                .contact-item {
+                    flex: 1 1 100%;
+                    padding: 20px;
+                }
             }
 
-            if (mobile.length < 10) {
-                showToast('⚠️ Please enter a valid 10-digit mobile number', 'error');
-                return;
+            @media (max-width: 480px) {
+                h1 {
+                    font-size: 32px !important;
+                }
+
+                h2 {
+                    font-size: 26px !important;
+                }
+
+                .hero-text h1 {
+                    font-size: 28px !important;
+                }
+
+                .logo-wrapper .logo-text {
+                    font-size: 16px;
+                }
+
+                .logo-wrapper .logo-row img {
+                    height: 32px;
+                }
+
+                .logo-wrapper .tagline {
+                    font-size: 10px;
+                }
+
+                .nav-links a {
+                    font-size: 13px;
+                }
+
+                .why-section h2 {
+                    font-size: 26px !important;
+                }
+
+                .why-item {
+                    flex: 1 1 calc(50% - 10px);
+                    min-width: 80px;
+                    padding: 10px 4px;
+                }
+
+                .why-item h4 {
+                    font-size: 10px;
+                }
+
+                .why-item .icon-wrapper {
+                    width: 32px;
+                    height: 32px;
+                }
+
+                .why-item .icon-wrapper i {
+                    font-size: 12px;
+                }
+
+                .why-item .icon-wrapper img {
+                    width: 32px !important;
+                    height: 32px !important;
+                }
+
+                .course-card h3 {
+                    font-size: 18px;
+                }
+
+                .course-card .btn-group button,
+                .course-card .btn-group a {
+                    padding: 6px 16px;
+                    font-size: 12px;
+                    height: 32px;
+                }
+
+                .course-card .card-image img {
+                    padding: 6px;
+                }
+
+                .demo-cta-section h2 {
+                    font-size: 18px;
+                }
+
+                .demo-cta-section .btn-demo-cta {
+                    padding: 8px 16px;
+                    font-size: 12px;
+                }
+
+                .footer-top {
+                    grid-template-columns: 1fr;
+                    gap: 16px;
+                }
             }
+        </style>
+    </head>
 
-            if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-                showToast('⚠️ Please enter a valid email address', 'error');
-                return;
-            }
+    <body>
 
-            const requestData = {
-                name: name,
-                mobile: mobile,
-                email: email,
-                course: course,
-                pdfUrl: getCoursePDF(course)
-            };
+        <!-- ===== NAVBAR ===== -->
+        <nav class="navbar">
+            <a href="index.html" class="logo">
+                <img src="images/logo.png" alt="QSkill Logo" />
+                <span class="logo-text">
+                    <span class="qskill">Qskill</span>
+                    <span class="careersolutions">careersolutions</span>
+                </span>
+            </a>
+            <ul class="nav-links">
+                <li><a href="index.html" class="active">Home</a></li>
+                <li><a href="about.html">About Us</a></li>
+                <li><a href="courses.html">Courses</a></li>
+                <li><a href="contact.html">Contact</a></li>
+                <li class="login-dropdown-wrapper">
+                    <a href="#" class="login-btn" id="loginDropdownBtn">Login <i class="fas fa-chevron-down"></i></a>
+                    <div class="login-dropdown" id="loginDropdown">
+                        <a href="login.html?role=student" data-role="student">
+                            <span class="dropdown-icon"><i class="fas fa-user-graduate"></i></span>
+                            <span class="dropdown-text">
+                                <span class="role-title">Student</span>
+                                <span class="role-sub">Login as a student</span>
+                            </span>
+                        </a>
+                        <a href="login.html?role=instructor" data-role="instructor">
+                            <span class="dropdown-icon"><i class="fas fa-chalkboard-teacher"></i></span>
+                            <span class="dropdown-text">
+                                <span class="role-title">Instructor</span>
+                                <span class="role-sub">Login as an instructor</span>
+                            </span>
+                        </a>
+                    </div>
+                </li>
+            </ul>
+        </nav>
 
-            // Save to admin
-            saveToAdmin(requestData);
+        <!-- ===== HERO ===== -->
+        <section class="hero">
+            <div class="hero-slider" id="heroSlider">
+                <div class="slide slide-1"></div>
+            </div>
 
-            // Show success
-            showToast('✅ Curriculum for "' + course + '" sent to ' + email, 'success');
+            <div class="floating-icons">
+                <i class="fas fa-bug"></i>
+                <i class="fas fa-code"></i>
+                <i class="fas fa-cog"></i>
+                <i class="fas fa-chart-line"></i>
+            </div>
 
-            console.log('📄 ==========================================');
-            console.log('📄 CURRICULUM DOWNLOAD REQUEST');
-            console.log('📄 ==========================================');
-            console.log('📄 Name:    ' + name);
-            console.log('📄 Mobile:  +91 ' + mobile);
-            console.log('📄 Email:   ' + email);
-            console.log('📄 Course:  ' + course);
-            console.log('📄 PDF:     ' + getCoursePDF(course));
-            console.log('📄 ==========================================');
+            <div class="hero-text">
+                <p class="tag">WELCOME TO QSKILL CAREER SOLUTIONS</p>
+                <h1>Excel in <br /><span style="color:#1F3C88;">Software testing</span></h1>
+                <p class="sub-tagline">
+                    Build career in <span style="color:var(--text-gray);">Software Testing</span> with industry-relevant
+                    skills and real time projects
+                </p>
+                <div class="hero-buttons">
+                    <a href="courses.html#courses" class="btn-primary">
+                        Explore Courses <i class="fas fa-arrow-right"></i>
+                    </a>
+                    <a href="demo.html" class="btn-secondary">
+                        Book a Demo Class <i class="fas fa-calendar-alt"></i>
+                    </a>
+                </div>
+            </div>
+        </section>
 
-            // Reset form
-            document.getElementById('curriculumForm').reset();
+        <!-- ===== FEATURES ===== -->
+        <section class="features">
+            <div class="feature-item">
+                <div class="icon-wrapper"><i class="fas fa-graduation-cap"></i></div>
+                <h4>Expert Trainers</h4>
+                <p>Industry professionals</p>
+            </div>
+            <div class="feature-item">
+                <div class="icon-wrapper"><i class="fas fa-briefcase"></i></div>
+                <h4>Job Assistance</h4>
+                <p>100% placement support</p>
+            </div>
+            <div class="feature-item">
+                <div class="icon-wrapper"><i class="fas fa-users"></i></div>
+                <h4>Hands-on Training</h4>
+                <p>Real-time projects</p>
+            </div>
+            <div class="feature-item">
+                <div class="icon-wrapper"><i class="fas fa-certificate"></i></div>
+                <h4>Certification</h4>
+                <p>Industry recognized</p>
+            </div>
+        </section>
 
-            // Close modal after 2.5 seconds
-            setTimeout(function () {
-                closeCurriculumModal();
-            }, 2500);
-        }
-    </script>
+        <!-- ===== WHY QSKILL ===== -->
+        <section class="why-section">
+            <h2>Why QSkill?</h2>
+            <p>At Qskill Career Solutions, we are committed to helping aspiring professionals build successful careers in
+                software testing through industry-focused training, hands-on practical learning, expert mentorship and
+                dedicated placement guidance. Our goal is to equip every student with the skills, confidence, and real-world
+                experience needed to excel in today's competitive IT industry.</p>
+            <div class="why-grid">
+                <div class="why-item">
+                    <div class="icon-wrapper"><i class="fas fa-book-open"></i></div>
+                    <h4>Industry-Oriented Curriculum</h4>
+                </div>
+                <div class="why-item">
+                    <div class="icon-wrapper"><i class="fas fa-laptop-code"></i></div>
+                    <h4>Hands-on Training</h4>
+                </div>
+                <div class="why-item">
+                    <div class="icon-wrapper"><i class="fas fa-cogs"></i></div>
+                    <h4>Real-time Projects</h4>
+                </div>
+                <div class="why-item">
+                    <div class="icon-wrapper"><i class="fas fa-user-check"></i></div>
+                    <h4>Placement Assistance</h4>
+                </div>
+                <div class="why-item">
+                    <div class="icon-wrapper"><i class="fas fa-chalkboard-teacher"></i></div>
+                    <h4>Expert Trainers</h4>
+                </div>
+                <div class="why-item">
+                    <div class="icon-wrapper">
+                        <img src="./images/photo9.png" alt="Certification"
+                            style="width:44px; height:44px; object-fit:contain;" />
+                    </div>
+                    <h4>Certification Support</h4>
+                </div>
+            </div>
+        </section>
 
-</body>
+        <!-- ===== COURSES ===== -->
+        <section class="courses-section" id="courses">
+            <div class="section-header">
+                <h2>OUR COURSES</h2>
+                <p>Choose the right course and start your journey towards a rewarding career.</p>
+            </div>
 
-</html>
+            <div class="course-grid">
+
+                <!-- CARD 1: Manual Testing -->
+                <div class="course-card">
+                    <div class="card-image">
+                        <img src="images/manual-testing.jpg" alt="Manual Testing" />
+                        <span class="image-badge">📋 Manual</span>
+                    </div>
+                    <h3>Manual Testing</h3>
+                    <p class="card-description">Learn SDLC, STLC, test cases, defect tracking and more.</p>
+                    <div class="rating">⭐ 4.8 <span>(320 Reviews)</span></div>
+                    <div class="btn-group">
+                        <button class="btn-outline-course" onclick="window.location.href='curriculum-modal.html?course=Manual%20Testing'">Curriculum <i
+                                class="fas fa-download"></i>
+                        </button>
+                        <a href="courses-detail.html?course=manual" class="btn-enroll">Enroll Now →</a>
+                    </div>
+                </div>
+
+                <!-- CARD 2: Automation Testing (Java + Selenium) -->
+                <div class="course-card">
+                    <div class="card-image">
+                        <img src="images/automation-testing.jpg" alt="Automation Testing" />
+                        <span class="image-badge blue-badge">⚙️ Automation</span>
+                    </div>
+                    <h3>Automation Testing (Java + Selenium)</h3>
+                    <p class="card-description">Learn Selenium with real-time projects, frameworks and CI/CD pipeline.</p>
+                    <div class="rating">⭐ 4.7 <span>(280 Reviews)</span></div>
+                    <div class="btn-group">
+                        <button class="btn-outline-course" onclick="window.location.href='curriculum-modal.html?course=Automation%20Testing%20(Java%20+%20Selenium)'">
+                            Curriculum <i class="fas fa-download"></i>
+                        </button>
+                        <a href="courses-detail.html?course=automation" class="btn-enroll">Enroll Now →</a>
+                    </div>
+                </div>
+
+                <!-- CARD 3: Postman API Testing -->
+                <div class="course-card">
+                    <div class="card-image">
+                        <img src="images/api-testing.jpg" alt="API Testing" />
+                        <span class="image-badge orange-badge">🔌 API</span>
+                    </div>
+                    <h3>Postman API Testing</h3>
+                    <p class="card-description">Learn REST API testing, Postman collections, automation and reporting.</p>
+                    <div class="rating">⭐ 4.6 <span>(210 Reviews)</span></div>
+                    <div class="btn-group">
+                        <button class="btn-outline-course" onclick="window.location.href='curriculum-modal.html?course=Postman%20API%20Testing'">Curriculum
+                            <i class="fas fa-download"></i></button>
+                        <a href="courses-detail.html?course=api" class="btn-enroll">Enroll Now →</a>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- ===== CONTACT SECTION – FULL WIDTH FLEX ===== -->
+        <section class="contact" id="contact">
+            <h2>Contact</h2>
+            <div class="contact-grid">
+                <div class="contact-item">
+                    <div class="icon-wrapper"><i class="fas fa-phone-alt"></i></div>
+                    <h4>Phone</h4>
+                    <p>+91 99999 99999</p>
+                </div>
+                <div class="contact-item">
+                    <div class="icon-wrapper"><i class="fas fa-envelope"></i></div>
+                    <h4>Email</h4>
+                    <p>info@qskillcareersolutions.com</p>
+                </div>
+                <div class="contact-item">
+                    <div class="icon-wrapper"><i class="fab fa-whatsapp"></i></div>
+                    <h4>WhatsApp</h4>
+                    <p>+91 99999 99999</p>
+                </div>
+                <div class="contact-item">
+                    <div class="icon-wrapper"><i class="fas fa-clock"></i></div>
+                    <h4>Support</h4>
+                    <p>Mon – Sat<br />9 AM – 6 PM</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- ===== BOOK A DEMO CLASS ===== -->
+        <section class="demo-cta-section">
+            <h2>📅 Ready to Start Your Journey?</h2>
+            <p>Book a free demo class and experience our training methodology firsthand.</p>
+            <a href="demo.html" class="btn-demo-cta">
+                <i class="fas fa-calendar-alt"></i> Book a Demo Class
+            </a>
+        </section>
+
+        <!-- ===== FOOTER ===== -->
+        <footer class="footer">
+            <div class="footer-top">
+                <div class="footer-logo">
+                    <img src="images/logo.png" alt="QSkill Logo" />
+                    <p>Empowering careers with industry-ready Software Testing skills.</p>
+                    <div class="footer-social">
+                        <i class="fab fa-instagram"></i>
+                        <i class="fab fa-whatsapp"></i>
+                        <i class="fas fa-envelope"></i>
+                    </div>
+                </div>
+                <div>
+                    <h4>Quick Links</h4>
+                    <a href="index.html">Home</a>
+                    <a href="courses.html">Courses</a>
+                    <a href="contact.html">Contact</a>
+                    <a href="demo.html">Free Demo</a>
+                    <a href="login.html">Login</a>
+                </div>
+                <div>
+                    <h4>Important Links</h4>
+                    <a href="#">Terms &amp; Conditions</a>
+                    <a href="#">Privacy Policy</a>
+                    <a href="#">Security Policy</a>
+                </div>
+                <div class="footer-contact">
+                    <h4>Contact Us</h4>
+                    <p><i class="fas fa-phone-alt"></i> +91 99999 99999</p>
+                    <p><i class="fas fa-envelope"></i> info@qskillcareersolutions.com</p>
+                    <p><i class="fas fa-clock"></i> Mon - Sat | 9AM - 6PM</p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                © 2026 QSkill Career Solutions. All Rights Reserved.
+            </div>
+        </footer>
+
+        <!-- ============================================================ -->
+        <!-- ===== SCRIPTS ===== -->
+        <!-- ============================================================ -->
+        <script>
+            // ===== HERO SLIDE IN =====
+            (function () {
+                const slider = document.getElementById('heroSlider');
+                window.addEventListener('load', function () {
+                    setTimeout(function () {
+                        slider.style.transform = 'translateX(0%)';
+                    }, 200);
+                });
+            })();
+
+            // ===== LOGIN DROPDOWN =====
+            const dropdownBtn = document.getElementById('loginDropdownBtn');
+            const dropdown = document.getElementById('loginDropdown');
+
+            dropdownBtn.addEventListener('click', function (e) {
+                e.preventDefault();
+                e.stopPropagation();
+                dropdown.classList.toggle('show');
+            });
+
+            document.addEventListener('click', function (e) {
+                if (!dropdownBtn.contains(e.target) && !dropdown.contains(e.target)) {
+                    dropdown.classList.remove('show');
+                }
+            });
+
+            document.addEventListener('keydown', function (e) {
+                if (e.key === 'Escape') {
+                    dropdown.classList.remove('show');
+                }
+            });
+
+            console.log('QSkill Career Solutions loaded.');
+        </script>
+
+    </body>
+
+    </html>
