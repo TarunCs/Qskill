@@ -70,6 +70,13 @@
             font-weight: 300;
         }
 
+        /* ===== NAV RIGHT ===== */
+        .nav-right {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
         .nav-settings-link {
             text-decoration: none;
             font-weight: 500;
@@ -97,6 +104,34 @@
         .nav-settings-link i {
             font-size: 15px;
             color: #1F3C88;
+        }
+
+        .nav-logout-link {
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 14px;
+            transition: 0.3s;
+            padding: 8px 18px;
+            border-radius: 999px;
+            background: #FEF2F2;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            border: 1px solid #FECACA;
+            cursor: pointer;
+            color: #991B1B;
+        }
+
+        .nav-logout-link:hover {
+            background: #DC2626;
+            color: #FFFFFF;
+            border-color: #DC2626;
+            transform: translateY(-1px);
+            box-shadow: 0 4px 16px rgba(220, 38, 38, 0.2);
+        }
+
+        .nav-logout-link i {
+            font-size: 14px;
         }
 
         /* ===== ADMIN WRAPPER ===== */
@@ -832,6 +867,10 @@
                 gap: 10px;
                 min-height: auto;
             }
+            .nav-right {
+                width: 100%;
+                justify-content: center;
+            }
             .admin-header h1 {
                 font-size: 24px;
             }
@@ -888,6 +927,10 @@
                 font-size: 11px;
                 padding: 5px 12px;
             }
+            .nav-logout-link {
+                font-size: 13px;
+                padding: 6px 14px;
+            }
         }
 
         @media (max-width: 480px) {
@@ -915,6 +958,10 @@
                 font-size: 12px;
                 padding: 6px 14px;
             }
+            .nav-logout-link {
+                font-size: 12px;
+                padding: 6px 12px;
+            }
             .settings-modal {
                 padding: 20px 14px 18px;
                 border-radius: 20px;
@@ -937,6 +984,10 @@
             .footer-top {
                 grid-template-columns: 1fr;
                 gap: 16px;
+            }
+            .nav-right {
+                flex-wrap: wrap;
+                justify-content: center;
             }
         }
     </style>
@@ -961,9 +1012,14 @@
                 <span class="careersolutions">careersolutions</span>
             </span>
         </a>
-        <a href="#" class="nav-settings-link" onclick="openSettingsModal()">
-            <i class="fas fa-cog"></i> Settings
-        </a>
+        <div class="nav-right">
+            <a href="#" class="nav-settings-link" onclick="openSettingsModal()">
+                <i class="fas fa-cog"></i> Settings
+            </a>
+            <a href="#" class="nav-logout-link" onclick="handleLogout()">
+                <i class="fas fa-sign-out-alt"></i> Logout
+            </a>
+        </div>
     </nav>
 
     <!-- ============================================================ -->
@@ -1379,6 +1435,18 @@
         document.addEventListener('keydown', function(e) {
             if (e.key === 'Escape') closeSettingsModal();
         });
+
+        // ============================================================ */
+        // ===== LOGOUT – NO POP-UP, REDIRECT TO INDEX ===== */
+        // ============================================================ */
+        function handleLogout() {
+            // Show toast notification
+            showToast('🔒 Logging out...', 'success');
+            // Redirect to index page after short delay
+            setTimeout(function() {
+                window.location.href = 'index.html';
+            }, 800);
+        }
 
         // ============================================================ */
         // ===== TOAST ===== */
