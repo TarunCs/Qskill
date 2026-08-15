@@ -1,779 +1,955 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Admin Dashboard - QSkill Career Solutions</title>
-    
+
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap"
+        rel="stylesheet" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
-    
+
+    <link rel="stylesheet" href="style.css" />
+
     <style>
-        /* ============================================================ */
-        /* ===== RESET & BASE ===== */
-        /* ============================================================ */
+        /* ===== GLOBAL ===== */
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
- 
-        html, body {
-            font-family: 'Poppins', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            color: #1A1A1A;
-            background: #F3F6FA;
-            line-height: 1.6;
+
+        body {
+            background: #F5F7FA;
+            font-family: 'Poppins', sans-serif;
         }
- 
-        h1, h2, h3, h4, h5, h6, .logo-text {
-            font-family: 'Poppins', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-        }
- 
-        p {
-            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
-        }
- 
-        i.fas, i.fab, i.far {
-            font-family: "Font Awesome 6 Free", "Font Awesome 6 Brands";
-        }
- 
-        /* ============================================================ */
-        /* ===== EXACT COLOR SYSTEM ===== */
-        /* ============================================================ */
-        :root {
-            --primary: #1F3C88;
-            --secondary: #2D5BFF;
-            --light-bg: #EAF1FF;
-            --white: #FFFFFF;
-            --text-dark: #1A1A1A;
-            --text-gray: #6B7280;
-            --border: #E5E7EB;
-            --orange: #FA7000;
-            --success: #22C55E;
-            --error: #EF4444;
-            --warning: #F59E0B;
-            --footer: #0B1E3C;
-        }
- 
-        /* ============================================================ */
+
         /* ===== NAVBAR ===== */
-        /* ============================================================ */
         .navbar {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 14px 80px;
+            padding: 12px 60px;
             background: #FFFFFF;
             box-shadow: 0 2px 16px rgba(0, 0, 0, 0.06);
             position: sticky;
             top: 0;
             z-index: 100;
-            border-bottom: 1px solid var(--border);
+            border-bottom: 1px solid rgba(31, 60, 136, 0.05);
+            min-height: 70px;
         }
- 
+
         .logo {
             display: flex;
             align-items: center;
-            gap: 10px;
+            gap: 12px;
             text-decoration: none;
         }
- 
+
         .logo img {
             height: 44px;
             width: auto;
             display: block;
         }
- 
-        .logo-text {
+
+        .logo .logo-text {
             font-size: 22px;
             font-weight: 700;
+            color: #0F172A;
         }
- 
-        .logo-text .qskill {
-            color: var(--primary);
+
+        .logo .logo-text .qskill {
+            color: #1F3C88;
         }
- 
-        .logo-text .careersolutions {
-            color: var(--orange);
+
+        .logo .logo-text .careersolutions {
+            color: #F97316;
             font-weight: 300;
         }
- 
-        .nav-right {
-            display: flex;
-            align-items: center;
-            gap: 16px;
-        }
- 
-        .nav-right .admin-badge {
-            background: var(--light-bg);
-            color: var(--primary);
-            padding: 4px 14px;
-            border-radius: 999px;
-            font-size: 12px;
-            font-weight: 600;
-        }
- 
-        .nav-right .logout-btn {
-            background: var(--error);
-            color: var(--white);
-            border: none;
-            padding: 8px 18px;
-            border-radius: 6px;
-            font-weight: 500;
-            font-size: 13px;
-            cursor: pointer;
-            transition: 0.3s;
-            font-family: 'Poppins', sans-serif;
-        }
- 
-        .nav-right .logout-btn:hover {
-            background: #dc2626;
-            transform: translateY(-1px);
-        }
- 
-        /* ============================================================ */
-        /* ===== MAIN CONTAINER ===== */
-        /* ============================================================ */
-        .admin-container {
-            max-width: 1400px;
-            margin: 0 auto;
-            padding: 24px 80px 50px;
-        }
- 
-        /* ===== PAGE HEADER ===== */
-        .page-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            flex-wrap: wrap;
-            gap: 16px;
-            margin-bottom: 24px;
-        }
- 
-        .page-header h1 {
-            font-size: 28px;
-            color: var(--primary);
-            font-weight: 700;
-        }
- 
-        .page-header h1 span {
-            color: var(--orange);
-        }
- 
-        .page-header .stats {
-            display: flex;
-            gap: 16px;
-            flex-wrap: wrap;
-        }
- 
-        .page-header .stats .stat-item {
-            background: var(--white);
-            padding: 10px 20px;
-            border-radius: 10px;
-            border: 1px solid var(--border);
-            text-align: center;
-            min-width: 90px;
-        }
- 
-        .page-header .stats .stat-item .number {
-            font-size: 22px;
-            font-weight: 700;
-            color: var(--primary);
-        }
- 
-        .page-header .stats .stat-item .label {
-            font-size: 12px;
-            color: var(--text-gray);
-        }
 
-        .page-header .stats .stat-item .number.pending-count {
-            color: var(--warning);
-        }
-        .page-header .stats .stat-item .number.contacted-count {
-            color: var(--primary);
-        }
-        .page-header .stats .stat-item .number.completed-count {
-            color: var(--success);
-        }
- 
-        /* ============================================================ */
-        /* ===== TABS ===== */
-        /* ============================================================ */
-        .admin-tabs {
-            display: flex;
-            gap: 4px;
-            background: var(--white);
-            padding: 4px;
-            border-radius: 12px;
-            border: 1px solid var(--border);
-            margin-bottom: 24px;
-            flex-wrap: wrap;
-        }
- 
-        .admin-tab {
+        .nav-settings-link {
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 14px;
+            transition: 0.3s;
             padding: 8px 20px;
-            border: none;
-            border-radius: 8px;
-            font-family: 'Poppins', sans-serif;
-            font-size: 14px;
-            font-weight: 500;
-            cursor: pointer;
-            transition: 0.3s;
-            background: transparent;
-            color: var(--text-gray);
-            display: flex;
-            align-items: center;
-            gap: 6px;
-        }
- 
-        .admin-tab:hover {
-            color: var(--text-dark);
-            background: var(--light-bg);
-        }
- 
-        .admin-tab.active {
-            background: var(--primary);
-            color: var(--white);
-        }
- 
-        .admin-tab i {
-            font-size: 14px;
-        }
-
-        .admin-tab .tab-badge {
-            background: var(--error);
-            color: var(--white);
-            font-size: 10px;
-            padding: 1px 8px;
             border-radius: 999px;
-            font-weight: 600;
-        }
-
-        .admin-tab.active .tab-badge {
-            background: rgba(255,255,255,0.3);
-        }
- 
-        /* ============================================================ */
-        /* ===== TAB CONTENT ===== */
-        /* ============================================================ */
-        .tab-content {
-            display: none;
-            animation: fadeIn 0.3s ease;
-        }
- 
-        .tab-content.active {
-            display: block;
-        }
- 
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(8px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
- 
-        /* ===== TABLE CONTROLS ===== */
-        .table-controls {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            flex-wrap: wrap;
-            gap: 12px;
-            margin-bottom: 16px;
-        }
- 
-        .table-controls .search-box {
+            background: #F1F4F9;
             display: flex;
             align-items: center;
             gap: 8px;
-            background: var(--white);
-            border: 1px solid var(--border);
-            border-radius: 8px;
-            padding: 6px 14px;
-            flex: 1;
-            max-width: 320px;
+            border: 1px solid #E2E8F0;
+            cursor: pointer;
+            color: #1E293B;
         }
- 
-        .table-controls .search-box i {
-            color: var(--text-gray);
+
+        .nav-settings-link:hover {
+            color: #1F3C88;
+            border-color: #1F3C88;
+            background: #FFFFFF;
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(31, 60, 136, 0.08);
         }
- 
-        .table-controls .search-box input {
+
+        .nav-settings-link i {
+            font-size: 15px;
+            color: #1F3C88;
+        }
+
+        /* ===== ADMIN WRAPPER ===== */
+        .admin-wrapper {
+            padding: 28px 60px 50px;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        /* ===== ADMIN HEADER ===== */
+        .admin-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 28px;
+            flex-wrap: wrap;
+            gap: 16px;
+        }
+
+        .admin-header h1 {
+            font-size: 30px;
+            font-weight: 700;
+            color: #0F172A;
+            letter-spacing: -0.5px;
+        }
+
+        .admin-header h1 span {
+            color: #1F3C88;
+        }
+
+        .admin-header .admin-badge {
+            background: linear-gradient(135deg, #1F3C88, #152B66);
+            color: #fff;
+            padding: 8px 24px;
+            border-radius: 999px;
+            font-size: 13px;
+            font-weight: 500;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            box-shadow: 0 4px 12px rgba(31, 60, 136, 0.15);
+        }
+
+        .admin-header .admin-badge i {
+            font-size: 15px;
+        }
+
+        /* ===== TABS ===== */
+        .admin-tabs {
+            display: flex;
+            gap: 6px;
+            margin-bottom: 30px;
+            background: #FFFFFF;
+            padding: 6px;
+            border-radius: 14px;
+            border: 1px solid #E2E8F0;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.02);
+        }
+
+        .admin-tab {
+            padding: 12px 28px;
             border: none;
-            outline: none;
-            flex: 1;
-            font-size: 14px;
+            border-radius: 10px;
             font-family: 'Poppins', sans-serif;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.25s ease;
             background: transparent;
-        }
- 
-        .table-controls .add-btn {
-            background: var(--primary);
-            color: var(--white);
-            border: none;
-            padding: 8px 20px;
-            border-radius: 6px;
-            font-weight: 500;
-            font-size: 14px;
-            cursor: pointer;
-            transition: 0.3s;
-            font-family: 'Poppins', sans-serif;
+            color: #64748B;
             display: flex;
             align-items: center;
-            gap: 6px;
-        }
- 
-        .table-controls .add-btn:hover {
-            background: var(--secondary);
-            transform: translateY(-2px);
+            gap: 10px;
+            flex: 1;
+            justify-content: center;
         }
 
-        .table-controls .refresh-btn {
-            background: var(--light-bg);
-            color: var(--text-dark);
-            border: 1px solid var(--border);
-            padding: 8px 16px;
-            border-radius: 6px;
-            font-weight: 500;
-            font-size: 13px;
-            cursor: pointer;
-            transition: 0.3s;
-            font-family: 'Poppins', sans-serif;
+        .admin-tab:hover {
+            background: #F1F4F9;
+            color: #1E293B;
+        }
+
+        .admin-tab.active {
+            background: #1F3C88;
+            color: #FFFFFF;
+            box-shadow: 0 4px 14px rgba(31, 60, 136, 0.2);
+        }
+
+        .admin-tab i {
+            font-size: 16px;
+        }
+
+        .admin-tab.active i {
+            color: #FFFFFF;
+        }
+
+        /* ===== SECTION ===== */
+        .admin-section {
+            background: #FFFFFF;
+            border-radius: 16px;
+            padding: 28px 30px;
+            border: 1px solid #E2E8F0;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.02);
+        }
+
+        .admin-section .section-header {
             display: flex;
+            justify-content: space-between;
             align-items: center;
-            gap: 6px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+            gap: 12px;
         }
 
-        .table-controls .refresh-btn:hover {
-            background: var(--border);
-        }
- 
-        /* ===== TABLE ===== */
-        .table-wrapper {
-            background: var(--white);
-            border-radius: 12px;
-            border: 1px solid var(--border);
-            overflow-x: auto;
-        }
- 
-        .table-wrapper table {
-            width: 100%;
-            border-collapse: collapse;
-            min-width: 600px;
-        }
- 
-        .table-wrapper th {
-            background: var(--light-bg);
-            padding: 12px 16px;
-            text-align: left;
-            font-size: 13px;
+        .admin-section .section-header h2 {
+            font-size: 20px;
             font-weight: 600;
-            color: var(--text-dark);
-            border-bottom: 1px solid var(--border);
+            color: #0F172A;
+            display: flex;
+            align-items: center;
+            gap: 10px;
         }
- 
-        .table-wrapper td {
-            padding: 12px 16px;
-            font-size: 14px;
-            color: var(--text-dark);
-            border-bottom: 1px solid var(--border);
+
+        .admin-section .section-header h2 i {
+            color: #1F3C88;
+            font-size: 22px;
         }
- 
-        .table-wrapper tr:hover td {
-            background: #FAFBFC;
-        }
- 
-        .table-wrapper .status-badge {
-            padding: 3px 12px;
+
+        .admin-section .section-header .section-count {
+            background: #F1F4F9;
+            padding: 4px 14px;
             border-radius: 999px;
             font-size: 12px;
             font-weight: 500;
-        }
- 
-        .table-wrapper .status-badge.active {
-            background: #DCFCE7;
-            color: #16a34a;
-        }
- 
-        .table-wrapper .status-badge.inactive {
-            background: #FEE2E2;
-            color: #dc2626;
-        }
- 
-        .table-wrapper .status-badge.pending {
-            background: #FEF3C7;
-            color: #d97706;
-        }
- 
-        .table-wrapper .status-badge.completed {
-            background: #DBEAFE;
-            color: #2563EB;
+            color: #64748B;
         }
 
-        .table-wrapper .status-badge.contacted {
-            background: #E0E7FF;
-            color: #4F46E5;
+        .admin-section .section-desc {
+            color: #94A3B8;
+            font-size: 14px;
+            margin-bottom: 18px;
         }
 
-        .table-wrapper .status-badge.cancelled {
-            background: #FEE2E2;
-            color: #DC2626;
+        /* ===== TAB CONTENT ===== */
+        .tab-panel {
+            display: none;
+            animation: fadeSlide 0.3s ease;
         }
- 
-        .action-btns {
-            display: flex;
-            gap: 6px;
-            flex-wrap: wrap;
+
+        .tab-panel.active {
+            display: block;
         }
- 
-        .action-btns button {
-            padding: 3px 10px;
-            border: none;
-            border-radius: 4px;
+
+        @keyframes fadeSlide {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* ===== TABLES ===== */
+        .table-responsive {
+            overflow-x: auto;
+            border-radius: 12px;
+            border: 1px solid #E2E8F0;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 14px;
+            min-width: 680px;
+        }
+
+        table thead {
+            background: #F8FAFC;
+        }
+
+        table th {
+            padding: 14px 18px;
+            text-align: left;
+            font-weight: 600;
+            color: #475569;
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            border-bottom: 2px solid #E2E8F0;
+        }
+
+        table td {
+            padding: 14px 18px;
+            border-bottom: 1px solid #F1F4F9;
+            color: #1E293B;
+            vertical-align: middle;
+        }
+
+        table tbody tr {
+            transition: background 0.15s ease;
+        }
+
+        table tbody tr:hover {
+            background: #FAFBFC;
+        }
+
+        table tbody tr:last-child td {
+            border-bottom: none;
+        }
+
+        /* ===== STATUS BADGES ===== */
+        .status-badge {
+            padding: 4px 14px;
+            border-radius: 999px;
             font-size: 12px;
             font-weight: 500;
-            cursor: pointer;
-            transition: 0.3s;
-            font-family: 'Poppins', sans-serif;
+            display: inline-block;
         }
- 
-        .action-btns .view-btn {
-            background: var(--light-bg);
-            color: var(--primary);
-        }
- 
-        .action-btns .view-btn:hover {
-            background: var(--primary);
-            color: var(--white);
-        }
- 
-        .action-btns .block-btn {
+
+        .status-badge.pending {
             background: #FEF3C7;
-            color: #d97706;
+            color: #92400E;
         }
- 
-        .action-btns .block-btn:hover {
-            background: #d97706;
-            color: var(--white);
+
+        .status-badge.contacted {
+            background: #D1FAE5;
+            color: #065F46;
         }
- 
-        .action-btns .unblock-btn {
+
+        .status-badge.active {
             background: #DCFCE7;
-            color: #16a34a;
+            color: #15803D;
         }
- 
-        .action-btns .unblock-btn:hover {
-            background: #16a34a;
-            color: var(--white);
-        }
- 
-        .action-btns .delete-btn {
+
+        .status-badge.inactive {
             background: #FEE2E2;
-            color: #dc2626;
-        }
- 
-        .action-btns .delete-btn:hover {
-            background: #dc2626;
-            color: var(--white);
+            color: #991B1B;
         }
 
-        .action-btns .status-btn {
-            background: var(--light-bg);
-            color: var(--text-dark);
+        .status-badge.completed {
+            background: #DBEAFE;
+            color: #1D4ED8;
         }
 
-        .action-btns .status-btn:hover {
-            background: var(--primary);
-            color: var(--white);
-        }
- 
-        /* ============================================================ */
-        /* ===== TOAST ===== */
-        /* ============================================================ */
-        .toast {
-            position: fixed;
-            top: 20px;
-            right: 20px;
-            padding: 14px 24px;
-            border-radius: 12px;
-            color: var(--white);
+        /* ===== ENQUIRY DROPDOWN ===== */
+        .status-dropdown {
+            padding: 5px 30px 5px 14px;
+            border-radius: 999px;
+            font-size: 12px;
             font-weight: 500;
-            font-size: 14px;
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15);
-            transform: translateX(120%);
-            transition: transform 0.4s ease;
-            z-index: 9999;
+            border: none;
+            cursor: pointer;
+            font-family: 'Poppins', sans-serif;
+            appearance: none;
+            -webkit-appearance: none;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6' viewBox='0 0 10 6'%3E%3Cpath d='M1 1l4 4 4-4' stroke='%236B7280' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 10px center;
+            transition: all 0.25s ease;
+            min-width: 100px;
+            outline: none;
+        }
+
+        .status-dropdown.pending {
+            background-color: #FEF3C7;
+            color: #92400E;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6' viewBox='0 0 10 6'%3E%3Cpath d='M1 1l4 4 4-4' stroke='%2392400E' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+        }
+
+        .status-dropdown.contacted {
+            background-color: #D1FAE5;
+            color: #065F46;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6' viewBox='0 0 10 6'%3E%3Cpath d='M1 1l4 4 4-4' stroke='%23065F46' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+        }
+
+        .status-dropdown:focus {
+            outline: 2px solid #1F3C88;
+            outline-offset: 2px;
+        }
+
+        .status-dropdown option {
+            background: #FFFFFF;
+            color: #1E293B;
+            padding: 6px 10px;
+        }
+
+        /* ===== CERTIFICATE UPLOAD ===== */
+        .cert-wrapper {
             display: flex;
             align-items: center;
-            gap: 12px;
-            max-width: 400px;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+
+        .cert-upload-btn {
+            background: #F1F4F9;
+            border: 1.5px dashed #CBD5E1;
+            padding: 6px 16px;
+            border-radius: 8px;
+            font-size: 12px;
+            cursor: pointer;
+            transition: all 0.25s ease;
             font-family: 'Poppins', sans-serif;
+            color: #1F3C88;
+            display: inline-flex;
+            align-items: center;
+            gap: 7px;
+            font-weight: 500;
         }
- 
-        .toast.show {
-            transform: translateX(0);
+
+        .cert-upload-btn:hover {
+            background: #1F3C88;
+            color: #FFFFFF;
+            border-color: #1F3C88;
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(31, 60, 136, 0.15);
         }
- 
-        .toast.success {
-            background: var(--success);
+
+        .cert-upload-btn i {
+            font-size: 13px;
         }
- 
-        .toast.error {
-            background: var(--error);
+
+        .cert-file-input {
+            display: none;
         }
- 
-        .toast.info {
-            background: var(--primary);
+
+        .cert-uploaded {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: #DCFCE7;
+            color: #15803D;
+            padding: 5px 14px 5px 12px;
+            border-radius: 8px;
+            font-size: 12px;
+            font-weight: 500;
+            border: 1px solid #BBF7D0;
         }
- 
-        .toast i {
-            font-size: 18px;
+
+        .cert-uploaded i {
+            font-size: 14px;
         }
- 
+
+        .cert-uploaded .remove-cert {
+            color: #DC2626;
+            cursor: pointer;
+            font-size: 14px;
+            transition: 0.2s;
+            line-height: 1;
+        }
+
+        .cert-uploaded .remove-cert:hover {
+            color: #991B1B;
+            transform: scale(1.2);
+        }
+
         /* ============================================================ */
-        /* ===== MODAL ===== */
+        /* ===== SETTINGS MODAL ===== */
         /* ============================================================ */
-        .modal-overlay {
+        .settings-modal-overlay {
             display: none;
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(0, 0, 0, 0.5);
-            backdrop-filter: blur(4px);
-            z-index: 1000;
-            justify-content: center;
+            background: rgba(15, 23, 42, 0.6);
+            backdrop-filter: blur(8px);
+            z-index: 9999;
             align-items: center;
+            justify-content: center;
             padding: 20px;
         }
- 
-        .modal-overlay.active {
+
+        .settings-modal-overlay.active {
             display: flex;
         }
- 
-        .modal-content {
-            background: var(--white);
-            border-radius: 16px;
-            max-width: 520px;
+
+        .settings-modal {
+            background: #FFFFFF;
+            border-radius: 24px;
+            max-width: 640px;
             width: 100%;
-            max-height: 90vh;
-            overflow-y: auto;
-            padding: 28px 30px;
+            padding: 40px 40px 32px;
             position: relative;
-            animation: modalSlideIn 0.3s ease;
+            box-shadow: 0 40px 80px rgba(0, 0, 0, 0.2);
+            animation: modalSlideIn 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+            max-height: 94vh;
+            overflow-y: auto;
         }
- 
+
+        .settings-modal::-webkit-scrollbar {
+            width: 4px;
+        }
+        .settings-modal::-webkit-scrollbar-track {
+            background: #F1F4F9;
+            border-radius: 4px;
+        }
+        .settings-modal::-webkit-scrollbar-thumb {
+            background: #1F3C88;
+            border-radius: 4px;
+        }
+
         @keyframes modalSlideIn {
-            from { opacity: 0; transform: translateY(30px) scale(0.95); }
-            to { opacity: 1; transform: translateY(0) scale(1); }
+            from {
+                opacity: 0;
+                transform: translateY(30px) scale(0.96);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
         }
- 
-        .modal-close {
-            position: absolute;
-            top: 14px;
-            right: 16px;
-            background: var(--light-bg);
-            border: none;
-            width: 34px;
-            height: 34px;
+
+        .settings-modal .close-btn {
+            position: sticky;
+            top: 0;
+            float: right;
+            width: 40px;
+            height: 40px;
             border-radius: 50%;
-            font-size: 18px;
+            background: #F1F4F9;
+            border: none;
             cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
             transition: 0.3s;
-            color: var(--text-gray);
+            font-size: 17px;
+            color: #64748B;
+            margin-top: -8px;
+            margin-right: -8px;
+            z-index: 10;
+            flex-shrink: 0;
         }
- 
-        .modal-close:hover {
-            background: var(--border);
-            color: var(--text-dark);
+
+        .settings-modal .close-btn:hover {
+            background: #E2E8F0;
+            transform: rotate(90deg);
+            color: #0F172A;
         }
- 
-        .modal-content h2 {
-            font-size: 22px;
-            color: var(--primary);
+
+        .settings-modal .modal-heading {
+            text-align: center;
+            font-size: 26px;
             font-weight: 700;
-            margin-bottom: 2px;
+            color: #0F172A;
+            margin: 4px 0 6px;
+            clear: both;
         }
- 
-        .modal-content .modal-sub {
-            color: var(--text-gray);
+
+        .settings-modal .modal-heading span {
+            color: #1F3C88;
+            position: relative;
+        }
+
+        .settings-modal .modal-heading span::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: #F97316;
+            border-radius: 2px;
+            opacity: 0.5;
+        }
+
+        .settings-modal .modal-desc {
+            text-align: center;
             font-size: 14px;
+            color: #94A3B8;
+            line-height: 1.7;
+            margin: 10px 0 24px;
+            max-width: 400px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .settings-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 24px;
+        }
+
+        .settings-card {
+            background: #F8FAFC;
+            border: 1px solid #E2E8F0;
+            border-radius: 14px;
+            padding: 22px 24px;
+            transition: 0.3s;
+        }
+
+        .settings-card:hover {
+            border-color: #CBD5E1;
+        }
+
+        .settings-card h3 {
+            font-size: 16px;
+            font-weight: 600;
+            color: #0F172A;
+            margin-bottom: 14px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .settings-card h3 i {
+            color: #1F3C88;
+            font-size: 18px;
+            width: 28px;
+            text-align: center;
+        }
+
+        .settings-card .form-group {
+            margin-bottom: 14px;
+        }
+
+        .settings-card .form-group:last-of-type {
             margin-bottom: 16px;
         }
- 
-        .modal-content .form-group {
-            margin-bottom: 12px;
-        }
- 
-        .modal-content .form-group label {
+
+        .settings-card .form-group label {
             display: block;
             font-size: 13px;
-            font-weight: 600;
-            color: var(--text-dark);
-            margin-bottom: 4px;
+            font-weight: 500;
+            color: #475569;
+            margin-bottom: 5px;
         }
- 
-        .modal-content .form-group input,
-        .modal-content .form-group select {
+
+        .settings-card .form-group input {
             width: 100%;
-            padding: 8px 12px;
-            border: 1px solid var(--border);
-            border-radius: 6px;
-            font-size: 14px;
+            padding: 10px 14px;
+            border: 1.5px solid #E2E8F0;
+            border-radius: 10px;
             font-family: 'Poppins', sans-serif;
+            font-size: 14px;
             transition: 0.3s;
+            background: #FFFFFF;
+            color: #0F172A;
         }
- 
-        .modal-content .form-group input:focus,
-        .modal-content .form-group select:focus {
-            border-color: var(--primary);
+
+        .settings-card .form-group input:focus {
+            border-color: #1F3C88;
             outline: none;
-            box-shadow: 0 0 0 3px rgba(31, 60, 136, 0.08);
+            box-shadow: 0 0 0 4px rgba(31, 60, 136, 0.06);
         }
- 
-        .modal-content .modal-btn {
-            width: 100%;
-            padding: 10px;
-            background: var(--primary);
-            color: var(--white);
+
+        .settings-card .form-group input::placeholder {
+            color: #94A3B8;
+        }
+
+        .settings-card .btn-save {
+            background: #1F3C88;
+            color: #FFFFFF;
             border: none;
-            border-radius: 6px;
+            padding: 10px 22px;
+            border-radius: 999px;
             font-weight: 600;
-            font-size: 15px;
+            font-size: 14px;
             cursor: pointer;
             transition: 0.3s;
             font-family: 'Poppins', sans-serif;
-            margin-top: 6px;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            width: 100%;
+            justify-content: center;
         }
- 
-        .modal-content .modal-btn:hover {
-            background: var(--secondary);
+
+        .settings-card .btn-save:hover {
+            background: #152B66;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 16px rgba(31, 60, 136, 0.2);
+        }
+
+        /* ============================================================ */
+        /* ===== TOAST ===== */
+        /* ============================================================ */
+        .toast {
+            position: fixed;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%) translateY(100px);
+            background: #0F172A;
+            color: #FFFFFF;
+            padding: 14px 28px;
+            border-radius: 14px;
+            font-family: 'Poppins', sans-serif;
+            font-size: 14px;
+            font-weight: 500;
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.25);
+            z-index: 99999;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            opacity: 0;
+            pointer-events: none;
+            transition: all 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+        }
+
+        .toast.show {
+            opacity: 1;
+            transform: translateX(-50%) translateY(0);
+            pointer-events: auto;
+        }
+
+        .toast i {
+            font-size: 18px;
+        }
+
+        .toast.success i {
+            color: #22C55E;
+        }
+
+        .toast.error i {
+            color: #EF4444;
+        }
+
+        /* ============================================================ */
+        /* ===== FOOTER ===== */
+        /* ============================================================ */
+        .footer {
+            background: #1A1A2E;
+            color: #FFFFFF;
+            padding: 40px 60px 20px;
+            margin-top: 20px;
+        }
+
+        .footer-top {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 40px;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding-bottom: 20px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+        }
+
+        .footer-logo img {
+            height: 40px;
+            width: auto;
+        }
+
+        .footer-logo p {
+            font-size: 13px;
+            color: rgba(255, 255, 255, 0.7);
+            margin: 8px 0 12px;
+            line-height: 1.6;
+        }
+
+        .footer-social {
+            display: flex;
+            gap: 14px;
+        }
+
+        .footer-social i {
+            font-size: 20px;
+            color: rgba(255, 255, 255, 0.6);
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .footer-social i:hover {
+            color: #FFFFFF;
             transform: translateY(-2px);
         }
 
-        /* ===== DEMO BOOKING DETAILS ===== */
-        .demo-detail-row {
-            display: flex;
-            justify-content: space-between;
-            padding: 4px 0;
-            font-size: 13px;
-            border-bottom: 1px solid var(--border);
-        }
-
-        .demo-detail-row:last-child {
-            border-bottom: none;
-        }
-
-        .demo-detail-row .demo-label {
-            color: var(--text-gray);
-            font-weight: 500;
-        }
-
-        .demo-detail-row .demo-value {
-            color: var(--text-dark);
+        .footer h4 {
+            font-size: 16px;
             font-weight: 600;
+            margin-bottom: 12px;
+            color: #FFFFFF;
+        }
+
+        .footer a {
+            display: block;
+            color: rgba(255, 255, 255, 0.7);
+            text-decoration: none;
+            font-size: 14px;
+            padding: 4px 0;
+            transition: 0.3s;
+        }
+
+        .footer a:hover {
+            color: #FFFFFF;
+        }
+
+        .footer-contact p {
+            font-size: 14px;
+            color: rgba(255, 255, 255, 0.7);
+            padding: 4px 0;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .footer-contact p i {
+            width: 18px;
+            color: #F97316;
+        }
+
+        .footer-bottom {
+            text-align: center;
+            font-size: 13px;
+            color: rgba(255, 255, 255, 0.5);
+            padding-top: 20px;
+            max-width: 1400px;
+            margin: 0 auto;
         }
 
         /* ============================================================ */
         /* ===== RESPONSIVE ===== */
         /* ============================================================ */
-        @media (max-width: 992px) {
+        @media (max-width: 1024px) {
+            .admin-wrapper {
+                padding: 20px 30px 40px;
+            }
             .navbar {
-                padding: 14px 40px;
+                padding: 12px 30px;
             }
-            .admin-container {
-                padding: 20px 40px 40px;
+        }
+
+        @media (max-width: 768px) {
+            .admin-wrapper {
+                padding: 16px 16px 30px;
             }
-            .page-header {
+            .navbar {
+                flex-direction: column;
+                padding: 12px 16px;
+                gap: 10px;
+                min-height: auto;
+            }
+            .admin-header h1 {
+                font-size: 24px;
+            }
+            .admin-tabs {
+                flex-wrap: nowrap;
+                overflow-x: auto;
+                gap: 4px;
+                padding: 4px;
+                -webkit-overflow-scrolling: touch;
+            }
+            .admin-tab {
+                flex: 0 0 auto;
+                padding: 10px 16px;
+                font-size: 13px;
+                white-space: nowrap;
+            }
+            .admin-section {
+                padding: 20px 16px;
+            }
+            .admin-section .section-header h2 {
+                font-size: 18px;
+            }
+            table {
+                font-size: 13px;
+                min-width: 580px;
+            }
+            table th,
+            table td {
+                padding: 10px 12px;
+            }
+            .settings-grid {
+                grid-template-columns: 1fr;
+                gap: 16px;
+            }
+            .settings-modal {
+                padding: 28px 20px 24px;
+            }
+            .settings-modal .modal-heading {
+                font-size: 22px;
+            }
+            .footer {
+                padding: 30px 20px 16px;
+            }
+            .footer-top {
+                grid-template-columns: 1fr 1fr;
+                gap: 20px;
+            }
+            .status-dropdown {
+                font-size: 11px;
+                padding: 4px 26px 4px 10px;
+                min-width: 80px;
+            }
+            .cert-upload-btn {
+                font-size: 11px;
+                padding: 5px 12px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .admin-header {
                 flex-direction: column;
                 align-items: flex-start;
             }
-        }
- 
-        @media (max-width: 768px) {
-            .navbar {
-                flex-direction: column;
-                padding: 12px 20px;
-                gap: 10px;
-            }
-            .nav-right {
-                width: 100%;
-                justify-content: space-between;
-            }
-            .admin-container {
-                padding: 16px 20px 30px;
-            }
-            .page-header h1 {
-                font-size: 22px;
-            }
-            .admin-tabs {
-                flex-direction: column;
+            .admin-header h1 {
+                font-size: 20px;
             }
             .admin-tab {
-                justify-content: center;
-            }
-            .table-controls {
-                flex-direction: column;
-            }
-            .table-controls .search-box {
-                max-width: 100%;
-                width: 100%;
-            }
-            .table-wrapper {
-                overflow-x: auto;
-            }
-            .table-wrapper table {
-                min-width: 600px;
-            }
-            .modal-content {
-                padding: 20px;
-            }
-        }
- 
-        @media (max-width: 480px) {
-            .logo-text {
-                font-size: 18px;
-            }
-            .logo img {
-                height: 34px;
-            }
-            .page-header .stats .stat-item {
-                min-width: 70px;
+                font-size: 11px;
                 padding: 8px 12px;
             }
-            .page-header .stats .stat-item .number {
+            .admin-tab i {
+                font-size: 12px;
+            }
+            .logo .logo-text {
+                font-size: 16px;
+            }
+            .logo img {
+                height: 32px;
+            }
+            .nav-settings-link {
+                font-size: 12px;
+                padding: 6px 14px;
+            }
+            .settings-modal {
+                padding: 20px 14px 18px;
+                border-radius: 20px;
+            }
+            .settings-modal .modal-heading {
                 font-size: 18px;
+            }
+            .settings-modal .close-btn {
+                width: 32px;
+                height: 32px;
+                font-size: 13px;
+            }
+            .settings-card {
+                padding: 16px;
+            }
+            .settings-card .btn-save {
+                font-size: 13px;
+                padding: 8px 16px;
+            }
+            .footer-top {
+                grid-template-columns: 1fr;
+                gap: 16px;
             }
         }
     </style>
 </head>
+
 <body>
 
-    <!-- ============================================================ -->
-    <!-- ===== SESSION CHECK ===== -->
-    <!-- ============================================================ -->
-    <script>
-        const isAdmin = localStorage.getItem('qskillAdminLoggedIn');
-        if (!isAdmin) {
-            window.location.href = 'login.html';
-        }
-        
-        function logout() {
-            if (confirm('Are you sure you want to logout?')) {
-                localStorage.removeItem('qskillAdminLoggedIn');
-                localStorage.removeItem('qskillUser');
-                window.location.href = 'login.html';
-            }
-        }
-    </script>
- 
     <!-- ===== TOAST ===== -->
     <div class="toast" id="toast">
         <i class="fas fa-check-circle" id="toastIcon"></i>
         <span id="toastMessage">Success!</span>
     </div>
- 
+
     <!-- ============================================================ -->
     <!-- ===== NAVBAR ===== -->
     <!-- ============================================================ -->
@@ -785,1269 +961,529 @@
                 <span class="careersolutions">careersolutions</span>
             </span>
         </a>
-        <div class="nav-right">
-            <span class="admin-badge"><i class="fas fa-user-shield"></i> Admin</span>
-            <button class="logout-btn" onclick="logout()"><i class="fas fa-sign-out-alt"></i> Logout</button>
-        </div>
+        <a href="#" class="nav-settings-link" onclick="openSettingsModal()">
+            <i class="fas fa-cog"></i> Settings
+        </a>
     </nav>
- 
+
     <!-- ============================================================ -->
-    <!-- ===== ADMIN CONTAINER ===== -->
+    <!-- ===== ADMIN DASHBOARD ===== -->
     <!-- ============================================================ -->
-    <div class="admin-container">
- 
-        <!-- ===== PAGE HEADER ===== -->
-        <div class="page-header">
-            <div>
-                <h1>Admin <span>Dashboard</span></h1>
-                <p style="color: var(--text-gray); font-size: 14px;">Manage students, instructors, courses, and demo bookings</p>
-            </div>
-            <div class="stats" id="statsContainer">
-                <div class="stat-item">
-                    <div class="number" id="totalStudents">0</div>
-                    <div class="label">Students</div>
-                </div>
-                <div class="stat-item">
-                    <div class="number" id="totalInstructors">0</div>
-                    <div class="label">Instructors</div>
-                </div>
-                <div class="stat-item">
-                    <div class="number" id="totalCourses">0</div>
-                    <div class="label">Courses</div>
-                </div>
-                <div class="stat-item">
-                    <div class="number" id="totalDemos">0</div>
-                    <div class="label">Demo Bookings</div>
-                </div>
-            </div>
+    <section class="admin-wrapper">
+
+        <div class="admin-header">
+            <h1>👋 <span>Admin Dashboard</span></h1>
+            <span class="admin-badge"><i class="fas fa-user-cog"></i> Super Admin</span>
         </div>
- 
+
         <!-- ===== TABS ===== -->
         <div class="admin-tabs" id="adminTabs">
-            <button class="admin-tab active" data-tab="students">
-                <i class="fas fa-user-graduate"></i> Students
+            <button class="admin-tab active" data-tab="enquiry" onclick="switchTab('enquiry')">
+                <i class="fas fa-inbox"></i> Enquiry
             </button>
-            <button class="admin-tab" data-tab="instructors">
-                <i class="fas fa-chalkboard-teacher"></i> Instructors
+            <button class="admin-tab" data-tab="instructor" onclick="switchTab('instructor')">
+                <i class="fas fa-chalkboard-teacher"></i> Instructor
             </button>
-            <button class="admin-tab" data-tab="courses">
-                <i class="fas fa-book"></i> Courses
-            </button>
-            <button class="admin-tab" data-tab="enrollments">
-                <i class="fas fa-link"></i> Enrollments
-            </button>
-            <button class="admin-tab" data-tab="demos">
-                <i class="fas fa-calendar-alt"></i> Demo Bookings
-                <span class="tab-badge" id="demoBadge">0</span>
+            <button class="admin-tab" data-tab="student" onclick="switchTab('student')">
+                <i class="fas fa-user-graduate"></i> Student
             </button>
         </div>
- 
-        <!-- ===== STUDENTS TAB ===== -->
-        <div class="tab-content active" id="tab-students">
-            <div class="table-controls">
-                <div class="search-box">
-                    <i class="fas fa-search"></i>
-                    <input type="text" id="studentSearch" placeholder="Search students..." oninput="renderStudents()" />
+
+        <!-- ============================================================ -->
+        <!-- ===== TAB: ENQUIRY ===== -->
+        <!-- ============================================================ -->
+        <div class="tab-panel active" id="panel-enquiry">
+            <div class="admin-section">
+                <div class="section-header">
+                    <h2><i class="fas fa-inbox"></i> Enquiry</h2>
+                    <span class="section-count">4 Requests</span>
                 </div>
-                <button class="add-btn" onclick="openAddStudent()">
-                    <i class="fas fa-plus"></i> Add Student
-                </button>
-            </div>
-            <div class="table-wrapper">
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Student ID</th>
-                            <th>Email</th>
-                            <th>Name</th>
-                            <th>Status</th>
-                            <th>Actions</th>
-                        </tr>
-                    </thead>
-                    <tbody id="studentsTableBody"></tbody>
-                </table>
+                <p class="section-desc">Manage course enquiry requests. Use the dropdown to update status.</p>
+                <div class="table-responsive">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Email</th>
+                                <th>Phone</th>
+                                <th>Course</th>
+                                <th>Enquiry Date</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>Rahul Sharma</strong></td>
+                                <td>rahul@example.com</td>
+                                <td>98765 43210</td>
+                                <td>Automation Testing</td>
+                                <td>2025-01-10</td>
+                                <td>
+                                    <select class="status-dropdown pending" onchange="updateEnquiryStatus(this)">
+                                        <option value="pending" selected>Pending</option>
+                                        <option value="contacted">Contacted</option>
+                                    </select>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><strong>Priya Patel</strong></td>
+                                <td>priya@example.com</td>
+                                <td>98765 43211</td>
+                                <td>Manual Testing</td>
+                                <td>2025-01-12</td>
+                                <td>
+                                    <select class="status-dropdown contacted" onchange="updateEnquiryStatus(this)">
+                                        <option value="pending">Pending</option>
+                                        <option value="contacted" selected>Contacted</option>
+                                    </select>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><strong>Arjun Kumar</strong></td>
+                                <td>arjun@example.com</td>
+                                <td>98765 43212</td>
+                                <td>API Testing</td>
+                                <td>2025-01-14</td>
+                                <td>
+                                    <select class="status-dropdown pending" onchange="updateEnquiryStatus(this)">
+                                        <option value="pending" selected>Pending</option>
+                                        <option value="contacted">Contacted</option>
+                                    </select>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><strong>Neha Singh</strong></td>
+                                <td>neha@example.com</td>
+                                <td>98765 43213</td>
+                                <td>Playwright</td>
+                                <td>2025-01-16</td>
+                                <td>
+                                    <select class="status-dropdown contacted" onchange="updateEnquiryStatus(this)">
+                                        <option value="pending">Pending</option>
+                                        <option value="contacted" selected>Contacted</option>
+                                    </select>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
- 
-        <!-- ===== INSTRUCTORS TAB ===== -->
-        <div class="tab-content" id="tab-instructors">
-            <div class="table-controls">
-                <div class="search-box">
-                    <i class="fas fa-search"></i>
-                    <input type="text" id="instructorSearch" placeholder="Search instructors..." oninput="renderInstructors()" />
+
+        <!-- ============================================================ -->
+        <!-- ===== TAB: INSTRUCTOR ===== -->
+        <!-- ============================================================ -->
+        <div class="tab-panel" id="panel-instructor">
+            <div class="admin-section">
+                <div class="section-header">
+                    <h2><i class="fas fa-chalkboard-teacher"></i> Instructor</h2>
+                    <span class="section-count">4 Instructors</span>
                 </div>
-                <button class="add-btn" onclick="openAddInstructor()">
-                    <i class="fas fa-plus"></i> Add Instructor
-                </button>
-            </div>
-            <div class="table-wrapper">
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Email</th>
-                            <th>Name</th>
-                            <th>Status</th>
-                            <th>Actions</th>
-                        </tr>
-                    </thead>
-                    <tbody id="instructorsTableBody"></tbody>
-                </table>
+                <p class="section-desc">Manage instructors, their courses, and status.</p>
+                <div class="table-responsive">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Course Trained</th>
+                                <th>Join Date</th>
+                                <th>Duration (Days)</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>Dr. Anjali Mehta</strong></td>
+                                <td>Selenium + Java</td>
+                                <td>2024-06-01</td>
+                                <td>180</td>
+                                <td><span class="status-badge active">Active</span></td>
+                            </tr>
+                            <tr>
+                                <td><strong>Mr. Vikram Singh</strong></td>
+                                <td>Postman API</td>
+                                <td>2024-09-15</td>
+                                <td>90</td>
+                                <td><span class="status-badge active">Active</span></td>
+                            </tr>
+                            <tr>
+                                <td><strong>Ms. Sneha Reddy</strong></td>
+                                <td>Cypress</td>
+                                <td>2024-11-01</td>
+                                <td>60</td>
+                                <td><span class="status-badge inactive">Inactive</span></td>
+                            </tr>
+                            <tr>
+                                <td><strong>Mr. Karan Joshi</strong></td>
+                                <td>Playwright</td>
+                                <td>2024-12-10</td>
+                                <td>45</td>
+                                <td><span class="status-badge active">Active</span></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
- 
-        <!-- ===== COURSES TAB ===== -->
-        <div class="tab-content" id="tab-courses">
-            <div class="table-controls">
-                <div class="search-box">
-                    <i class="fas fa-search"></i>
-                    <input type="text" id="courseSearch" placeholder="Search courses..." oninput="renderCourses()" />
+
+        <!-- ============================================================ -->
+        <!-- ===== TAB: STUDENT ===== -->
+        <!-- ============================================================ -->
+        <div class="tab-panel" id="panel-student">
+            <div class="admin-section">
+                <div class="section-header">
+                    <h2><i class="fas fa-user-graduate"></i> Student</h2>
+                    <span class="section-count">4 Students</span>
                 </div>
-                <button class="add-btn" onclick="openAddCourse()">
-                    <i class="fas fa-plus"></i> Add Course
-                </button>
-            </div>
-            <div class="table-wrapper">
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Course Name</th>
-                            <th>Duration</th>
-                            <th>Level</th>
-                            <th>Status</th>
-                            <th>Actions</th>
-                        </tr>
-                    </thead>
-                    <tbody id="coursesTableBody"></tbody>
-                </table>
+                <p class="section-desc">View student enrollments, payments, and upload certificates (PDF/JPG/PNG).</p>
+                <div class="table-responsive">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Course</th>
+                                <th>Enroll Date</th>
+                                <th>Payment</th>
+                                <th>Amount</th>
+                                <th>Status</th>
+                                <th>Certificate</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>Rahul Sharma</strong></td>
+                                <td>Automation Testing</td>
+                                <td>2025-01-15</td>
+                                <td>UPI</td>
+                                <td>₹14,999</td>
+                                <td><span class="status-badge completed">Completed</span></td>
+                                <td>
+                                    <div class="cert-wrapper" id="cert-rahul">
+                                        <button class="cert-upload-btn" onclick="triggerCertUpload('rahul')">
+                                            <i class="fas fa-upload"></i> Upload
+                                        </button>
+                                        <input type="file" class="cert-file-input" id="cert-rahul-input"
+                                            accept=".pdf,.jpg,.jpeg,.png" onchange="uploadCertificateFile('rahul', this)" />
+                                        <span class="cert-status" id="cert-rahul-status"></span>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><strong>Priya Patel</strong></td>
+                                <td>Manual Testing</td>
+                                <td>2025-01-18</td>
+                                <td>Card</td>
+                                <td>₹9,999</td>
+                                <td><span class="status-badge active">Active</span></td>
+                                <td>
+                                    <div class="cert-wrapper" id="cert-priya">
+                                        <button class="cert-upload-btn" onclick="triggerCertUpload('priya')">
+                                            <i class="fas fa-upload"></i> Upload
+                                        </button>
+                                        <input type="file" class="cert-file-input" id="cert-priya-input"
+                                            accept=".pdf,.jpg,.jpeg,.png" onchange="uploadCertificateFile('priya', this)" />
+                                        <span class="cert-status" id="cert-priya-status"></span>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><strong>Arjun Kumar</strong></td>
+                                <td>API Testing</td>
+                                <td>2025-01-20</td>
+                                <td>Net Banking</td>
+                                <td>₹9,999</td>
+                                <td><span class="status-badge pending">Pending</span></td>
+                                <td>
+                                    <div class="cert-wrapper" id="cert-arjun">
+                                        <button class="cert-upload-btn" onclick="triggerCertUpload('arjun')">
+                                            <i class="fas fa-upload"></i> Upload
+                                        </button>
+                                        <input type="file" class="cert-file-input" id="cert-arjun-input"
+                                            accept=".pdf,.jpg,.jpeg,.png" onchange="uploadCertificateFile('arjun', this)" />
+                                        <span class="cert-status" id="cert-arjun-status"></span>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><strong>Neha Singh</strong></td>
+                                <td>Playwright</td>
+                                <td>2025-01-22</td>
+                                <td>UPI</td>
+                                <td>₹14,999</td>
+                                <td><span class="status-badge active">Active</span></td>
+                                <td>
+                                    <div class="cert-wrapper" id="cert-neha">
+                                        <button class="cert-upload-btn" onclick="triggerCertUpload('neha')">
+                                            <i class="fas fa-upload"></i> Upload
+                                        </button>
+                                        <input type="file" class="cert-file-input" id="cert-neha-input"
+                                            accept=".pdf,.jpg,.jpeg,.png" onchange="uploadCertificateFile('neha', this)" />
+                                        <span class="cert-status" id="cert-neha-status"></span>
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
- 
-        <!-- ===== ENROLLMENTS TAB ===== -->
-        <div class="tab-content" id="tab-enrollments">
-            <div class="table-controls">
-                <div class="search-box">
-                    <i class="fas fa-search"></i>
-                    <input type="text" id="enrollmentSearch" placeholder="Search enrollments..." oninput="renderEnrollments()" />
-                </div>
-                <button class="add-btn" onclick="openAddEnrollment()">
-                    <i class="fas fa-plus"></i> Add Enrollment
-                </button>
-            </div>
-            <div class="table-wrapper">
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Student</th>
-                            <th>Course</th>
-                            <th>Instructor</th>
-                            <th>Status</th>
-                            <th>Actions</th>
-                        </tr>
-                    </thead>
-                    <tbody id="enrollmentsTableBody"></tbody>
-                </table>
-            </div>
-        </div>
- 
-        <!-- ===== DEMO BOOKINGS TAB ===== -->
-        <div class="tab-content" id="tab-demos">
-            <div class="table-controls">
-                <div class="search-box">
-                    <i class="fas fa-search"></i>
-                    <input type="text" id="demoSearch" placeholder="Search by name, email, ID..." oninput="renderDemos()" />
-                </div>
-                <div style="display:flex;gap:10px;flex-wrap:wrap;">
-                    <select id="demoStatusFilter" onchange="renderDemos()" style="padding:8px 14px;border:1px solid var(--border);border-radius:6px;font-family:'Poppins',sans-serif;font-size:13px;background:var(--white);">
-                        <option value="all">All Status</option>
-                        <option value="pending">Pending</option>
-                        <option value="contacted">Contacted</option>
-                        <option value="completed">Completed</option>
-                        <option value="cancelled">Cancelled</option>
-                    </select>
-                    <button class="refresh-btn" onclick="renderDemos(); updateStats();">
-                        <i class="fas fa-sync-alt"></i> Refresh
-                    </button>
-                </div>
-            </div>
-            <div class="table-wrapper">
-                <table>
-                    <thead>
-                        <tr>
-                            <th>#</th>
-                            <th>Student</th>
-                            <th>Contact</th>
-                            <th>Date &amp; Time</th>
-                            <th>Message</th>
-                            <th>Status</th>
-                            <th>Actions</th>
-                        </tr>
-                    </thead>
-                    <tbody id="demosTableBody"></tbody>
-                </table>
-            </div>
-        </div>
- 
-    </div>
- 
+
+    </section>
+
     <!-- ============================================================ -->
-    <!-- ===== MODALS ===== -->
+    <!-- ===== SETTINGS MODAL ===== -->
     <!-- ============================================================ -->
- 
-    <!-- Add Student Modal -->
-    <div class="modal-overlay" id="addStudentModal">
-        <div class="modal-content">
-            <button class="modal-close" onclick="closeModal('addStudentModal')"><i class="fas fa-times"></i></button>
-            <h2>Add Student</h2>
-            <p class="modal-sub">Create a new student account</p>
-            <form id="addStudentForm">
-                <div class="form-group">
-                    <label>Email <span style="color: var(--error);">*</span></label>
-                    <input type="email" id="studentEmail" placeholder="Enter email address" required />
+    <div class="settings-modal-overlay" id="settingsModal">
+        <div class="settings-modal">
+            <button class="close-btn" onclick="closeSettingsModal()" aria-label="Close">
+                <i class="fas fa-times"></i>
+            </button>
+
+            <h2 class="modal-heading">⚙️ <span>Settings</span></h2>
+            <p class="modal-desc">Update your admin profile and change your password.</p>
+
+            <div class="settings-grid">
+                <div class="settings-card">
+                    <h3><i class="fas fa-user-edit"></i> Admin Details</h3>
+                    <form id="adminDetailsForm" onsubmit="updateAdminDetails(event)">
+                        <div class="form-group">
+                            <label>Full Name</label>
+                            <input type="text" id="adminName" value="Super Admin" required />
+                        </div>
+                        <div class="form-group">
+                            <label>Email</label>
+                            <input type="email" id="adminEmail" value="admin@qskillcareersolutions.com" required />
+                        </div>
+                        <div class="form-group">
+                            <label>Phone</label>
+                            <input type="tel" id="adminPhone" value="+91 99999 99999" required />
+                        </div>
+                        <button type="submit" class="btn-save"><i class="fas fa-save"></i> Update Details</button>
+                    </form>
                 </div>
-                <div class="form-group">
-                    <label>Password <span style="color: var(--error);">*</span></label>
-                    <input type="text" id="studentPassword" placeholder="Enter password (min 6 chars)" required minlength="6" />
+
+                <div class="settings-card">
+                    <h3><i class="fas fa-key"></i> Change Password</h3>
+                    <form id="passwordForm" onsubmit="changePassword(event)">
+                        <div class="form-group">
+                            <label>Current Password</label>
+                            <input type="password" id="currentPassword" placeholder="Enter current password" required />
+                        </div>
+                        <div class="form-group">
+                            <label>New Password</label>
+                            <input type="password" id="newPassword" placeholder="Enter new password" required />
+                        </div>
+                        <div class="form-group">
+                            <label>Confirm New Password</label>
+                            <input type="password" id="confirmPassword" placeholder="Confirm new password" required />
+                        </div>
+                        <button type="submit" class="btn-save"><i class="fas fa-sync-alt"></i> Change Password</button>
+                    </form>
                 </div>
-                <div class="form-group">
-                    <label>Full Name</label>
-                    <input type="text" id="studentName" placeholder="Enter student name" />
-                </div>
-                <button type="submit" class="modal-btn">Add Student</button>
-            </form>
-        </div>
-    </div>
- 
-    <!-- Add Instructor Modal -->
-    <div class="modal-overlay" id="addInstructorModal">
-        <div class="modal-content">
-            <button class="modal-close" onclick="closeModal('addInstructorModal')"><i class="fas fa-times"></i></button>
-            <h2>Add Instructor</h2>
-            <p class="modal-sub">Create a new instructor account</p>
-            <form id="addInstructorForm">
-                <div class="form-group">
-                    <label>Email <span style="color: var(--error);">*</span></label>
-                    <input type="email" id="instructorEmail" placeholder="Enter email address" required />
-                </div>
-                <div class="form-group">
-                    <label>Password <span style="color: var(--error);">*</span></label>
-                    <input type="text" id="instructorPassword" placeholder="Enter password (min 6 chars)" required minlength="6" />
-                </div>
-                <div class="form-group">
-                    <label>Full Name</label>
-                    <input type="text" id="instructorName" placeholder="Enter instructor name" />
-                </div>
-                <button type="submit" class="modal-btn">Add Instructor</button>
-            </form>
-        </div>
-    </div>
- 
-    <!-- Add Course Modal -->
-    <div class="modal-overlay" id="addCourseModal">
-        <div class="modal-content">
-            <button class="modal-close" onclick="closeModal('addCourseModal')"><i class="fas fa-times"></i></button>
-            <h2>Add Course</h2>
-            <p class="modal-sub">Create a new course</p>
-            <form id="addCourseForm">
-                <div class="form-group">
-                    <label>Course Name <span style="color: var(--error);">*</span></label>
-                    <input type="text" id="courseName" placeholder="Enter course name" required />
-                </div>
-                <div class="form-group">
-                    <label>Duration</label>
-                    <input type="text" id="courseDuration" placeholder="e.g., 6 Weeks" />
-                </div>
-                <div class="form-group">
-                    <label>Level</label>
-                    <select id="courseLevel">
-                        <option value="Beginner">Beginner</option>
-                        <option value="Intermediate">Intermediate</option>
-                        <option value="Advanced">Advanced</option>
-                        <option value="Beginner to Advanced">Beginner to Advanced</option>
-                        <option value="Beginner to Intermediate">Beginner to Intermediate</option>
-                        <option value="Intermediate to Advanced">Intermediate to Advanced</option>
-                    </select>
-                </div>
-                <button type="submit" class="modal-btn">Add Course</button>
-            </form>
-        </div>
-    </div>
- 
-    <!-- Add Enrollment Modal -->
-    <div class="modal-overlay" id="addEnrollmentModal">
-        <div class="modal-content">
-            <button class="modal-close" onclick="closeModal('addEnrollmentModal')"><i class="fas fa-times"></i></button>
-            <h2>Add Enrollment</h2>
-            <p class="modal-sub">Enroll a student in a course</p>
-            <form id="addEnrollmentForm">
-                <div class="form-group">
-                    <label>Student <span style="color: var(--error);">*</span></label>
-                    <select id="enrollmentStudent" required></select>
-                </div>
-                <div class="form-group">
-                    <label>Course <span style="color: var(--error);">*</span></label>
-                    <select id="enrollmentCourse" required></select>
-                </div>
-                <div class="form-group">
-                    <label>Instructor <span style="color: var(--error);">*</span></label>
-                    <select id="enrollmentInstructor" required></select>
-                </div>
-                <button type="submit" class="modal-btn">Add Enrollment</button>
-            </form>
+            </div>
         </div>
     </div>
 
-    <!-- View Demo Modal -->
-    <div class="modal-overlay" id="viewDemoModal">
-        <div class="modal-content">
-            <button class="modal-close" onclick="closeModal('viewDemoModal')"><i class="fas fa-times"></i></button>
-            <h2>📋 Demo Booking Details</h2>
-            <p class="modal-sub" id="viewDemoId">Booking ID: DEMO-001</p>
-            <div id="viewDemoContent">
-                <div class="demo-detail-row"><span class="demo-label">Student Name</span><span class="demo-value" id="viewDemoName">-</span></div>
-                <div class="demo-detail-row"><span class="demo-label">Email</span><span class="demo-value" id="viewDemoEmail">-</span></div>
-                <div class="demo-detail-row"><span class="demo-label">Phone</span><span class="demo-value" id="viewDemoPhone">-</span></div>
-                <div class="demo-detail-row"><span class="demo-label">Date</span><span class="demo-value" id="viewDemoDate">-</span></div>
-                <div class="demo-detail-row"><span class="demo-label">Time</span><span class="demo-value" id="viewDemoTime">-</span></div>
-                <div class="demo-detail-row"><span class="demo-label">Message</span><span class="demo-value" id="viewDemoMessage" style="font-weight:400;">-</span></div>
-                <div class="demo-detail-row"><span class="demo-label">Status</span><span class="demo-value" id="viewDemoStatus">-</span></div>
-                <div class="demo-detail-row"><span class="demo-label">Booked On</span><span class="demo-value" id="viewDemoBookedAt">-</span></div>
+    <!-- ============================================================ -->
+    <!-- ===== FOOTER ===== -->
+    <!-- ============================================================ -->
+    <footer class="footer">
+        <div class="footer-top">
+            <div class="footer-logo">
+                <img src="images/logo.png" alt="QSkill Logo" />
+                <p>Empowering careers with industry-ready Software Testing skills.</p>
+                <div class="footer-social">
+                    <i class="fab fa-instagram"></i>
+                    <i class="fab fa-whatsapp"></i>
+                    <i class="fas fa-envelope"></i>
+                </div>
             </div>
-            <button class="modal-btn" onclick="closeModal('viewDemoModal')" style="background:var(--text-gray);">Close</button>
+            <div>
+                <h4>Quick Links</h4>
+                <a href="index.html">Home</a>
+                <a href="courses.html">Courses</a>
+                <a href="contact.html">Contact</a>
+                <a href="demo.html">Free Demo</a>
+                <a href="login.html">Login</a>
+            </div>
+            <div>
+                <h4>Important Links</h4>
+                <a href="#">Terms &amp; Conditions</a>
+                <a href="#">Privacy Policy</a>
+                <a href="#">Security Policy</a>
+            </div>
+            <div class="footer-contact">
+                <h4>Contact Us</h4>
+                <p><i class="fas fa-phone-alt"></i> +91 99999 99999</p>
+                <p><i class="fas fa-envelope"></i> info@qskillcareersolutions.com</p>
+                <p><i class="fas fa-clock"></i> Mon - Sat | 9AM - 6PM</p>
+            </div>
         </div>
-    </div>
- 
+        <div class="footer-bottom">© 2026 QSkill Career Solutions. All Rights Reserved.</div>
+    </footer>
+
     <!-- ============================================================ -->
     <!-- ===== SCRIPTS ===== -->
     <!-- ============================================================ -->
     <script>
         // ============================================================ */
+        // ===== TAB SWITCHING ===== */
+        // ============================================================ */
+        function switchTab(tabId) {
+            document.querySelectorAll('.tab-panel').forEach(panel => {
+                panel.classList.remove('active');
+            });
+            const panel = document.getElementById('panel-' + tabId);
+            if (panel) panel.classList.add('active');
+
+            document.querySelectorAll('.admin-tab').forEach(btn => {
+                btn.classList.remove('active');
+                if (btn.dataset.tab === tabId) {
+                    btn.classList.add('active');
+                }
+            });
+        }
+
+        // ============================================================ */
+        // ===== ENQUIRY STATUS DROPDOWN (SILENT) ===== */
+        // ============================================================ */
+        function updateEnquiryStatus(select) {
+            const status = select.value;
+            select.className = 'status-dropdown ' + status;
+            console.log('Enquiry status updated to:', status);
+        }
+
+        // ============================================================ */
+        // ===== SETTINGS MODAL ===== */
+        // ============================================================ */
+        function openSettingsModal() {
+            const modal = document.getElementById('settingsModal');
+            if (modal) {
+                modal.classList.add('active');
+                document.body.style.overflow = 'hidden';
+            }
+        }
+
+        function closeSettingsModal() {
+            const modal = document.getElementById('settingsModal');
+            if (modal) {
+                modal.classList.remove('active');
+                document.body.style.overflow = '';
+            }
+        }
+
+        document.getElementById('settingsModal').addEventListener('click', function(e) {
+            if (e.target === this) closeSettingsModal();
+        });
+
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') closeSettingsModal();
+        });
+
+        // ============================================================ */
         // ===== TOAST ===== */
         // ============================================================ */
-        let toastTimeout;
- 
         function showToast(message, type = 'success') {
             const toast = document.getElementById('toast');
             const toastIcon = document.getElementById('toastIcon');
             const toastMessage = document.getElementById('toastMessage');
-            
-            if (toastTimeout) clearTimeout(toastTimeout);
-            
-            toastIcon.className = type === 'success' ? 'fas fa-check-circle' : 
-                                type === 'error' ? 'fas fa-exclamation-circle' : 
-                                'fas fa-info-circle';
-            
+            if (!toast) return;
+            toastIcon.className = type === 'success' ? 'fas fa-check-circle' :
+                type === 'error' ? 'fas fa-exclamation-circle' :
+                'fas fa-info-circle';
             toastMessage.textContent = message;
             toast.className = 'toast ' + type;
-            
-            setTimeout(() => {
-                toast.classList.add('show');
-            }, 10);
-            
-            toastTimeout = setTimeout(() => {
-                toast.classList.remove('show');
-            }, 4000);
-        }
- 
-        // ============================================================ */
-        // ===== SHARED DATA ACCESS ===== */
-        // ============================================================ */
-        
-        // Students - shared with login page and student dashboard
-        function getStudentDatabase() {
-            return JSON.parse(localStorage.getItem('qskillStudents')) || {};
-        }
-        
-        function saveStudentDatabase(data) {
-            localStorage.setItem('qskillStudents', JSON.stringify(data));
-        }
-        
-        // Courses - shared with all pages
-        function getCourseCatalog() {
-            return JSON.parse(localStorage.getItem('qskillCourses')) || {};
-        }
-        
-        function saveCourseCatalog(data) {
-            localStorage.setItem('qskillCourses', JSON.stringify(data));
-        }
-        
-        // Instructors - shared with instructor pages
-        function getInstructorDatabase() {
-            return JSON.parse(localStorage.getItem('qskillInstructors')) || {};
-        }
-        
-        function saveInstructorDatabase(data) {
-            localStorage.setItem('qskillInstructors', JSON.stringify(data));
-        }
-        
-        // Enrollments - shared with student dashboard
-        function getEnrollments() {
-            return JSON.parse(localStorage.getItem('qskillEnrollments')) || [];
-        }
-        
-        function saveEnrollments(data) {
-            localStorage.setItem('qskillEnrollments', JSON.stringify(data));
-        }
-        
-        // Demo bookings
-        function getDemoBookings() {
-            try {
-                return JSON.parse(localStorage.getItem('demoBookings') || '[]');
-            } catch (e) {
-                return [];
-            }
-        }
-        
-        function saveDemoBookings(bookings) {
-            localStorage.setItem('demoBookings', JSON.stringify(bookings));
+            setTimeout(() => toast.classList.add('show'), 10);
+            setTimeout(() => toast.classList.remove('show'), 4000);
         }
 
         // ============================================================ */
-        // ===== DATA ===== */
+        // ===== SETTINGS FORMS ===== */
         // ============================================================ */
-        
-        // Initialize with default data if empty
-        function initData() {
-            let students = getStudentDatabase();
-            if (Object.keys(students).length === 0) {
-                students = {
-                    'QSK24012345': { email: 'student@qskill.com', password: 'a1b2c3d4e5f67890', name: 'Demo Student', registeredAt: new Date().toISOString() },
-                    'QSK24067890': { email: 'demo@qskill.com', password: 'f9e8d7c6b5a43210', name: 'Demo User', registeredAt: new Date().toISOString() }
-                };
-                saveStudentDatabase(students);
-            }
-            
-            let instructors = getInstructorDatabase();
-            if (Object.keys(instructors).length === 0) {
-                instructors = {
-                    'instructor@qskill.com': { password: 'instructor123', name: 'Demo Instructor', role: 'instructor', joinedAt: new Date().toISOString() },
-                    'admin@qskill.com': { password: 'admin123', name: 'Super Admin', role: 'admin', joinedAt: new Date().toISOString() }
-                };
-                saveInstructorDatabase(instructors);
-            }
-            
-            let courses = getCourseCatalog();
-            if (Object.keys(courses).length === 0) {
-                courses = {
-                    'manual': { id: 'manual', title: 'Manual Testing', duration: '6 Weeks', level: 'Beginner', status: 'active' },
-                    'automation': { id: 'automation', title: 'Automation Testing (Selenium)', duration: '12 Weeks', level: 'Beginner to Advanced', status: 'active' },
-                    'api': { id: 'api', title: 'Postman API Testing', duration: '4 Weeks', level: 'Beginner to Intermediate', status: 'active' },
-                    'playwright': { id: 'playwright', title: 'Playwright Automation', duration: '8 Weeks', level: 'Intermediate', status: 'active' },
-                    'cypress': { id: 'cypress', title: 'Cypress Automation', duration: '8 Weeks', level: 'Intermediate', status: 'active' },
-                    'restassured': { id: 'restassured', title: 'REST Assured API Testing', duration: '6 Weeks', level: 'Intermediate to Advanced', status: 'active' }
-                };
-                saveCourseCatalog(courses);
-            }
-            
-            let enrollments = getEnrollments();
-            if (enrollments.length === 0) {
-                enrollments = [
-                    { id: 1, studentId: 'QSK24012345', courseId: 'manual', instructorEmail: 'instructor@qskill.com', status: 'active' },
-                    { id: 2, studentId: 'QSK24012345', courseId: 'automation', instructorEmail: 'instructor@qskill.com', status: 'active' },
-                    { id: 3, studentId: 'QSK24067890', courseId: 'api', instructorEmail: 'instructor@qskill.com', status: 'active' }
-                ];
-                saveEnrollments(enrollments);
-            }
-            
-            // Also ensure enrolledCourses is set for student dashboard
-            let enrolledCourses = JSON.parse(localStorage.getItem('enrolledCourses')) || [];
-            if (enrolledCourses.length === 0) {
-                enrolledCourses = ['automation', 'manual', 'api'];
-                localStorage.setItem('enrolledCourses', JSON.stringify(enrolledCourses));
-            }
-        }
-        
-        initData();
-        
-        let enrollmentIdCounter = getEnrollments().length + 1;
-
-        // ============================================================ */
-        // ===== TABS ===== */
-        // ============================================================ */
-        document.querySelectorAll('.admin-tab').forEach(tab => {
-            tab.addEventListener('click', function() {
-                document.querySelectorAll('.admin-tab').forEach(t => t.classList.remove('active'));
-                this.classList.add('active');
-                const tabName = this.dataset.tab;
-                document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
-                document.getElementById('tab-' + tabName).classList.add('active');
-                renderTab(tabName);
-            });
-        });
- 
-        function renderTab(type) {
-            switch(type) {
-                case 'students': renderStudents(); break;
-                case 'instructors': renderInstructors(); break;
-                case 'courses': renderCourses(); break;
-                case 'enrollments': renderEnrollments(); break;
-                case 'demos': renderDemos(); break;
-            }
-            updateStats();
-        }
- 
-        // ============================================================ */
-        // ===== RENDER FUNCTIONS ===== */
-        // ============================================================ */
- 
-        function renderStudents() {
-            const search = document.getElementById('studentSearch').value.toLowerCase();
-            const tbody = document.getElementById('studentsTableBody');
-            const students = getStudentDatabase();
-            const entries = Object.entries(students);
-            const filtered = entries.filter(([id, s]) => 
-                id.toLowerCase().includes(search) || 
-                s.email.toLowerCase().includes(search) || 
-                (s.name && s.name.toLowerCase().includes(search))
-            );
-            
-            if (!filtered.length) {
-                tbody.innerHTML = `<tr><td colspan="5" style="text-align:center;color:var(--text-gray);padding:30px;">No students found</td></tr>`;
-                return;
-            }
-            
-            tbody.innerHTML = filtered.map(([id, s]) => {
-                const status = s.status || 'active';
-                const statusClass = status === 'active' ? 'active' : 'inactive';
-                return `
-                    <tr>
-                        <td><strong>${id}</strong></td>
-                        <td>${s.email}</td>
-                        <td>${s.name || '-'}</td>
-                        <td>
-                            <span class="status-badge ${statusClass}">${status}</span>
-                        </td>
-                        <td>
-                            <div class="action-btns">
-                                <button class="view-btn" onclick="viewStudent('${id}')"><i class="fas fa-eye"></i></button>
-                                ${status === 'active' ? 
-                                    `<button class="block-btn" onclick="blockStudent('${id}')"><i class="fas fa-ban"></i></button>` :
-                                    `<button class="unblock-btn" onclick="unblockStudent('${id}')"><i class="fas fa-check"></i></button>`
-                                }
-                                <button class="delete-btn" onclick="deleteStudent('${id}')"><i class="fas fa-trash"></i></button>
-                            </div>
-                        </td>
-                    </tr>
-                `;
-            }).join('');
-        }
- 
-        function renderInstructors() {
-            const search = document.getElementById('instructorSearch').value.toLowerCase();
-            const tbody = document.getElementById('instructorsTableBody');
-            const instructors = getInstructorDatabase();
-            const entries = Object.entries(instructors);
-            const filtered = entries.filter(([email, i]) => 
-                email.toLowerCase().includes(search) || 
-                (i.name && i.name.toLowerCase().includes(search))
-            );
-            
-            if (!filtered.length) {
-                tbody.innerHTML = `<tr><td colspan="4" style="text-align:center;color:var(--text-gray);padding:30px;">No instructors found</td></tr>`;
-                return;
-            }
-            
-            tbody.innerHTML = filtered.map(([email, i]) => {
-                const status = i.status || 'active';
-                const statusClass = status === 'active' ? 'active' : 'inactive';
-                return `
-                    <tr>
-                        <td>${email}</td>
-                        <td>${i.name || '-'}</td>
-                        <td>
-                            <span class="status-badge ${statusClass}">${status}</span>
-                        </td>
-                        <td>
-                            <div class="action-btns">
-                                <button class="view-btn" onclick="viewInstructor('${email}')"><i class="fas fa-eye"></i></button>
-                                ${status === 'active' ? 
-                                    `<button class="block-btn" onclick="blockInstructor('${email}')"><i class="fas fa-ban"></i></button>` :
-                                    `<button class="unblock-btn" onclick="unblockInstructor('${email}')"><i class="fas fa-check"></i></button>`
-                                }
-                                <button class="delete-btn" onclick="deleteInstructor('${email}')"><i class="fas fa-trash"></i></button>
-                            </div>
-                        </td>
-                    </tr>
-                `;
-            }).join('');
-        }
- 
-        function renderCourses() {
-            const search = document.getElementById('courseSearch').value.toLowerCase();
-            const tbody = document.getElementById('coursesTableBody');
-            const courses = getCourseCatalog();
-            const entries = Object.entries(courses);
-            const filtered = entries.filter(([id, c]) => 
-                c.title.toLowerCase().includes(search) || 
-                c.level.toLowerCase().includes(search)
-            );
-            
-            if (!filtered.length) {
-                tbody.innerHTML = `<tr><td colspan="5" style="text-align:center;color:var(--text-gray);padding:30px;">No courses found</td></tr>`;
-                return;
-            }
-            
-            tbody.innerHTML = filtered.map(([id, c]) => {
-                const status = c.status || 'active';
-                const statusClass = status === 'active' ? 'active' : 'inactive';
-                return `
-                    <tr>
-                        <td><strong>${c.title}</strong></td>
-                        <td>${c.duration || '-'}</td>
-                        <td>${c.level || '-'}</td>
-                        <td>
-                            <span class="status-badge ${statusClass}">${status}</span>
-                        </td>
-                        <td>
-                            <div class="action-btns">
-                                ${status === 'active' ? 
-                                    `<button class="block-btn" onclick="blockCourse('${id}')"><i class="fas fa-ban"></i></button>` :
-                                    `<button class="unblock-btn" onclick="unblockCourse('${id}')"><i class="fas fa-check"></i></button>`
-                                }
-                                <button class="delete-btn" onclick="deleteCourse('${id}')"><i class="fas fa-trash"></i></button>
-                            </div>
-                        </td>
-                    </tr>
-                `;
-            }).join('');
-        }
- 
-        function renderEnrollments() {
-            const search = document.getElementById('enrollmentSearch').value.toLowerCase();
-            const tbody = document.getElementById('enrollmentsTableBody');
-            const enrollments = getEnrollments();
-            const students = getStudentDatabase();
-            const courses = getCourseCatalog();
-            const instructors = getInstructorDatabase();
-            
-            const filtered = enrollments.filter(e => {
-                const student = students[e.studentId];
-                const course = courses[e.courseId];
-                const instructor = instructors[e.instructorEmail];
-                return (student && (student.name || student.email || '').toLowerCase().includes(search)) ||
-                       (course && course.title.toLowerCase().includes(search)) ||
-                       (instructor && (instructor.name || instructor.email || '').toLowerCase().includes(search));
-            });
-            
-            if (!filtered.length) {
-                tbody.innerHTML = `<tr><td colspan="5" style="text-align:center;color:var(--text-gray);padding:30px;">No enrollments found</td></tr>`;
-                return;
-            }
-            
-            tbody.innerHTML = filtered.map(e => {
-                const student = students[e.studentId];
-                const course = courses[e.courseId];
-                const instructor = instructors[e.instructorEmail];
-                const status = e.status || 'active';
-                const statusClass = status === 'active' ? 'active' : 'inactive';
-                return `
-                    <tr>
-                        <td>${student ? (student.name || student.email) : e.studentId}</td>
-                        <td>${course ? course.title : 'Not found'}</td>
-                        <td>${instructor ? (instructor.name || instructor.email) : 'Not found'}</td>
-                        <td>
-                            <span class="status-badge ${statusClass}">${status}</span>
-                        </td>
-                        <td>
-                            <div class="action-btns">
-                                ${status === 'active' ? 
-                                    `<button class="block-btn" onclick="blockEnrollment(${e.id})"><i class="fas fa-ban"></i></button>` :
-                                    `<button class="unblock-btn" onclick="unblockEnrollment(${e.id})"><i class="fas fa-check"></i></button>`
-                                }
-                                <button class="delete-btn" onclick="deleteEnrollment(${e.id})"><i class="fas fa-trash"></i></button>
-                            </div>
-                        </td>
-                    </tr>
-                `;
-            }).join('');
-        }
-
-        // ============================================================ */
-        // ===== RENDER DEMO BOOKINGS ===== */
-        // ============================================================ */
-        function renderDemos() {
-            const search = document.getElementById('demoSearch').value.toLowerCase().trim();
-            const statusFilter = document.getElementById('demoStatusFilter').value;
-            const tbody = document.getElementById('demosTableBody');
-            let bookings = getDemoBookings();
-
-            if (statusFilter !== 'all') {
-                bookings = bookings.filter(b => (b.status || 'pending') === statusFilter);
-            }
-
-            if (search) {
-                bookings = bookings.filter(b =>
-                    (b.name || '').toLowerCase().includes(search) ||
-                    (b.email || '').toLowerCase().includes(search) ||
-                    (b.phone || '').includes(search) ||
-                    (b.booking_id || '').toLowerCase().includes(search)
-                );
-            }
-
-            const allBookings = getDemoBookings();
-            const pendingCount = allBookings.filter(b => (b.status || 'pending') === 'pending').length;
-            document.getElementById('demoBadge').textContent = pendingCount;
-
-            if (!bookings.length) {
-                tbody.innerHTML = `<tr><td colspan="7" style="text-align:center;color:var(--text-gray);padding:30px;">No demo bookings found</td></tr>`;
-                return;
-            }
-
-            tbody.innerHTML = bookings.map((booking, index) => {
-                const status = booking.status || 'pending';
-                const dateDisplay = booking.date || booking.preferred_date || 'N/A';
-                const timeDisplay = booking.time || booking.preferred_time || 'N/A';
-                const messageDisplay = booking.message || 'No message';
-
-                return `
-                    <tr>
-                        <td>${index + 1}</td>
-                        <td>
-                            <strong>${booking.name || 'Unknown'}</strong>
-                            <br />
-                            <span style="font-size:11px;color:var(--text-gray);">${booking.booking_id || ''}</span>
-                        </td>
-                        <td>
-                            ${booking.email || 'N/A'}<br />
-                            ${booking.phone || 'N/A'}
-                        </td>
-                        <td>
-                            <strong>${dateDisplay}</strong><br />
-                            <span style="font-size:11px;color:var(--text-gray);">${timeDisplay}</span>
-                        </td>
-                        <td style="max-width:150px;word-break:break-word;font-size:12px;color:var(--text-gray);">
-                            ${messageDisplay}
-                        </td>
-                        <td>
-                            <span class="status-badge ${status}">${status.charAt(0).toUpperCase() + status.slice(1)}</span>
-                        </td>
-                        <td>
-                            <div class="action-btns">
-                                <button class="view-btn" onclick="viewDemo('${booking.booking_id}')"><i class="fas fa-eye"></i></button>
-                                <select class="status-btn" onchange="updateDemoStatus('${booking.booking_id}', this.value)" style="padding:2px 6px;border:1px solid var(--border);border-radius:4px;font-size:11px;font-family:'Poppins',sans-serif;background:var(--white);">
-                                    <option value="pending" ${status === 'pending' ? 'selected' : ''}>Pending</option>
-                                    <option value="contacted" ${status === 'contacted' ? 'selected' : ''}>Contacted</option>
-                                    <option value="completed" ${status === 'completed' ? 'selected' : ''}>Completed</option>
-                                    <option value="cancelled" ${status === 'cancelled' ? 'selected' : ''}>Cancelled</option>
-                                </select>
-                                <button class="delete-btn" onclick="deleteDemo('${booking.booking_id}')"><i class="fas fa-trash"></i></button>
-                            </div>
-                        </td>
-                    </tr>
-                `;
-            }).join('');
-        }
-
-        // ============================================================ */
-        // ===== DEMO ACTIONS ===== */
-        // ============================================================ */
-        function updateDemoStatus(bookingId, newStatus) {
-            const bookings = getDemoBookings();
-            const index = bookings.findIndex(b => b.booking_id === bookingId);
-            if (index !== -1) {
-                bookings[index].status = newStatus;
-                saveDemoBookings(bookings);
-                renderDemos();
-                updateStats();
-                showToast(`✅ Demo status updated to ${newStatus}`, 'success');
-            }
-        }
-
-        function viewDemo(bookingId) {
-            const bookings = getDemoBookings();
-            const booking = bookings.find(b => b.booking_id === bookingId);
-            if (!booking) {
-                showToast('Booking not found', 'error');
-                return;
-            }
-
-            document.getElementById('viewDemoId').textContent = `Booking ID: ${booking.booking_id}`;
-            document.getElementById('viewDemoName').textContent = booking.name || 'Unknown';
-            document.getElementById('viewDemoEmail').textContent = booking.email || 'N/A';
-            document.getElementById('viewDemoPhone').textContent = booking.phone || 'N/A';
-            document.getElementById('viewDemoDate').textContent = booking.date || booking.preferred_date || 'N/A';
-            document.getElementById('viewDemoTime').textContent = booking.time || booking.preferred_time || 'N/A';
-            document.getElementById('viewDemoMessage').textContent = booking.message || 'No message';
-            document.getElementById('viewDemoStatus').textContent = (booking.status || 'pending').charAt(0).toUpperCase() + (booking.status || 'pending').slice(1);
-            document.getElementById('viewDemoBookedAt').textContent = booking.booked_at ? new Date(booking.booked_at).toLocaleString() : 'N/A';
-
-            const statusEl = document.getElementById('viewDemoStatus');
-            const status = booking.status || 'pending';
-            const colors = {
-                'pending': '#d97706',
-                'contacted': '#4F46E5',
-                'completed': '#16a34a',
-                'cancelled': '#dc2626'
-            };
-            statusEl.style.color = colors[status] || '#6B7280';
-            statusEl.style.fontWeight = '700';
-
-            document.getElementById('viewDemoModal').classList.add('active');
-        }
-
-        function deleteDemo(bookingId) {
-            if (!confirm('Are you sure you want to delete this demo booking?')) return;
-            let bookings = getDemoBookings();
-            bookings = bookings.filter(b => b.booking_id !== bookingId);
-            saveDemoBookings(bookings);
-            renderDemos();
-            updateStats();
-            showToast('🗑️ Demo booking deleted successfully', 'info');
-        }
- 
-        // ============================================================ */
-        // ===== UPDATE STATS ===== */
-        // ============================================================ */
-        function updateStats() {
-            const students = Object.values(getStudentDatabase()).filter(s => s.status !== 'inactive').length;
-            const instructors = Object.values(getInstructorDatabase()).filter(i => i.status !== 'inactive').length;
-            const courses = Object.values(getCourseCatalog()).filter(c => c.status !== 'inactive').length;
-            const demos = getDemoBookings().length;
-
-            document.getElementById('totalStudents').textContent = students;
-            document.getElementById('totalInstructors').textContent = instructors;
-            document.getElementById('totalCourses').textContent = courses;
-            document.getElementById('totalDemos').textContent = demos;
-
-            const pendingDemos = getDemoBookings().filter(b => (b.status || 'pending') === 'pending').length;
-            document.getElementById('demoBadge').textContent = pendingDemos;
-        }
- 
-        // ============================================================ */
-        // ===== STUDENT ACTIONS (SYNC WITH qskillStudents) ===== */
-        // ============================================================ */
-        function viewStudent(id) {
-            const students = getStudentDatabase();
-            const student = students[id];
-            if (student) {
-                showToast(`👤 Student: ${id} - ${student.email}`, 'info');
-            }
-        }
- 
-        function blockStudent(id) {
-            if (confirm('Are you sure you want to block this student?')) {
-                const students = getStudentDatabase();
-                if (students[id]) {
-                    students[id].status = 'inactive';
-                    saveStudentDatabase(students);
-                    renderStudents();
-                    updateStats();
-                    showToast('Student blocked successfully', 'success');
-                }
-            }
-        }
- 
-        function unblockStudent(id) {
-            const students = getStudentDatabase();
-            if (students[id]) {
-                students[id].status = 'active';
-                saveStudentDatabase(students);
-                renderStudents();
-                updateStats();
-                showToast('Student unblocked successfully', 'success');
-            }
-        }
- 
-        function deleteStudent(id) {
-            if (confirm('Are you sure you want to delete this student? This action cannot be undone.')) {
-                const students = getStudentDatabase();
-                delete students[id];
-                saveStudentDatabase(students);
-                
-                // Also remove from enrollments
-                let enrollments = getEnrollments();
-                enrollments = enrollments.filter(e => e.studentId !== id);
-                saveEnrollments(enrollments);
-                
-                renderStudents();
-                updateStats();
-                showToast('Student deleted successfully', 'success');
-            }
-        }
- 
-        // ============================================================ */
-        // ===== INSTRUCTOR ACTIONS (SYNC WITH qskillInstructors) ===== */
-        // ============================================================ */
-        function viewInstructor(email) {
-            const instructors = getInstructorDatabase();
-            const instructor = instructors[email];
-            if (instructor) {
-                showToast(`👨‍🏫 Instructor: ${email} - ${instructor.name || 'No name'}`, 'info');
-            }
-        }
- 
-        function blockInstructor(email) {
-            if (confirm('Are you sure you want to block this instructor?')) {
-                const instructors = getInstructorDatabase();
-                if (instructors[email]) {
-                    instructors[email].status = 'inactive';
-                    saveInstructorDatabase(instructors);
-                    renderInstructors();
-                    updateStats();
-                    showToast('Instructor blocked successfully', 'success');
-                }
-            }
-        }
- 
-        function unblockInstructor(email) {
-            const instructors = getInstructorDatabase();
-            if (instructors[email]) {
-                instructors[email].status = 'active';
-                saveInstructorDatabase(instructors);
-                renderInstructors();
-                updateStats();
-                showToast('Instructor unblocked successfully', 'success');
-            }
-        }
- 
-        function deleteInstructor(email) {
-            if (confirm('Are you sure you want to delete this instructor? This action cannot be undone.')) {
-                const instructors = getInstructorDatabase();
-                delete instructors[email];
-                saveInstructorDatabase(instructors);
-                
-                let enrollments = getEnrollments();
-                enrollments = enrollments.filter(e => e.instructorEmail !== email);
-                saveEnrollments(enrollments);
-                
-                renderInstructors();
-                updateStats();
-                showToast('Instructor deleted successfully', 'success');
-            }
-        }
- 
-        // ============================================================ */
-        // ===== COURSE ACTIONS (SYNC WITH qskillCourses) ===== */
-        // ============================================================ */
-        function blockCourse(id) {
-            if (confirm('Are you sure you want to deactivate this course?')) {
-                const courses = getCourseCatalog();
-                if (courses[id]) {
-                    courses[id].status = 'inactive';
-                    saveCourseCatalog(courses);
-                    renderCourses();
-                    updateStats();
-                    showToast('Course deactivated successfully', 'success');
-                }
-            }
-        }
- 
-        function unblockCourse(id) {
-            const courses = getCourseCatalog();
-            if (courses[id]) {
-                courses[id].status = 'active';
-                saveCourseCatalog(courses);
-                renderCourses();
-                updateStats();
-                showToast('Course activated successfully', 'success');
-            }
-        }
- 
-        function deleteCourse(id) {
-            if (confirm('Are you sure you want to delete this course? This will also remove all enrollments.')) {
-                const courses = getCourseCatalog();
-                delete courses[id];
-                saveCourseCatalog(courses);
-                
-                // Also update enrolledCourses for students
-                let enrolledCourses = JSON.parse(localStorage.getItem('enrolledCourses')) || [];
-                enrolledCourses = enrolledCourses.filter(c => c !== id);
-                localStorage.setItem('enrolledCourses', JSON.stringify(enrolledCourses));
-                
-                let enrollments = getEnrollments();
-                enrollments = enrollments.filter(e => e.courseId !== id);
-                saveEnrollments(enrollments);
-                
-                renderCourses();
-                updateStats();
-                showToast('Course deleted successfully', 'success');
-            }
-        }
- 
-        // ============================================================ */
-        // ===== ENROLLMENT ACTIONS ===== */
-        // ============================================================ */
-        function blockEnrollment(id) {
-            let enrollments = getEnrollments();
-            const enrollment = enrollments.find(e => e.id === id);
-            if (enrollment) {
-                enrollment.status = 'inactive';
-                saveEnrollments(enrollments);
-                renderEnrollments();
-                updateStats();
-                showToast('Enrollment deactivated successfully', 'success');
-            }
-        }
- 
-        function unblockEnrollment(id) {
-            let enrollments = getEnrollments();
-            const enrollment = enrollments.find(e => e.id === id);
-            if (enrollment) {
-                enrollment.status = 'active';
-                saveEnrollments(enrollments);
-                renderEnrollments();
-                updateStats();
-                showToast('Enrollment activated successfully', 'success');
-            }
-        }
- 
-        function deleteEnrollment(id) {
-            if (confirm('Are you sure you want to delete this enrollment?')) {
-                let enrollments = getEnrollments();
-                enrollments = enrollments.filter(e => e.id !== id);
-                saveEnrollments(enrollments);
-                renderEnrollments();
-                updateStats();
-                showToast('Enrollment deleted successfully', 'success');
-            }
-        }
- 
-        // ============================================================ */
-        // ===== MODAL FUNCTIONS ===== */
-        // ============================================================ */
-        function closeModal(modalId) {
-            document.getElementById(modalId).classList.remove('active');
-        }
- 
-        document.querySelectorAll('.modal-overlay').forEach(modal => {
-            modal.addEventListener('click', function(e) {
-                if (e.target === this) {
-                    this.classList.remove('active');
-                }
-            });
-        });
- 
-        // ============================================================ */
-        // ===== ADD STUDENT (SYNC WITH qskillStudents) ===== */
-        // ============================================================ */
-        function openAddStudent() {
-            document.getElementById('addStudentForm').reset();
-            document.getElementById('addStudentModal').classList.add('active');
-        }
- 
-        document.getElementById('addStudentForm').addEventListener('submit', function(e) {
+        function updateAdminDetails(e) {
             e.preventDefault();
-            const email = document.getElementById('studentEmail').value.trim();
-            const password = document.getElementById('studentPassword').value.trim();
-            const name = document.getElementById('studentName').value.trim();
-            
-            const students = getStudentDatabase();
-            let exists = false;
-            for (let id in students) {
-                if (students[id].email === email) {
-                    exists = true;
-                    break;
-                }
-            }
-            
-            if (exists) {
-                showToast('Student with this email already exists', 'error');
-                return;
-            }
-            
-            const year = new Date().getFullYear().toString().slice(-2);
-            const random = Math.floor(10000 + Math.random() * 90000).toString();
-            const studentId = 'QSK' + year + random;
-            
-            students[studentId] = {
-                email: email,
-                password: password,
-                name: name || '',
-                status: 'active',
-                registeredAt: new Date().toISOString()
-            };
-            
-            saveStudentDatabase(students);
-            closeModal('addStudentModal');
-            renderStudents();
-            updateStats();
-            showToast(`✅ Student added! ID: ${studentId}`, 'success');
-        });
- 
-        // ============================================================ */
-        // ===== ADD INSTRUCTOR (SYNC WITH qskillInstructors) ===== */
-        // ============================================================ */
-        function openAddInstructor() {
-            document.getElementById('addInstructorForm').reset();
-            document.getElementById('addInstructorModal').classList.add('active');
+            showToast('✅ Admin details updated successfully!', 'success');
+            closeSettingsModal();
         }
- 
-        document.getElementById('addInstructorForm').addEventListener('submit', function(e) {
-            e.preventDefault();
-            const email = document.getElementById('instructorEmail').value.trim();
-            const password = document.getElementById('instructorPassword').value.trim();
-            const name = document.getElementById('instructorName').value.trim();
-            
-            const instructors = getInstructorDatabase();
-            if (instructors[email]) {
-                showToast('Instructor with this email already exists', 'error');
-                return;
-            }
-            
-            instructors[email] = {
-                password: password,
-                name: name || '',
-                status: 'active',
-                role: 'instructor',
-                joinedAt: new Date().toISOString()
-            };
-            
-            saveInstructorDatabase(instructors);
-            closeModal('addInstructorModal');
-            renderInstructors();
-            updateStats();
-            showToast('✅ Instructor added successfully!', 'success');
-        });
- 
-        // ============================================================ */
-        // ===== ADD COURSE (SYNC WITH qskillCourses) ===== */
-        // ============================================================ */
-        function openAddCourse() {
-            document.getElementById('addCourseForm').reset();
-            document.getElementById('addCourseModal').classList.add('active');
-        }
- 
-        document.getElementById('addCourseForm').addEventListener('submit', function(e) {
-            e.preventDefault();
-            const name = document.getElementById('courseName').value.trim();
-            const duration = document.getElementById('courseDuration').value.trim();
-            const level = document.getElementById('courseLevel').value;
-            
-            if (!name) {
-                showToast('Course name is required', 'error');
-                return;
-            }
-            
-            const courses = getCourseCatalog();
-            const id = name.toLowerCase().replace(/[^a-z0-9]/g, '');
-            const newId = id + (Object.keys(courses).filter(k => k.startsWith(id)).length);
-            
-            courses[newId] = {
-                id: newId,
-                title: name,
-                duration: duration || 'Not specified',
-                level: level,
-                status: 'active'
-            };
-            
-            saveCourseCatalog(courses);
-            closeModal('addCourseModal');
-            renderCourses();
-            updateStats();
-            showToast('✅ Course added successfully!', 'success');
-        });
- 
-        // ============================================================ */
-        // ===== ADD ENROLLMENT ===== */
-        // ============================================================ */
-        function openAddEnrollment() {
-            const studentSelect = document.getElementById('enrollmentStudent');
-            const courseSelect = document.getElementById('enrollmentCourse');
-            const instructorSelect = document.getElementById('enrollmentInstructor');
-            
-            studentSelect.innerHTML = '';
-            courseSelect.innerHTML = '';
-            instructorSelect.innerHTML = '';
-            
-            const students = getStudentDatabase();
-            const courses = getCourseCatalog();
-            const instructors = getInstructorDatabase();
-            
-            Object.entries(students).forEach(([id, student]) => {
-                if (student.status !== 'inactive') {
-                    const option = document.createElement('option');
-                    option.value = id;
-                    option.textContent = student.name ? `${student.name} (${id})` : id;
-                    studentSelect.appendChild(option);
-                }
-            });
-            
-            Object.entries(courses).forEach(([id, course]) => {
-                if (course.status !== 'inactive') {
-                    const option = document.createElement('option');
-                    option.value = id;
-                    option.textContent = course.title;
-                    courseSelect.appendChild(option);
-                }
-            });
-            
-            Object.entries(instructors).forEach(([email, instructor]) => {
-                if (instructor.status !== 'inactive' && instructor.role !== 'admin') {
-                    const option = document.createElement('option');
-                    option.value = email;
-                    option.textContent = instructor.name ? `${instructor.name} (${email})` : email;
-                    instructorSelect.appendChild(option);
-                }
-            });
-            
-            document.getElementById('addEnrollmentModal').classList.add('active');
-        }
- 
-        document.getElementById('addEnrollmentForm').addEventListener('submit', function(e) {
-            e.preventDefault();
-            const studentId = document.getElementById('enrollmentStudent').value;
-            const courseId = document.getElementById('enrollmentCourse').value;
-            const instructorEmail = document.getElementById('enrollmentInstructor').value;
-            
-            if (!studentId || !courseId || !instructorEmail) {
-                showToast('Please fill all fields', 'error');
-                return;
-            }
-            
-            let enrollments = getEnrollments();
-            const exists = enrollments.some(e => 
-                e.studentId === studentId && e.courseId === courseId && e.status === 'active'
-            );
-            
-            if (exists) {
-                showToast('This student is already enrolled in this course', 'error');
-                return;
-            }
-            
-            enrollments.push({
-                id: enrollmentIdCounter++,
-                studentId: studentId,
-                courseId: courseId,
-                instructorEmail: instructorEmail,
-                status: 'active'
-            });
-            
-            saveEnrollments(enrollments);
-            
-            // Also update enrolledCourses for student dashboard
-            let enrolledCourses = JSON.parse(localStorage.getItem('enrolledCourses')) || [];
-            if (!enrolledCourses.includes(courseId)) {
-                enrolledCourses.push(courseId);
-                localStorage.setItem('enrolledCourses', JSON.stringify(enrolledCourses));
-            }
-            
-            closeModal('addEnrollmentModal');
-            renderEnrollments();
-            updateStats();
-            showToast('✅ Enrollment added successfully!', 'success');
-        });
- 
-        // ============================================================ */
-        // ===== INITIALIZE ===== */
-        // ============================================================ */
-        renderTab('students');
-        console.log('🔐 QSkill Admin Dashboard Loaded');
-        console.log('📊 Data synced across all pages:');
-        console.log('   - Students: qskillStudents');
-        console.log('   - Instructors: qskillInstructors');
-        console.log('   - Courses: qskillCourses');
-        console.log('   - Enrollments: qskillEnrollments');
-        console.log('   - Demo Bookings: demoBookings');
-        console.log('   - Enrolled Courses: enrolledCourses');
-        console.log('📌 Changes made here will update ALL pages!');
 
-        // Auto-refresh every 30 seconds
-        setInterval(() => {
-            if (document.getElementById('tab-demos').classList.contains('active')) {
-                renderDemos();
+        function changePassword(e) {
+            e.preventDefault();
+            const newPass = document.getElementById('newPassword').value;
+            const confirm = document.getElementById('confirmPassword').value;
+            if (newPass !== confirm) {
+                showToast('⚠️ New passwords do not match.', 'error');
+                return;
             }
-            updateStats();
-        }, 30000);
+            if (newPass.length < 6) {
+                showToast('⚠️ Password must be at least 6 characters.', 'error');
+                return;
+            }
+            showToast('✅ Password changed successfully!', 'success');
+            document.getElementById('passwordForm').reset();
+            closeSettingsModal();
+        }
+
+        // ============================================================ */
+        // ===== CERTIFICATE UPLOAD ===== */
+        // ============================================================ */
+        function triggerCertUpload(studentId) {
+            const input = document.getElementById('cert-' + studentId + '-input');
+            if (input) input.click();
+        }
+
+        function uploadCertificateFile(studentId, input) {
+            const file = input.files[0];
+            if (!file) return;
+
+            const allowedTypes = ['application/pdf', 'image/jpeg', 'image/png', 'image/jpg'];
+            const ext = file.name.split('.').pop().toLowerCase();
+            const validExts = ['pdf', 'jpg', 'jpeg', 'png'];
+
+            if (!allowedTypes.includes(file.type) && !validExts.includes(ext)) {
+                showToast('⚠️ Please upload PDF, JPG, or PNG files only.', 'error');
+                input.value = '';
+                return;
+            }
+
+            const statusSpan = document.getElementById('cert-' + studentId + '-status');
+            const wrapper = document.getElementById('cert-' + studentId);
+            const uploadBtn = wrapper.querySelector('.cert-upload-btn');
+
+            const fileSize = (file.size / 1024).toFixed(1);
+            const fileIcon = file.type === 'application/pdf' ? 'fa-file-pdf' : 'fa-file-image';
+
+            statusSpan.innerHTML = `
+                <span class="cert-uploaded">
+                    <i class="fas ${fileIcon}"></i>
+                    ${file.name} (${fileSize} KB)
+                    <span class="remove-cert" onclick="removeCertificate('${studentId}')" title="Remove certificate">
+                        <i class="fas fa-times-circle"></i>
+                    </span>
+                </span>
+            `;
+            uploadBtn.style.display = 'none';
+
+            showToast('✅ Certificate uploaded for ' + studentId, 'success');
+            console.log('📄 Certificate uploaded:', file.name, 'for', studentId);
+        }
+
+        function removeCertificate(studentId) {
+            const statusSpan = document.getElementById('cert-' + studentId + '-status');
+            const wrapper = document.getElementById('cert-' + studentId);
+            const uploadBtn = wrapper.querySelector('.cert-upload-btn');
+            const input = document.getElementById('cert-' + studentId + '-input');
+
+            statusSpan.innerHTML = '';
+            uploadBtn.style.display = 'inline-flex';
+            input.value = '';
+            showToast('🗑️ Certificate removed.', 'success');
+        }
+
+        console.log('✅ Admin Dashboard loaded.');
+        console.log('📌 Enquiry dropdown updates silently.');
+        console.log('📌 Upload certificates (PDF/JPG/PNG) in Student tab.');
     </script>
- 
+
 </body>
+
 </html>
