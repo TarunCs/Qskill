@@ -1401,17 +1401,26 @@
                 <i class="fas fa-check-circle"></i>
             </div>
             <h2 id="successTitle">🎉 Thanks for Enrolling!</h2>
-            <p class="sub-text" id="successSubText">Your enrollment is complete. Check your email for login credentials.</p>
+            <p class="sub-text" id="successSubText">Your enrollment is complete. Use the credentials below to log in.</p>
 
             <div class="email-sent-badge">
-                <i class="fas fa-envelope"></i> <span id="emailStatusText">📧 Credentials sent to your email</span>
+                <i class="fas fa-key"></i> <span id="emailStatusText">🔐 Login credentials created successfully</span>
             </div>
+
+            <div id="loginCredentials" style="margin:16px 0; padding:14px; text-align:left; background:#f0fdfa; border:1px solid #99f6e4; border-radius:8px;">
+                <p style="margin:0 0 8px; font-size:13px;"><strong>Student ID:</strong> <span id="successStudentId"></span></p>
+                <p style="margin:0; font-size:13px;"><strong>Password:</strong> <span id="successPassword"></span></p>
+            </div>
+
+            <a class="btn-continue" id="gmailCredentialsLink" href="#" target="_blank" rel="noopener" style="display:inline-block; text-decoration:none; margin-bottom:10px;">
+                <i class="fas fa-envelope"></i> Open Gmail Draft
+            </a>
 
             <button class="btn-continue" onclick="window.location.href='login.html'">
                 <i class="fas fa-sign-in-alt"></i> Login Now
             </button>
             <p style="margin-top:8px; font-size:12px; color:var(--text-gray);">
-                <i class="fas fa-info-circle"></i> Login credentials have been sent to your email
+                <i class="fas fa-info-circle"></i> Save these credentials before continuing
             </p>
         </div>
     </div>
@@ -1645,35 +1654,27 @@
         }
 
         // ============================================================ */
-        // ===== SEND WELCOME EMAIL (DEMO) ===== */
+        // ===== SHOW ACCOUNT CREDENTIALS ===== */
         // ============================================================ */
-        function sendWelcomeEmail(studentData) {
-            console.log('📧 ==========================================');
-            console.log('📧 WELCOME EMAIL SENT TO: ' + studentData.email);
-            console.log('📧 ==========================================');
-            console.log('📧 Subject: Welcome to QSkill Career Solutions!');
-            console.log('📧');
-            console.log('📧 Dear ' + studentData.name + ',');
-            console.log('📧');
-            console.log('📧 Thank you for enrolling in the "' + studentData.course + '" course!');
-            console.log('📧');
-            console.log('📧 Your account has been created successfully:');
-            console.log('📧');
-            console.log('📧   🆔 Student ID: ' + studentData.studentId);
-            console.log('📧   🔑 Password:   ' + studentData.password);
-            console.log('📧');
-            console.log('📧 You can login at: ' + window.location.origin + '/login.html');
-            console.log('📧');
-            console.log('📧 ⚠️ Please keep your credentials safe. You can change your password');
-            console.log('📧    after logging in from your dashboard.');
-            console.log('📧');
-            console.log('📧 If you have any questions, contact us at support@qskill.com');
-            console.log('📧');
-            console.log('📧 Best regards,');
-            console.log('📧 QSkill Career Solutions Team');
-            console.log('📧 ==========================================');
-
-            showToast('📧 Welcome email sent to ' + studentData.email, 'success');
+        function showAccountCredentials(studentData) {
+            document.getElementById('successStudentId').textContent = studentData.studentId;
+            document.getElementById('successPassword').textContent = studentData.password;
+            var subject = 'Your QSkill Career Solutions login credentials';
+            var body = [
+                'Hello ' + studentData.name + ',',
+                '',
+                'Your enrollment in ' + studentData.course + ' is complete.',
+                '',
+                'Student ID: ' + studentData.studentId,
+                'Password: ' + studentData.password,
+                '',
+                'Login: ' + window.location.origin + '/login.html',
+                '',
+                'Please keep these credentials secure.'
+            ].join('\n');
+            var gmailLink = document.getElementById('gmailCredentialsLink');
+            gmailLink.href = 'https://mail.google.com/mail/?view=cm&fs=1&to=' + encodeURIComponent(studentData.email) + '&su=' + encodeURIComponent(subject) + '&body=' + encodeURIComponent(body);
+            showToast('✅ Gmail draft prepared for ' + studentData.email + '.', 'success');
         }
 
         // ============================================================ */
@@ -1904,7 +1905,7 @@
                     localStorage.setItem('enrolledCourses', JSON.stringify(enrolledCourses));
                 }
 
-                sendWelcomeEmail({
+                showAccountCredentials({
                     name: data.name,
                     email: data.email,
                     studentId: studentId,
@@ -1916,11 +1917,11 @@
 
                 var modal = document.getElementById('successModal');
                 document.getElementById('successTitle').textContent = '🎉 Thanks for Enrolling!';
-                document.getElementById('successSubText').textContent = 'You are now enrolled in ' + course.title + '. Check your email for login credentials.';
-                document.getElementById('emailStatusText').textContent = '📧 Credentials sent to ' + data.email;
+                document.getElementById('successSubText').textContent = 'You are now enrolled in ' + course.title + '. Use the credentials below to log in.';
+                document.getElementById('emailStatusText').textContent = '🔐 Credentials created for ' + data.email;
                 modal.classList.add('active');
                 document.body.style.overflow = 'hidden';
-                showToast('✅ Enrollment successful! Check your email.', 'success');
+                showToast('✅ Enrollment successful! Open the Gmail draft to send the credentials.', 'success');
             } catch (error) {
                 console.log('Enrollment completion after UPI failed:', error);
             }
