@@ -1610,9 +1610,18 @@
                 discountPercent: '0% OFF',
                 gst: 0,
                 total: 0,
-                totalDisplay: '₹0'
+                totalDisplay: '₹0',
+                paymentTestAmount: 1
             }
         };
+
+        var paymentRecipientUpiId = 'cstaruncs@oksbi';
+
+        function getWalletRequestAmount(course) {
+            if (!course) return 0;
+            if (Number(course.total) === 0) return Number(course.paymentTestAmount || 1);
+            return Number(course.total) || 0;
+        }
 
         // ============================================================ */
         // ===== GENERATE 12-DIGIT PASSWORD ===== */
@@ -1765,20 +1774,20 @@
                     `,
                 'googlepay': `
                         <div class="form-group">
-                            <label>Google Pay UPI ID <span class="required">*</span></label>
-                            <input type="text" id="googlePayUpi" placeholder="your-email@googlepay" />
+                            <label>Pay QSkill with Google Pay</label>
+                            <input type="text" value="cstaruncs@oksbi" readonly />
                         </div>
                     `,
                 'phonepe': `
                         <div class="form-group">
-                            <label>PhonePe UPI ID <span class="required">*</span></label>
-                            <input type="text" id="phonePeUpi" placeholder="your-email@phonepe" />
+                            <label>Pay QSkill with PhonePe</label>
+                            <input type="text" value="cstaruncs@oksbi" readonly />
                         </div>
                     `,
                 'paytm': `
                         <div class="form-group">
-                            <label>Paytm UPI ID <span class="required">*</span></label>
-                            <input type="text" id="paytmUpi" placeholder="your-email@paytm" />
+                            <label>Pay QSkill with Paytm</label>
+                            <input type="text" value="cstaruncs@oksbi" readonly />
                         </div>
                     `
             };
@@ -1824,7 +1833,7 @@
             var transactionId = 'QSK-' + Date.now();
             var numericAmount = Number(amount) || 0;
             var upiParams = [
-                'pa=' + encodeURIComponent(upiId),
+                'pa=' + encodeURIComponent(paymentRecipientUpiId),
                 'pn=' + encodeURIComponent(safeName),
                 'am=' + encodeURIComponent(numericAmount.toFixed(2)),
                 'cu=INR',
@@ -1917,17 +1926,22 @@
             }
         }
 
-        function markPaymentPendingState() {
+        function markPaymentPendingState(requestAmount) {
             var payBtn = document.getElementById('payButton');
             var manualBtn = document.getElementById('manualConfirmPayment');
+            var isFreeCourse = Number(window.selectedCourse && window.selectedCourse.total) === 0;
             if (payBtn) {
                 payBtn.disabled = false;
-                payBtn.innerHTML = '<i class="fas fa-check-circle"></i> Payment Request Sent';
+                if (isFreeCourse && Number(requestAmount) > 0) {
+                    payBtn.innerHTML = '<i class="fas fa-check-circle"></i> Wallet request sent for ₹' + Number(requestAmount).toFixed(0);
+                } else {
+                    payBtn.innerHTML = '<i class="fas fa-check-circle"></i> Payment Request Sent';
+                }
             }
             if (manualBtn) {
                 manualBtn.style.display = 'block';
             }
-            showToast('📲 UPI request sent. Please approve it in your wallet app.', 'info');
+            showToast(isFreeCourse ? '📲 Wallet request opened for a ₹1 verification amount. Please approve it in your wallet app.' : '📲 UPI request sent. Please approve it in your wallet app.', 'info');
         }
 
         async function handlePayment(event) {
@@ -1956,35 +1970,27 @@
                 return;
             }
 
-            var upiInputId = getUpiInputForMethod();
-            var upiInput = document.getElementById(upiInputId);
-            var upiId = upiInput ? upiInput.value.trim() : '';
-
-            if (!upiId || !/^[A-Za-z0-9._-]+@[A-Za-z0-9.-]+$/.test(upiId)) {
-                showToast('⚠️ Please enter a valid UPI ID for ' + getUpiLabelForMethod() + '.', 'error');
-                return;
-            }
-
             var course = window.selectedCourse;
+            var paymentRequestAmount = getWalletRequestAmount(course);
             var payBtn = document.getElementById('payButton');
             payBtn.disabled = true;
             payBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Opening UPI App...';
 
             try {
-                var paymentAmount = Number(course && course.total !== undefined ? course.total : 0);
-                var paymentUrl = buildUpiUrl(upiId, name, paymentAmount, course.title, selectedPaymentMethod);
+                var paymentUrl = buildUpiUrl(paymentRecipientUpiId, name, paymentRequestAmount, course.title, selectedPaymentMethod);
                 sessionStorage.setItem('qskillPendingUpiPayment', JSON.stringify({
                     name: name,
                     email: email,
                     phone: phone,
                     courseId: courseParam || 'manual',
-                    upiId: upiId,
+                    upiId: paymentRecipientUpiId,
                     paymentMethod: selectedPaymentMethod,
-                    amount: course.total
+                    amount: course.total,
+                    walletRequestAmount: paymentRequestAmount
                 }));
 
                 showToast('📲 Opening ' + getUpiLabelForMethod() + ' for payment...', 'info');
-                markPaymentPendingState();
+                markPaymentPendingState(paymentRequestAmount);
                 triggerUpiPayment(paymentUrl.deepLink, paymentUrl.intentLink, paymentUrl.fallback);
             } catch (error) {
                 showToast('❌ Payment redirect failed. Please try again.', 'error');
@@ -2024,7 +2030,10 @@
                         document.getElementById('studentName').value = parsed.name || '';
                         document.getElementById('studentEmail').value = parsed.email || '';
                         document.getElementById('studentPhone').value = parsed.phone || '';
-                        document.getElementById(parsed.paymentMethod === 'googlepay' ? 'googlePayUpi' : parsed.paymentMethod === 'phonepe' ? 'phonePeUpi' : 'paytmUpi').value = parsed.upiId || '';
+                        var pendingPaymentOption = document.querySelector('.payment-option[data-method="' + parsed.paymentMethod + '"]');
+                        if (pendingPaymentOption) {
+                            selectPayment(pendingPaymentOption);
+                        }
                         showToast('✅ Payment step initiated. Please complete the UPI payment in your wallet app and then return to continue.', 'success');
                     }
                 } catch (error) {
