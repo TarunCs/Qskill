@@ -4,17 +4,17 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Enroll Now - QSkill Career Solutions</title>
-    
+
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
-    
+
     <link rel="stylesheet" href="style.css" />
-    
+
     <style>
         /* ============================================================ */
-        /* ===== ENROLL PAGE STYLES ===== */
+        /* ===== GLOBAL ===== */
         /* ============================================================ */
         .enroll-wrapper {
             padding: 40px 80px 60px;
@@ -42,7 +42,6 @@
             margin-top: 6px;
         }
 
-        /* ===== ENROLL GRID ===== */
         .enroll-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
@@ -51,7 +50,9 @@
             margin: 0 auto;
         }
 
-        /* ===== LEFT SIDE - COURSE SUMMARY ===== */
+        /* ============================================================ */
+        /* ===== COURSE SUMMARY ===== */
+        /* ============================================================ */
         .course-summary {
             background: var(--white);
             border: 1px solid var(--border);
@@ -146,10 +147,152 @@
         }
 
         /* ============================================================ */
-        /* ===== PAYMENT GRID - RADIO BUTTON STYLE ===== */
+        /* ===== REG FEE NOTE ===== */
+        /* ============================================================ */
+        .reg-fee-note {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 13px;
+            color: var(--text-dark);
+            background: #F0F7FF;
+            padding: 10px 14px;
+            border-radius: 10px;
+            margin: 12px 0 16px;
+        }
+
+        .reg-fee-note i {
+            color: var(--primary);
+            font-size: 16px;
+        }
+
+        .reg-fee-note strong {
+            color: var(--primary);
+        }
+
+        /* ============================================================ */
+        /* ===== PAYMENT FORM ===== */
+        /* ============================================================ */
+        .payment-form h3 {
+            font-size: 22px;
+            font-weight: 700;
+            color: var(--text-dark);
+            margin-bottom: 2px;
+        }
+
+        .payment-form .form-sub {
+            color: var(--text-gray);
+            font-size: 14px;
+            margin-bottom: 20px;
+        }
+
+        .form-group {
+            margin-bottom: 16px;
+        }
+
+        .form-group label {
+            font-size: 13px;
+            font-weight: 600;
+            display: block;
+            margin-bottom: 4px;
+            color: var(--text-dark);
+        }
+
+        .form-group .required {
+            color: #EF4444;
+        }
+
+        .form-group .input-wrapper {
+            display: flex;
+            align-items: center;
+            border: 1.5px solid #e2e8f0;
+            border-radius: 8px;
+            padding: 0 12px;
+            transition: 0.3s;
+            background: #FAFBFC;
+        }
+
+        .form-group .input-wrapper:focus-within {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(31, 60, 136, 0.08);
+            background: #ffffff;
+        }
+
+        .form-group .input-wrapper .prefix {
+            font-weight: 600;
+            color: #1e293b;
+            font-size: 14px;
+            padding-right: 8px;
+            border-right: 1px solid #e2e8f0;
+            margin-right: 8px;
+        }
+
+        .form-group .input-wrapper input {
+            border: none;
+            outline: none;
+            flex: 1;
+            font-size: 14px;
+            font-family: 'Poppins', sans-serif;
+            color: #1e293b;
+            background: transparent;
+            padding: 10px 0;
+            width: 100%;
+        }
+
+        .form-group input,
+        .form-group select {
+            width: 100%;
+            height: 42px;
+            padding: 0 12px;
+            border: 1.5px solid var(--border);
+            border-radius: 8px;
+            font-size: 13px;
+            font-family: 'Poppins', sans-serif;
+            transition: 0.3s;
+            background: var(--white);
+            color: var(--text-dark);
+        }
+
+        .form-group input:focus,
+        .form-group select:focus {
+            border-color: var(--primary);
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(31, 60, 136, 0.08);
+        }
+
+        /* ============================================================ */
+        /* ===== ORDER SUMMARY ===== */
+        /* ============================================================ */
+        .order-summary {
+            background: var(--light-bg);
+            border-radius: 10px;
+            padding: 12px 16px;
+            margin-top: 12px;
+            border: 1px solid var(--border);
+        }
+
+        .order-summary .summary-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 4px 0;
+            font-size: 13px;
+            color: var(--text-dark);
+        }
+
+        .order-summary .summary-row.total {
+            border-top: 1px solid var(--border);
+            margin-top: 4px;
+            padding-top: 8px;
+            font-weight: 700;
+            font-size: 15px;
+            color: var(--primary);
+        }
+
+        /* ============================================================ */
+        /* ===== PAYMENT GRID (NO UPI) ===== */
         /* ============================================================ */
         .payment-section {
-            margin: 20px 0;
+            margin: 20px 0 0;
         }
 
         .payment-section .section-label {
@@ -177,11 +320,14 @@
             transition: all 0.3s ease;
             background: var(--white);
             min-height: 56px;
+            text-decoration: none;
         }
 
         .payment-option:hover {
             border-color: var(--primary);
             background: var(--light-bg);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
         }
 
         .payment-option.selected {
@@ -191,15 +337,10 @@
         }
 
         .payment-option .option-icon {
-            font-size: 22px;
-            color: var(--text-gray);
+            font-size: 24px;
             min-width: 32px;
             text-align: center;
             transition: 0.3s;
-        }
-
-        .payment-option.selected .option-icon {
-            color: var(--primary);
         }
 
         .payment-option .option-text {
@@ -240,24 +381,73 @@
             transform: scale(1);
         }
 
-        /* ===== PAYMENT METHOD SPECIFIC ICON COLORS ===== */
-        .payment-option[data-method="upi"] .option-icon { color: #6B7280; }
-        .payment-option[data-method="card"] .option-icon { color: #1A5D8C; }
-        .payment-option[data-method="debit"] .option-icon { color: #0D9488; }
-        .payment-option[data-method="netbanking"] .option-icon { color: #7C3AED; }
-        .payment-option[data-method="googlepay"] .option-icon { color: #4285F4; }
-        .payment-option[data-method="phonepe"] .option-icon { color: #5F259F; }
-        .payment-option[data-method="paytm"] .option-icon { color: #00BAF2; }
+        /* ===== PAYMENT ICON COLORS ===== */
+        .payment-option[data-method="card"] .option-icon {
+            color: #1A5D8C;
+        }
+        .payment-option[data-method="card"].selected .option-icon {
+            color: #0D3B5E;
+        }
+        .payment-option[data-method="debit"] .option-icon {
+            color: #0D9488;
+        }
+        .payment-option[data-method="debit"].selected .option-icon {
+            color: #0D6B5E;
+        }
+        .payment-option[data-method="netbanking"] .option-icon {
+            color: #7C3AED;
+        }
+        .payment-option[data-method="netbanking"].selected .option-icon {
+            color: #5B21B6;
+        }
+        .payment-option[data-method="googlepay"] .option-icon {
+            color: #4285F4;
+        }
+        .payment-option[data-method="googlepay"].selected .option-icon {
+            color: #1A73E8;
+        }
+        .payment-option[data-method="phonepe"] .option-icon {
+            color: #5F259F;
+        }
+        .payment-option[data-method="phonepe"].selected .option-icon {
+            color: #3D1570;
+        }
+        .payment-option[data-method="paytm"] .option-icon {
+            color: #00BAF2;
+        }
+        .payment-option[data-method="paytm"].selected .option-icon {
+            color: #0085B5;
+        }
 
-        .payment-option.selected[data-method="upi"] .option-icon { color: var(--primary); }
-        .payment-option.selected[data-method="card"] .option-icon { color: #1A5D8C; }
-        .payment-option.selected[data-method="debit"] .option-icon { color: #0D9488; }
-        .payment-option.selected[data-method="netbanking"] .option-icon { color: #7C3AED; }
-        .payment-option.selected[data-method="googlepay"] .option-icon { color: #4285F4; }
-        .payment-option.selected[data-method="phonepe"] .option-icon { color: #5F259F; }
-        .payment-option.selected[data-method="paytm"] .option-icon { color: #00BAF2; }
+        .paytm-icon-wrapper {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 14px;
+            background: #00BAF2;
+            color: #FFFFFF;
+            width: 28px;
+            height: 28px;
+            border-radius: 6px;
+            transition: 0.3s;
+            font-family: 'Poppins', sans-serif;
+        }
 
+        .payment-option[data-method="paytm"] .option-icon {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .payment-option[data-method="paytm"].selected .paytm-icon-wrapper {
+            background: #0085B5;
+            transform: scale(1.05);
+        }
+
+        /* ============================================================ */
         /* ===== PAYMENT DETAILS ===== */
+        /* ============================================================ */
         .payment-details {
             display: none;
             margin-top: 16px;
@@ -272,8 +462,14 @@
         }
 
         @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(-8px); }
-            to { opacity: 1; transform: translateY(0); }
+            from {
+                opacity: 0;
+                transform: translateY(-8px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
 
         .payment-details .detail-row {
@@ -294,7 +490,8 @@
             color: var(--text-dark);
         }
 
-        .payment-details .form-group input {
+        .payment-details .form-group input,
+        .payment-details .form-group select {
             width: 100%;
             height: 38px;
             padding: 0 12px;
@@ -307,36 +504,16 @@
             color: var(--text-dark);
         }
 
-        .payment-details .form-group input:focus {
+        .payment-details .form-group input:focus,
+        .payment-details .form-group select:focus {
             border-color: var(--primary);
             outline: none;
             box-shadow: 0 0 0 3px rgba(31, 60, 136, 0.08);
         }
 
-        .payment-details .upi-input {
-            margin-top: 0;
-        }
-
-        .payment-details .upi-input input {
-            width: 100%;
-            height: 38px;
-            padding: 0 12px;
-            border: 1.5px solid var(--border);
-            border-radius: 8px;
-            font-size: 13px;
-            font-family: 'Poppins', sans-serif;
-            transition: 0.3s;
-            background: var(--white);
-            color: var(--text-dark);
-        }
-
-        .payment-details .upi-input input:focus {
-            border-color: var(--primary);
-            outline: none;
-            box-shadow: 0 0 0 3px rgba(31, 60, 136, 0.08);
-        }
-
+        /* ============================================================ */
         /* ===== SECURE BADGE ===== */
+        /* ============================================================ */
         .secure-badge {
             display: flex;
             align-items: center;
@@ -355,7 +532,9 @@
             font-size: 18px;
         }
 
-        /* ===== SUBMIT BUTTON ===== */
+        /* ============================================================ */
+        /* ===== PAY BUTTON ===== */
+        /* ============================================================ */
         .btn-pay {
             width: 100%;
             background: var(--primary);
@@ -376,16 +555,93 @@
             margin-top: 20px;
         }
 
-        .btn-pay:hover {
+        .btn-pay:hover:not(:disabled) {
             background: var(--secondary);
             transform: translateY(-2px);
             box-shadow: 0 6px 24px rgba(31, 60, 136, 0.35);
         }
 
         .btn-pay:disabled {
-            opacity: 0.5;
+            opacity: 0.6;
             cursor: not-allowed;
             transform: none;
+        }
+
+        /* ============================================================ */
+        /* ===== PROCESSING OVERLAY ===== */
+        /* ============================================================ */
+        .processing-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(6px);
+            z-index: 9998;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+        }
+
+        .processing-overlay.active {
+            display: flex;
+        }
+
+        .processing-overlay .spinner-container {
+            background: var(--white);
+            border-radius: 20px;
+            padding: 40px 50px;
+            text-align: center;
+            max-width: 400px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            animation: modalSlideIn 0.4s ease;
+        }
+
+        .processing-overlay .spinner {
+            width: 60px;
+            height: 60px;
+            border: 4px solid #e2e8f0;
+            border-top-color: var(--primary);
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+            margin: 0 auto 16px;
+        }
+
+        @keyframes spin {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        .processing-overlay .status-text {
+            font-size: 16px;
+            font-weight: 600;
+            color: var(--text-dark);
+        }
+
+        .processing-overlay .status-sub {
+            font-size: 13px;
+            color: var(--text-gray);
+            margin-top: 4px;
+        }
+
+        .processing-overlay .progress-bar {
+            width: 100%;
+            height: 4px;
+            background: #e2e8f0;
+            border-radius: 2px;
+            margin-top: 16px;
+            overflow: hidden;
+        }
+
+        .processing-overlay .progress-bar .progress-fill {
+            height: 100%;
+            background: var(--primary);
+            border-radius: 2px;
+            width: 0%;
+            transition: width 0.3s ease;
         }
 
         /* ============================================================ */
@@ -400,7 +656,7 @@
             height: 100%;
             background: rgba(0, 0, 0, 0.5);
             backdrop-filter: blur(4px);
-            z-index: 1000;
+            z-index: 9999;
             justify-content: center;
             align-items: center;
             padding: 20px;
@@ -461,45 +717,17 @@
             line-height: 1.6;
         }
 
-        .success-modal .modal-content .credentials-box {
-            background: var(--light-bg);
-            border-radius: 12px;
-            padding: 16px 20px;
-            margin: 12px 0 16px;
-            text-align: left;
-            border: 1px solid var(--border);
-        }
-
-        .success-modal .modal-content .credentials-box .cred-row {
-            display: flex;
-            justify-content: space-between;
-            padding: 4px 0;
-            font-size: 14px;
-            color: var(--text-dark);
-        }
-
-        .success-modal .modal-content .credentials-box .cred-row .label {
-            color: var(--text-gray);
-            font-weight: 500;
-        }
-
-        .success-modal .modal-content .credentials-box .cred-row .value {
-            font-weight: 600;
-            color: var(--primary);
-            word-break: break-all;
-        }
-
-        .success-modal .modal-content .email-sent {
-            background: #EAF1FF;
-            border-radius: 8px;
-            padding: 10px 14px;
+        .success-modal .modal-content .email-sent-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: #DCFCE7;
+            color: #16a34a;
+            padding: 8px 20px;
+            border-radius: 999px;
             font-size: 13px;
-            color: var(--primary);
-            margin: 10px 0 16px;
-        }
-
-        .success-modal .modal-content .email-sent i {
-            margin-right: 6px;
+            font-weight: 500;
+            margin-bottom: 16px;
         }
 
         .success-modal .modal-content .btn-continue {
@@ -524,65 +752,383 @@
             margin-right: 8px;
         }
 
-        .success-modal .modal-content .btn-login-now {
-            background: transparent;
-            color: var(--primary);
-            border: 2px solid var(--primary);
-            padding: 12px 40px;
-            border-radius: 999px;
-            font-weight: 600;
-            font-size: 16px;
-            cursor: pointer;
-            transition: 0.3s;
-            font-family: 'Poppins', sans-serif;
-            margin-left: 10px;
+        /* ============================================================ */
+        /* ===== NAVBAR OVERRIDES TO MATCH INDEX ===== */
+        /* ============================================================ */
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 80px;
+            background: #FFFFFF;
+            box-shadow: 0 2px 16px rgba(0, 0, 0, 0.06);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            border-bottom: 1px solid rgba(31, 60, 136, 0.05);
+            height: auto;
+            min-height: 76px;
         }
 
-        .success-modal .modal-content .btn-login-now:hover {
-            background: var(--primary);
-            color: var(--white);
+        .nav-links {
+            display: flex;
+            gap: 24px;
+            align-items: center;
+            list-style: none;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--text-dark);
+            font-weight: 500;
+            font-size: 15px;
+            transition: 0.3s;
+            padding: 6px 0;
+            border-bottom: 2px solid transparent;
+        }
+
+        .nav-links a:hover,
+        .nav-links a.active {
+            color: var(--primary);
+            border-bottom-color: var(--primary);
+        }
+
+        .login-btn {
+            background: var(--primary) !important;
+            color: var(--white) !important;
+            padding: 10px 28px !important;
+            border-radius: 999px !important;
+            font-weight: 600 !important;
+            font-size: 15px !important;
+            transition: 0.3s !important;
+            cursor: pointer !important;
+            display: inline-block !important;
+            border: none !important;
+            text-decoration: none !important;
+            border-bottom: none !important;
+            font-family: 'Poppins', sans-serif !important;
+            box-shadow: 0 2px 8px rgba(31, 60, 136, 0.12) !important;
+            line-height: 1.4 !important;
+            letter-spacing: 1px !important;
+        }
+
+        .login-btn i {
+            margin-left: 8px !important;
+            font-size: 12px !important;
+        }
+
+        .login-btn:hover {
+            background: var(--secondary) !important;
+            transform: translateY(-2px) !important;
+            border-bottom: none !important;
+            box-shadow: 0 4px 16px rgba(31, 60, 136, 0.25) !important;
+        }
+
+        .login-dropdown-wrapper {
+            position: relative;
+            display: inline-block;
+        }
+
+        .login-dropdown {
+            display: none;
+            position: absolute;
+            background: var(--white);
+            top: 48px;
+            right: 0;
+            box-shadow: 0 12px 32px rgba(0, 0, 0, 0.12);
+            border-radius: 14px;
+            padding: 6px 0;
+            min-width: 260px;
+            border: 1px solid var(--border);
+            z-index: 200;
+        }
+
+        .login-dropdown.show {
+            display: block;
+        }
+
+        .login-dropdown a {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            padding: 14px 22px;
+            color: var(--text-dark) !important;
+            text-decoration: none;
+            transition: 0.3s;
+            border-bottom: none !important;
+        }
+
+        .login-dropdown a:not(:last-child) {
+            border-bottom: 1px solid var(--border) !important;
+        }
+
+        .login-dropdown a:hover {
+            background: var(--light-bg);
+        }
+
+        .login-dropdown .dropdown-icon {
+            width: 42px;
+            height: 42px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .login-dropdown .dropdown-icon i {
+            font-size: 17px;
+        }
+
+        .login-dropdown a[data-role="student"] .dropdown-icon {
+            background: var(--light-bg);
+        }
+
+        .login-dropdown a[data-role="student"] .dropdown-icon i {
+            color: var(--primary);
+        }
+
+        .login-dropdown a[data-role="instructor"] .dropdown-icon {
+            background: #FFEBDD;
+        }
+
+        .login-dropdown a[data-role="instructor"] .dropdown-icon i {
+            color: var(--orange);
+        }
+
+        .login-dropdown .dropdown-text {
+            display: flex !important;
+            flex-direction: column !important;
+            gap: 2px !important;
+        }
+
+        .login-dropdown .role-title {
+            font-weight: 600;
+            font-size: 15px;
+            color: var(--text-dark);
+        }
+
+        .login-dropdown .role-sub {
+            font-weight: 400;
+            font-size: 12px;
+            color: var(--text-gray);
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+        }
+
+        .login-dropdown a:hover .role-title {
+            color: var(--primary);
         }
 
         /* ============================================================ */
         /* ===== RESPONSIVE ===== */
         /* ============================================================ */
         @media (max-width: 992px) {
-            .enroll-wrapper { padding: 30px 40px 40px; }
-            .enroll-grid { grid-template-columns: 1fr; gap: 30px; max-width: 600px; }
-            .enroll-header h1 { font-size: 30px; }
+            .enroll-wrapper {
+                padding: 30px 40px 40px;
+            }
+            .enroll-grid {
+                grid-template-columns: 1fr;
+                gap: 30px;
+                max-width: 600px;
+            }
+            .enroll-header h1 {
+                font-size: 30px;
+            }
+            .navbar {
+                padding: 12px 20px !important;
+                flex-wrap: wrap;
+                gap: 8px;
+            }
+            .nav-links {
+                flex-wrap: wrap;
+                justify-content: center;
+                gap: 6px 12px;
+                padding: 6px 0;
+            }
+            .nav-links li a {
+                font-size: 13px;
+                padding: 4px 8px;
+            }
+            .login-btn {
+                padding: 6px 16px !important;
+                font-size: 12px !important;
+            }
+            .login-dropdown {
+                min-width: 200px;
+                right: auto;
+                left: 50%;
+                transform: translateX(-50%);
+            }
+            .login-dropdown a {
+                padding: 10px 16px;
+                font-size: 13px;
+            }
+            .login-dropdown .dropdown-icon {
+                width: 34px;
+                height: 34px;
+            }
+            .login-dropdown .dropdown-icon i {
+                font-size: 14px;
+            }
+            .login-dropdown .role-title {
+                font-size: 13px;
+            }
+            .login-dropdown .role-sub {
+                font-size: 11px;
+            }
         }
 
         @media (max-width: 768px) {
-            .enroll-wrapper { padding: 20px; }
-            .enroll-header h1 { font-size: 26px; }
-            .payment-grid { grid-template-columns: repeat(2, 1fr); }
-            .course-summary { padding: 20px; }
-            .payment-section { padding: 0; }
-            .success-modal .modal-content { padding: 30px 20px; }
-            .success-modal .modal-content .credentials-box .cred-row { flex-direction: column; gap: 2px; }
-            .success-modal .modal-content .btn-login-now { margin-left: 0; margin-top: 10px; }
+            .enroll-wrapper {
+                padding: 20px;
+            }
+            .enroll-header h1 {
+                font-size: 26px;
+            }
+            .payment-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            .course-summary {
+                padding: 20px;
+            }
+            .payment-section {
+                padding: 0;
+            }
+            .success-modal .modal-content {
+                padding: 30px 20px;
+            }
+            .processing-overlay .spinner-container {
+                padding: 30px 20px;
+            }
+            .navbar {
+                padding: 8px 12px !important;
+                flex-direction: column;
+                align-items: center;
+            }
+            .logo img {
+                height: 32px !important;
+            }
+            .logo-text .qskill {
+                font-size: 18px !important;
+            }
+            .logo-text .careersolutions {
+                font-size: 10px !important;
+            }
+            .nav-links {
+                gap: 4px 8px;
+                padding: 4px 0;
+            }
+            .nav-links li a {
+                font-size: 11px;
+                padding: 4px 6px;
+            }
+            .login-btn {
+                padding: 4px 12px !important;
+                font-size: 11px !important;
+            }
+            .login-btn i {
+                margin-left: 4px !important;
+                font-size: 10px !important;
+            }
+            .login-dropdown {
+                min-width: 170px;
+            }
+            .login-dropdown a {
+                padding: 8px 12px;
+                font-size: 12px;
+                gap: 10px;
+            }
+            .login-dropdown .dropdown-icon {
+                width: 28px;
+                height: 28px;
+            }
+            .login-dropdown .dropdown-icon i {
+                font-size: 12px;
+            }
+            .login-dropdown .role-title {
+                font-size: 12px;
+            }
+            .login-dropdown .role-sub {
+                font-size: 10px;
+            }
         }
 
         @media (max-width: 500px) {
-            .payment-grid { grid-template-columns: 1fr 1fr; gap: 8px; }
-            .payment-option { padding: 10px 12px; min-height: 48px; gap: 8px; }
-            .payment-option .option-icon { font-size: 18px; min-width: 24px; }
-            .payment-option .option-text { font-size: 12px; }
-            .payment-option .option-radio { width: 14px; height: 14px; }
-            .payment-option .option-radio .radio-dot { width: 6px; height: 6px; }
-            .payment-details .detail-row { grid-template-columns: 1fr; gap: 8px; }
-            .payment-details .form-group input { height: 34px; font-size: 12px; }
-            .success-modal .modal-content .btn-login-now { width: 100%; }
-            .success-modal .modal-content .btn-continue { width: 100%; }
-        }
-
-        @media (max-width: 380px) {
-            .payment-grid { grid-template-columns: 1fr 1fr; gap: 6px; }
-            .payment-option { padding: 8px 8px; min-height: 40px; gap: 6px; }
-            .payment-option .option-icon { font-size: 14px; min-width: 18px; }
-            .payment-option .option-text { font-size: 10px; }
-            .payment-option .option-radio { width: 12px; height: 12px; }
-            .payment-option .option-radio .radio-dot { width: 5px; height: 5px; }
+            .payment-grid {
+                grid-template-columns: 1fr 1fr;
+                gap: 8px;
+            }
+            .payment-option {
+                padding: 10px 12px;
+                min-height: 48px;
+                gap: 8px;
+            }
+            .payment-option .option-icon {
+                font-size: 18px;
+                min-width: 24px;
+            }
+            .payment-option .option-text {
+                font-size: 12px;
+            }
+            .payment-option .option-radio {
+                width: 14px;
+                height: 14px;
+            }
+            .payment-option .option-radio .radio-dot {
+                width: 6px;
+                height: 6px;
+            }
+            .payment-details .detail-row {
+                grid-template-columns: 1fr;
+                gap: 8px;
+            }
+            .payment-details .form-group input {
+                height: 34px;
+                font-size: 12px;
+            }
+            .success-modal .modal-content .btn-continue {
+                width: 100%;
+            }
+            .navbar {
+                padding: 6px 8px !important;
+            }
+            .logo img {
+                height: 26px !important;
+            }
+            .logo-text .qskill {
+                font-size: 15px !important;
+            }
+            .logo-text .careersolutions {
+                font-size: 8px !important;
+            }
+            .nav-links li a {
+                font-size: 10px;
+                padding: 2px 4px;
+            }
+            .login-btn {
+                padding: 3px 10px !important;
+                font-size: 10px !important;
+            }
+            .login-dropdown {
+                min-width: 150px;
+            }
+            .login-dropdown a {
+                padding: 6px 10px;
+                font-size: 11px;
+                gap: 8px;
+            }
+            .login-dropdown .dropdown-icon {
+                width: 24px;
+                height: 24px;
+            }
+            .login-dropdown .dropdown-icon i {
+                font-size: 10px;
+            }
+            .login-dropdown .role-title {
+                font-size: 11px;
+            }
+            .login-dropdown .role-sub {
+                font-size: 9px;
+            }
         }
     </style>
 </head>
@@ -594,8 +1140,20 @@
         <span id="toastMessage">Success!</span>
     </div>
 
+    <!-- ===== PROCESSING OVERLAY ===== -->
+    <div class="processing-overlay" id="processingOverlay">
+        <div class="spinner-container">
+            <div class="spinner"></div>
+            <div class="status-text" id="statusText">Processing Payment...</div>
+            <div class="status-sub" id="statusSub">Please do not close this window</div>
+            <div class="progress-bar">
+                <div class="progress-fill" id="progressFill"></div>
+            </div>
+        </div>
+    </div>
+
     <!-- ============================================================ -->
-    <!-- ===== NAVBAR (MATCHING courses.html) ===== -->
+    <!-- ===== NAVBAR ===== -->
     <!-- ============================================================ -->
     <nav class="navbar">
         <a href="index.html" class="logo">
@@ -636,7 +1194,7 @@
     <!-- ===== ENROLL PAGE ===== -->
     <!-- ============================================================ -->
     <section class="enroll-wrapper">
-        
+
         <div class="enroll-header">
             <h1>Enroll Now &amp; <span>Start Learning</span></h1>
             <p>Complete your payment and get instant access to your course</p>
@@ -644,7 +1202,7 @@
 
         <div class="enroll-grid">
             <!-- ========================================================== -->
-            <!-- LEFT SIDE - COURSE SUMMARY -->
+            <!-- LEFT - COURSE SUMMARY -->
             <!-- ========================================================== -->
             <div class="course-summary">
                 <img src="images/manual-testing.jpg" alt="Course" class="course-image" id="courseImage" />
@@ -658,16 +1216,21 @@
                 <div class="price-breakdown">
                     <div class="price-row">
                         <span>Course Price</span>
-                        <span id="originalPrice">₹8,999</span>
+                        <span id="originalPrice">₹14,999</span>
                     </div>
                     <div class="price-row">
                         <span>Discount</span>
-                        <span class="discount-text" id="discountText">- ₹4,000 (44% OFF)</span>
+                        <span class="discount-text" id="discountText">- ₹5,000 (33% OFF)</span>
                     </div>
                     <div class="price-row total">
                         <span>Total Amount</span>
-                        <span id="totalPrice">₹4,999</span>
+                        <span id="totalPrice">₹9,999</span>
                     </div>
+                </div>
+
+                <div class="reg-fee-note">
+                    <i class="fas fa-check-circle"></i>
+                    <span><strong>Registration Fee ₹1,000</strong> (already included in the total)</span>
                 </div>
 
                 <h4 style="font-size:15px; font-weight:600; color:var(--text-dark);">What's Included:</h4>
@@ -683,23 +1246,27 @@
             </div>
 
             <!-- ========================================================== -->
-            <!-- RIGHT SIDE - PAYMENT FORM -->
+            <!-- RIGHT - PAYMENT FORM -->
             <!-- ========================================================== -->
             <div class="payment-form">
                 <h3>Payment Details</h3>
                 <p class="form-sub">Fill in your details and choose a payment method</p>
 
                 <form id="paymentForm" onsubmit="handlePayment(event)">
-                    <!-- Student Name -->
+                    <!-- Full Name -->
                     <div class="form-group">
                         <label>Full Name <span class="required">*</span></label>
-                        <input type="text" id="studentName" placeholder="Enter your full name" required />
+                        <div class="input-wrapper">
+                            <input type="text" id="studentName" placeholder="Enter your full name" required />
+                        </div>
                     </div>
 
                     <!-- Email -->
                     <div class="form-group">
                         <label>Email Address <span class="required">*</span></label>
-                        <input type="email" id="studentEmail" placeholder="Enter your email address" required />
+                        <div class="input-wrapper">
+                            <input type="email" id="studentEmail" placeholder="Enter your email address" required />
+                        </div>
                     </div>
 
                     <!-- Phone -->
@@ -711,63 +1278,96 @@
                         </div>
                     </div>
 
-                    <!-- ========================================================== -->
-                    <!-- ===== PAYMENT GRID - RADIO BUTTON STYLE ===== -->
-                    <!-- ========================================================== -->
+                    <!-- Order Summary -->
+                    <div class="order-summary">
+                        <div class="summary-row">
+                            <span>Course Fee</span>
+                            <span id="orderCoursePrice">₹8,474</span>
+                        </div>
+                        <div class="summary-row">
+                            <span>GST (18%)</span>
+                            <span id="orderGst">₹1,525</span>
+                        </div>
+                        <div class="summary-row total">
+                            <span>Total Amount</span>
+                            <span id="orderTotal">₹9,999</span>
+                        </div>
+                    </div>
+
+                    <!-- ===== PAYMENT GRID (NO UPI) ===== -->
                     <div class="payment-section">
                         <span class="section-label">Select Payment Method</span>
                         <div class="payment-grid" id="paymentGrid">
-                            <!-- Row 1: UPI, Credit Card, Debit Card -->
-                            <div class="payment-option selected" data-method="upi" data-label="UPI" onclick="selectPayment(this)">
-                                <span class="option-icon"><i class="fas fa-mobile-alt"></i></span>
-                                <span class="option-text">UPI</span>
-                                <span class="option-radio"><span class="radio-dot"></span></span>
-                            </div>
-                            <div class="payment-option" data-method="card" data-label="Credit Card" onclick="selectPayment(this)">
+
+                            <!-- Credit Card -->
+                            <div class="payment-option selected" data-method="card" data-label="Credit Card" onclick="selectPayment(this)">
                                 <span class="option-icon"><i class="fas fa-credit-card"></i></span>
                                 <span class="option-text">Credit Card</span>
                                 <span class="option-radio"><span class="radio-dot"></span></span>
                             </div>
+
+                            <!-- Debit Card -->
                             <div class="payment-option" data-method="debit" data-label="Debit Card" onclick="selectPayment(this)">
                                 <span class="option-icon"><i class="fas fa-wallet"></i></span>
                                 <span class="option-text">Debit Card</span>
                                 <span class="option-radio"><span class="radio-dot"></span></span>
                             </div>
 
-                            <!-- Row 2: Net Banking, Google Pay, PhonePe -->
+                            <!-- Net Banking -->
                             <div class="payment-option" data-method="netbanking" data-label="Net Banking" onclick="selectPayment(this)">
                                 <span class="option-icon"><i class="fas fa-university"></i></span>
                                 <span class="option-text">Net Banking</span>
                                 <span class="option-radio"><span class="radio-dot"></span></span>
                             </div>
+
+                            <!-- Google Pay -->
                             <div class="payment-option" data-method="googlepay" data-label="Google Pay" onclick="selectPayment(this)">
                                 <span class="option-icon"><i class="fab fa-google-pay"></i></span>
                                 <span class="option-text">Google Pay</span>
                                 <span class="option-radio"><span class="radio-dot"></span></span>
                             </div>
+
+                            <!-- PhonePe -->
                             <div class="payment-option" data-method="phonepe" data-label="PhonePe" onclick="selectPayment(this)">
                                 <span class="option-icon"><i class="fas fa-mobile-alt"></i></span>
                                 <span class="option-text">PhonePe</span>
                                 <span class="option-radio"><span class="radio-dot"></span></span>
                             </div>
 
-                            <!-- Row 3: Paytm (single item, spans full width) -->
-                            <div class="payment-option" data-method="paytm" data-label="Paytm" onclick="selectPayment(this)" style="grid-column: 1 / -1;">
-                                <span class="option-icon"><i class="fab fa-paytm"></i></span>
+                            <!-- Paytm (normal grid item, no full-width) -->
+                            <div class="payment-option" data-method="paytm" data-label="Paytm" onclick="selectPayment(this)">
+                                <span class="option-icon">
+                                    <span class="paytm-icon-wrapper">P</span>
+                                </span>
                                 <span class="option-text">Paytm</span>
                                 <span class="option-radio"><span class="radio-dot"></span></span>
                             </div>
+
                         </div>
                     </div>
 
                     <!-- ===== PAYMENT DETAILS ===== -->
                     <div class="payment-details show" id="paymentDetails">
                         <div id="paymentDetailsContent">
-                            <!-- UPI Details (default) -->
-                            <div class="upi-input">
+                            <!-- Default: Credit Card fields -->
+                            <div class="detail-row">
                                 <div class="form-group">
-                                    <label>UPI ID <span class="required">*</span></label>
-                                    <input type="text" id="upiId" placeholder="example@upi or phone@bank" />
+                                    <label>Card Number <span class="required">*</span></label>
+                                    <input type="text" id="cardNumber" placeholder="1234 5678 9012 3456" maxlength="19" />
+                                </div>
+                                <div class="form-group">
+                                    <label>Cardholder Name <span class="required">*</span></label>
+                                    <input type="text" id="cardholderName" placeholder="Name on card" />
+                                </div>
+                            </div>
+                            <div class="detail-row" style="margin-top:10px;">
+                                <div class="form-group">
+                                    <label>Expiry Date <span class="required">*</span></label>
+                                    <input type="text" id="expiryDate" placeholder="MM/YY" maxlength="5" />
+                                </div>
+                                <div class="form-group">
+                                    <label>CVV <span class="required">*</span></label>
+                                    <input type="password" id="cvv" placeholder="123" maxlength="4" />
                                 </div>
                             </div>
                         </div>
@@ -779,9 +1379,13 @@
                         <span>Your payment is secure and encrypted</span>
                     </div>
 
-                    <!-- ===== PAY NOW BUTTON ===== -->
+                    <!-- ===== PAY NOW ===== -->
                     <button type="submit" class="btn-pay" id="payButton">
-                        <i class="fas fa-lock"></i> Pay <span id="payAmount">₹4,999</span> Now
+                        <i class="fas fa-lock"></i> Pay <span id="payAmount">₹9,999</span> Now
+                    </button>
+
+                    <button type="button" class="btn-pay" id="manualConfirmPayment" style="margin-top:12px; background:#0f766e; display:none;">
+                        <i class="fas fa-check-circle"></i> I have completed the UPI payment
                     </button>
                 </form>
             </div>
@@ -789,40 +1393,26 @@
     </section>
 
     <!-- ============================================================ -->
-    <!-- ===== SUCCESS MODAL (Updated with Credentials) ===== -->
+    <!-- ===== SUCCESS MODAL ===== -->
     <!-- ============================================================ -->
     <div class="success-modal" id="successModal">
         <div class="modal-content">
             <div class="success-icon">
                 <i class="fas fa-check-circle"></i>
             </div>
-            <h2 id="successTitle">🎉 Payment Successful!</h2>
-            <p class="sub-text" id="successSubText">Your enrollment is complete. Check your email for course access details.</p>
-            
-            <!-- ===== CREDENTIALS BOX ===== -->
-            <div class="credentials-box" id="credentialsBox">
-                <div class="cred-row">
-                    <span class="label">🆔 Student ID</span>
-                    <span class="value" id="displayStudentId">QSK26012345</span>
-                </div>
-                <div class="cred-row">
-                    <span class="label">🔑 Password</span>
-                    <span class="value" id="displayPassword">••••••••••••••••</span>
-                </div>
-            </div>
+            <h2 id="successTitle">🎉 Thanks for Enrolling!</h2>
+            <p class="sub-text" id="successSubText">Your enrollment is complete. Check your email for login credentials.</p>
 
-            <div class="email-sent" id="emailStatusBox">
+            <div class="email-sent-badge">
                 <i class="fas fa-envelope"></i> <span id="emailStatusText">📧 Credentials sent to your email</span>
             </div>
 
-            <div style="display:flex; flex-wrap:wrap; gap:10px; justify-content:center; margin-top:6px;">
-                <button class="btn-continue" onclick="window.location.href='dashboard.html'">
-                    <i class="fas fa-arrow-right"></i> Go to Dashboard
-                </button>
-                <button class="btn-login-now" onclick="window.location.href='login.html'">
-                    <i class="fas fa-sign-in-alt"></i> Login Now
-                </button>
-            </div>
+            <button class="btn-continue" onclick="window.location.href='login.html'">
+                <i class="fas fa-sign-in-alt"></i> Login Now
+            </button>
+            <p style="margin-top:8px; font-size:12px; color:var(--text-gray);">
+                <i class="fas fa-info-circle"></i> Login credentials have been sent to your email
+            </p>
         </div>
     </div>
 
@@ -869,206 +1459,243 @@
     <!-- ============================================================ -->
     <script>
         // ============================================================ */
-        // ===== EMAILJS CONFIGURATION ===== */
+        // ===== DROPDOWN ===== */
         // ============================================================ */
-        const EMAILJS_CONFIG = {
-            PUBLIC_KEY: 'YOUR_EMAILJS_PUBLIC_KEY',
-            SERVICE_ID: 'YOUR_EMAILJS_SERVICE_ID',
-            STUDENT_WELCOME_TEMPLATE: 'YOUR_STUDENT_WELCOME_TEMPLATE_ID',
-            STUDENT_REMINDER_TEMPLATE: 'YOUR_STUDENT_REMINDER_TEMPLATE_ID'
-        };
+        const dropdownBtn = document.getElementById('loginDropdownBtn');
+        const dropdown = document.getElementById('loginDropdown');
+        if (dropdownBtn && dropdown) {
+            dropdownBtn.addEventListener('click', function(e) {
+                e.preventDefault();
+                e.stopPropagation();
+                dropdown.classList.toggle('show');
+            });
+            document.addEventListener('click', function(e) {
+                if (!dropdownBtn.contains(e.target) && !dropdown.contains(e.target)) {
+                    dropdown.classList.remove('show');
+                }
+            });
+            document.addEventListener('keydown', function(e) {
+                if (e.key === 'Escape') dropdown.classList.remove('show');
+            });
+        }
 
         // ============================================================ */
-        // ===== GET COURSE PARAMETER FROM URL ===== */
+        // ===== TOAST ===== */
         // ============================================================ */
-        const urlParams = new URLSearchParams(window.location.search);
-        const courseParam = urlParams.get('course');
+        function showToast(message, type) {
+            type = type || 'success';
+            const toast = document.getElementById('toast');
+            const toastIcon = document.getElementById('toastIcon');
+            const toastMessage = document.getElementById('toastMessage');
+            if (!toast) return;
+            toastIcon.className = type === 'success' ? 'fas fa-check-circle' :
+                type === 'error' ? 'fas fa-exclamation-circle' :
+                'fas fa-info-circle';
+            toastMessage.textContent = message;
+            toast.className = 'toast ' + type;
+            setTimeout(function() { toast.classList.add('show'); }, 10);
+            setTimeout(function() { toast.classList.remove('show'); }, 4000);
+        }
+
+        // ============================================================ */
+        // ===== GET COURSE PARAMETER ===== */
+        // ============================================================ */
+        var urlParams = new URLSearchParams(window.location.search);
+        var courseParam = urlParams.get('course');
 
         // ============================================================ */
         // ===== COURSE DATA ===== */
         // ============================================================ */
-        const courseData = {
+        var courseData = {
             'manual': {
                 title: 'Manual Testing',
                 image: 'images/manual-testing.jpg',
                 level: 'Beginner',
                 duration: '6 Weeks',
-                price: '₹4,999',
-                originalPrice: '₹8,999',
-                discount: '44% OFF'
+                price: 8474,
+                priceDisplay: '₹8,474',
+                originalPrice: 14999,
+                originalDisplay: '₹14,999',
+                discount: 5000,
+                discountPercent: '33% OFF',
+                gst: 1525,
+                total: 9999,
+                totalDisplay: '₹9,999'
             },
             'automation': {
                 title: 'Automation Testing (Java + Selenium)',
                 image: 'images/photo11.jpeg',
                 level: 'Intermediate',
                 duration: '12 Weeks',
-                price: '₹7,999',
-                originalPrice: '₹12,999',
-                discount: '38% OFF'
+                price: 12711,
+                priceDisplay: '₹12,711',
+                originalPrice: 22999,
+                originalDisplay: '₹22,999',
+                discount: 8000,
+                discountPercent: '35% OFF',
+                gst: 2288,
+                total: 14999,
+                totalDisplay: '₹14,999'
             },
             'api': {
                 title: 'Postman API Testing',
                 image: 'images/photo12.jpeg',
                 level: 'Beginner to Intermediate',
                 duration: '4 Weeks',
-                price: '₹3,999',
-                originalPrice: '₹6,999',
-                discount: '43% OFF'
+                price: 8474,
+                priceDisplay: '₹8,474',
+                originalPrice: 14999,
+                originalDisplay: '₹14,999',
+                discount: 5000,
+                discountPercent: '33% OFF',
+                gst: 1525,
+                total: 9999,
+                totalDisplay: '₹9,999'
             },
             'playwright': {
                 title: 'Playwright Automation',
                 image: 'images/photo10.jpeg',
                 level: 'Intermediate',
                 duration: '8 Weeks',
-                price: '₹6,999',
-                originalPrice: '₹10,999',
-                discount: '36% OFF'
+                price: 12711,
+                priceDisplay: '₹12,711',
+                originalPrice: 21999,
+                originalDisplay: '₹21,999',
+                discount: 7000,
+                discountPercent: '32% OFF',
+                gst: 2288,
+                total: 14999,
+                totalDisplay: '₹14,999'
             },
             'cypress': {
                 title: 'Cypress Automation',
                 image: 'images/photo13.jpeg',
                 level: 'Intermediate',
                 duration: '8 Weeks',
-                price: '₹6,499',
-                originalPrice: '₹9,999',
-                discount: '35% OFF'
+                price: 12711,
+                priceDisplay: '₹12,711',
+                originalPrice: 21999,
+                originalDisplay: '₹21,999',
+                discount: 7000,
+                discountPercent: '32% OFF',
+                gst: 2288,
+                total: 14999,
+                totalDisplay: '₹14,999'
             },
             'restassured': {
                 title: 'REST Assured API Testing',
                 image: 'images/photo14.jpeg',
                 level: 'Intermediate to Advanced',
                 duration: '6 Weeks',
-                price: '₹5,999',
-                originalPrice: '₹9,499',
-                discount: '37% OFF'
+                price: 11016,
+                priceDisplay: '₹11,016',
+                originalPrice: 18999,
+                originalDisplay: '₹18,999',
+                discount: 6000,
+                discountPercent: '32% OFF',
+                gst: 1983,
+                total: 12999,
+                totalDisplay: '₹12,999'
+            },
+            'ai-tools': {
+                title: 'AI Tools',
+                image: 'images/photo13.jpeg',
+                level: 'Beginner',
+                duration: '3 Weeks',
+                price: 0,
+                priceDisplay: '₹0',
+                originalPrice: 0,
+                originalDisplay: '₹0',
+                discount: 0,
+                discountPercent: '0% OFF',
+                gst: 0,
+                total: 0,
+                totalDisplay: '₹0'
             }
         };
 
         // ============================================================ */
-        // ===== STUDENT DATABASE FUNCTIONS ===== */
+        // ===== GENERATE 12-DIGIT PASSWORD ===== */
         // ============================================================ */
-        function getStudentDatabase() {
-            return JSON.parse(localStorage.getItem('qskillStudents')) || {};
-        }
-
-        function saveStudentDatabase(data) {
-            localStorage.setItem('qskillStudents', JSON.stringify(data));
-        }
-
-        function findStudentByEmail(email) {
-            const db = getStudentDatabase();
-            for (const [id, info] of Object.entries(db)) {
-                if (info.email === email) {
-                    return { id, ...info };
-                }
-            }
-            return null;
-        }
-
-        function generateStudentId() {
-            const year = new Date().getFullYear().toString().slice(-2);
-            const random = Math.floor(10000 + Math.random() * 90000).toString();
-            return 'QSK' + year + random;
-        }
-
-        function generateHexPassword() {
-            const chars = '0123456789abcdef';
-            let password = '';
-            for (let i = 0; i < 16; i++) {
+        function generatePassword() {
+            var chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+            var password = '';
+            for (var i = 0; i < 12; i++) {
                 password += chars.charAt(Math.floor(Math.random() * chars.length));
             }
             return password;
         }
 
         // ============================================================ */
-        // ===== EMAIL SENDING FUNCTIONS ===== */
+        // ===== GENERATE STUDENT ID ===== */
         // ============================================================ */
-        let emailjsReady = false;
-
-        function initEmailService() {
-            try {
-                if (typeof emailjs !== 'undefined' && 
-                    EMAILJS_CONFIG.PUBLIC_KEY && 
-                    EMAILJS_CONFIG.PUBLIC_KEY !== 'YOUR_EMAILJS_PUBLIC_KEY') {
-                    emailjs.init(EMAILJS_CONFIG.PUBLIC_KEY);
-                    emailjsReady = true;
-                    console.log('✅ EmailJS initialized');
-                } else {
-                    console.log('ℹ️ EmailJS not configured — running in DEMO mode.');
-                }
-            } catch (e) {
-                console.warn('⚠️ EmailJS init failed, using demo mode.', e);
-            }
-            return emailjsReady;
-        }
-
-        async function sendStudentCredentials(studentData, isNew) {
-            const email = studentData.email;
-            const name = studentData.name || 'Student';
-            const studentId = studentData.id;
-            const password = studentData.password;
-
-            if (emailjsReady) {
-                try {
-                    const templateId = isNew ? 
-                        EMAILJS_CONFIG.STUDENT_WELCOME_TEMPLATE : 
-                        EMAILJS_CONFIG.STUDENT_REMINDER_TEMPLATE;
-                    
-                    const params = {
-                        to_email: email,
-                        student_name: name,
-                        student_id: studentId,
-                        student_password: password,
-                        login_link: window.location.origin + '/login.html',
-                        dashboard_link: window.location.origin + '/dashboard.html',
-                        current_year: new Date().getFullYear()
-                    };
-                    await emailjs.send(EMAILJS_CONFIG.SERVICE_ID, templateId, params);
-                    console.log('✅ Email sent to:', email);
-                    return { success: true, sent: true };
-                } catch (error) {
-                    console.error('❌ Email failed:', error);
-                    return simulateEmailSend(email, name, studentId, password, isNew);
-                }
-            } else {
-                return simulateEmailSend(email, name, studentId, password, isNew);
-            }
-        }
-
-        function simulateEmailSend(email, name, studentId, password, isNew) {
-            const type = isNew ? 'Welcome' : 'Credential Reminder';
-            console.log(`📧 [DEMO] ${type} email to ${email}`);
-            console.log(`   Student ID: ${studentId}`);
-            console.log(`   Password: ${password}`);
-            return { success: true, sent: false, demo: true };
+        function generateStudentId() {
+            var year = new Date().getFullYear().toString().slice(-2);
+            var random = Math.floor(10000 + Math.random() * 90000).toString();
+            return 'QSK' + year + random;
         }
 
         // ============================================================ */
-        // ===== LOAD COURSE DATA ===== */
+        // ===== SEND WELCOME EMAIL (DEMO) ===== */
+        // ============================================================ */
+        function sendWelcomeEmail(studentData) {
+            console.log('📧 ==========================================');
+            console.log('📧 WELCOME EMAIL SENT TO: ' + studentData.email);
+            console.log('📧 ==========================================');
+            console.log('📧 Subject: Welcome to QSkill Career Solutions!');
+            console.log('📧');
+            console.log('📧 Dear ' + studentData.name + ',');
+            console.log('📧');
+            console.log('📧 Thank you for enrolling in the "' + studentData.course + '" course!');
+            console.log('📧');
+            console.log('📧 Your account has been created successfully:');
+            console.log('📧');
+            console.log('📧   🆔 Student ID: ' + studentData.studentId);
+            console.log('📧   🔑 Password:   ' + studentData.password);
+            console.log('📧');
+            console.log('📧 You can login at: ' + window.location.origin + '/login.html');
+            console.log('📧');
+            console.log('📧 ⚠️ Please keep your credentials safe. You can change your password');
+            console.log('📧    after logging in from your dashboard.');
+            console.log('📧');
+            console.log('📧 If you have any questions, contact us at support@qskill.com');
+            console.log('📧');
+            console.log('📧 Best regards,');
+            console.log('📧 QSkill Career Solutions Team');
+            console.log('📧 ==========================================');
+
+            showToast('📧 Welcome email sent to ' + studentData.email, 'success');
+        }
+
+        // ============================================================ */
+        // ===== LOAD COURSE ===== */
         // ============================================================ */
         function loadCourse(courseId) {
-            const course = courseData[courseId] || courseData['manual'];
-            
+            var course = courseData[courseId] || courseData['manual'];
+            window.selectedCourse = course;
+
             document.getElementById('courseImage').src = course.image;
             document.getElementById('courseTitle').textContent = course.title;
             document.getElementById('metaLevel').textContent = course.level;
             document.getElementById('metaDuration').textContent = course.duration;
-            document.getElementById('originalPrice').textContent = course.originalPrice;
-            document.getElementById('discountText').textContent = `- ₹${parseInt(course.originalPrice.replace('₹','').replace(',','')) - parseInt(course.price.replace('₹','').replace(',',''))} (${course.discount})`;
-            document.getElementById('totalPrice').textContent = course.price;
-            document.getElementById('payAmount').textContent = course.price;
-            
-            window.selectedCourse = course;
+            document.getElementById('originalPrice').textContent = course.originalDisplay;
+            document.getElementById('discountText').textContent = '- ₹' + course.discount + ' (' + course
+            .discountPercent + ')';
+            document.getElementById('totalPrice').textContent = course.totalDisplay;
+            document.getElementById('payAmount').textContent = course.totalDisplay;
+            document.getElementById('orderCoursePrice').textContent = course.priceDisplay;
+            document.getElementById('orderGst').textContent = '₹' + course.gst;
+            document.getElementById('orderTotal').textContent = course.totalDisplay;
         }
 
         // ============================================================ */
-        // ===== PAYMENT SELECTION ===== */
+        // ===== PAYMENT SELECTION (NO UPI) ===== */
         // ============================================================ */
-        let selectedPaymentMethod = 'upi';
-        let paymentDetailsContent = document.getElementById('paymentDetailsContent');
+        var selectedPaymentMethod = 'card';
+        var paymentDetailsContent = document.getElementById('paymentDetailsContent');
 
         function selectPayment(element) {
-            document.querySelectorAll('.payment-option').forEach(opt => {
+            document.querySelectorAll('.payment-option').forEach(function(opt) {
                 opt.classList.remove('selected');
             });
             element.classList.add('selected');
@@ -1077,243 +1704,297 @@
         }
 
         function updatePaymentDetails(method) {
-            const detailsHtml = {
-                'upi': `
-                    <div class="upi-input">
-                        <div class="form-group">
-                            <label>UPI ID <span class="required">*</span></label>
-                            <input type="text" id="upiId" placeholder="example@upi or phone@bank" />
-                        </div>
-                    </div>
-                `,
+            var detailsHtml = {
                 'card': `
-                    <div class="detail-row">
-                        <div class="form-group">
-                            <label>Card Number <span class="required">*</span></label>
-                            <input type="text" id="cardNumber" placeholder="1234 5678 9012 3456" />
+                        <div class="detail-row">
+                            <div class="form-group">
+                                <label>Card Number <span class="required">*</span></label>
+                                <input type="text" id="cardNumber" placeholder="1234 5678 9012 3456" maxlength="19" />
+                            </div>
+                            <div class="form-group">
+                                <label>Cardholder Name <span class="required">*</span></label>
+                                <input type="text" id="cardholderName" placeholder="Name on card" />
+                            </div>
                         </div>
-                        <div class="form-group">
-                            <label>Cardholder Name <span class="required">*</span></label>
-                            <input type="text" id="cardholderName" placeholder="Name on card" />
+                        <div class="detail-row" style="margin-top:10px;">
+                            <div class="form-group">
+                                <label>Expiry Date <span class="required">*</span></label>
+                                <input type="text" id="expiryDate" placeholder="MM/YY" maxlength="5" />
+                            </div>
+                            <div class="form-group">
+                                <label>CVV <span class="required">*</span></label>
+                                <input type="password" id="cvv" placeholder="123" maxlength="4" />
+                            </div>
                         </div>
-                    </div>
-                    <div class="detail-row" style="margin-top:10px;">
-                        <div class="form-group">
-                            <label>Expiry Date <span class="required">*</span></label>
-                            <input type="text" id="expiryDate" placeholder="MM/YY" />
-                        </div>
-                        <div class="form-group">
-                            <label>CVV <span class="required">*</span></label>
-                            <input type="password" id="cvv" placeholder="123" />
-                        </div>
-                    </div>
-                `,
+                    `,
                 'debit': `
-                    <div class="detail-row">
-                        <div class="form-group">
-                            <label>Card Number <span class="required">*</span></label>
-                            <input type="text" id="debitCardNumber" placeholder="1234 5678 9012 3456" />
+                        <div class="detail-row">
+                            <div class="form-group">
+                                <label>Card Number <span class="required">*</span></label>
+                                <input type="text" id="debitCardNumber" placeholder="1234 5678 9012 3456" maxlength="19" />
+                            </div>
+                            <div class="form-group">
+                                <label>Cardholder Name <span class="required">*</span></label>
+                                <input type="text" id="debitCardholderName" placeholder="Name on card" />
+                            </div>
                         </div>
-                        <div class="form-group">
-                            <label>Cardholder Name <span class="required">*</span></label>
-                            <input type="text" id="debitCardholderName" placeholder="Name on card" />
+                        <div class="detail-row" style="margin-top:10px;">
+                            <div class="form-group">
+                                <label>Expiry Date <span class="required">*</span></label>
+                                <input type="text" id="debitExpiryDate" placeholder="MM/YY" maxlength="5" />
+                            </div>
+                            <div class="form-group">
+                                <label>CVV <span class="required">*</span></label>
+                                <input type="password" id="debitCvv" placeholder="123" maxlength="4" />
+                            </div>
                         </div>
-                    </div>
-                    <div class="detail-row" style="margin-top:10px;">
-                        <div class="form-group">
-                            <label>Expiry Date <span class="required">*</span></label>
-                            <input type="text" id="debitExpiryDate" placeholder="MM/YY" />
-                        </div>
-                        <div class="form-group">
-                            <label>CVV <span class="required">*</span></label>
-                            <input type="password" id="debitCvv" placeholder="123" />
-                        </div>
-                    </div>
-                `,
+                    `,
                 'netbanking': `
-                    <div class="form-group">
-                        <label>Select Bank <span class="required">*</span></label>
-                        <select id="bankSelect" style="width:100%; height:38px; padding:0 12px; border:1.5px solid var(--border); border-radius:8px; font-family:'Poppins',sans-serif; font-size:13px;">
-                            <option value="">Select your bank</option>
-                            <option value="sbi">State Bank of India</option>
-                            <option value="hdfc">HDFC Bank</option>
-                            <option value="icici">ICICI Bank</option>
-                            <option value="axis">Axis Bank</option>
-                            <option value="kotak">Kotak Mahindra Bank</option>
-                            <option value="yes">Yes Bank</option>
-                        </select>
-                    </div>
-                `,
+                        <div class="form-group">
+                            <label>Select Bank <span class="required">*</span></label>
+                            <select id="bankSelect" style="width:100%; height:38px; padding:0 12px; border:1.5px solid var(--border); border-radius:8px; font-family:'Poppins',sans-serif; font-size:13px;">
+                                <option value="">Select your bank</option>
+                                <option value="sbi">State Bank of India</option>
+                                <option value="hdfc">HDFC Bank</option>
+                                <option value="icici">ICICI Bank</option>
+                                <option value="axis">Axis Bank</option>
+                                <option value="kotak">Kotak Mahindra Bank</option>
+                                <option value="yes">Yes Bank</option>
+                            </select>
+                        </div>
+                    `,
                 'googlepay': `
-                    <div class="form-group">
-                        <label>Google Pay UPI ID <span class="required">*</span></label>
-                        <input type="text" id="googlePayUpi" placeholder="your-email@googlepay" />
-                    </div>
-                `,
+                        <div class="form-group">
+                            <label>Google Pay UPI ID <span class="required">*</span></label>
+                            <input type="text" id="googlePayUpi" placeholder="your-email@googlepay" />
+                        </div>
+                    `,
                 'phonepe': `
-                    <div class="form-group">
-                        <label>PhonePe UPI ID <span class="required">*</span></label>
-                        <input type="text" id="phonePeUpi" placeholder="your-email@phonepe" />
-                    </div>
-                `,
+                        <div class="form-group">
+                            <label>PhonePe UPI ID <span class="required">*</span></label>
+                            <input type="text" id="phonePeUpi" placeholder="your-email@phonepe" />
+                        </div>
+                    `,
                 'paytm': `
-                    <div class="form-group">
-                        <label>Paytm UPI ID <span class="required">*</span></label>
-                        <input type="text" id="paytmUpi" placeholder="your-email@paytm" />
-                    </div>
-                `
+                        <div class="form-group">
+                            <label>Paytm UPI ID <span class="required">*</span></label>
+                            <input type="text" id="paytmUpi" placeholder="your-email@paytm" />
+                        </div>
+                    `
             };
 
-            paymentDetailsContent.innerHTML = detailsHtml[method] || detailsHtml['upi'];
+            paymentDetailsContent.innerHTML = detailsHtml[method] || detailsHtml['card'];
         }
 
         // ============================================================ */
-        // ===== TOAST ===== */
+        // ===== DIRECT UPI REDIRECT ===== */
         // ============================================================ */
-        function showToast(message, type = 'success') {
-            const toast = document.getElementById('toast');
-            const toastIcon = document.getElementById('toastIcon');
-            const toastMessage = document.getElementById('toastMessage');
-            if (!toast) return;
-            toastIcon.className = type === 'success' ? 'fas fa-check-circle' : 
-                                type === 'error' ? 'fas fa-exclamation-circle' : 
-                                'fas fa-info-circle';
-            toastMessage.textContent = message;
-            toast.className = 'toast ' + type;
-            setTimeout(() => toast.classList.add('show'), 10);
-            setTimeout(() => toast.classList.remove('show'), 4000);
+        function getUpiInputForMethod() {
+            var map = {
+                googlepay: 'googlePayUpi',
+                phonepe: 'phonePeUpi',
+                paytm: 'paytmUpi'
+            };
+            return map[selectedPaymentMethod] || null;
         }
 
-        // ============================================================ */
-        // ===== HANDLE PAYMENT WITH ACCOUNT CREATION ===== */
-        // ============================================================ */
-        let generatedStudentData = null;
+        function getUpiLabelForMethod() {
+            var map = {
+                googlepay: 'Google Pay',
+                phonepe: 'PhonePe',
+                paytm: 'Paytm'
+            };
+            return map[selectedPaymentMethod] || 'selected wallet';
+        }
+
+        function buildUpiUrl(upiId, name, amount, courseTitle, method) {
+            var appPackages = {
+                googlepay: 'com.google.android.apps.nbu.paisa.user',
+                phonepe: 'com.phonepe.app',
+                paytm: 'net.one97.paytm'
+            };
+
+            var fallbackUrls = {
+                googlepay: 'https://pay.google.com/intl/en_in/about/',
+                phonepe: 'https://www.phonepe.com/',
+                paytm: 'https://paytm.com/'
+            };
+
+            var safeName = (name || 'QSkill Student').substring(0, 30);
+            var transactionId = 'QSK-' + Date.now();
+            var numericAmount = Number(amount) || 0;
+            var upiParams = [
+                'pa=' + encodeURIComponent(upiId),
+                'pn=' + encodeURIComponent(safeName),
+                'am=' + encodeURIComponent(numericAmount.toFixed(2)),
+                'cu=INR',
+                'tn=' + encodeURIComponent(courseTitle + ' Enrollment'),
+                'tr=' + encodeURIComponent(transactionId)
+            ].join('&');
+
+            var deepLink = 'upi://pay?' + upiParams;
+            var intentLink = 'intent://pay?' + upiParams + '#Intent;scheme=upi;package=' + (appPackages[method] || '') + ';end';
+
+            return {
+                deepLink: deepLink,
+                intentLink: intentLink,
+                fallback: fallbackUrls[method] || 'https://www.google.com/search?q=UPI+payment'
+            };
+        }
+
+        function triggerUpiPayment(upiUrl, intentUrl, fallbackUrl) {
+            var timer = setTimeout(function() {
+                if (confirm('The UPI app did not open automatically. Do you want to continue to the wallet website instead?')) {
+                    window.location.href = fallbackUrl;
+                }
+            }, 2200);
+
+            var anchor = document.createElement('a');
+            anchor.style.display = 'none';
+            anchor.rel = 'noopener';
+            anchor.href = intentUrl || upiUrl;
+            document.body.appendChild(anchor);
+            anchor.click();
+
+            setTimeout(function() {
+                anchor.href = upiUrl;
+                anchor.click();
+            }, 300);
+
+            window.addEventListener('pagehide', function() {
+                clearTimeout(timer);
+            }, { once: true });
+        }
+
+        function completeEnrollmentAfterUpiSuccess() {
+            var pendingUpi = sessionStorage.getItem('qskillPendingUpiPayment');
+            if (!pendingUpi) {
+                return;
+            }
+
+            try {
+                var data = JSON.parse(pendingUpi);
+                var course = courseData[data.courseId] || courseData['manual'];
+                var studentId = generateStudentId();
+                var password = generatePassword();
+                var students = JSON.parse(localStorage.getItem('qskillStudents')) || {};
+
+                students[studentId] = {
+                    email: data.email,
+                    phone: data.phone,
+                    password: password,
+                    name: data.name,
+                    registeredAt: new Date().toISOString(),
+                    enrolledCourses: [data.courseId || 'manual']
+                };
+                localStorage.setItem('qskillStudents', JSON.stringify(students));
+
+                var enrolledCourses = JSON.parse(localStorage.getItem('enrolledCourses')) || [];
+                if (data.courseId && !enrolledCourses.includes(data.courseId)) {
+                    enrolledCourses.push(data.courseId);
+                    localStorage.setItem('enrolledCourses', JSON.stringify(enrolledCourses));
+                }
+
+                sendWelcomeEmail({
+                    name: data.name,
+                    email: data.email,
+                    studentId: studentId,
+                    password: password,
+                    course: course.title
+                });
+
+                sessionStorage.removeItem('qskillPendingUpiPayment');
+
+                var modal = document.getElementById('successModal');
+                document.getElementById('successTitle').textContent = '🎉 Thanks for Enrolling!';
+                document.getElementById('successSubText').textContent = 'You are now enrolled in ' + course.title + '. Check your email for login credentials.';
+                document.getElementById('emailStatusText').textContent = '📧 Credentials sent to ' + data.email;
+                modal.classList.add('active');
+                document.body.style.overflow = 'hidden';
+                showToast('✅ Enrollment successful! Check your email.', 'success');
+            } catch (error) {
+                console.log('Enrollment completion after UPI failed:', error);
+            }
+        }
+
+        function markPaymentPendingState() {
+            var payBtn = document.getElementById('payButton');
+            var manualBtn = document.getElementById('manualConfirmPayment');
+            if (payBtn) {
+                payBtn.disabled = false;
+                payBtn.innerHTML = '<i class="fas fa-check-circle"></i> Payment Request Sent';
+            }
+            if (manualBtn) {
+                manualBtn.style.display = 'block';
+            }
+            showToast('📲 UPI request sent. Please approve it in your wallet app.', 'info');
+        }
 
         async function handlePayment(event) {
             event.preventDefault();
-            
-            const name = document.getElementById('studentName').value.trim();
-            const email = document.getElementById('studentEmail').value.trim();
-            const phone = document.getElementById('studentPhone').value.trim();
-            
+
+            var name = document.getElementById('studentName').value.trim();
+            var email = document.getElementById('studentEmail').value.trim();
+            var phone = document.getElementById('studentPhone').value.trim();
+
             if (!name || !email || !phone) {
                 showToast('⚠️ Please fill in all required fields', 'error');
                 return;
             }
-            
             if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
                 showToast('⚠️ Please enter a valid email address', 'error');
                 return;
             }
-            
             if (phone.length < 10) {
                 showToast('⚠️ Please enter a valid phone number', 'error');
                 return;
             }
-            
-            // Validate payment method specific fields
-            if (selectedPaymentMethod === 'upi') {
-                const upiId = document.getElementById('upiId');
-                if (upiId && !upiId.value.trim()) {
-                    showToast('⚠️ Please enter your UPI ID', 'error');
-                    return;
-                }
+
+            var supportedMethods = ['googlepay', 'phonepe', 'paytm'];
+            if (!supportedMethods.includes(selectedPaymentMethod)) {
+                showToast('⚠️ Please select Google Pay, PhonePe, or Paytm and enter the UPI ID.', 'error');
+                return;
             }
-            
-            const payBtn = document.getElementById('payButton');
+
+            var upiInputId = getUpiInputForMethod();
+            var upiInput = document.getElementById(upiInputId);
+            var upiId = upiInput ? upiInput.value.trim() : '';
+
+            if (!upiId || !/^[A-Za-z0-9._-]+@[A-Za-z0-9.-]+$/.test(upiId)) {
+                showToast('⚠️ Please enter a valid UPI ID for ' + getUpiLabelForMethod() + '.', 'error');
+                return;
+            }
+
+            var course = window.selectedCourse;
+            var payBtn = document.getElementById('payButton');
             payBtn.disabled = true;
-            payBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Processing...';
+            payBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Opening UPI App...';
 
-            // Check if student exists
-            const existingStudent = findStudentByEmail(email);
-            let studentId, password, isNew = false;
-
-            if (existingStudent) {
-                // Existing student – use their credentials
-                studentId = existingStudent.id;
-                password = existingStudent.password;
-                console.log('👤 Existing student found:', studentId);
-            } else {
-                // New student – generate ID and password
-                studentId = generateStudentId();
-                password = generateHexPassword();
-                isNew = true;
-                console.log('🆕 New student, generated ID:', studentId);
-            }
-
-            // Save or update student in database
-            const db = getStudentDatabase();
-            if (isNew) {
-                db[studentId] = {
+            try {
+                var paymentAmount = Number(course && course.total !== undefined ? course.total : 0);
+                var paymentUrl = buildUpiUrl(upiId, name, paymentAmount, course.title, selectedPaymentMethod);
+                sessionStorage.setItem('qskillPendingUpiPayment', JSON.stringify({
+                    name: name,
                     email: email,
                     phone: phone,
-                    password: password,
-                    name: name,
-                    registeredAt: new Date().toISOString()
-                };
-                saveStudentDatabase(db);
-                console.log('💾 New student saved to database');
-            } else {
-                // Update name/phone if changed
-                if (db[studentId]) {
-                    db[studentId].name = name;
-                    db[studentId].phone = phone;
-                    saveStudentDatabase(db);
-                    console.log('💾 Existing student info updated');
-                }
-            }
+                    courseId: courseParam || 'manual',
+                    upiId: upiId,
+                    paymentMethod: selectedPaymentMethod,
+                    amount: course.total
+                }));
 
-            // Store for display
-            generatedStudentData = { id: studentId, password, isNew };
-
-            // Send email (real or simulated)
-            const emailResult = await sendStudentCredentials(
-                { id: studentId, email, name, password },
-                isNew
-            );
-
-            // Show success modal with credentials
-            const modal = document.getElementById('successModal');
-            const orderId = 'QSK-' + new Date().getFullYear() + '-' + String(Math.floor(Math.random() * 1000)).padStart(3, '0');
-            
-            document.getElementById('displayStudentId').textContent = studentId;
-            document.getElementById('displayPassword').textContent = password;
-            
-            // Update modal text based on new/existing
-            if (isNew) {
-                document.getElementById('successTitle').textContent = '🎉 Welcome to QSkill!';
-                document.getElementById('successSubText').textContent = 'Your account has been created successfully. Check your email for login credentials.';
-                document.getElementById('emailStatusText').textContent = emailResult.sent ? '📧 Credentials sent to your email' : '📧 [DEMO] Credentials logged to console (check developer tools)';
-            } else {
-                document.getElementById('successTitle').textContent = '🎉 Welcome Back!';
-                document.getElementById('successSubText').textContent = 'You already have an account. Your credentials have been sent to your email.';
-                document.getElementById('emailStatusText').textContent = emailResult.sent ? '📧 Existing credentials sent to your email' : '📧 [DEMO] Credentials logged to console (check developer tools)';
-            }
-
-            // Show credentials box
-            document.getElementById('credentialsBox').style.display = 'block';
-            document.getElementById('emailStatusBox').style.display = 'block';
-
-            modal.classList.add('active');
-            document.body.style.overflow = 'hidden';
-
-            // Re-enable button
-            payBtn.disabled = false;
-            payBtn.innerHTML = '<i class="fas fa-lock"></i> Pay ' + window.selectedCourse.price + ' Now';
-
-            showToast(isNew ? '✅ Account created! Check your email.' : '✅ Welcome back! Credentials sent.', 'success');
-
-            // Enroll the student in the course (add to enrolled courses)
-            const enrolledCourses = JSON.parse(localStorage.getItem('enrolledCourses')) || [];
-            if (courseParam && !enrolledCourses.includes(courseParam)) {
-                enrolledCourses.push(courseParam);
-                localStorage.setItem('enrolledCourses', JSON.stringify(enrolledCourses));
-                console.log('📚 Student enrolled in:', courseParam);
+                showToast('📲 Opening ' + getUpiLabelForMethod() + ' for payment...', 'info');
+                markPaymentPendingState();
+                triggerUpiPayment(paymentUrl.deepLink, paymentUrl.intentLink, paymentUrl.fallback);
+            } catch (error) {
+                showToast('❌ Payment redirect failed. Please try again.', 'error');
+                payBtn.disabled = false;
+                payBtn.innerHTML = '<i class="fas fa-lock"></i> Pay ' + window.selectedCourse.totalDisplay + ' Now';
             }
         }
 
         // ============================================================ */
-        // ===== CLOSE MODAL ON OVERLAY CLICK ===== */
+        // ===== CLOSE MODAL ===== */
         // ============================================================ */
         document.getElementById('successModal').addEventListener('click', function(e) {
             if (e.target === this) {
@@ -1323,55 +2004,51 @@
         });
 
         // ============================================================ */
-        // ===== LOGIN DROPDOWN ===== */
-        // ============================================================ */
-        const dropdownBtn = document.getElementById('loginDropdownBtn');
-        const dropdown = document.getElementById('loginDropdown');
-
-        if (dropdownBtn && dropdown) {
-            dropdownBtn.addEventListener('click', function(e) {
-                e.preventDefault();
-                e.stopPropagation();
-                dropdown.classList.toggle('show');
-            });
-
-            document.addEventListener('click', function(e) {
-                if (!dropdownBtn.contains(e.target) && !dropdown.contains(e.target)) {
-                    dropdown.classList.remove('show');
-                }
-            });
-
-            document.addEventListener('keydown', function(e) {
-                if (e.key === 'Escape') {
-                    dropdown.classList.remove('show');
-                }
-            });
-        }
-
-        // ============================================================ */
-        // ===== INITIALIZE ===== */
+        // ===== INIT ===== */
         // ============================================================ */
         document.addEventListener('DOMContentLoaded', function() {
-            // Load course
             if (courseParam && courseData[courseParam]) {
                 loadCourse(courseParam);
             } else {
                 loadCourse('manual');
             }
-            
-            // Set default payment details (UPI)
-            updatePaymentDetails('upi');
-            
-            // Initialize EmailJS
-            initEmailService();
+            // Default to card
+            updatePaymentDetails('card');
 
-            // Hide credentials box initially (shown after payment)
-            document.getElementById('credentialsBox').style.display = 'none';
-            document.getElementById('emailStatusBox').style.display = 'none';
+            var pendingUpi = sessionStorage.getItem('qskillPendingUpiPayment');
+            if (pendingUpi) {
+                try {
+                    var parsed = JSON.parse(pendingUpi);
+                    if (parsed && parsed.courseId) {
+                        var course = courseData[parsed.courseId] || courseData['manual'];
+                        document.getElementById('studentName').value = parsed.name || '';
+                        document.getElementById('studentEmail').value = parsed.email || '';
+                        document.getElementById('studentPhone').value = parsed.phone || '';
+                        document.getElementById(parsed.paymentMethod === 'googlepay' ? 'googlePayUpi' : parsed.paymentMethod === 'phonepe' ? 'phonePeUpi' : 'paytmUpi').value = parsed.upiId || '';
+                        showToast('✅ Payment step initiated. Please complete the UPI payment in your wallet app and then return to continue.', 'success');
+                    }
+                } catch (error) {
+                    console.log('Pending UPI payment not found.');
+                }
+            }
 
-            console.log('💳 QSkill Enroll Page Loaded');
-            console.log('✅ Student ID & Password generation enabled');
-            console.log('📧 Email notifications (real or demo mode)');
+            if (new URLSearchParams(window.location.search).get('payment') === 'success') {
+                completeEnrollmentAfterUpiSuccess();
+            }
+
+            var manualConfirm = document.getElementById('manualConfirmPayment');
+            if (manualConfirm) {
+                manualConfirm.addEventListener('click', function() {
+                    completeEnrollmentAfterUpiSuccess();
+                });
+            }
+
+            console.log('💳 Enroll Page Loaded — UPI redirect flow active');
+            console.log('💰 Course: ' + window.selectedCourse.title);
+            console.log('💵 Total: ' + window.selectedCourse.totalDisplay);
+            console.log('📝 Registration Fee ₹1,000 included in total');
+            console.log('🔑 12-character passwords are generated automatically');
+            console.log('📧 Welcome emails are sent after successful payment');
         });
     </script>
 
