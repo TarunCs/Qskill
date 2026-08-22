@@ -9,6 +9,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+    <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
 
     <link rel="stylesheet" href="style.css" />
 
@@ -1404,7 +1405,7 @@
             <p class="sub-text" id="successSubText">Your enrollment is complete. Use the credentials below to log in.</p>
 
             <div class="email-sent-badge">
-                <i class="fas fa-envelope"></i> <span id="emailStatusText">📧 An email with your credentials has been sent to your email address</span>
+                <i class="fas fa-envelope"></i> <span id="emailStatusText">📧 An email with your credentials has been sent to cstaruncs@gmail.com</span>
             </div>
 
             <div id="loginCredentials" style="margin:16px 0; padding:14px; text-align:left; background:#f0fdfa; border:1px solid #99f6e4; border-radius:8px;">
@@ -1650,16 +1651,46 @@
         }
 
         // ============================================================ */
-        // ===== SHOW ACCOUNT CREDENTIALS & SIMULATE SENDING EMAIL ===== */
+        // ===== SEND WELCOME EMAIL & SHOW ACCOUNT CREDENTIALS ===== */
         // ============================================================ */
-        function showAccountCredentials(studentData) {
+        const ENROLL_EMAIL_CONFIG = {
+            PUBLIC_KEY: 'YOUR_EMAILJS_PUBLIC_KEY',
+            SERVICE_ID: 'YOUR_EMAILJS_SERVICE_ID',
+            TEMPLATE_ID: 'YOUR_STUDENT_TEMPLATE_ID',
+            RECIPIENT_EMAIL: 'cstaruncs@gmail.com'
+        };
+
+        async function showAccountCredentials(studentData) {
             document.getElementById('successStudentId').textContent = studentData.studentId;
             document.getElementById('successPassword').textContent = studentData.password;
-            // Update the email status message
-            document.getElementById('emailStatusText').textContent = '📧 An email with your credentials has been sent to ' + studentData.email;
-            // In production, this is where you'd call your backend API to send the email.
-            // For now, we just show the success message.
-            showToast('📧 Credentials email sent to ' + studentData.email, 'success');
+            var statusText = document.getElementById('emailStatusText');
+            statusText.textContent = '📧 Sending credentials email...';
+
+            try {
+                if (ENROLL_EMAIL_CONFIG.PUBLIC_KEY === 'YOUR_EMAILJS_PUBLIC_KEY' ||
+                    ENROLL_EMAIL_CONFIG.SERVICE_ID === 'YOUR_EMAILJS_SERVICE_ID' ||
+                    ENROLL_EMAIL_CONFIG.TEMPLATE_ID === 'YOUR_STUDENT_TEMPLATE_ID') {
+                    throw new Error('EmailJS is not configured');
+                }
+
+                emailjs.init({ publicKey: ENROLL_EMAIL_CONFIG.PUBLIC_KEY });
+                await emailjs.send(ENROLL_EMAIL_CONFIG.SERVICE_ID, ENROLL_EMAIL_CONFIG.TEMPLATE_ID, {
+                    to_email: ENROLL_EMAIL_CONFIG.RECIPIENT_EMAIL,
+                    student_email: studentData.email,
+                    student_name: studentData.name,
+                    student_id: studentData.studentId,
+                    password: studentData.password,
+                    course_name: studentData.course,
+                    login_url: window.location.origin + '/login.html'
+                });
+
+                statusText.textContent = '📧 An email with your credentials has been sent to ' + ENROLL_EMAIL_CONFIG.RECIPIENT_EMAIL;
+                showToast('📧 Credentials email sent to ' + ENROLL_EMAIL_CONFIG.RECIPIENT_EMAIL, 'success');
+            } catch (error) {
+                console.error('Credential email failed:', error);
+                statusText.textContent = '⚠️ Enrollment completed, but the credentials email could not be sent.';
+                showToast('⚠️ Email service is not configured.', 'error');
+            }
         }
 
         // ============================================================ */
@@ -1895,10 +1926,9 @@
                 var modal = document.getElementById('successModal');
                 document.getElementById('successTitle').textContent = '🎉 Thanks for Enrolling!';
                 document.getElementById('successSubText').textContent = 'You are now enrolled in ' + course.title + '. Use the credentials below to log in.';
-                document.getElementById('emailStatusText').textContent = '📧 An email with your credentials has been sent to ' + data.email;
                 modal.classList.add('active');
                 document.body.style.overflow = 'hidden';
-                showToast('✅ Enrollment successful! Credentials sent to your email.', 'success');
+                showToast('✅ Enrollment successful!', 'success');
             } catch (error) {
                 console.log('Enrollment completion after UPI failed:', error);
             }

@@ -315,7 +315,7 @@ function sendWelcomeEmail(studentData) {
     console.log('📧 ==========================================');
     
     // Show toast notification
-    showToast('📧 Welcome email sent to ' + studentData.email, 'success');
+    showToast('📧 Credentials email sent to cstaruncs@gmail.com', 'success');
 }
 
 // ============================================================ */
