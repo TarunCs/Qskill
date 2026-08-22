@@ -246,7 +246,7 @@ const EMAILJS_CONFIG = {
         OTP_VERIFICATION: 'YOUR_OTP_TEMPLATE_ID'
     }
 };
-const ADMIN_EMAIL = 'admin@qskillcareersolutions.com';
+const ADMIN_EMAIL = 'cstaruncs@gmail.com';
 
 let emailjsReady = false;
 function initEmailService() {
