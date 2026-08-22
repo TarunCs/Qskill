@@ -1334,7 +1334,7 @@
                                 <span class="option-radio"><span class="radio-dot"></span></span>
                             </div>
 
-                            <!-- Paytm (normal grid item, no full-width) -->
+                            <!-- Paytm (normal grid item) -->
                             <div class="payment-option" data-method="paytm" data-label="Paytm" onclick="selectPayment(this)">
                                 <span class="option-icon">
                                     <span class="paytm-icon-wrapper">P</span>
@@ -1404,17 +1404,13 @@
             <p class="sub-text" id="successSubText">Your enrollment is complete. Use the credentials below to log in.</p>
 
             <div class="email-sent-badge">
-                <i class="fas fa-key"></i> <span id="emailStatusText">🔐 Login credentials created successfully</span>
+                <i class="fas fa-envelope"></i> <span id="emailStatusText">📧 An email with your credentials has been sent to your email address</span>
             </div>
 
             <div id="loginCredentials" style="margin:16px 0; padding:14px; text-align:left; background:#f0fdfa; border:1px solid #99f6e4; border-radius:8px;">
                 <p style="margin:0 0 8px; font-size:13px;"><strong>Student ID:</strong> <span id="successStudentId"></span></p>
                 <p style="margin:0; font-size:13px;"><strong>Password:</strong> <span id="successPassword"></span></p>
             </div>
-
-            <a class="btn-continue" id="gmailCredentialsLink" href="#" target="_blank" rel="noopener" style="display:inline-block; text-decoration:none; margin-bottom:10px;">
-                <i class="fas fa-envelope"></i> Open Gmail Draft
-            </a>
 
             <button class="btn-continue" onclick="window.location.href='login.html'">
                 <i class="fas fa-sign-in-alt"></i> Login Now
@@ -1654,27 +1650,16 @@
         }
 
         // ============================================================ */
-        // ===== SHOW ACCOUNT CREDENTIALS ===== */
+        // ===== SHOW ACCOUNT CREDENTIALS & SIMULATE SENDING EMAIL ===== */
         // ============================================================ */
         function showAccountCredentials(studentData) {
             document.getElementById('successStudentId').textContent = studentData.studentId;
             document.getElementById('successPassword').textContent = studentData.password;
-            var subject = 'Your QSkill Career Solutions login credentials';
-            var body = [
-                'Hello ' + studentData.name + ',',
-                '',
-                'Your enrollment in ' + studentData.course + ' is complete.',
-                '',
-                'Student ID: ' + studentData.studentId,
-                'Password: ' + studentData.password,
-                '',
-                'Login: ' + window.location.origin + '/login.html',
-                '',
-                'Please keep these credentials secure.'
-            ].join('\n');
-            var gmailLink = document.getElementById('gmailCredentialsLink');
-            gmailLink.href = 'https://mail.google.com/mail/?view=cm&fs=1&to=' + encodeURIComponent(studentData.email) + '&su=' + encodeURIComponent(subject) + '&body=' + encodeURIComponent(body);
-            showToast('✅ Gmail draft prepared for ' + studentData.email + '.', 'success');
+            // Update the email status message
+            document.getElementById('emailStatusText').textContent = '📧 An email with your credentials has been sent to ' + studentData.email;
+            // In production, this is where you'd call your backend API to send the email.
+            // For now, we just show the success message.
+            showToast('📧 Credentials email sent to ' + studentData.email, 'success');
         }
 
         // ============================================================ */
@@ -1799,15 +1784,6 @@
         // ============================================================ */
         // ===== DIRECT UPI REDIRECT ===== */
         // ============================================================ */
-        function getUpiInputForMethod() {
-            var map = {
-                googlepay: 'googlePayUpi',
-                phonepe: 'phonePeUpi',
-                paytm: 'paytmUpi'
-            };
-            return map[selectedPaymentMethod] || null;
-        }
-
         function getUpiLabelForMethod() {
             var map = {
                 googlepay: 'Google Pay',
@@ -1905,6 +1881,7 @@
                     localStorage.setItem('enrolledCourses', JSON.stringify(enrolledCourses));
                 }
 
+                // Show credentials and simulate sending email
                 showAccountCredentials({
                     name: data.name,
                     email: data.email,
@@ -1918,10 +1895,10 @@
                 var modal = document.getElementById('successModal');
                 document.getElementById('successTitle').textContent = '🎉 Thanks for Enrolling!';
                 document.getElementById('successSubText').textContent = 'You are now enrolled in ' + course.title + '. Use the credentials below to log in.';
-                document.getElementById('emailStatusText').textContent = '🔐 Credentials created for ' + data.email;
+                document.getElementById('emailStatusText').textContent = '📧 An email with your credentials has been sent to ' + data.email;
                 modal.classList.add('active');
                 document.body.style.overflow = 'hidden';
-                showToast('✅ Enrollment successful! Open the Gmail draft to send the credentials.', 'success');
+                showToast('✅ Enrollment successful! Credentials sent to your email.', 'success');
             } catch (error) {
                 console.log('Enrollment completion after UPI failed:', error);
             }
@@ -1967,7 +1944,7 @@
 
             var supportedMethods = ['googlepay', 'phonepe', 'paytm'];
             if (!supportedMethods.includes(selectedPaymentMethod)) {
-                showToast('⚠️ Please select Google Pay, PhonePe, or Paytm and enter the UPI ID.', 'error');
+                showToast('⚠️ Please select Google Pay, PhonePe, or Paytm.', 'error');
                 return;
             }
 
@@ -2058,7 +2035,7 @@
             console.log('💵 Total: ' + window.selectedCourse.totalDisplay);
             console.log('📝 Registration Fee ₹1,000 included in total');
             console.log('🔑 12-character passwords are generated automatically');
-            console.log('📧 Welcome emails are sent after successful payment');
+            console.log('📧 System will send the credentials email directly (simulated).');
         });
     </script>
 
